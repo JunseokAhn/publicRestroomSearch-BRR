@@ -8,6 +8,6 @@
 <title>Spring Maven Sample Home</title>
 </head>
 <body>
-<h1>Spring Maven Sample Home</h1>
+	<h1>Spring Maven Sample Home</h1>
 </body>
 </html>
