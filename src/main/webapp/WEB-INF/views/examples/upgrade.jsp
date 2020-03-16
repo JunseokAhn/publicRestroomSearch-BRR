@@ -63,7 +63,7 @@
 				<div class="navbar-collapse-header d-md-none">
 					<div class="row">
 						<div class="col-6 collapse-brand">
-							<a href="<c:url value="/examples/index"/>"> <img src=".<c:url value="/resources/assets/img/brand/blue.png"/>">
+							<a href="<c:url value="/examples/index"/>"> <img src="<c:url value="/resources/assets/img/brand/blue.png"/>">
 							</a>
 						</div>
 						<div class="col-6 collapse-close">

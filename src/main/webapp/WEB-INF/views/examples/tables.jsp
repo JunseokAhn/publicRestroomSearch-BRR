@@ -295,7 +295,7 @@
 												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-1-800x800.jpg"/>" class="rounded-circle">
 												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-2-800x800.jpg"/>" class="rounded-circle">
 												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-3-800x800.jpg"/>" class="rounded-circle">
-												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe"> <img alt="Image placeholder" src="<c:url value="/resources/"/>" class="rounded-circle">
+												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>" class="rounded-circle">
 												</a>
 											</div>
 										</td>
