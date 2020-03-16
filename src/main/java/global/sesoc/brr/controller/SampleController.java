@@ -64,4 +64,9 @@ public class SampleController {
 	public String upgrade() {
 		return "examples/upgrade";
 	}
+
+	@GetMapping(value = "index")
+	public String index() {
+		return "examples/index";
+	}
 }
