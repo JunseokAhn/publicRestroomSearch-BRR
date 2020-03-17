@@ -9,5 +9,15 @@
 </head>
 <body>
 	<h1>Spring Maven Sample Home</h1>
+	
+	<form action="naverlogin" method = "GET">
+
+<input type = "submit" value="네이버 로그인 페이지로 가기">
+
+</form>
+	
+	
+	
+	
 </body>
 </html>
