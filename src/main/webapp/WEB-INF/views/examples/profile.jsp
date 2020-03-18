@@ -6,7 +6,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Argon Dashboard - Free Dashboard for Bootstrap 4 by Creative Tim</title>
+<title>화장실이 급할땐? - 부르르</title>
 <!-- Favicon -->
 <link href="<c:url value="/resources/assets/img/brand/favicon.png"/>" rel="icon" type="image/png">
 <!-- Fonts -->
@@ -86,20 +86,30 @@
 				</form>
 				<!-- Navigation -->
 				<ul class="navbar-nav">
-					<li class="nav-item  active "><a class="nav-link " href="<c:url value="/examples/index"/>"> <i class="ni ni-tv-2 text-primary"></i> Dashboard
+					<li class="nav-item"><a class="nav-link  active " href="<c:url value="/examples/maps"/>"> <i class="ni ni-pin-3 text-orange"></i> Maps
 					</a></li>
+					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/index"/>"> <i class="ni ni-tv-2 text-primary"></i> Board
+					</a></li>
+					<%-- <li class="nav-item  active "><a class="nav-link " href="<c:url value="/examples/index"/>">
+							<i class="ni ni-tv-2 text-primary"></i> Dashboard
+						</a></li> //nav-item  active는 무조건 검정색으로 표시됩니다. --%>
 					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/icons"/>"> <i class="ni ni-planet text-blue"></i> Icons
 					</a></li>
-					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/maps"/>"> <i class="ni ni-pin-3 text-orange"></i> Maps
-					</a></li>
-					<li class="nav-item"><a class="nav-link  active " href="<c:url value="/examples/profile"/>"> <i class="ni ni-single-02 text-yellow"></i> User profile
-					</a></li>
+
 					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/tables"/>"> <i class="ni ni-bullet-list-67 text-red"></i> Tables
 					</a></li>
-					<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/login"/>"> <i class="ni ni-key-25 text-info"></i> Login
-					</a></li>
-					<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/register"/>"> <i class="ni ni-circle-08 text-pink"></i> Register
-					</a></li>
+					<c:if test="${sessionScope.userID==null }">
+						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/login"/>"> <i class="ni ni-key-25 text-info"></i> Login
+						</a></li>
+						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/register"/>"> <i class="ni ni-circle-08 text-pink"></i> Sign up
+						</a></li>
+					</c:if>
+					<c:if test="${sessionScope.userID!=null }">
+						<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/profile"/>"> <i class="ni ni-single-02 text-yellow"></i> User profile
+						</a></li>
+						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/login"/>"> <i class="ni ni-key-25 text-info"></i> Logout
+						</a></li>
+					</c:if>
 				</ul>
 				<!-- Divider -->
 				<hr class="my-3">
