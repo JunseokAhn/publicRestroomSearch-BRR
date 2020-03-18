@@ -356,6 +356,7 @@
 			application : "argon-dashboard-free"
 		});
 	</script>
+
 </body>
 
 </html>
