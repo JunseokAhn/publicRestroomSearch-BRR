@@ -1,0 +1,23 @@
+안준석 - 구글 api(현재잔고 34만원) - 구글맵 api 열리는페이지는 열때마다 돈들어갑니다. 필요할때빼곤 자제해주세요
+AIzaSyDkQ00U2AUBQSS1CJF5YveL-1YWsTjaRGA
+
+황정현 - 네이버 api (로그인, 프로필만 무료)
+이름 : BRR 클라이언트 ID : z_lyTyQUbIC8kv8VfFwH, 클라이언트 Secret : EdlvjsCOLs
+
+다오,매퍼,컨트롤러는 api나 기능별로 찢습니다.
+
+컨트롤러 - 기능별로 찢습니다. 첫글자 대문자 ex : GoogleMapsController.java
+
+매퍼 -  컨트롤러랑 마찬가지입니다. 첫글자 대문자
+ex: GoogleMapsMapper.java / GoogleMapsMapper.xml 
+
+다오 - 컨트롤러랑 마찬가지입니다. 첫글자대문자, DAO는 전부대문자 ex : GoogleMapsDAO
+
+VO - 테이블에 맞춰야될거같은데 테이블은 저희가 아직 안만들었으니까 패스하겠습니다.
+vo만드실때 혹시모르니까 테이블 변수명이랑 vo변수명이랑 똑같이 맞춰주시고,  변수타입은 String으로 통일, 소문자로시작하겠습니다
+ex : private String userName;
+
+테이블sql - brr바로 아래에 넣겠습니다. ex : Sample_SQL.txt 위치에 넣으시면됩니다.
+
+jsp는 maps그룹, board그룹, diary그룹으로 나눠서 폴더별로 정리하겠습니다. 소문자시작입니다.
+왼쪽 네비게이터에 나오는 첫페이지는 ~Main.jsp통일하겠습니다.(ex : maps/mapsMain.jsp)

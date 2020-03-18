@@ -4,24 +4,21 @@
 <script src="<c:url value="/resources/js/jquery-3.4.1.js/"/>"></script>
 <html>
 <head>
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
-<meta name="author" content="Creative Tim">
-<title>Argon Dashboard - Free Dashboard for Bootstrap 4</title>
+<title>화장실이 급할땐? - 부르르</title>
 <!-- Favicon -->
 <link href="<c:url value="/resources/assets/img/brand/favicon.png"/>" rel="icon" type="image/png">
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 <!-- Icons -->
-<link href="<c:url value="/resources/assets/js/plugins/nucleo/css/nucleo.css"/>" rel="stylesheet">
-<link href="<c:url value="/resources/assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css"/>" rel="stylesheet">
-<!-- Argon CSS -->
-<link type="text/css" href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.0.0"/>" rel="stylesheet">
+<link href="<c:url value="/resources/assets/js/plugins/nucleo/css/nucleo.css"/>" rel="stylesheet" />
+<link href="<c:url value="/resources/assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css"/>" rel="stylesheet" />
+<!-- CSS Files -->
+<link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
 </head>
 
-<body>
-	<!-- Sidenav -->
+<body class="">
 	<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
 		<div class="container-fluid">
 			<!-- Toggler -->
@@ -29,7 +26,7 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<!-- Brand -->
-			<a class="navbar-brand pt-0" href="<c:url value="/index.html"/>"> <img src="<c:url value="/resources/assets/img/brand/blue.png"/>" class="navbar-brand-img" alt="...">
+			<a class="navbar-brand pt-0" href="<c:url value="/examples/maps"/>"> <img src="<c:url value="/resources/assets/img/brand/blue.png"/>" class="navbar-brand-img" alt="...">
 			</a>
 			<!-- User -->
 			<ul class="nav align-items-center d-md-none">
@@ -66,7 +63,7 @@
 				<div class="navbar-collapse-header d-md-none">
 					<div class="row">
 						<div class="col-6 collapse-brand">
-							<a href="<c:url value="/index"/>"> <img src="<c:url value="/resources/assets/img/brand/blue.png"/>">
+							<a href="<c:url value="/examples/index"/>"> <img src="<c:url value="/resources/assets/img/brand/blue.png"/>">
 							</a>
 						</div>
 						<div class="col-6 collapse-close">
@@ -89,20 +86,30 @@
 				</form>
 				<!-- Navigation -->
 				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/index"/>"> <i class="ni ni-tv-2 text-primary"></i> Dashboard
+					<li class="nav-item"><a class="nav-link  active " href="<c:url value="/examples/maps"/>"> <i class="ni ni-pin-3 text-orange"></i> Maps
 					</a></li>
-					<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/icons"/>"> <i class="ni ni-planet text-blue"></i> Icons
+					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/index"/>"> <i class="ni ni-tv-2 text-primary"></i> Board
 					</a></li>
-					<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/maps"/>">"> <i class="ni ni-pin-3 text-orange"></i> Maps
+					<%-- <li class="nav-item  active "><a class="nav-link " href="<c:url value="/examples/index"/>">
+							<i class="ni ni-tv-2 text-primary"></i> Dashboard
+						</a></li> //nav-item  active는 무조건 검정색으로 표시됩니다. --%>
+					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/icons"/>"> <i class="ni ni-planet text-blue"></i> Icons
 					</a></li>
-					<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/profile"/>">"> <i class="ni ni-single-02 text-yellow"></i> User profile
+
+					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/tables"/>"> <i class="ni ni-bullet-list-67 text-red"></i> Tables
 					</a></li>
-					<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/tables"/>">"> <i class="ni ni-bullet-list-67 text-red"></i> Tables
-					</a></li>
-					<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/login"/>">"> <i class="ni ni-key-25 text-info"></i> Login
-					</a></li>
-					<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/register"/>">"> <i class="ni ni-circle-08 text-pink"></i> Register
-					</a></li>
+					<c:if test="${sessionScope.userID==null }">
+						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/login"/>"> <i class="ni ni-key-25 text-info"></i> Login
+						</a></li>
+						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/register"/>"> <i class="ni ni-circle-08 text-pink"></i> Sign up
+						</a></li>
+					</c:if>
+					<c:if test="${sessionScope.userID!=null }">
+						<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/profile"/>"> <i class="ni ni-single-02 text-yellow"></i> User profile
+						</a></li>
+						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/login"/>"> <i class="ni ni-key-25 text-info"></i> Logout
+						</a></li>
+					</c:if>
 				</ul>
 				<!-- Divider -->
 				<hr class="my-3">
@@ -115,6 +122,10 @@
 					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/foundation/colors.html"> <i class="ni ni-palette"></i> Foundation
 					</a></li>
 					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/components/alerts.html"> <i class="ni ni-ui-04"></i> Components
+					</a></li>
+				</ul>
+				<ul class="navbar-nav">
+					<li class="nav-item active active-pro"><a class="nav-link" href="<c:url value="/examples/upgrade"/>"> <i class="ni ni-send text-dark"></i> Upgrade to PRO
 					</a></li>
 				</ul>
 			</div>

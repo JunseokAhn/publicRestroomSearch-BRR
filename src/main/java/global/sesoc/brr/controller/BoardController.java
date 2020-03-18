@@ -5,12 +5,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(value = "maps")
-public class GoogleMapsController {
+@RequestMapping(value = "board")
+public class BoardController {
 
-	@GetMapping(value = "mapsMain")
-	public String MapsMain() {
-
-		return "maps/mapsMain";
+	@GetMapping(value = "boardMain")
+	public String boardMain() {
+		return "board/boardMain";
 	}
 }
