@@ -11,21 +11,55 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <title>네이버로그인</title>
 <script>
-function gohome() {
-	location.href = "/test1";
+window.onload = function()
+{
+	setTimeout(function(){ SendToken(); }, 2000);
 }
 
-function goview() {
+function gohome() {
+	location.href = "/test1";
+	//main 화면으로 넘어가는 경로를 적어주시면 됩니다.
+}
+
+
+function SendToken()
+{
+	var token = $('#txtToken').val();
+	console.log(token);
 	
-	location.href = "viewForm";
+	$.ajax({
+		url : "viewForm",
+		type : "GET",
+		data : {
+			access_token : token
+		},
+		success : function()
+		{
+			alert("Success!");
+			init();
+		},
+		error : function(e)
+		{
+			alert(JSON.stringify(e));
+		}
+	});
+}
+
+function init() 
+{
+	location.href = "/test1";
+	//main 화면으로 넘어가는 경로를 적어주시면 됩니다.
+
 }
 
  </script>
   </head>
 <body>
 <%
+String strTokenFull = "";
     String clientId = "z_lyTyQUbIC8kv8VfFwH";//애플리케이션 클라이언트 아이디값";
     String clientSecret = "EdlvjsCOLs";//애플리케이션 클라이언트 시크릿값";
     String code = request.getParameter("code");
@@ -60,16 +94,25 @@ function goview() {
       }
       br.close();
       if(responseCode==200) {
-        out.println(res.toString());
+    	  strTokenFull = res.toString();
+//         out.println(res.toString());
+//         out.println(strTokenFull);
+        
+        int itmp = strTokenFull.indexOf("refresh_token");
+        access_token = strTokenFull.substring(17, itmp - 3);
+//         out.println("\n\n");
+//         out.println(access_token);
       }
     } catch (Exception e) {
       System.out.println(e);
     }
   %>
   
-  <input type = "button" value = "회원 정보 로그인 페이지로 이동" onclick="goview()">
+  
+  <input type="hidden" id="txtToken" value="<%=access_token%>">
   
   <input type = "button" value="홈 화면으로 돌아가기" onclick="gohome()">
+  
   
   
 </body>
