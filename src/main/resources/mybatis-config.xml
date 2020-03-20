@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<typeAlias type="global.sesoc.brr.vo.VO" alias="VO" />
+		
 		<typeAlias type="global.sesoc.brr.vo.BoardVO" alias="board"/>
 	</typeAliases>
 	<mappers>

@@ -21,7 +21,6 @@ import global.sesoc.brr.util.PageNavigator;
 import global.sesoc.brr.vo.BoardVO;
 
 
-
 @Controller
 @RequestMapping(value = "board")
 public class BoardController {
@@ -64,20 +63,25 @@ public class BoardController {
 //		}
 		
 		dao.insertBoard(board);
-		return "redirect:/board/ahnTables";
+		return "redirect:/board/listBoard";
 	}
 	
-	//ahnTables 연습
 	//전체 게시판 글목록
-	@GetMapping(value = "ahnTables")
+	@GetMapping(value = "listBoard")
 	public String ahnTables(Model model) {
 
 		ArrayList<BoardVO> listBoard = dao.listBoard();
 		model.addAttribute("list", listBoard);
-		return "board/ahnTables";
+		return "board/listBoard";
 	}
-
 	
+	//상세 게시글 읽기
+	@GetMapping(value = "readBoard")
+	public String readBoard(String boardnum, Model model) {
+		BoardVO board = dao.readBoard(boardnum);
+		model.addAttribute("board", board);
+		return "board/readBoard";
+	}
 
 	
 	

@@ -296,7 +296,7 @@
 												<a href="#" class="avatar rounded-circle mr-3"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/bootstrap.jpg"/>">
 												</a>
 												<div class="media-body">
-													<span class="mb-0 text-sm">${memo.title}</span>
+													<span class="mb-0 text-sm"><a href="readBoard?boardnum=${memo.boardnum}">${memo.title}</a> </span>
 												</div>
 											</div>
 										</th>
@@ -322,7 +322,7 @@
 							</table>
 							</c:if>
 						</div>
-						<div class="card-footer py-4">
+						<div class="mx-auto card-footer py-4">
 							<nav aria-label="...">
 								<ul class="pagination justify-content-end mb-0">
 									<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1"> <i class="fas fa-angle-left"></i> <span class="sr-only">Previous</span>
@@ -335,10 +335,12 @@
 								</ul>
 							</nav>
 						</div>
+						<div class="mx-auto boardButton form-group">
+							<button type="button" class="btn btn-success" onclick="location.href='write';">Write</button>
+						</div>
 					</div>
 				</div>
 			</div>
-			<p><input type="button" value="글쓰기" onclick="location.href='write';"></p>
 			
 			<!-- Dark table -->
 			<div class="row mt-5">
