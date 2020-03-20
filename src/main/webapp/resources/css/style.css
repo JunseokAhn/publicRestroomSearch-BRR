@@ -1,0 +1,169 @@
+@charset "UTF-8";
+
+/* 메인화면 */
+.container {
+	width: 500px;
+	height: 350px;
+	background-color: MistyRose;
+/* 	background-color: mintcream; */
+	margin: 150px auto; /*상하는 150px 좌우는 auto -> 범위내중앙정렬  */
+}
+/* 회원가입창 */
+.container2 {
+	width: 500px;
+	height: 500px;
+	background-color: PaleGreen;
+	margin: 150px auto; /*상하는 150px 좌우는 auto -> 범위내중앙정렬  */
+}
+/* 로그인창 */
+.container3 {
+	width: 500px;
+	height: 350px;
+	background-color: Aquamarine;
+	margin: 150px auto; /*상하는 150px 좌우는 auto -> 범위내중앙정렬  */
+}
+/* 메모장목록 */
+.container4 {
+	width: 900px;
+	height: 600px;
+	background-color: mintcream;
+	margin: auto; /*상하는 150px 좌우는 auto -> 범위내중앙정렬  */
+}
+/* 메모장글읽기 */
+#listDiv {
+	width: 900px;
+	background-color: ivory;
+	margin: auto; /* 좌우는 auto -> 범위내중앙정렬  */
+}
+
+/* 메모장글쓰기 */
+.container6 {
+	width: 800px;
+	height: 600px;
+	background-color: ivory;
+	margin: auto; /* 좌우는 auto -> 범위내중앙정렬  */
+}
+
+
+h1 {
+	font-size: 4rem;
+	font-family: 'Nanum Pen Script', cursive;
+/* 	font-family: 'Nanum Brush Script', cursive; */
+	text-align: center;
+}
+
+p {
+	font-family: 'Nanum Pen Script', cursive;
+/* 	font-family: 'Nanum Brush Script', cursive; */
+	text-align: center;
+}
+
+a:link {
+	color: green;
+	font-size: 24px;
+	font-family: 'Nanum Brush Script', cursive;
+	font-weight: bold;
+	text-align: left;
+}
+
+a:visited {
+	color: blue;
+	font-size: 24px;
+	font-family: 'Nanum Brush Script', cursive;
+	font-weight: bold;
+	text-align: left;
+}
+
+a:hover {
+	color: red;
+	font-size: 24px;
+	font-family: 'Nanum Brush Script', cursive;
+	font-weight: bold;
+	text-align: left;
+}
+
+p {
+	font-size: 24px;
+	font-family: 'Nanum Brush Script', cursive;
+	font-weight: bold;
+	text-align: center;
+}
+
+table {
+	border-radius: 20px; /*모서리가깎임  / 20px 깍이는 정도를 나타냄*/
+	border: 1px solid;
+	padding: 10px 10px 10px 0px;
+	margin: auto;
+	text-align: center;
+}
+
+th {
+	font-family: 'Nanum Brush Script', cursive;
+	font-size: 26px;
+	width: 150px;
+	height: 30px;
+	text-align: center;
+	font-weight: bold;
+}
+
+td {
+	font-family: 'Nanum Brush Script', cursive;
+	font-size: 24px;
+	width: 150px;
+	height: 30px;
+	text-align: center;
+	font-weight: bold;
+}
+
+.writeTitle {
+	width: 300px;
+
+}
+
+/* 메모장 */
+
+.id1 {
+	width: 100px;	
+}
+.text1 {
+	width: 400px;
+}
+.inputdate {
+	width: 100px;
+}
+
+.title_th {
+	width: 300px;
+	text-align: center;
+}
+.title_td {
+	width: 300px;
+	text-align: left;
+}
+.date {
+	width: 300px;
+}
+.id {
+	width: 200px;
+}
+.upd_length {
+	width: 50px;
+}
+.del_length {
+	width: 50px;
+}
+
+
+input[type="text"] {
+	text-align: left;
+}
+
+input[type="password"] {
+	text-align: left;
+}
+
+input[type="button"] {
+	text-align: left;
+}
+
+
