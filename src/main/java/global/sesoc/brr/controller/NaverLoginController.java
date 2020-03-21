@@ -90,6 +90,17 @@ public class NaverLoginController {
         
     }
 	
+	@GetMapping("logout")
+	public String logOut (HttpSession httpsession) {
+		logger.info("로그아웃 페이지로 이동하였습니다.");
+			
+		httpsession.invalidate();
+//			httpsession.removeAttribute("sessionId");
+			
+		return "logoutForm";
+	}
+	
+	
 	
 	
 }
