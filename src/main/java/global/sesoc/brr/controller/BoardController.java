@@ -83,6 +83,46 @@ public class BoardController {
 		return "board/readBoard";
 	}
 
+	//상세글 삭제
+	@GetMapping(value = "deleteBoard")
+	public String delete(HttpSession session, String boardnum) {
+		//String id = (String)session.getAttribute("loginId");
+		String id = "haha";
+		
+		BoardVO board = new BoardVO();
+		board.setBoardnum(boardnum);
+		board.setId(id);
+				
+		dao.deleteBoard(board);
+				
+		//* 주의: redirect를 해야 삭제한후 목록이 나옴
+		return "redirect:/board/listBoard"; 
+	}
+
+	//상세글 수정
+	@GetMapping(value = "updateBoard")
+	public String update(String boardnum, Model model) {
+		BoardVO board = dao.readBoard(boardnum);
+		model.addAttribute("board", board);
+		
+		return "board/updateForm";
+	}
+	//받는값 확인하기!!!
+	//set  title = ?  contents = ? where  boardnum = ?  and id = ?
+	//메모수정2
+	@RequestMapping(value = "updateBoard", method = RequestMethod.POST)
+	public String update(HttpSession session, BoardVO board) {
+		//String id = (String)session.getAttribute("loginId");
+		String id = "haha";
+		BoardVO exboard = dao.readBoard(board.getBoardnum());
+		if (exboard == null || !exboard.getId().equals(id)) {
+			return "redirect:/board/listBoard";
+		}
+		board.setId(id);
+		dao.updateBoard(board);
+				
+		return "redirect:/board/listBoard";
+	}
 	
 	
 }

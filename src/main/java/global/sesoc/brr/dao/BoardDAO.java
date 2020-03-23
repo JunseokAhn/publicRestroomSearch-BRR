@@ -32,6 +32,16 @@ public class BoardDAO {
 		BoardVO readBoard = mapper.readBoard(boardnum);
 		return readBoard;
 	}
+	//글삭제
+	public void deleteBoard(BoardVO board) {
+		BoardMapper mapper = session.getMapper(BoardMapper.class);
+		mapper.deleteBoard(board);
+	}
+	//글수정
+	public void updateBoard(BoardVO board) {
+		BoardMapper mapper = session.getMapper(BoardMapper.class);
+		mapper.updateBoard(board);
+	}
 
 	
 	

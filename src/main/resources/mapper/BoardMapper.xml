@@ -61,4 +61,25 @@ where
 	boardnum = #{boardnum}
 </select>
 
+<!-- 글삭제 -->
+<delete id="deleteBoard" parameterType="board">
+delete from
+	brr_board
+where
+	boardnum = #{boardnum}
+	and id = #{id}	
+</delete>
+
+<!-- 글수정 -->
+<update id="updateBoard" parameterType="board">
+update 
+	brr_board
+set
+	title = #{title}
+	,contents = #{contents}
+where
+	boardnum = #{boardnum}
+	and id = #{id}
+</update>
+
 </mapper>

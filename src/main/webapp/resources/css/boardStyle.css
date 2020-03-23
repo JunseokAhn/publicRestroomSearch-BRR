@@ -53,7 +53,6 @@ h1 span:nth-child(2) {
 	width: 553px;	
 	font: 1rem/1.5 var(--font-family-sans-serif);
 	color: var(--blue);
-	
 }
 
 .boardContents {
@@ -67,4 +66,19 @@ h1 span:nth-child(2) {
 	width: 553px;	
 }
 
+.replyButton1 {
+	border: 1px solid;
+	color: var(--gray);
+}
+
+.replyButton2 {
+	border: 1px solid;
+	color: var(--blue);
+}
+
+.replyComments {
+	width: 553px;	
+	font: 1rem/1.5 var(--font-family-sans-serif);
+	
+}
 

@@ -6,9 +6,11 @@
 	<typeAliases>
 		
 		<typeAlias type="global.sesoc.brr.vo.BoardVO" alias="board"/>
+		<typeAlias type="global.sesoc.brr.vo.ReplyVO" alias="reply"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/BoardMapper.xml" />
+		<mapper resource="mapper/ReplyMapper.xml" />
 		<mapper resource="mapper/GoogleMapsMapper.xml" />
 		<mapper resource="mapper/NaverLoginMapper.xml" />
 	</mappers>

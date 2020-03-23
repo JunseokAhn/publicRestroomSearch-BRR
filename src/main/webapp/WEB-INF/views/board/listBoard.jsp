@@ -7,6 +7,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>화장실이 급할땐? - 부르르</title>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <!-- Favicon -->
 <link href="<c:url value="/resources/assets/img/brand/favicon.png"/>" rel="icon" type="image/png">
 <!-- Fonts -->
@@ -16,6 +18,8 @@
 <link href="<c:url value="/resources/assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css"/>" rel="stylesheet" />
 <!-- CSS Files -->
 <link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
+<!-- BoardStyle -->
+<link rel="stylesheet" type="text/css" href="../resources/css/boardStyle.css">
 </head>
 
 <body class="">
@@ -289,22 +293,22 @@
 								</thead>
 								<tbody>
 								<!-- 반복시작 -->
-								<c:forEach var="memo" items="${list}">
+								<c:forEach var="board" items="${list}">
 									<tr>
 										<th scope="row">
 											<div class="media align-items-center">
 												<a href="#" class="avatar rounded-circle mr-3"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/bootstrap.jpg"/>">
 												</a>
 												<div class="media-body">
-													<span class="mb-0 text-sm"><a href="readBoard?boardnum=${memo.boardnum}">${memo.title}</a> </span>
+													<span class="mb-0 text-sm"><a href="readBoard?boardnum=${board.boardnum}">${board.title}</a> </span>
 												</div>
 											</div>
 										</th>
 										<td>$2,500 USD</td>
 										<td><span class="badge badge-dot mr-4"> <i class="bg-warning"></i> pending
 										</span></td>
-										<td>${memo.id}</td>
-										<td>${memo.inputdate}</td>
+										<td>${board.id}</td>
+										<td>${board.inputdate}</td>
 										<td class="text-right">
 											<div class="dropdown">
 												<a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-ellipsis-v"></i>
@@ -322,7 +326,7 @@
 							</table>
 							</c:if>
 						</div>
-						<div class="mx-auto card-footer py-4">
+						<div class="card-footer py-4">
 							<nav aria-label="...">
 								<ul class="pagination justify-content-end mb-0">
 									<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1"> <i class="fas fa-angle-left"></i> <span class="sr-only">Previous</span>
@@ -335,7 +339,7 @@
 								</ul>
 							</nav>
 						</div>
-						<div class="mx-auto boardButton form-group">
+						<div class="mx-auto form-group">
 							<button type="button" class="btn btn-success" onclick="location.href='write';">Write</button>
 						</div>
 					</div>
