@@ -13,6 +13,13 @@ values(#{id}, #{email}, #{nickname}, #{profile_image}, #{gender}, #{birthday}, #
 </insert>
 
 
+<select id="getNaverMember" parameterType = "String"  resultType = "int">
+select * from navermember
+where id = #{id}
+</select>
+
+
+
 
 
 </mapper>
