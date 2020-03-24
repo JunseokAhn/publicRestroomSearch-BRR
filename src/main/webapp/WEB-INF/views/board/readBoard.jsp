@@ -106,14 +106,17 @@ function updateReply() {
  	console.log(replynum);
  	console.log(id);
  	console.log(comments);
+
+	$(".upd").hide(); //댓글수정시 수정버튼숨기기!
 	
 	var str = '';
 	str += '<tr>'
-	str += '	<td><input type="text" value="' + id + ' " readonly="true"> </td>';	
+//	str += '	<td><input type="text" value="' + id + ' " readonly="true"> </td>';	
+	str += '	<td></td>';	
 	str += '	<td><input type="text" id="replyUpd" value="' + comments + ' "> </td>';
 	str += '	<td></td>';
-	str += '	<td class="upd_length"><input type="button" id="confirmUpd" value="수정 확인"> </td>';
-	str += '	<td class="del_length"><input type="button" id="cancelUpd" value="취소"> </td>';
+	str += '	<td class="upd_length"><input type="button" id="confirmUpd" class="upd btn btn-secondary btn-sm" value="수정 확인"> </td>';
+	str += '	<td class="del_length"><input type="button" id="cancelUpd" class="upd btn btn-secondary btn-sm" value="취소"> </td>';
 	str += '<tr>';
 
 	$(this).closest('tr').after(str);
@@ -130,6 +133,7 @@ function updateReply() {
 			}
 			,success: function(cnt) {
 				alert(cnt);
+				$(".upd").show(); //수정확인후 수정버튼 다시보임.
 				init();
 			}
 			,error: function(e) {
