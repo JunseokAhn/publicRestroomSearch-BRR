@@ -270,7 +270,9 @@
 			<div class="row">
 				<div class="col">
 					<div class="card shadow border-0">
-						<div id="map-canvas" class="map-canvas" style="height: 600px;"></div>
+						<div id="map" class="map-canvas" style="height: 600px;"></div>
+						<input type="hidden" id="start">
+   						 <input type="hidden" id="end">
 					</div>
 				</div>
 			</div>
@@ -300,53 +302,89 @@
 	<script src="<c:url value="/resources/assets/js/plugins/jquery/dist/jquery.min.js"/>"></script>
 	<script src="<c:url value="/resources/assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"/>"></script>
 	<!--   Optional JS   -->
-	<script>
-		// Note: This example requires that you consent to location sharing when
-		// prompted by your browser. If you see the error "The Geolocation service
-		// failed.", it means you probably did not give permission for the browser to
-		// locate you.
-		var map, infoWindow;
-		function initMap() {
-			map = new google.maps.Map(document.getElementById('map-canvas'), {
-				center : {
-					lat : -34.397,
-					lng : 150.644
-				},
-				zoom : 16
-			});
+	 <script>
+      // Note: This example requires that you consent to location sharing when
+      // prompted by your browser. If you see the error "The Geolocation service
+      // failed.", it means you probably did not give permission for the browser to
+      // locate you.
+      var map, infoWindow, pos;
+      function initMap() {
+      	map = new google.maps.Map(document.getElementById('map'), {
+      		center: {lat: -34.397, lng: 150.644},
+      		zoom: 16
+      	});
+      	infoWindow = new google.maps.InfoWindow;
 
-			infoWindow = new google.maps.InfoWindow;
+        // 내위치설정
+        if (navigator.geolocation) {
+        	navigator.geolocation.getCurrentPosition(function(position) {
+           pos = {
+             lat: position.coords.latitude,
+             lng: position.coords.longitude
+           };
 
-			// Try HTML5 geolocation.
-			if (navigator.geolocation) {
-				navigator.geolocation.getCurrentPosition(function(position) {
-					var pos = {
-						lat : position.coords.latitude,
-						lng : position.coords.longitude
-					};
+           infoWindow.setPosition(pos);
+           infoWindow.setContent('Location found.');
+           infoWindow.open(map);
+           map.setCenter(pos);
+           console.log(JSON.stringify(pos));
+           document.getElementById('start').value = pos.lat + "," + pos.lng
+         }, function() {
+          handleLocationError(true, infoWindow, map.getCenter());
+        });
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infoWindow, map.getCenter());
+        }
 
-					infoWindow.setPosition(pos);
-					infoWindow.setContent('Your position');
-					infoWindow.open(map);
-					map.setCenter(pos);
-				}, function() {
-					handleLocationError(true, infoWindow, map.getCenter());
-				});
-			} else {
-				// Browser doesn't support Geolocation
-				handleLocationError(false, infoWindow, map.getCenter());
-			}
-		}
+        //길찾기설정
+        var directionsService = new google.maps.DirectionsService();
+        var directionsRenderer = new google.maps.DirectionsRenderer();
+        directionsRenderer.setMap(map);
 
-		function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-			infoWindow.setPosition(pos);
-			infoWindow
-					.setContent(browserHasGeolocation ? 'Error: The Geolocation service failed.'
-							: 'Error: Your browser doesn\'t support geolocation.');
-			infoWindow.open(map);
-		}
-	</script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkQ00U2AUBQSS1CJF5YveL-1YWsTjaRGA&callback=initMap"></script>
+        var onChangeHandler = function() {
+          calculateAndDisplayRoute(directionsService, directionsRenderer);
+        };
+        document.getElementById('start').addEventListener('change', onChangeHandler);
+        document.getElementById('end').addEventListener('change', onChangeHandler);
+        //document.getElementById('end').onchange(onChangeHandler);
+        //$('#end').onchange(onChangeHandler)
+        //원하는 화장실을 찝어서 길찾기버튼을 누르면 end의 밸류를 바꿔주고 onChangeHandler를 실행해야함.
+        //즉. 지금만들어야하는것은 화장실좌표가 있다고가정하고 그 마크랑 UI를 띄워줘야함
+      }
+
+      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+       infoWindow.setPosition(pos);
+       infoWindow.setContent(browserHasGeolocation ?
+        'Error: The Geolocation service failed.' :
+        'Error: Your browser doesn\'t support geolocation.');
+       infoWindow.open(map);
+     }
+
+     function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+      directionsService.route(
+      {
+        origin: {query: document.getElementById('start').value},
+        destination: {query: document.getElementById('end').value},
+        travelMode: 'TRANSIT'
+
+      },
+      function(response, status) {
+        if (status === 'OK') {
+          directionsRenderer.setDirections(response);
+        } else {
+          window.alert('Directions request failed due to ' + status);
+        }
+      });
+    }
+    
+    /* https://maps.googleapis.com/maps/api/directions/json?origin=41.43206,-81.38992&destination=41.43206,-81.38992&key=AIzaSyDkQ00U2AUBQSS1CJF5YveL-1YWsTjaRGA*/
+
+    /*https://maps.googleapis.com/maps/api/directions/json?origin=37.5728359,126.9746922&destination=37.5728359,126.9746926&mode=transit&key=AIzaSyDkQ00U2AUBQSS1CJF5YveL-1YWsTjaRGA&callback=initMap*/
+  </script>
+  <script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkQ00U2AUBQSS1CJF5YveL-1YWsTjaRGA&callback=initMap">
+</script>
 	<!--   Argon JS   -->
 	<%-- <script src="<c:url value="/resources/assets/js/argon-dashboard.min.js?v=1.1.2"/>"></script> --%>
 	<script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
