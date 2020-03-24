@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+
 import global.sesoc.brr.mapper.NaverLoginMapper;
 import global.sesoc.brr.vo.NaverVO;
 
@@ -21,7 +22,18 @@ public class NaverLoginDAO {
 			result = mapper.insertNaver(naver);
 		} catch (Exception e) {
 			e.printStackTrace();
-			session.rollback();
+		}
+		return result;
+	}
+	
+	public int getNaverMember (String id) {
+		NaverLoginMapper mapper = session.getMapper(NaverLoginMapper.class);
+		int result = 0;
+		
+		try {
+			result = mapper.getNaverMember(id);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return result;
 	}
