@@ -5,10 +5,12 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="global.sesoc.brr.vo.VO" alias="VO" />
+		<typeAlias type="global.sesoc.brr.vo.ToiletVO" alias="toilet" />
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/BoardMapper.xml" />
 		<mapper resource="mapper/GoogleMapsMapper.xml" />
 		<mapper resource="mapper/NaverLoginMapper.xml" />
+		<mapper resource="mapper/ToiletMapper.xml" />
 	</mappers>
 </configuration>
