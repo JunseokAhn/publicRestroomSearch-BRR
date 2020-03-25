@@ -57,7 +57,7 @@ public class ExamplesController {
 	public String tables() {
 		return "examples/tables";
 	}
-
+	
 	@GetMapping(value = "upgrade")
 	public String upgrade() {
 		return "examples/upgrade";
