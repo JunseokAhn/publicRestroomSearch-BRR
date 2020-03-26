@@ -40,8 +40,8 @@ public class ReplyController {
 	//댓글목록
 	@ResponseBody
 	@GetMapping(value = "listReply")
-	public ArrayList<ReplyVO> listReply() {
-		ArrayList<ReplyVO> listReply = dao.listReply();
+	public ArrayList<ReplyVO> listReply(String boardnum) {
+		ArrayList<ReplyVO> listReply = dao.listReply(boardnum);
 		return listReply;
 	}
 	
