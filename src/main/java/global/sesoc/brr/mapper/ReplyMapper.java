@@ -10,7 +10,7 @@ public interface ReplyMapper {
 	public void insertReply(ReplyVO reply);
 		
 	//리플목록
-	public ArrayList<ReplyVO> listReply();
+	public ArrayList<ReplyVO> listReply(String boardnum);
 	
 	//리플삭제
 	public int deleteReply(ReplyVO reply);

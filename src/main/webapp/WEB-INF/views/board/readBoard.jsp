@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>woogoogle</title>
+<title>brr 상세글</title>
 <script src="../resources/js/jquery-3.4.1.js/"/>"></script>
 <%--BootStrap Getting Started--%>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -63,10 +63,16 @@ function formSave() {
 }
 
 function init() {
+
+	var boardnum = $('#boardnum').val();
+	
 	$.ajax({
-		url: '../reply/listReply'
-		,type: 'GET'
-		,success: output
+		url: '../reply/listReply',
+		data: {
+			boardnum: boardnum //ReplyController에 listReply에 넘겨줄 boardnum
+		}, 	
+		type: 'GET',
+		success: output
 	});
 }
 
@@ -202,7 +208,7 @@ function deleteReply() {
 		</div>
 		<!-- 댓글쓰기 -->
 		<div class="mx-auto boardTitle form-group">
-			<input type="hidden" id="boardnum" name="boardnum" value="${board.boardnum}">  
+			<input type="hidden" id="boardnum" value="${board.boardnum}">  
 			<input class="form-control" type="text" id="comments" placeholder="댓글등록">
 		</div>
 		<div class="mx-auto boardTitle form-group">

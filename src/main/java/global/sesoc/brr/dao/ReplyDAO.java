@@ -22,9 +22,9 @@ public class ReplyDAO {
 	}
 		
 	//리플목록
-	public ArrayList<ReplyVO> listReply() {
+	public ArrayList<ReplyVO> listReply(String boardnum) {
 		ReplyMapper mapper = session.getMapper(ReplyMapper.class);
-		ArrayList<ReplyVO> listReply = mapper.listReply();
+		ArrayList<ReplyVO> listReply = mapper.listReply(boardnum);
 		return listReply;
 	}
 	
