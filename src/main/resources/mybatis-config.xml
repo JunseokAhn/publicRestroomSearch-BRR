@@ -4,9 +4,9 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<typeAlias type="global.sesoc.brr.vo.BoardVO" alias="board"/>
-		<typeAlias type="global.sesoc.brr.vo.ReplyVO" alias="reply"/>
-
+		<typeAlias type="global.sesoc.brr.vo.BoardVO" alias="board" />
+		<typeAlias type="global.sesoc.brr.vo.ReplyVO" alias="reply" />
+		<typeAlias type="global.sesoc.brr.vo.NaverVO" alias="naver" />
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/BoardMapper.xml" />
