@@ -271,8 +271,16 @@
 				<div class="col">
 					<div class="card shadow border-0">
 						<div id="map" class="map-canvas" style="height: 600px;"></div>
-						<input type="hidden" id="start">
-   						 <input type="hidden" id="end">
+						<!-- <input type="hidden" id="start"> -->
+   						<!--  <input type="hidden" id="end"> -->
+   						<b>End: </b>
+      					 <div id="floating-panel">
+      						 <input type="hidden" id="start">
+      						<select id="end">
+        					<option value="chicago, il">Chicago</option>
+        					<option value="37.511600,127.061200">St Louis</option>
+      						</select>
+						 </div>
 					</div>
 				</div>
 			</div>
@@ -303,84 +311,172 @@
 	<script src="<c:url value="/resources/assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"/>"></script>
 	<!--   Optional JS   -->
 	 <script>
-      // Note: This example requires that you consent to location sharing when
-      // prompted by your browser. If you see the error "The Geolocation service
-      // failed.", it means you probably did not give permission for the browser to
-      // locate you.
-      var map, infoWindow, pos;
-      function initMap() {
-      	map = new google.maps.Map(document.getElementById('map'), {
-      		center: {lat: -34.397, lng: 150.644},
-      		zoom: 16
-      	});
-      	infoWindow = new google.maps.InfoWindow;
+	  // Note: This example requires that you consent to location sharing when
+     // prompted by your browser. If you see the error "The Geolocation service
+     // failed.", it means you probably did not give permission for the browser to
+     // locate you.
+     var map, pos, marker, i;
 
-        // 내위치설정
-        if (navigator.geolocation) {
-        	navigator.geolocation.getCurrentPosition(function(position) {
-           pos = {
-             lat: position.coords.latitude,
-             lng: position.coords.longitude
-           };
-
-           infoWindow.setPosition(pos);
-           infoWindow.setContent('Location found.');
-           infoWindow.open(map);
-           map.setCenter(pos);
-           console.log(JSON.stringify(pos));
-           document.getElementById('start').value = pos.lat + "," + pos.lng
-         }, function() {
-          handleLocationError(true, infoWindow, map.getCenter());
-        });
-        } else {
-          // Browser doesn't support Geolocation
-          handleLocationError(false, infoWindow, map.getCenter());
-        }
-
-        //길찾기설정
-        var directionsService = new google.maps.DirectionsService();
-        var directionsRenderer = new google.maps.DirectionsRenderer();
-        directionsRenderer.setMap(map);
-
-        var onChangeHandler = function() {
-          calculateAndDisplayRoute(directionsService, directionsRenderer);
-        };
-        document.getElementById('start').addEventListener('change', onChangeHandler);
-        document.getElementById('end').addEventListener('change', onChangeHandler);
-        //document.getElementById('end').onchange(onChangeHandler);
-        //$('#end').onchange(onChangeHandler)
-        //원하는 화장실을 찝어서 길찾기버튼을 누르면 end의 밸류를 바꿔주고 onChangeHandler를 실행해야함.
-        //즉. 지금만들어야하는것은 화장실좌표가 있다고가정하고 그 마크랑 UI를 띄워줘야함
-      }
-
-      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-       infoWindow.setPosition(pos);
-       infoWindow.setContent(browserHasGeolocation ?
-        'Error: The Geolocation service failed.' :
-        'Error: Your browser doesn\'t support geolocation.');
-       infoWindow.open(map);
+     window.onload = function() {
+       infowindow =new google.maps.InfoWindow();
      }
 
-     function calculateAndDisplayRoute(directionsService, directionsRenderer) {
-      directionsService.route(
-      {
-        origin: {query: document.getElementById('start').value},
-        destination: {query: document.getElementById('end').value},
-        travelMode: 'TRANSIT'
+     function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+       center: {lat: 37.511683, lng: 127.061255},
+       zoom: 16,
+       mapTypeId: google.maps.MapTypeId.ROADMAP
+     });
+      infoWindow = new google.maps.InfoWindow();
 
-      },
-      function(response, status) {
-        if (status === 'OK') {
-          directionsRenderer.setDirections(response);
-        } else {
-          window.alert('Directions request failed due to ' + status);
-        }
-      });
+       // 내위치설정
+       if (navigator.geolocation) {
+       	navigator.geolocation.getCurrentPosition(function(position) {
+          pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+
+          infoWindow.setPosition(pos);
+          infoWindow.setContent('Location found.');
+          infoWindow.open(map);
+          map.setCenter(pos);
+          console.log("this location : "+JSON.stringify(pos));
+          document.getElementById('start').value = pos.lat + "," + pos.lng
+        }, function() {
+         handleLocationError(true, infoWindow, map.getCenter());
+       });
+       } else {
+         // Browser doesn't support Geolocation
+         handleLocationError(false, infoWindow, map.getCenter());
+       }
+
+
+       //마커설정
+        // Create an array of alphabetical characters used to label the markers.
+        var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+       // Add some markers to the map.
+       // Note: The code uses the JavaScript Array.prototype.map() method to
+       // create an array of markers based on a given "locations" array.
+       // The map() method here has nothing to do with the Google Maps API.
+       
+      /* marker = locations.map(function(location, i) {
+         return new google.maps.Marker({
+           position: {lat : location.lat, lng : location.lng},
+           label: labels[i % labels.length],
+           title: "index"+i,
+           //title: location.contents,
+           content: location.contents
+         });
+         
+       });*/
+
+       for (var i = 0; i < locations.length; i++) {  
+         marker = new google.maps.Marker({
+           id:i,
+           position: new  google.maps.LatLng(locations[i].lat, locations[i].lng),
+           label: labels[i % labels.length],
+           map: map
+         });
+
+         google.maps.event.addListener(marker, 'click', (function(marker, i) {
+           return function() {
+             console.log(i);
+             infowindow.setContent(locations[i].contents);
+             infowindow.open(map, marker);
+           }
+         })(marker, i));
+         if(marker){
+           marker.addListener('click', function() {
+             map.setZoom(15);
+             map.setCenter(this.getPosition());
+             target = this.getPosition()
+             console.log("target location : "+target);
+           });
+         }
+       }
+
+
+
+       // Add a marker clusterer to manage the markers.
+
+       /*var markerCluster = new MarkerClusterer(map, marker,
+       {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});*/
+
+
+       //길찾기설정
+       var directionsService = new google.maps.DirectionsService();
+       var directionsRenderer = new google.maps.DirectionsRenderer();
+       directionsRenderer.setMap(map);
+
+       var onChangeHandler = function() {
+         calculateAndDisplayRoute(directionsService, directionsRenderer);
+       };
+       //document.getElementById('start').addEventListener('change', onChangeHandler);
+       document.getElementById('end').addEventListener('change', onChangeHandler);
+
+     }
+
+     function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+      infoWindow.setPosition(pos);
+      infoWindow.setContent(browserHasGeolocation ?
+       'Error: The Geolocation service failed.' :
+       'Error: Your browser doesn\'t support geolocation.');
+      infoWindow.open(map);
     }
-    
-    /* https://maps.googleapis.com/maps/api/directions/json?origin=41.43206,-81.38992&destination=41.43206,-81.38992&key=AIzaSyDkQ00U2AUBQSS1CJF5YveL-1YWsTjaRGA*/
 
-    /*https://maps.googleapis.com/maps/api/directions/json?origin=37.5728359,126.9746922&destination=37.5728359,126.9746926&mode=transit&key=AIzaSyDkQ00U2AUBQSS1CJF5YveL-1YWsTjaRGA&callback=initMap*/
+    function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+     directionsService.route(
+     {
+       origin: {query: document.getElementById('start').value},
+       destination: {query: document.getElementById('end').value},
+       travelMode: 'TRANSIT'
+     },
+     function(response, status) {
+       if (status === 'OK') {
+         directionsRenderer.setDirections(response);
+       } else {
+         window.alert('Directions request failed due to ' + status);
+       }
+     });
+   }
+
+   //마커 위치설정
+   var locations = [
+   {lat: -31.563910, lng: 147.154312, contents: "이게되나?1"},
+   {lat: -33.718234, lng: 150.363181, contents: "이게되나?2"},
+   {lat: -33.727111, lng: 150.371124, contents: "이게되나?3"},
+   {lat: -33.848588, lng: 151.209834, contents: "이게되나?4"},
+   {lat: -33.851702, lng: 151.216968, contents: "이게되나?5"},
+   {lat: -34.671264, lng: 150.863657, contents: "이게되나?6"},
+   {lat: -35.304724, lng: 148.662905, contents: "이게되나?7"},
+   {lat: -36.817685, lng: 175.699196, contents: "이게되나?8"},
+   {lat: -36.828611, lng: 175.790222, contents: "이게되나?9"},
+   {lat: -37.750000, lng: 145.116667, contents: "이게되나?10"},
+   {lat: -37.759859, lng: 145.128708, contents: "이게되나?11"},
+   {lat: -37.765015, lng: 145.133858, contents: "이게되나?12"},
+   {lat: -37.770104, lng: 145.143299, contents: "이게되나?13"},
+   {lat: -37.773700, lng: 145.145187, contents: "이게되나?14"},
+   {lat: -37.774785, lng: 145.137978, contents: "이게되나?15"},
+   {lat: -37.819616, lng: 144.968119, contents: "이게되나?16"},
+   {lat: -38.330766, lng: 144.695692, contents: "이게되나?17"},
+   {lat: -39.927193, lng: 175.053218, contents: "이게되나?18"},
+   {lat: -41.330162, lng: 174.865694, contents: "이게되나?19"},
+   {lat: -42.734358, lng: 147.439506, contents: "이게되나?20"},
+   {lat: -42.734358, lng: 147.501315, contents: "이게되나?21"},
+   {lat: -42.735258, lng: 147.438000, contents: "이게되나?22"},
+   {lat: -43.999792, lng: 170.463352, contents: "이게되나?23"},
+   {lat: 37.559739, lng: 126.843046, contents: "이게되나?24"},
+   {lat: 37.562162, lng: 126.844371, contents: "이게되나?25"},
+   {lat: 37.561116, lng: 126.842429, contents: "이게되나?26"}
+   ]
+
+   /* https://maps.googleapis.com/maps/api/directions/json?origin=41.43206,-81.38992&destination=41.43206,-81.8992&key=AIzaSyDkQ00U2AUBQSS1CJF5YveL-1YWsTjaRGA*/
+
+   /*https://maps.googleapis.com/maps/api/directions/json?origin=37.5728359,126.9746922&destination=37.5129907,127.1005382&key=AIzaSyDkQ00U2AUBQSS1CJF5YveL-1YWsTjaRGA*/
+/*https://maps.googleapis.com/maps/api/directions/
+json?origin=37.5728359,126.9746922&destination=37.5129907,127.1005382&mode=transit&departure_time=now&key=AIzaSyDkQ00U2AUBQSS1CJF5YveL-1YWsTjaRGA&callback=initMap*/
   </script>
   <script async defer
   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkQ00U2AUBQSS1CJF5YveL-1YWsTjaRGA&callback=initMap">
