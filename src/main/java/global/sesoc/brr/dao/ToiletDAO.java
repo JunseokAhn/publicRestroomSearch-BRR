@@ -20,7 +20,7 @@ public class ToiletDAO
 		try
 		{
 			ToiletMapper mapper = session.getMapper(ToiletMapper.class);
-			result = mapper.insertToiletInfo(input);
+			result = mapper.insertToiletInfo(input);			
 		}
 		catch(Exception e)
 		{
@@ -29,6 +29,22 @@ public class ToiletDAO
 		
 		if(result>0) return true;
 		return false;
+	}
+	
+	public int countToiletInfo()
+	{
+		int size=0;
+		try
+		{			
+			ToiletMapper mapper = session.getMapper(ToiletMapper.class);
+			size = mapper.countToiletInfo();			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return size;		
 	}
 
 }

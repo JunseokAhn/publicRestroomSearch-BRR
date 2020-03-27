@@ -48,4 +48,10 @@ values
 )
 </insert>
 
+
+<select id="countToiletInfo" resultType="integer">
+select count(*)
+from brr_toilet
+</select>
+
 </mapper>
