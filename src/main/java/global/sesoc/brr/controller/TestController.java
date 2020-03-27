@@ -175,7 +175,7 @@ public class TestController
 						temp.setInstitutionNm((String)toiletInfo.get("institutionNm"));
 						temp.setPhoneNumber((String)toiletInfo.get("phoneNumber"));
 						temp.setOpenTime((String)toiletInfo.get("openTime"));
-					
+
 
 						logger.debug("에러"+((String)toiletInfo.get("latitude")).length());
 						if(((String)toiletInfo.get("latitude")).length()!=4)

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="global.sesoc.brr.mapper.ReplyMapper">
+
+<!-- 리플삽입 -->
+<insert id="insertReply" parameterType="reply">
+insert into
+	brr_reply(
+		replynum
+		,boardnum
+		,id
+		,comments
+		)values(
+		brr_reply_seq.nextval
+		,#{boardnum}
+		,#{id}
+		,#{comments}
+		)
+</insert>
+
+<!-- 리플목록 -->
+<select id="listReply" resultType="reply">
+select
+	replynum
+	,boardnum
+	,id
+	,comments
+	,to_char(inputdate, 'yyyy/mm/dd hh24:mi') as inputdate 
+from
+	brr_reply
+order by
+	replynum
+</select>
+
+<!-- 리플삭제 -->
+<delete id="deleteReply" parameterType="reply">
+delete from
+	brr_reply
+where
+	replynum = #{replynum}
+	and id = #{id} 
+</delete>
+
+<!-- 리플수정 -->
+<update id="updateReply" parameterType="reply">
+update
+	brr_reply
+set
+	comments = #{comments}
+where
+	replynum = #{replynum}
+	and id = #{id} 
+</update>
+
+
+
+
+</mapper>
