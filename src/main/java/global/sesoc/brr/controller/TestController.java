@@ -238,6 +238,50 @@ public class TestController
 		int tableSize = toiletDAO.countToiletInfo();
 		int readSize =100;
 
+		try
+		{
+			String strUrl = "http://api.data.go.kr/openapi/pblic-toilet-std";
+			strUrl += "?serviceKey=WxmY00Tj2kX1M75S9K3bJ6T83gRglX6tD1NR1RFQaYq8C9FWrOA2%2FloB0ciJYKIuP5%2BQ8fQw8VIi5UiIK0rIEA%3D%3D";
+			strUrl += "&type=json";
+			strUrl += "&numOfRows=1";
+			strUrl += "&pageNo=1";	
+			URL url = new URL(strUrl);
+			URLConnection urlConnection = url.openConnection();
+			HttpURLConnection connection = null;
+			if(urlConnection instanceof HttpURLConnection)
+			{
+				connection = (HttpURLConnection) urlConnection;
+			}
+			else
+			{
+				System.out.println("error");
+				return null;
+			}
+			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+			String urlString = "";
+			String current;			
+
+
+			while((current = in.readLine()) != null)
+			{
+				urlString =urlString.concat(current);			   
+			}
+
+			JSONParser parser = new JSONParser();
+			JSONObject obj = (JSONObject) parser.parse(urlString);
+
+			// Top레벨 단계인 response 키를 가지고 데이터를 파싱합니다. 
+			JSONObject parse_response = (JSONObject) obj.get("response"); 
+			// response 로 부터 body 찾아옵니다. 
+			JSONObject parse_body = (JSONObject) parse_response.get("body");
+
+			apiSize = Integer.parseInt((String)parse_body.get("totalCount"));
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		//테이블 사이즈와 api 정보 사이즈가 같을 경우
 		if(tableSize>32000)
 		{
@@ -255,7 +299,7 @@ public class TestController
 			{
 				repeatNumber++;
 			}
-			
+			logger.debug("여기까지는 동작"+repeatNumber);
 			try
 			{			
 				String strUrl = "http://api.data.go.kr/openapi/pblic-toilet-std";
