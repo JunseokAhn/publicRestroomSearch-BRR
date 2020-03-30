@@ -8,31 +8,45 @@
 <title>Sample</title>
 
 <script src="<c:url value="/resources/js/jquery-3.4.1.js/"/>" type="text/javascript"></script>
-<!-- <script src="http://api.data.go.kr/openapi/pblic-toilet-std?serviceKey=WxmY00Tj2kX1M75S9K3bJ6T83gRglX6tD1NR1RFQaYq8C9FWrOA2%2FloB0ciJYKIuP5%2BQ8fQw8VIi5UiIK0rIEA%3D%3D" type="text/javascript"></script> -->
 
-<script type="text/javascript" >	
-
-	/* $.ajax({ 
-		url: "http://api.data.go.kr/openapi/pblic-toilet-std?serviceKey=WxmY00Tj2kX1M75S9K3bJ6T83gRglX6tD1NR1RFQaYq8C9FWrOA2%2FloB0ciJYKIuP5%2BQ8fQw8VIi5UiIK0rIEA%3D%3D&type=json&pageNo=1&numOfRows=100&insttNm=전라남도 광양시",
-		dataType: 'jsonp', 
-		jsonpCallback: "myCallback", 
-		success: callback 
-	});  */
-
-	$.ajax({
-		url: "http://api.bus.go.kr/contents/sub02/getStationByPos.html"
-		, type: "GET"
-		, success: function(resp) {
-			alert(resp)
-		}
-	});
-	
-	/* $.getJSON(url + "?callback=?", data, callback);
- */
-	
+<script type="text/javascript" >		
+	$(
+			function()
+			{
+				$.ajax({
+					url:"<c:url value="/test/receive"/>",
+					type:"get",
+					dataType:"text",
+					success:
+						function(flag)
+						{
+							if(flag=="success")
+							{
+								alert("모든 데이터 업데이트가 완료되었습니다.\n 메인화면으로 이동합니다.");
+								location.href="<c:url value="/"/>"
+							}
+							else
+							{
+								alert("데이터를 받는 도중 이상이 생겼습니다. 다시 실행해주십시오.");
+							}
+						}
+					,
+					error:
+						function()
+						{
+							console.log("에러!!");
+						}
+				}); 				
+			}
+	);
 </script>
 </head>
-<body>
-	<h1>Sample</h1>
+<body style="text-align: center;">
+	<br>
+	<br>
+	<br>
+	<br>
+	<h1 style="text-align: center;">화장실 데이터를 받아오고 있습니다. <br> 잠시만 기다려주세요.</h1>
+	<img style="width:280px;height:280px;" src="<c:url value="/resources/img/Loading.gif"/>">
 </body>
 </html>
