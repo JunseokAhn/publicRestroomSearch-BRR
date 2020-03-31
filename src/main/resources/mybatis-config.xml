@@ -6,10 +6,12 @@
 	<typeAliases>
 		<typeAlias type="global.sesoc.brr.vo.VO" alias="VO" />
 		<typeAlias type="global.sesoc.brr.vo.NaverVO" alias="naver" />
+		<typeAlias type="global.sesoc.brr.vo.GoogleVO" alias="googlelogin"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/BoardMapper.xml" />
 		<mapper resource="mapper/GoogleMapsMapper.xml" />
 		<mapper resource="mapper/NaverLoginMapper.xml" />
+		<mapper resource="mapper/GoogleLoginMapper.xml"/>
 	</mappers>
 </configuration>
