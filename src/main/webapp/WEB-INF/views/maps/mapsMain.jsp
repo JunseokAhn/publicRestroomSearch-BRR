@@ -305,8 +305,8 @@
 		// prompted by your browser. If you see the error "The Geolocation service
 		// failed.", it means you probably did not give permission for the browser to
 		// locate you.
-		var map, pos, marker, i;
-
+		var map, pos, marker, i, nearbyToilet;
+		var locations = [];
 		window.onload = function() {
 			infowindow = new google.maps.InfoWindow();
 		}
@@ -332,13 +332,11 @@
 					$.ajax({
 						url : "<c:url value='/maps/getLocation'/>",
 						data : {
-							lat : pos.lat,
-							lng : pos.lng
+							lat : pos.lat.toFixed(6),
+							lng : pos.lng.toFixed(6)
 						},
 						type : "post",
-						success : function(e) {
-							console.log(e)
-						},
+						success : setMarkers,
 						error : function(e) {
 							console.log(e)
 						}
@@ -359,8 +357,57 @@
 			}
 
 			//마커설정
+			function setMarkers(e) {
+				nearbyToilet = e
+				console.log(nearbyToilet[0])
+				for (var i = 0; i < nearbyToilet.length; i++) {
+					//locations[i].lat = nearbyToilet[i].lat;
+					//locations[i].lng = nearbyToilet[i].lng;
+					locations[i] = {
+						lat : nearbyToilet[i].lat,
+						lng : nearbyToilet[i].lng
+					}
+				}
+				var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+				for (var i = 0; i < locations.length; i++) {
+					marker = new google.maps.Marker({
+						id : i,
+						position : new google.maps.LatLng(locations[i].lat,
+								locations[i].lng),
+						label : labels[i % labels.length],
+						map : map
+					});
+
+					google.maps.event.addListener(marker, 'click', (function(
+							marker, i) {
+						return function() {
+							console.log(i);
+							infowindow.setContent(locations[i].contents);
+							infowindow.open(map, marker);
+						}
+					})(marker, i));
+					if (marker) {
+						marker.addListener('click', function() {
+							map.setZoom(15);
+							map.setCenter(this.getPosition());
+							target = this.getPosition()
+							target = String(target)
+							target = target.replace('(', '');
+							target = target.replace(')', '');
+							target = target.replace(' ', '');
+							console.log("target location : " + target);
+							document.getElementById('end').value = target;
+							console.log("start : "
+									+ document.getElementById('start').value);
+							console.log("end : "
+									+ document.getElementById('end').value);
+							onChangeHandler();
+
+						});
+					}
+				}
+			}
 			// Create an array of alphabetical characters used to label the markers.
-			var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 			// Add some markers to the map.
 			// Note: The code uses the JavaScript Array.prototype.map() method to
@@ -378,46 +425,7 @@
 			   
 			 });*/
 
-			for (var i = 0; i < locations.length; i++) {
-				marker = new google.maps.Marker({
-					id : i,
-					position : new google.maps.LatLng(locations[i].lat,
-							locations[i].lng),
-					label : labels[i % labels.length],
-					map : map
-				});
-
-				google.maps.event.addListener(marker, 'click', (function(
-						marker, i) {
-					return function() {
-						console.log(i);
-						infowindow.setContent(locations[i].contents);
-						infowindow.open(map, marker);
-					}
-				})(marker, i));
-				if (marker) {
-					marker.addListener('click', function() {
-						map.setZoom(15);
-						map.setCenter(this.getPosition());
-						target = this.getPosition()
-						target = String(target)
-						target = target.replace('(', '');
-						target = target.replace(')', '');
-						target = target.replace(' ', '');
-						console.log("target location : " + target);
-						document.getElementById('end').value = target;
-						console.log("start : "
-								+ document.getElementById('start').value);
-						console.log("end : "
-								+ document.getElementById('end').value);
-						onChangeHandler();
-
-					});
-				}
-			}
-
 			// Add a marker clusterer to manage the markers.
-
 			/*var markerCluster = new MarkerClusterer(map, marker,
 			{imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});*/
 
@@ -462,7 +470,11 @@
 		}
 
 		//마커 위치설정
-		var locations = [ {
+		//lat, lng, 
+		//contents(내용),
+		//
+
+		/* locations = [ {
 			lat : -31.563910,
 			lng : 147.154312,
 			contents : "이게되나?1"
@@ -566,7 +578,7 @@
 			lat : 37.561116,
 			lng : 126.842429,
 			contents : "이게되나?26"
-		} ]
+		} ] */
 
 		/* https://maps.googleapis.com/maps/api/directions/json?origin=41.43206,-81.38992&destination=41.43206,-81.8992&key=AIzaSyDkQ00U2AUBQSS1CJF5YveL-1YWsTjaRGA*/
 
