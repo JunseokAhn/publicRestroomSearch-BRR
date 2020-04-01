@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="global.sesoc.brr.mapper.SnsReplyMapper">
+
+<!-- sns리플삽입 -->
+<insert id="insertSnsReply" parameterType="snsReply">
+insert into
+	snsReply(
+		snsReplynum
+		,snsBoardnum
+		,id
+		,comments
+		)values(
+		snsReply_seq.nextval
+		,#{snsBoardnum}
+		,#{id}
+		,#{comments}
+        )	
+</insert>
+
+<!-- sns리플목록 -->
+<select id="listSnsReply" resultType="snsReply" parameterType="string">
+select
+	snsReplynum
+	,snsBoardnum
+	,id
+	,comments
+	,to_char(inputdate, 'yyyy/mm/dd hh24:mi') as inputdate
+from
+	snsReply
+where
+	snsBoardnum = #{snsBoardnum}	
+order by
+	snsReplynum 
+</select>
+
+<!-- 리플삭제 -->
+<delete id="deleteSnsReply" parameterType="snsReply">
+delete from
+	snsReply
+where
+	snsReplynum = #{snsReplynum}
+	and id = #{id}
+</delete>
+
+<!-- 리플수정 -->
+<update id="updateSnsReply" parameterType="snsReply">
+update
+	snsReply
+set
+	comments = #{comments}
+where
+	snsReplynum = #{snsReplynum}
+	and id = #{id}
+</update>
+
+
+</mapper>

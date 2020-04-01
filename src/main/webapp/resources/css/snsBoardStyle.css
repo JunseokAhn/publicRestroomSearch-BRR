@@ -30,7 +30,6 @@
   --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
-
 /* jocoding참조 */
 h1 {
 	text-align: center;
@@ -80,6 +79,31 @@ h1 span:nth-child(2) {
 .replyComments {
 	width: 553px;	
 	font: 1rem/1.5 var(--font-family-sans-serif);
-	
+}
+
+/* snsStyle */
+
+.pageTitle {
+	position: fixed; left: 0; top: 0; width: 100%; height: 52px;
+	line-height: 52px; color: #343a40; text-align: center; background: #fff;}
+article {padding: 52px 3% 0;}
+article .block {
+	padding: 20px;
+	min-height: 500px;
+	border-bottom: 1px solid;
+	border-bottom-color: #D3D3D3;
+}
+article .block p {
+	line-height: 22px; 
+	font-size: 16px; 
+	font-weight: 600;
+}
+article .block:nth-child(2n+1) {
+	background: #FFF8DC;
+	width: 553px;
+}
+article .block:nth-child(2n) {
+	background: #FFF8DC;
+	width: 553px;
 }
 

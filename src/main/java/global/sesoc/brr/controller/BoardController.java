@@ -68,7 +68,7 @@ public class BoardController {
 	
 	//전체 게시판 글목록
 	@GetMapping(value = "listBoard")
-	public String ahnTables(Model model) {
+	public String listBoard(Model model) {
 
 		ArrayList<BoardVO> listBoard = dao.listBoard();
 		model.addAttribute("list", listBoard);
@@ -80,6 +80,7 @@ public class BoardController {
 	public String readBoard(String boardnum, Model model) {
 		BoardVO board = dao.readBoard(boardnum);
 		model.addAttribute("board", board);
+		//return "board/readBoard";
 		return "board/readBoard";
 	}
 

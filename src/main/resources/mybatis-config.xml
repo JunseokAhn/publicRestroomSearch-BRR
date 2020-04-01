@@ -4,11 +4,15 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		
+		<typeAlias type="global.sesoc.brr.vo.SnsBoardVO" alias="snsBoard"/>
+		<typeAlias type="global.sesoc.brr.vo.SnsReplyVO" alias="snsReply"/>
 		<typeAlias type="global.sesoc.brr.vo.BoardVO" alias="board"/>
 		<typeAlias type="global.sesoc.brr.vo.ReplyVO" alias="reply"/>
 	</typeAliases>
 	<mappers>
+		<mapper resource="mapper/SnsBoardMapper.xml" />
+		<mapper resource="mapper/SnsReplyMapper.xml" />
+	
 		<mapper resource="mapper/BoardMapper.xml" />
 		<mapper resource="mapper/ReplyMapper.xml" />
 		<mapper resource="mapper/GoogleMapsMapper.xml" />

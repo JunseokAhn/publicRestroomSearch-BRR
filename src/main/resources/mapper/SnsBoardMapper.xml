@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="global.sesoc.brr.mapper.SnsBoardMapper">
+
+<!-- 게시판 글저장 -->
+<insert id="insertSNS" parameterType="snsBoard">
+insert into
+	snsBoard(
+		snsBoardnum  
+    	,id       
+    	,title    
+    	,contents 
+    	<if test="originalfile != null and savedfile != null">
+    	,originalfile
+    	,savedfile
+    	</if>
+		)values(
+		snsBoard_seq.nextval  
+    	,#{id}       
+    	,#{title}    
+    	,#{contents}
+    	<if test="originalfile != null and savedfile != null">
+    	,#{originalfile}
+    	,#{savedfile}
+    	</if>
+		)
+</insert>
+
+<!-- 게시글 목록읽기 -->
+<select id="listSNS" parameterType="string" resultType="snsBoard">
+select
+	snsBoardnum
+	,id
+	,title
+	,contents
+	,to_char(inputdate, 'YYYY/MM/DD HH24:MI:SS') as inputdate
+from
+	snsBoard
+<!-- if조건 문에서 객체가 아닌 하나의 값을 받을 때는 아래와 같이 표시 -->	
+<if test="_parameter != null">	
+where
+	title like '%' || #{searchText} || '%'
+</if>		
+order by 
+	snsBoardnum desc
+</select>
+
+<!-- 게시글 상세 글읽기 -->
+<select id="readSNS" parameterType="string" resultType="snsBoard">
+select
+	snsBoardnum
+	,id
+	,title
+	,contents
+	,to_char(inputdate, 'YYYY/MM/DD HH24:MI:SS') as inputdate
+	,originalfile
+	,savedfile
+from
+	snsBoard
+where
+	snsBoardnum = #{snsBoardnum}
+</select>
+
+<!-- 글삭제 -->
+<delete id="deleteSNS" parameterType="snsBoard">
+delete from
+	snsBoard
+where
+	snsBoardnum = #{snsBoardnum}
+	and id = #{id}	
+</delete>
+
+<!-- 글수정 -->
+<update id="updateSNS" parameterType="snsBoard">
+update 
+	snsBoard
+set
+	title = #{title}
+	,contents = #{contents}
+where
+	snsBoardnum = #{snsBoardnum}
+	and id = #{id}
+</update>
+
+</mapper>
