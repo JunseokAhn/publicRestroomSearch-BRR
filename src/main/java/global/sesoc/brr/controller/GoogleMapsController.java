@@ -1,6 +1,7 @@
 package global.sesoc.brr.controller;
 
 import java.net.URI;
+import java.util.ArrayList;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,9 +13,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import global.sesoc.brr.dao.GoogleMapsDAO;
+import global.sesoc.brr.vo.LocationVO;
+import global.sesoc.brr.vo.NearbyToiletVO;
+
 @Controller
 @RequestMapping(value = "maps")
 public class GoogleMapsController {
+
+	GoogleMapsDAO dao = new GoogleMapsDAO();
+	LocationVO lo = new LocationVO();
 
 	@GetMapping(value = "mapsMain")
 	public String MapsMain(Model model) {
@@ -37,8 +45,9 @@ public class GoogleMapsController {
 	@ResponseBody
 	@PostMapping(value = "getLocation")
 	public String getLocation(String lat, String lng) {
-		System.out.println(lat);
-		System.out.println(lng);
+		lo = new LocationVO(lat, lng);
+		ArrayList<NearbyToiletVO> list = dao.getToilet(lo);
+
 		return lat;
 	}
 
