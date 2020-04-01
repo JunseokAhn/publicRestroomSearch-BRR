@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import global.sesoc.brr.mapper.GoogleLoginMapper;
 
-import global.sesoc.brr.vo.GoogleVO;
+import global.sesoc.brr.vo.GoogleLoginVO;
 
 @Repository
 public class GoogleLoginDAO {
@@ -15,7 +15,7 @@ public class GoogleLoginDAO {
 	private SqlSession session;
 	
 	
-	public int insertGoogle (GoogleVO google) {
+	public int insertGoogle (GoogleLoginVO google) {
 		GoogleLoginMapper mapper = session.getMapper(GoogleLoginMapper.class);
 		int result = 0;
 		result = mapper.insertGoogle(google);

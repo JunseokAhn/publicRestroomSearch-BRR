@@ -1,6 +1,6 @@
 package global.sesoc.brr.vo;
 
-import global.sesoc.brr.vo.GoogleVO;
+import global.sesoc.brr.vo.GoogleLoginVO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GoogleVO {
+public class GoogleLoginVO {
 	
 	
 	private String id;

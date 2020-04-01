@@ -22,7 +22,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 
 import global.sesoc.brr.dao.GoogleLoginDAO;
-import global.sesoc.brr.vo.GoogleVO;
+import global.sesoc.brr.vo.GoogleLoginVO;
 
 @Controller
 public class GoogleLoginController {
@@ -37,13 +37,13 @@ public class GoogleLoginController {
 		
 		logger.info("구글 로그인으로 이동하였습니다.");
 		
-		return "googlelogin";
+		return "member/googlelogin";
 	}
 	
 	//google은 반드시 throws 처리를 해주어야 한다.(GeneralSecurityException, IOException)
 	@ResponseBody
 	@PostMapping("callbackTestGoo")
-	public String GoogleCallback(HttpServletRequest httpServletRequest, GoogleVO google, HttpSession httpsession) throws GeneralSecurityException, IOException {
+	public String GoogleCallback(HttpServletRequest httpServletRequest, GoogleLoginVO google, HttpSession httpsession) throws GeneralSecurityException, IOException {
 		
 		logger.info("콜백 페이지로 이동하였습니다.");
 		

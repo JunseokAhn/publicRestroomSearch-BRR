@@ -11,7 +11,7 @@
 
 function goHome() {
 	
-	location.href = "/test1";
+	location.href = "/brr";
 }
 
 

@@ -20,7 +20,7 @@ window.onload = function()
 }
 
 function gohome() {
-	location.href = "/test1";
+	location.href = "/brr";
 	//main 화면으로 넘어가는 경로를 적어주시면 됩니다.
 }
 
@@ -50,7 +50,7 @@ function SendToken()
 
 function init() 
 {
-	location.href = "/test1";
+	location.href = "/brr";
 	//main 화면으로 넘어가는 경로를 적어주시면 됩니다.
 
 }

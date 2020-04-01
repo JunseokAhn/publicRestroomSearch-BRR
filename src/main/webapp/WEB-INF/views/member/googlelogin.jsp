@@ -33,7 +33,7 @@ function onSignIn(googleUser) {
 	}
 function BackHome(){
 	
-	location.href = "/test1";
+	location.href = "/brr";
 }
 
 function signOut() {
