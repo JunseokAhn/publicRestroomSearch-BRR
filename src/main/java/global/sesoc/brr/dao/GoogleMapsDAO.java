@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import global.sesoc.brr.mapper.GoogleMapsMapper;
 import global.sesoc.brr.vo.LocationVO;
 import global.sesoc.brr.vo.NearbyToiletVO;
 
@@ -13,10 +14,12 @@ import global.sesoc.brr.vo.NearbyToiletVO;
 public class GoogleMapsDAO {
 
 	@Autowired
-	private SqlSession session;
+	SqlSession session;
 
-	public ArrayList<NearbyToiletVO> getToilet(LocationVO lo) {
+	public ArrayList<NearbyToiletVO> getNearbyToilet(LocationVO lo) {
 		// TODO Auto-generated method stub
-		return null;
+		GoogleMapsMapper mapper = session.getMapper(GoogleMapsMapper.class);
+		ArrayList<NearbyToiletVO> list = mapper.getNearbyToilet(lo);
+		return list;
 	}
 }
