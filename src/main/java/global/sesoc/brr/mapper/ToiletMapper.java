@@ -8,4 +8,6 @@ public interface ToiletMapper {
 	int insertToiletInfo(ToiletVO input);
 	//테이블 크기 확인
 	int countToiletInfo();
+	//테이플 속성 전체 삭제
+	int deleteAllToiletInfo();	
 }

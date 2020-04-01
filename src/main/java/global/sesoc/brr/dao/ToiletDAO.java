@@ -46,5 +46,21 @@ public class ToiletDAO
 		
 		return size;		
 	}
-
+	
+	public boolean deleteAllToiletInfo()
+	{
+		int result = 0;		
+		try
+		{
+			ToiletMapper mapper = session.getMapper(ToiletMapper.class);
+			result = mapper.deleteAllToiletInfo();			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		if(result>0) return true;
+		return false;
+	}
 }

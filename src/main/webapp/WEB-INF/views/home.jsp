@@ -351,6 +351,31 @@
 	<%-- <script src="<c:url value="/resources/assets/js/argon-dashboard.min.js?v=1.1.2"/>"></script> --%>
 	<script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
 	<script>
+
+		$.ajax({
+			url:"<c:url value='/checkRecv'/>",
+			type:"get",
+			success:
+				function(flag)
+				{
+					if(flag=="do_not_need")
+					{
+						alert("최신 데이터입니다.");
+					}
+					else
+					{
+						alert("최신 데이터아닙니다. 다운로드 페이지로 이동합니다.");
+						location.href="<c:url value='/toilet/toiletRecv'/>"
+					}
+				}
+			,
+			error:
+				function(e)
+				{
+					console.log(JSON.stringify(e));
+				}
+		});
+	
 		window.TrackJS && TrackJS.install({
 			token : "ee6fab19c5a04ac1a32a645abde4613a",
 			application : "argon-dashboard-free"

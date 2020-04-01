@@ -54,4 +54,8 @@ select count(*)
 from brr_toilet
 </select>
 
+<delete id="deleteAllToiletInfo">
+delete from brr_toilet
+</delete>
+
 </mapper>
