@@ -8,6 +8,8 @@
 		<typeAlias type="global.sesoc.brr.vo.ToiletVO" alias="toilet" />
 		<typeAlias type="global.sesoc.brr.vo.BoardVO" alias="board"/>
 		<typeAlias type="global.sesoc.brr.vo.ReplyVO" alias="reply"/>
+		<typeAlias type="global.sesoc.brr.vo.LocationVO" alias="location"/>
+		<typeAlias type="global.sesoc.brr.vo.NearbyToiletVO" alias="nearbyToilet" />
 
 	</typeAliases>
 	<mappers>
