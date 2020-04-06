@@ -8,6 +8,9 @@
 <title>brr 상세글</title>
 <script src="../resources/js/jquery-3.4.1.js/"/>"></script>
 <%--BootStrap Getting Started--%>
+<link rel="stylesheet" type="text/css" href="../resources/css/materialize.css">
+<link rel="stylesheet" type="text/css" href="../resources/css/materialize.min.css">
+
 <link rel="stylesheet" type="text/css" href="../resources/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="../resources/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="../resources/css/boardStyle.css">
@@ -82,10 +85,13 @@ function boardList() {
 	<!-- 반복시작 -->
 		<div class="mx-auto block form-group">
 		<!-- 글쓰기 -->
-			<span>ID: ${sns.id}</span>
-			<span>제목: ${sns.title}</span> 
-			<span>내용: ${sns.contents}</span>
-			<span>등록일: ${sns.inputdate}</span>
+			<div class="row">
+				<div class="id col-md-auto"><span>ID: ${sns.id}</span></div>
+				<div class="date col"><span>등록일: ${sns.inputdate}</span></div>
+			</div>
+			<div class="row">
+				<div class="col-md-auto"><span>내용넣기: ${sns.contents}</span></div>
+			</div>
 		</div>
 		<div class="mx-auto boardButton form-group">
 			<button type="button" class="btn btn-secondary btn-sm" 
@@ -93,7 +99,20 @@ function boardList() {
 		</div>
 	</c:forEach>
 	<!-- 반복종료 -->
-<!-- 반복 -->		
+<!-- 반복 -->	
+
+<!-- 댓글폼 -->
+  <div class="row">
+    <div class="col s12">
+      <div class="row">
+        <div class="input-field col s12">
+          <i class="material-icons prefix">textsms</i>
+          <input type="text" id="autocomplete-input" class="autocomplete">
+          <label for="autocomplete-input">Autocomplete</label>
+        </div>
+      </div>
+    </div>
+  </div>	
 </article>
 	
 </body>

@@ -63,7 +63,7 @@ h1 span:nth-child(2) {
 
 .boardButton {
 	text-align: right;
-	width: 553px;	
+	width: 620px;	
 }
 
 .replyButton1 {
@@ -82,28 +82,49 @@ h1 span:nth-child(2) {
 }
 
 /* snsStyle */
+.id {
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.date {
+	font-size: 13px;
+	text-align: right;
+	font-weight: bold;
+	font-style: italic;
+	color: #5c6fdf;
+}
 
 .pageTitle {
 	position: fixed; left: 0; top: 0; width: 100%; height: 52px;
 	line-height: 52px; color: #343a40; text-align: center; background: #fff;}
-article {padding: 52px 3% 0;}
+article {
+	padding: 52px 3% 0;
+}
 article .block {
 	padding: 20px;
 	min-height: 500px;
 	border-bottom: 1px solid;
 	border-bottom-color: #D3D3D3;
+	box-shadow: 3px 3px 3px 3px gray;
+	font-family: sans-serif;	
 }
 article .block p {
 	line-height: 22px; 
 	font-size: 16px; 
 	font-weight: 600;
+	font-family: sans-serif;
 }
 article .block:nth-child(2n+1) {
-	background: #FFF8DC;
-	width: 553px;
+	font-family: sans-serif;
+	width: 620px;
+	box-shadow: 3px 3px 3px 3px gray;
+	font-family: sans-serif;
 }
 article .block:nth-child(2n) {
-	background: #FFF8DC;
-	width: 553px;
+	font-family: sans-serif;
+	width: 620px;
+	box-shadow: 3px 3px 3px 3px gray;
+	font-family: sans-serif;
 }
 
