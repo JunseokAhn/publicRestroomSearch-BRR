@@ -4,37 +4,20 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>병원api</title>
-<script>
+<title>진단</title>
 
-
-/* var xhr = new XMLHttpRequest();
-var url = 'http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlMdcncListInfoInqire'; /*URL*/
-var queryParams = '?' + encodeURIComponent('serviceKey') + '='+'3Z%2BQ6%2BHzb5xtUL0lQXoKADtynzjVnPkyC8wcAu8j9S6In342YSsdx2%2FUqhPFf4xUe2XxB0ab9lptySS7xTRoRQ%3D%3D'; /*Service Key*/
-
-queryParams += '&' + encodeURIComponent('Q0') + '=' + encodeURIComponent('서울특별시'); /*페이지번호*/
-queryParams += '&' + encodeURIComponent('QZ') + '=' + encodeURIComponent('B'); /*한 페이지 결과 수*/
-xhr.open('GET', url + queryParams);
-xhr.onreadystatechange = function () {
-    if (this.readyState == 4) {
-        alert('Status: '+this.status+' Headers: '+JSON.stringify(this.getAllResponseHeaders())+' Body: '+this.responseText);
-    }
-};
-
-xhr.send(''); */
-
-</script>
 <style>
 aside { 
                 float:right; 
                 width: 20%; 
-                float: right; 
-                background-color: green; 
+                
+                background-color: #F5F5DC; 
                 color: white; 
                 padding:5px;  
-                margin:10px; 
+                margin:5px; 
                 height:100px; 
             } 
+          
 </style>
 
 </head>
@@ -42,15 +25,15 @@ aside {
 
 
 
- <div class = "gfg">GeeksforGeeks</div> 
-        <article> 
-            <h1>Heading . . .</h1> 
-            <p>Aside tag is use to display important information 
-             about the primary page.</p> 
-        </article> 
-        <aside> 
-            <h1>Aside tag example</h1> 
-            <p>Aside tag content. . .</p>  
+ 
+       
+        <aside>
+        <div>
+        <figure style="background-image:url("../resources/img/ddongselect.png")" style="width:30%;height:100%"></figure>
+        </div>
+  <a class="recommendation-link no-text" href="../api/dairy2" role="button">대변으로 건강체크 CLICK!</a>
+        
+            <p>대변으로 건강체크 CLICK!</p>  
         </aside> 
     </body> 
 

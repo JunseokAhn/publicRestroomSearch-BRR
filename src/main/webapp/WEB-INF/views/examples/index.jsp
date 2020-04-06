@@ -444,7 +444,7 @@
 										<td>3,678</td>
 										<td>
 											<div class="d-flex align-items-center">
-												<span class="mr-2">75%</span>
+												<span class="mr-2">35%</span>
 												<div>
 													<div class="progress">
 														<div class="progress-bar bg-gradient-info" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;"></div>
