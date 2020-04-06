@@ -1,11 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<script src="<c:url value="/resources/js/jquery-3.4.1.js/"/>"></script>
 <html>
 <head>
-<script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx4afb1a7c147445528d8e83f3f1d4fea0"></script>
-<script src="<c:url value="/resources/js/jquery-3.4.1.js/"/>"></script>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>화장실이 급할땐? - 부르르</title>
@@ -18,238 +16,9 @@
 <link href="<c:url value="/resources/assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css"/>" rel="stylesheet" />
 <!-- CSS Files -->
 <link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
-<script type="text/javascript">
-	var map, pos, marker, marker_s, marker_e, marker_p1, marker_p2, label, endX, endY, polyline_;
-	var totalMarkerArr = [];
-	var drawInfoArr = [];
-	var nearbyToilet = [];
-	var flag = 0;
-
-	// HTML5의 geolocation으로 사용할 수 있는지 확인합니다      
-	if (navigator.geolocation) {
-		navigator.geolocation
-				.getCurrentPosition(function(position) {
-					lat = position.coords.latitude;
-					lng = position.coords.longitude;
-					pos = {
-						lat : lat,
-						lng : lng
-					};
-					//팝업 생성
-					var content = "<div style=' position: relative; border-bottom: 1px solid #dcdcdc; line-height: 18px; padding: 0 35px 2px 0;'>"
-							+ "<div style='font-size: 12px; line-height: 15px;'>"
-							+ "<span style='display: inline-block; width: 14px; height: 14px; background-image: url(/resources/images/common/icon_blet.png); vertical-align: middle; margin-right: 5px;'></span>Your position"
-							+ "</div>" + "</div>";
-
-					marker = new Tmapv2.Marker({
-						position : new Tmapv2.LatLng(lat, lng),
-						map : map
-					});
-
-					InfoWindow = new Tmapv2.InfoWindow({
-						position : new Tmapv2.LatLng(lat, lng),
-						content : content,
-						type : 2,
-						map : map
-					});
-					map.setCenter(new Tmapv2.LatLng(lat, lng));
-					map.setZoom(15);
-				});
-
-	}
-
-	function navigators(endX, endY) {
-
-		directions(endX, endY);
-	}
-	// 페이지가 로딩이 된 후 호출하는 함수입니다.
-	function initTmap() {
-
-		// Tmap.map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
-		map = new Tmapv2.Map("map_div", {
-			center : new Tmapv2.LatLng(37.566481622437934, 126.98502302169841), // 지도 초기 좌표
-			width : "100%", // map의 width 설정
-			height : "400px" // map의 height 설정	
-
-		});
-
-		//다중 마커 저장 배열, 좌표 지정
-		var positions = [ {
-			title : 'SKT타워',
-			lonlat : new Tmapv2.LatLng(37.566369, 126.984895)
-		}, {
-			title : '호텔',
-			lonlat : new Tmapv2.LatLng(37.564432, 126.979979)
-		}, {
-			title : '명동성당',
-			lonlat : new Tmapv2.LatLng(37.5632423, 126.987210)
-		}, {
-			title : '을지로3가역',
-			lonlat : new Tmapv2.LatLng(37.566337, 126.992703)
-		}, {
-			title : '덕수궁',
-			lonlat : new Tmapv2.LatLng(37.565861, 126.975194)
-		} ];
-
-		for (i = 0; i < positions.length; i++) {//for문을 통하여 배열 안에 있는 값을 마커 생성
-			var lonlat = positions[i].lonlat;
-			var title = positions[i].title;
-			label = "<span style='background-color: #46414E;color:white'>"
-					+ title + "</span>";
-
-			//Marker 객체 생성.
-			marker = new Tmapv2.Marker({
-				id : i,
-				position : lonlat, //Marker의 중심좌표 설정.
-				map : map, //Marker가 표시될 Map 설정.
-				title : title, //Marker 타이틀.
-				label : label
-			//Marker의 라벨.
-			});
-			//Marker에 클릭이벤트 등록.
-			marker.addListener("click", function(marker, i) {
-				return function() {
-					index = i;
-					target = marker.getPosition();
-					endX = target._lng;
-					endY = target._lat;
-					var content = "<input type='button' id='direction[" + i
-							+ "]' value='경로안내' onclick='navigators(" + endX
-							+ ',' + endY + ")'>";
-					console.log("target : " + i)
-					setTimeout(function() {
-						InfoWindow.setMap(null)
-					}, 0);
-					setTimeout(function() {
-						InfoWindow = new Tmapv2.InfoWindow({
-							position : new Tmapv2.LatLng(target._lat,
-									target._lng),
-							content : content,
-							type : 1,
-							map : map
-						});
-					}, 0);
-
-				}
-			}(marker, i));
-		}
-
-		map.setZoom(15);
-	}
-	function directions(endX, endY) {
-
-		// 4. 경로탐색 API 사용요청
-		$
-				.ajax({
-					method : "POST",
-					url : "https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json&callback=result",//
-					async : false,
-					data : {
-						"appKey" : "l7xx4afb1a7c147445528d8e83f3f1d4fea0",
-						"startX" : lng,
-						"startY" : lat,
-						"endX" : endX,
-						"endY" : endY,
-						//"passList" : "126.987319,37.565778_126.983072,37.573028",
-						"reqCoordType" : "WGS84GEO",
-						"resCoordType" : "EPSG3857",
-						"startName" : "출발지",
-						"endName" : "도착지"
-					},
-					success : function(response) {
-						var resultData = response.features;
-
-						//결과 출력
-						var tDistance = "총 거리 : "
-								+ ((resultData[0].properties.totalDistance) / 1000)
-										.toFixed(1) + "km,";
-						var tTime = " 총 시간 : "
-								+ ((resultData[0].properties.totalTime) / 60)
-										.toFixed(0) + "분";
-
-						$("#result").text(tDistance + tTime);
-
-						drawInfoArr = [];
-						for ( var i in resultData) { //for문 [S]
-							var geometry = resultData[i].geometry;
-							var properties = resultData[i].properties;
-							// var polyline_;
-
-							if (geometry.type == "LineString") {
-								for ( var j in geometry.coordinates) {
-									// 경로들의 결과값(구간)들을 포인트 객체로 변환 
-									var latlng = new Tmapv2.Point(
-											geometry.coordinates[j][0],
-											geometry.coordinates[j][1]);
-									// 포인트 객체를 받아 좌표값으로 변환
-									var convertPoint = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(
-											latlng);
-									// 포인트객체의 정보로 좌표값 변환 객체로 저장
-									var convertChange = new Tmapv2.LatLng(
-											convertPoint._lat,
-											convertPoint._lng);
-									// 배열에 담기
-									drawInfoArr.push(convertChange);
-								}
-
-							} else {
-								var markerImg = "";
-								var pType = "";
-								var size;
-
-								if (properties.pointType == "S") { //출발지 마커
-									markerImg = "http://tmapapis.sktelecom.com/upload/tmap/marker/pin_r_m_s.png";
-									pType = "S";
-									size = new Tmapv2.Size(24, 38);
-								} else if (properties.pointType == "E") { //도착지 마커
-									markerImg = "http://tmapapis.sktelecom.com/upload/tmap/marker/pin_r_m_e.png";
-									pType = "E";
-									size = new Tmapv2.Size(24, 38);
-								} else { //각 포인트 마커
-									markerImg = "http://topopen.tmap.co.kr/imgs/point.png";
-									pType = "P";
-									size = new Tmapv2.Size(8, 8);
-								}
-
-							}
-						}//for문 [E]
-
-						if (flag) {
-							setTimeout(function() {
-								//혹은 이벤트를걸어놔서 한번더 navigators가실행되면 이 메소드가 실행되게한다면?
-								polyline_.setMap(null)
-							}, 0);
-						}
-
-						setTimeout(function() {
-							polyline_ = new Tmapv2.Polyline({
-								path : drawInfoArr,
-								strokeColor : "#DD0000",
-								strokeWeight : 6,
-								map : map
-							});
-						}, 0);
-
-						flag = 1;
-
-					},
-					error : function(request, status, error) {
-						console.log("code:" + request.status + "\n"
-								+ "message:" + request.responseText + "\n"
-								+ "error:" + error);
-					}
-				});
-
-	}
-
-	function addComma(num) {
-		var regexp = /\B(?=(\d{3})+(?!\d))/g;
-		return num.toString().replace(regexp, ',');
-	}
-</script>
 </head>
 
-<body class="" onload="initTmap()">
+<body class="">
 	<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
 		<div class="container-fluid">
 			<!-- Toggler -->
@@ -501,12 +270,8 @@
 			<div class="row">
 				<div class="col">
 					<div class="card shadow border-0">
-						<div id="map_wrap" class="map_wrap3">
-							<div id="map_div" class="map-canvas" style="height: 600px;"></div>
-						</div>
-						<div class="map_act_btn_wrap clear_box"></div>
-						<p id="result" />
-						<!-- <input type="hidden" id="start"> <input type="hidden" id="end"> -->
+						<div id="map" class="map-canvas" style="height: 600px;"></div>
+						<input type="hidden" id="start"> <input type="hidden" id="end">
 					</div>
 				</div>
 			</div>
@@ -534,7 +299,296 @@
 	<!--   Core   -->
 	<script src="<c:url value="/resources/assets/js/plugins/jquery/dist/jquery.min.js"/>"></script>
 	<script src="<c:url value="/resources/assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"/>"></script>
-	
+	<!--   Optional JS   -->
+	<script>
+		// Note: This example requires that you consent to location sharing when
+		// prompted by your browser. If you see the error "The Geolocation service
+		// failed.", it means you probably did not give permission for the browser to
+		// locate you.
+		var map, pos, marker, i, nearbyToilet;
+		var locations = [];
+		window.onload = function() {
+			infowindow = new google.maps.InfoWindow();
+		}
+
+		function initMap() {
+			map = new google.maps.Map(document.getElementById('map'), {
+				center : {
+					lat : 37.511683,
+					lng : 127.061255
+				},
+				zoom : 16,
+				mapTypeId : google.maps.MapTypeId.ROADMAP
+			});
+			infoWindow = new google.maps.InfoWindow();
+
+			// 내위치설정
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(function(position) {
+					pos = {
+						lat : position.coords.latitude,
+						lng : position.coords.longitude
+					};
+					$.ajax({
+						url : "<c:url value='/maps/getLocation2'/>",
+						data : {
+							lat : pos.lat.toFixed(6),
+							lng : pos.lng.toFixed(6)
+						},
+						type : "post",
+						success : setMarkers,
+						error : function(e) {
+							console.log(e)
+						}
+					})
+					infoWindow.setPosition(pos);
+					infoWindow.setContent('Location found.');
+					infoWindow.open(map);
+					map.setCenter(pos);
+					console.log("this location : " + JSON.stringify(pos));
+					document.getElementById('start').value = pos.lat + ","
+							+ pos.lng
+				}, function() {
+					handleLocationError(true, infoWindow, map.getCenter());
+				});
+			} else {
+				// Browser doesn't support Geolocation
+				handleLocationError(false, infoWindow, map.getCenter());
+			}
+
+			//마커설정
+			function setMarkers(e) {
+				nearbyToilet = e
+				console.log(nearbyToilet[0])
+				for (var i = 0; i < nearbyToilet.length; i++) {
+					//locations[i].lat = nearbyToilet[i].lat;
+					//locations[i].lng = nearbyToilet[i].lng;
+					locations[i] = {
+						lat : nearbyToilet[i].lat,
+						lng : nearbyToilet[i].lng
+					}
+				}
+				var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+				for (var i = 0; i < locations.length; i++) {
+					marker = new google.maps.Marker({
+						id : i,
+						position : new google.maps.LatLng(locations[i].lat,
+								locations[i].lng),
+						label : labels[i % labels.length],
+						map : map
+					});
+
+					google.maps.event.addListener(marker, 'click', (function(
+							marker, i) {
+						return function() {
+							console.log(i);
+							infowindow.setContent(locations[i].contents);
+							infowindow.open(map, marker);
+						}
+					})(marker, i));
+					if (marker) {
+						marker.addListener('click', function() {
+							map.setZoom(15);
+							map.setCenter(this.getPosition());
+							target = this.getPosition()
+							target = String(target)
+							target = target.replace('(', '');
+							target = target.replace(')', '');
+							target = target.replace(' ', '');
+							console.log("target location : " + target);
+							document.getElementById('end').value = target;
+							console.log("start : "
+									+ document.getElementById('start').value);
+							console.log("end : "
+									+ document.getElementById('end').value);
+							onChangeHandler();
+
+						});
+					}
+				}
+			}
+			// Create an array of alphabetical characters used to label the markers.
+
+			// Add some markers to the map.
+			// Note: The code uses the JavaScript Array.prototype.map() method to
+			// create an array of markers based on a given "locations" array.
+			// The map() method here has nothing to do with the Google Maps API.
+
+			/* marker = locations.map(function(location, i) {
+			   return new google.maps.Marker({
+			     position: {lat : location.lat, lng : location.lng},
+			     label: labels[i % labels.length],
+			     title: "index"+i,
+			     //title: location.contents,
+			     content: location.contents
+			   });
+			   
+			 });*/
+
+			// Add a marker clusterer to manage the markers.
+			/*var markerCluster = new MarkerClusterer(map, marker,
+			{imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});*/
+
+			//길찾기설정
+			var directionsService = new google.maps.DirectionsService();
+			var directionsRenderer = new google.maps.DirectionsRenderer();
+			directionsRenderer.setMap(map);
+
+			var onChangeHandler = function() {
+				calculateAndDisplayRoute(directionsService, directionsRenderer);
+			};
+
+			//document.getElementById('start').addEventListener('change', onChangeHandler);
+			// document.getElementById('end').addEventListener('change', onChangeHandler);
+
+		}
+
+		function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+			infoWindow.setPosition(pos);
+			infoWindow
+					.setContent(browserHasGeolocation ? 'Error: The Geolocation service failed.'
+							: 'Error: Your browser doesn\'t support geolocation.');
+			infoWindow.open(map);
+		}
+
+		function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+			directionsService.route({
+				origin : {
+					query : document.getElementById('start').value
+				},
+				destination : {
+					query : document.getElementById('end').value
+				},
+				travelMode : 'TRANSIT'
+			}, function(response, status) {
+				if (status === 'OK') {
+					directionsRenderer.setDirections(response);
+				} else {
+					window.alert('Directions request failed due to ' + status);
+				}
+			});
+		}
+
+		//마커 위치설정
+		//lat, lng, 
+		//contents(내용),
+		//
+
+		/* locations = [ {
+			lat : -31.563910,
+			lng : 147.154312,
+			contents : "이게되나?1"
+		}, {
+			lat : -33.718234,
+			lng : 150.363181,
+			contents : "이게되나?2"
+		}, {
+			lat : -33.727111,
+			lng : 150.371124,
+			contents : "이게되나?3"
+		}, {
+			lat : -33.848588,
+			lng : 151.209834,
+			contents : "이게되나?4"
+		}, {
+			lat : -33.851702,
+			lng : 151.216968,
+			contents : "이게되나?5"
+		}, {
+			lat : -34.671264,
+			lng : 150.863657,
+			contents : "이게되나?6"
+		}, {
+			lat : -35.304724,
+			lng : 148.662905,
+			contents : "이게되나?7"
+		}, {
+			lat : -36.817685,
+			lng : 175.699196,
+			contents : "이게되나?8"
+		}, {
+			lat : -36.828611,
+			lng : 175.790222,
+			contents : "이게되나?9"
+		}, {
+			lat : -37.750000,
+			lng : 145.116667,
+			contents : "이게되나?10"
+		}, {
+			lat : -37.759859,
+			lng : 145.128708,
+			contents : "이게되나?11"
+		}, {
+			lat : -37.765015,
+			lng : 145.133858,
+			contents : "이게되나?12"
+		}, {
+			lat : -37.770104,
+			lng : 145.143299,
+			contents : "이게되나?13"
+		}, {
+			lat : -37.773700,
+			lng : 145.145187,
+			contents : "이게되나?14"
+		}, {
+			lat : -37.774785,
+			lng : 145.137978,
+			contents : "이게되나?15"
+		}, {
+			lat : -37.819616,
+			lng : 144.968119,
+			contents : "이게되나?16"
+		}, {
+			lat : -38.330766,
+			lng : 144.695692,
+			contents : "이게되나?17"
+		}, {
+			lat : -39.927193,
+			lng : 175.053218,
+			contents : "이게되나?18"
+		}, {
+			lat : -41.330162,
+			lng : 174.865694,
+			contents : "이게되나?19"
+		}, {
+			lat : -42.734358,
+			lng : 147.439506,
+			contents : "이게되나?20"
+		}, {
+			lat : -42.734358,
+			lng : 147.501315,
+			contents : "이게되나?21"
+		}, {
+			lat : -42.735258,
+			lng : 147.438000,
+			contents : "이게되나?22"
+		}, {
+			lat : -43.999792,
+			lng : 170.463352,
+			contents : "이게되나?23"
+		}, {
+			lat : 37.559739,
+			lng : 126.843046,
+			contents : "이게되나?24"
+		}, {
+			lat : 37.562162,
+			lng : 126.844371,
+			contents : "이게되나?25"
+		}, {
+			lat : 37.561116,
+			lng : 126.842429,
+			contents : "이게되나?26"
+		} ] */
+
+		/* https://maps.googleapis.com/maps/api/directions/json?origin=41.43206,-81.38992&destination=41.43206,-81.8992&key=AIzaSyDkQ00U2AUBQSS1CJF5YveL-1YWsTjaRGA*/
+
+		/*https://maps.googleapis.com/maps/api/directions/json?origin=37.5728359,126.9746922&destination=37.5129907,127.1005382&key=AIzaSyDkQ00U2AUBQSS1CJF5YveL-1YWsTjaRGA*/
+		/*https://maps.googleapis.com/maps/api/directions/
+		 json?origin=37.5728359,126.9746922&destination=37.5129907,127.1005382&mode=transit&departure_time=now&key=AIzaSyDkQ00U2AUBQSS1CJF5YveL-1YWsTjaRGA&callback=initMap*/
+	</script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkQ00U2AUBQSS1CJF5YveL-1YWsTjaRGA&callback=initMap">
+		
+	</script>
 </body>
 
 </html>

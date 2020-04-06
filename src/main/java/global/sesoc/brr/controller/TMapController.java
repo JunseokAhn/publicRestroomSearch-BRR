@@ -20,13 +20,13 @@ import global.sesoc.brr.vo.NearbyToiletVO;
 
 @Controller
 @RequestMapping(value = "maps")
-public class GoogleMapsController {
+public class TMapController {
 
 	@Autowired
 	GoogleMapsDAO dao;
 	LocationVO lo = new LocationVO();
 
-	@GetMapping(value = "mapsMain2")
+	@GetMapping(value = "mapsMain")
 	public String MapsMain(Model model) {
 
 		/*
@@ -41,11 +41,11 @@ public class GoogleMapsController {
 		 * System.out.println(responseEntity); model.addAttribute("directions",
 		 * responseEntity);
 		 */
-		return "maps/mapsMain2";
+		return "maps/mapsMain";
 	}
 
 	@ResponseBody
-	@PostMapping(value = "getLocation2")
+	@PostMapping(value = "getLocation")
 	public ArrayList<NearbyToiletVO> getLocation(String lat, String lng) {
 		lo = new LocationVO(lat, lng);
 		ArrayList<NearbyToiletVO> list = dao.getNearbyToilet(lo);
