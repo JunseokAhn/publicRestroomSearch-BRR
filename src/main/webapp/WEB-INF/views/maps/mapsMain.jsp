@@ -20,6 +20,9 @@
 <link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
 <script type="text/javascript">
     var map, pos, marker, marker_s, marker_e, marker_p1, marker_p2, label, endX, endY, polyline_;
+    var toiletType, unisexToiletYn, hour, distance;
+    menToiletBowlNumber, menHandicapToiletBowlNumber;
+    var ladiesToiletBowlNumber, ladiesHandicapToiletBowlNumber;
     var totalMarkerArr = [ ];
     var drawInfoArr = [ ];
     var nearbyToilet = [ ];
@@ -160,7 +163,23 @@
                                 target = marker.getPosition();
                                 endX = target._lng;
                                 endY = target._lat;
-                                var content = "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='directions(" + endX + ',' + endY + ")'>";
+                                if(nearbyToilet[i].unisexToiletYn=="Y")
+                                    nearbyToilet[i].unisexToiletYn = "남녀공용";
+                                else
+                                    nearbyToilet[i].unisexToiletYn = "남녀별도";
+                                
+                                var toiletBowlNumber = nearbyToilet[i].menToiletBowlNumber + nearbyToilet[i].ladiesToiletBowlNumber;
+                               var handicap =  nearbyToilet[i].menHandicapToiletBowlNumber + nearbyToilet[i].ladiesHandicapToiletBowlNumber;
+                               if(handicap>0)
+                                   handicap = "Y";
+                               else
+                                   handicap = "N";
+                               /* var content = nearbyToilet[i].unisexToiletYn+" "+nearbyToilet[i].toiletType; */
+                                var content = "<span class='card-title text-uppercase text-muted mb-0'>"+nearbyToilet[i].unisexToiletYn+"</span>" 
+                                content += "<h5 class='card-title text-uppercase text-muted mb-0'>대변기 : "+toiletBowlNumber+"</h5>"
+                                content += "<h5 class='card-title text-uppercase text-muted mb-0'>장애인실 : "+handicap+"</h5>"
+                               content += "<span class='card-title text-uppercase text-muted mb-0'>"+hour+", "+distance+"</span>"
+                               content += "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='directions(" + endX + ',' + endY + ")'>";
                                 console.log("target : " + i)
                                 setTimeout(function () {
                                     InfoWindow.setMap(null)
@@ -191,7 +210,7 @@
                             lng : lng
                         };
                         $.ajax({
-                            url : "<c:url value='/maps/getLocation2'/>",
+                            url : "<c:url value='/maps/getLocation'/>",
                             data : {
                                 lat : pos.lat.toFixed(6),
                                 lng : pos.lng.toFixed(6)
@@ -214,7 +233,7 @@
                         InfoWindow = new Tmapv2.InfoWindow({
                             position : new Tmapv2.LatLng(lat, lng),
                             content : content,
-                            type : 2,
+                            type : 1,
                             map : map
                         });
                         map.setCenter(new Tmapv2.LatLng(lat, lng));
