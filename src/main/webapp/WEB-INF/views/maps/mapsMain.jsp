@@ -20,7 +20,7 @@
 <link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
 <script type="text/javascript">
     var map, pos, marker, marker_s, marker_e, marker_p1, marker_p2, label, endX, endY, polyline_;
-    var toiletType, unisexToiletYn, hour, distance;
+    var toiletType, unisexToiletYn, hour, distance, distime;
     menToiletBowlNumber, menHandicapToiletBowlNumber;
     var ladiesToiletBowlNumber, ladiesHandicapToiletBowlNumber;
     var totalMarkerArr = [ ];
@@ -31,8 +31,7 @@
     //길찾기
     function directions (endX, endY) {
         //  경로탐색 API 사용요청
-        $
-                .ajax({
+        $.ajax({
                     method : "POST",
                     url : "https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json&callback=result",//
                     async : false,
@@ -52,10 +51,9 @@
                         var resultData = response.features;
                         
                         //결과 출력
-                        var tDistance = "총 거리 : " + ( ( resultData[0].properties.totalDistance ) / 1000 )
-                                .toFixed(1) + "km,";
-                        var tTime = " 총 시간 : " + ( ( resultData[0].properties.totalTime ) / 60 )
-                                .toFixed(0) + "분";
+                        var tDistance =  ( ( resultData[0].properties.totalDistance ) / 1000 ).toFixed(1) + "km";
+                        var tTime =  ( ( resultData[0].properties.totalTime ) / 60 ).toFixed(0) + "분";
+                        distime = tTime+', '+tDistance;
                         
                         $("#result").text(tDistance + tTime);
                         
@@ -119,14 +117,14 @@
                         }, 0);
                         
                         flag = 1;
-                        
                     },
                     error : function (request, status, error) {
                         console
                                 .log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
                     }
-                });
-        
+                });//ajax[E]
+
+       return distime;      
     }//directions[E]
     function initTmap () {
         // Tmap.map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
@@ -156,13 +154,15 @@
                 });
                 
                 //Marker에 클릭이벤트 등록.
-                marker
-                        .addListener("click", function (marker, i) {
+                marker.addListener("click", function (marker, i) {
                             return function () {
                                 index = i;
                                 target = marker.getPosition();
                                 endX = target._lng;
                                 endY = target._lat;
+                                
+                                //누르자마자 경로탐색 > 나중에 경로안내누르면 실시간안내되도록 바꾸기
+                                distime = directions(endX,endY);
                                 if(nearbyToilet[i].unisexToiletYn=="Y")
                                     nearbyToilet[i].unisexToiletYn = "남녀공용";
                                 else
@@ -174,12 +174,14 @@
                                    handicap = "Y";
                                else
                                    handicap = "N";
+                              
                                /* var content = nearbyToilet[i].unisexToiletYn+" "+nearbyToilet[i].toiletType; */
                                 var content = "<span class='card-title text-uppercase text-muted mb-0'>"+nearbyToilet[i].unisexToiletYn+"</span>" 
                                 content += "<h5 class='card-title text-uppercase text-muted mb-0'>대변기 : "+toiletBowlNumber+"</h5>"
                                 content += "<h5 class='card-title text-uppercase text-muted mb-0'>장애인실 : "+handicap+"</h5>"
-                               content += "<span class='card-title text-uppercase text-muted mb-0'>"+hour+", "+distance+"</span>"
+                               content += "<span class='card-title text-uppercase text-muted mb-0'>"+distime+"</span>"
                                content += "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='directions(" + endX + ',' + endY + ")'>";
+                             
                                 console.log("target : " + i)
                                 setTimeout(function () {
                                     InfoWindow.setMap(null)
@@ -201,8 +203,7 @@
         
         // HTML5의 geolocation으로 사용할 수 있는지 확인합니다      
         if(navigator.geolocation){
-            navigator.geolocation
-                    .getCurrentPosition(function (position) {
+            navigator.geolocation.getCurrentPosition(function (position) {
                         lat = position.coords.latitude;
                         lng = position.coords.longitude;
                         pos = {
