@@ -29,6 +29,11 @@ public class GoogleLoginDAO {
 		return result;
 	}
 	
-	
+	public int deleteGoogle (String id) {
+		GoogleLoginMapper mapper = session.getMapper(GoogleLoginMapper.class);
+		int result = 0;
+		result = mapper.deleteGoogle(id);
+		return result;
+	}
 	
 }

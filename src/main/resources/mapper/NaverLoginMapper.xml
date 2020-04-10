@@ -18,6 +18,10 @@ select * from navermember
 where id = #{id}
 </select>
 
+<delete id="deleteNaver" parameterType="String">
+delete from navermember
+where id = #{id}
+</delete>
 
 
 
