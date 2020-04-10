@@ -26,14 +26,10 @@
     var totalMarkerArr = [ ];
     var drawInfoArr = [ ];
     var nearbyToilet = [ ];
-    var flag = 0;
+    var polyFlag = 0;
+    var locationFlag = 0;
     
-    //실시간길찾기
-    function navigators(endX, endY){
-       
-        
-    }
-    
+
     //길찾기
     function directions (endX, endY) {
         //  경로탐색 API 사용요청
@@ -107,7 +103,7 @@
                             }
                         }//for문 [E]
                         
-                        if(flag){
+                        if(polyFlag){
                             setTimeout(function () {
                                 polyline_.setMap(null)
                             }, 0);
@@ -122,7 +118,7 @@
                             });
                         }, 0);
                         
-                        flag = 1;
+                        polyFlag = 1;
                     },
                     error : function (request, status, error) {
                         console
@@ -216,7 +212,8 @@
   	                            },
   	                            type : "post",
   	                            success : function(e){
-  	                                if(flag==0)
+  	                                if(locationFlag==0)
+  	                                    locationFlag==1;
   	                                    setPositions(e);
   	                            },
   	                            error : function (e) {
@@ -244,6 +241,18 @@
   	            }
   		 }//mylocation[E]
     
+  	    //실시간길찾기
+  	    function navigators(endX, endY){
+  	      
+  	        setInterval(function(){
+  	           myLocation();
+  	          directions(endX, endY);
+  	           console.log("네비게이터 실행중")
+  	        },5000);
+  	        
+  	    }
+  	    
+  		 
     function initTmap () {
         // Tmap.map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
         map = new Tmapv2.Map("map_div", {
