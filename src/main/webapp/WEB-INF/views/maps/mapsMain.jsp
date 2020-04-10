@@ -19,7 +19,7 @@
 <!-- CSS Files -->
 <link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
 <script type="text/javascript">
-    var map, pos, marker, marker_s, marker_e, marker_p1, marker_p2, label, endX, endY, polyline_;
+    var map, pos, marker, marker_s, marker_e, marker_p1, marker_p2, label, endX, endY, polyline_, InfoWindow;
     var toiletType, unisexToiletYn, hour, distance, distime;
     var menToiletBowlNumber, menHandicapToiletBowlNumber;
     var ladiesToiletBowlNumber, ladiesHandicapToiletBowlNumber;
@@ -144,8 +144,7 @@
                 position : new Tmapv2.LatLng(nearbyToilet[i].lat, nearbyToilet[i].lng), //Marker의 중심좌표 설정.
                 map : map, //Marker가 표시될 Map 설정.
                 title : title, //Marker 타이틀.
-                label : label
-            //Marker의 라벨.
+                label : label //Marker의 라벨.
             });
             
             //Marker에 클릭이벤트 등록.
@@ -224,17 +223,50 @@
   	                        //팝업 생성
   	                        var content = "<div style=' position: relative; border-bottom: 1px solid #dcdcdc; line-height: 18px; padding: 0 35px 2px 0;'>" + "<div style='font-size: 12px; line-height: 15px;'>" + "<span style='display: inline-block; width: 14px; height: 14px; background-image: url(/resources/images/common/icon_blet.png); vertical-align: middle; margin-right: 5px;'></span>Your position" + "</div>" + "</div>";
   	                        
-  	                        marker = new Tmapv2.Marker({
-  	                            position : new Tmapv2.LatLng(lat, lng),
+  	                        
+  	                     /*  setTimeout(function () {
+  	                        InfoWindow.setMap(null)
+  	                    }, 0);
+  	                    setTimeout(function () {
+  	                        InfoWindow = new Tmapv2.InfoWindow({
+  	                            type : 1,
   	                            map : map
   	                        });
+  	                    }, 0); */
+  	                    
+  	                  
+  	                        /* marker = new Tmapv2.Marker({
+  	                            position : new Tmapv2.LatLng(lat, lng),
+  	                            map : map
+  	                        }); */
   	                        
+  	                     setTimeout(function () {
+  	                        InfoWindow.setMap(null)
+  	                    }, 0);
+  	                    setTimeout(function () {
   	                        InfoWindow = new Tmapv2.InfoWindow({
+  	                          position : new Tmapv2.LatLng(lat, lng),
+	                            content : content,
+  	                            type : 1,
+  	                            map : map
+  	                        });
+  	                    }, 0);
+  	                        
+  	                  setTimeout(function(){
+	                        marker.setMap(null)
+	                    }, 0);
+	                    setTimeout(function(){
+	                      marker = new Tmapv2.Marker({
+	                            position : new Tmapv2.LatLng(lat, lng),
+	                            map : map
+	                        });
+	                    }, 0);
+  	                        /* InfoWindow = new Tmapv2.InfoWindow({
   	                            position : new Tmapv2.LatLng(lat, lng),
   	                            content : content,
   	                            type : 1,
   	                            map : map
-  	                        });
+  	                        }); */
   	                        map.setCenter(new Tmapv2.LatLng(lat, lng));
   	                        map.setZoom(15);
   	                    });
@@ -243,7 +275,8 @@
     
   	    //실시간길찾기
   	    function navigators(endX, endY){
-  	      
+  		     
+  		     //실시간 길찾기
   	        setInterval(function(){
   	           myLocation();
   	          directions(endX, endY);
