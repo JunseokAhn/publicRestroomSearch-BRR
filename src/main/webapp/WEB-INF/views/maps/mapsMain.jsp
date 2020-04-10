@@ -215,7 +215,10 @@
   	                                lng : pos.lng.toFixed(6)
   	                            },
   	                            type : "post",
-  	                            success : setPositions,
+  	                            success : function(e){
+  	                                if(flag==0)
+  	                                    setPositions(e);
+  	                            },
   	                            error : function (e) {
   	                                console.log(e)
   	                            }
