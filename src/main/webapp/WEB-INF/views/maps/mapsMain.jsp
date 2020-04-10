@@ -53,7 +53,7 @@
                         //결과 출력
                         var tDistance =  ( ( resultData[0].properties.totalDistance ) / 1000 ).toFixed(1) + "km";
                         var tTime =  ( ( resultData[0].properties.totalTime ) / 60 ).toFixed(0) + "분";
-                        distime = tTime+', '+tDistance;
+                        distime = tTime+" "+tDistance;
                         
                         $("#result").text(tDistance + tTime);
                         
@@ -176,12 +176,40 @@
                                    handicap = "N";
                               
                                /* var content = nearbyToilet[i].unisexToiletYn+" "+nearbyToilet[i].toiletType; */
-                                var content = "<span class='card-title text-uppercase text-muted mb-0'>"+nearbyToilet[i].unisexToiletYn+"</span>" 
+                               
+                                /* var content = "<span class='card-title text-uppercase text-muted mb-0'>"+nearbyToilet[i].unisexToiletYn+"</span>" 
                                 content += "<h5 class='card-title text-uppercase text-muted mb-0'>대변기 : "+toiletBowlNumber+"</h5>"
                                 content += "<h5 class='card-title text-uppercase text-muted mb-0'>장애인실 : "+handicap+"</h5>"
                                content += "<span class='card-title text-uppercase text-muted mb-0'>"+distime+"</span>"
-                               content += "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='directions(" + endX + ',' + endY + ")'>";
+                               content += "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='directions(" + endX + ',' + endY + ")'>";  */
                              
+                               var content = "<h5 class='card-title text-uppercase text-muted mb-0'>"+nearbyToilet[i].unisexToiletYn+"</h5>" 
+                               content += "<br'><span class='card-title text-uppercase text-muted mb-0'>대변기 : "+toiletBowlNumber+"</span>"
+                               content += "<br><span class='card-title text-uppercase text-muted mb-0'>배려실 : "+handicap+"</span>"
+                              content += "<br>"+distime;
+                              content += "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='directions(" + endX + ',' + endY + ")'>"; 
+                              
+                            /* var content = "<div class='col-xl-3 col-lg-6'>"
+                            content += "<div class='card card-stats mb-4 mb-xl-0'>"
+                            content += 	"<div class='card-body'>"
+                            content += 		"<div class='row'>"
+                            content += 			"<div class='col'>"
+                            content += 				"<h5 class='card-title text-uppercase text-muted mb-0'>Traffic</h5>"
+                            content += 				"<span class='h2 font-weight-bold mb-0'>350,897</span>"
+                            content += 			"</div>"
+                            content += 			"<div class='col-auto'>"
+                            content += 				"<div class='icon icon-shape bg-danger text-white rounded-circle shadow'>"
+                            content += 					"<i class='fas fa-chart-bar'></i>"
+                            content += 				"</div>"
+                            content += 			"</div>"
+                            content += 		"</div>"
+                            content += 		"<p class='mt-3 mb-0 text-muted text-sm'>"
+                            content += 			"<span class='text-success mr-2'><i class='fa fa-arrow-up'></i> 3.48%</span> <span class='text-nowrap'>Since last month</span>"
+                            content += 		"</p>"
+                            content += 	"</div>"
+                            content +=" </div>"
+                            content +="</div>" */
+                               
                                 console.log("target : " + i)
                                 setTimeout(function () {
                                     InfoWindow.setMap(null)
