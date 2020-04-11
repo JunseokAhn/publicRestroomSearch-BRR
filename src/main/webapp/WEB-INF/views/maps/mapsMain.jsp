@@ -19,7 +19,7 @@
 <!-- CSS Files -->
 <link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
 <script type="text/javascript">
-    var map, pos, marker, marker_s, marker_e, marker_p1, marker_p2, label, endX, endY, polyline_, InfoWindow;
+    var map, pos, marker, toliletMarker, marker_s, marker_e, marker_p1, marker_p2, label, endX, endY, polyline_, InfoWindow;
     var toiletType, unisexToiletYn, hour, distance, distime;
     var menToiletBowlNumber, menHandicapToiletBowlNumber;
     var ladiesToiletBowlNumber, ladiesHandicapToiletBowlNumber;
@@ -139,7 +139,7 @@
             var title = nearbyToilet[i].toiletNm;
             label = "<span style='background-color: #46414E;color:white'>" + title + "</span>";
             //Marker 객체 생성.
-            marker = new Tmapv2.Marker({
+            toliletMarker = new Tmapv2.Marker({
                 id : i,
                 position : new Tmapv2.LatLng(nearbyToilet[i].lat, nearbyToilet[i].lng), //Marker의 중심좌표 설정.
                 map : map, //Marker가 표시될 Map 설정.
@@ -148,21 +148,21 @@
             });
             
             //Marker에 클릭이벤트 등록.
-            marker.addListener("click", function (marker, i) {
-                        return function () {
-                            index = i;
-                            target = marker.getPosition();
-                            endX = target._lng;
-                            endY = target._lat;
+            toliletMarker.addListener("click", function (marker, i) {
+           		return function () {
+                           index = i;
+                           target = marker.getPosition();
+                           endX = target._lng;
+                           endY = target._lat;
                             
-                            //누르자마자 경로탐색 > 나중에 경로안내누르면 실시간안내되도록 바꾸기
-                            distime = directions(endX,endY);
-                            if(nearbyToilet[i].unisexToiletYn=="Y")
-                                nearbyToilet[i].unisexToiletYn = "남녀공용";
-                            else
-                                nearbyToilet[i].unisexToiletYn = "남녀별도";
+                           //누르자마자 경로탐색 > 나중에 경로안내누르면 실시간안내되도록 바꾸기
+                           distime = directions(endX,endY);
+                           if(nearbyToilet[i].unisexToiletYn=="Y")
+                               nearbyToilet[i].unisexToiletYn = "남녀공용";
+                           else
+                               nearbyToilet[i].unisexToiletYn = "남녀별도";
                             
-                            var toiletBowlNumber = nearbyToilet[i].menToiletBowlNumber + nearbyToilet[i].ladiesToiletBowlNumber;
+                           var toiletBowlNumber = nearbyToilet[i].menToiletBowlNumber + nearbyToilet[i].ladiesToiletBowlNumber;
                            var handicap =  nearbyToilet[i].menHandicapToiletBowlNumber + nearbyToilet[i].ladiesHandicapToiletBowlNumber;
                            if(handicap>0)
                                handicap = "Y";
@@ -172,118 +172,99 @@
                            var content = "<h5 class='card-title text-uppercase text-muted mb-0'>"+nearbyToilet[i].unisexToiletYn+"</h5>" 
                            content += "<br'><span class='card-title text-uppercase text-muted mb-0'>대변기 : "+toiletBowlNumber+"</span>"
                            content += "<br><span class='card-title text-uppercase text-muted mb-0'>배려실 : "+handicap+"</span>"
-                          content += "<br>"+distime;
-                          content += "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='navigators(" + endX + ',' + endY + ")'>"; 
+                           content += "<br>"+distime;
+                           content += "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='navigators(" + endX + ',' + endY + ")'>";
+                           //마커를 클로저방식으로 넘겨서, 그 마커를 네비게이터스가 실행될때 제거할수있도록해야할것같다.
+                           /* content += "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='navigators(" + endX + ',' + endY + ',' + marker + ")'>";  */
 	
-                            console.log("target : " + i)
-                            setTimeout(function () {
-                                InfoWindow.setMap(null)
+                           console.log("target : " + i)
+                           setTimeout(function () {
+                               InfoWindow.setMap(null)
+                           }, 0);
+                           setTimeout(function () {
+                               InfoWindow = new Tmapv2.InfoWindow({
+                                   position : new Tmapv2.LatLng(target._lat, target._lng),
+                                   content : content,
+                                   type : 1,
+                                   map : map
+                               });
                             }, 0);
-                            setTimeout(function () {
-                                InfoWindow = new Tmapv2.InfoWindow({
-                                    position : new Tmapv2.LatLng(target._lat, target._lng),
-                                    content : content,
-                                    type : 1,
-                                    map : map
-                                });
-                            }, 0);
-                            
                         }
-                    }(marker, i));
+                    }(toliletMarker, i));
         }
     }//setPositions[E]
     
-  	function myLocation(){
+  	function myLocation(marker){
   	  	// HTML5의 geolocation으로 사용할 수 있는지 확인합니다      
-  	        if(navigator.geolocation){
-  	            navigator.geolocation.getCurrentPosition(function (position) {
-  	                        lat = position.coords.latitude;
-  	                        lng = position.coords.longitude;
-  	                        pos = {
-  	                            lat : lat,
-  	                            lng : lng
-  	                        };
-  	                        $.ajax({
-  	                            url : "<c:url value='/maps/getLocation'/>",
-  	                            data : {
-  	                                lat : pos.lat.toFixed(6),
-  	                                lng : pos.lng.toFixed(6)
-  	                            },
-  	                            type : "post",
-  	                            success : function(e){
-  	                                if(locationFlag==0)
-  	                                    locationFlag==1;
-  	                                    setPositions(e);
-  	                            },
-  	                            error : function (e) {
-  	                                console.log(e)
-  	                            }
-  	                        })
+  	    if(navigator.geolocation){
+  	   		navigator.geolocation.getCurrentPosition(function (position) {
+  	        	lat = position.coords.latitude;
+  	            lng = position.coords.longitude;
+  	            pos = {
+  	              	lat : lat,
+  	                lng : lng
+  	            };
+  	            $.ajax({
+  	            	url : "<c:url value='/maps/getLocation'/>",
+  	       			data : {
+						lat : pos.lat.toFixed(6),
+  	               	    lng : pos.lng.toFixed(6)
+  	                },
+  	                type : "post",
+  	                success : function(e){
+  	                	if(locationFlag==0){
+  	                    	locationFlag=1;
+  	                   		setPositions(e);
+  	                   	}
+  	                },
+  	                error : function (e) {
+  	                	console.log(e)
+  	              	}
+  	    		})
 
-  	                        //팝업 생성
-  	                        var content = "<div style=' position: relative; border-bottom: 1px solid #dcdcdc; line-height: 18px; padding: 0 35px 2px 0;'>" + "<div style='font-size: 12px; line-height: 15px;'>" + "<span style='display: inline-block; width: 14px; height: 14px; background-image: url(/resources/images/common/icon_blet.png); vertical-align: middle; margin-right: 5px;'></span>Your position" + "</div>" + "</div>";
+  	            //팝업 생성
+  	            var content = "<div style=' position: relative; border-bottom: 1px solid #dcdcdc; line-height: 18px; padding: 0 35px 2px 0;'>" + "<div style='font-size: 12px; line-height: 15px;'>" + "<span style='display: inline-block; width: 14px; height: 14px; background-image: url(/resources/images/common/icon_blet.png); vertical-align: middle; margin-right: 5px;'></span>Your position" + "</div>" + "</div>";
+  	               
+  	            console.log(marker)
+  	            setTimeout(function(){
+  		    	  	marker.setMap(null)
+  		        }, 0);
+  		        setTimeout(function(){
+  		          	marker = new Tmapv2.Marker({
+  		          		position : new Tmapv2.LatLng(lat, lng),
+	           		    map : map
+  		           });
+  		        }, 0);
+  		                  
+  	            setTimeout(function () {
+  	            	InfoWindow.setMap(null)
+  	            }, 0);
+  	            setTimeout(function () {
+  	            	InfoWindow = new Tmapv2.InfoWindow({
+  	                	position : new Tmapv2.LatLng(lat, lng),
+	                    content : content,
+  	                    type : 1,
+  	                    map : map
+  	                });
+  	            }, 0);
   	                        
-  	                        
-  	                     /*  setTimeout(function () {
-  	                        InfoWindow.setMap(null)
-  	                    }, 0);
-  	                    setTimeout(function () {
-  	                        InfoWindow = new Tmapv2.InfoWindow({
-  	                            type : 1,
-  	                            map : map
-  	                        });
-  	                    }, 0); */
-  	                    
-  	                  
-  	                        /* marker = new Tmapv2.Marker({
-  	                            position : new Tmapv2.LatLng(lat, lng),
-  	                            map : map
-  	                        }); */
-  	                        
-  	                     setTimeout(function () {
-  	                        InfoWindow.setMap(null)
-  	                    }, 0);
-  	                    setTimeout(function () {
-  	                        InfoWindow = new Tmapv2.InfoWindow({
-  	                          position : new Tmapv2.LatLng(lat, lng),
-	                            content : content,
-  	                            type : 1,
-  	                            map : map
-  	                        });
-  	                    }, 0);
-  	                        
-  	                  setTimeout(function(){
-	                        marker.setMap(null)
-	                    }, 0);
-	                    setTimeout(function(){
-	                      marker = new Tmapv2.Marker({
-	                            position : new Tmapv2.LatLng(lat, lng),
-	                            map : map
-	                        });
-	                    }, 0);
-  	                        /* InfoWindow = new Tmapv2.InfoWindow({
-  	                            position : new Tmapv2.LatLng(lat, lng),
-  	                            content : content,
-  	                            type : 1,
-  	                            map : map
-  	                        }); */
-  	                        map.setCenter(new Tmapv2.LatLng(lat, lng));
-  	                        map.setZoom(15);
-  	                    });
-  	            }
-  		 }//mylocation[E]
+  	            map.setCenter(new Tmapv2.LatLng(lat, lng));
+  	            map.setZoom(15);
+  	           });
+  		}
+  	}//mylocation[E]
     
-  	    //실시간길찾기
-  	    function navigators(endX, endY){
+  	//실시간길찾기
+  	function navigators(endX, endY){
   		     
-  		     //실시간 길찾기
-  	        setInterval(function(){
-  	           myLocation();
-  	          directions(endX, endY);
-  	           console.log("네비게이터 실행중")
-  	        },5000);
+  		//실시간 길찾기
+  	    setInterval(function(){
+  	    	myLocation();
+  	       	directions(endX, endY);
+  	       	console.log("네비게이터 실행중")
+  	   	},5000);
   	        
-  	    }
+  	}
   	    
   		 
     function initTmap () {
