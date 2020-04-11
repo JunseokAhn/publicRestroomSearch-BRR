@@ -19,7 +19,8 @@
 <!-- CSS Files -->
 <link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
 <script type="text/javascript">
-    var map, pos, marker, toliletMarker, marker_s, marker_e, marker_p1, marker_p2, label, endX, endY, polyline_, InfoWindow;
+
+    var map, pos, marker, toiletMarker, marker_s, marker_e, marker_p1, marker_p2, label, endX, endY, polyline_, InfoWindow;
     var toiletType, unisexToiletYn, hour, distance, distime;
     var menToiletBowlNumber, menHandicapToiletBowlNumber;
     var ladiesToiletBowlNumber, ladiesHandicapToiletBowlNumber;
@@ -130,7 +131,7 @@
     }//directions[E]
     
     
-    function setPositions (e) {
+    function setPositions (e, marker) {
         nearbyToilet = e;
         console.log(nearbyToilet.length)
         console.log(nearbyToilet);
@@ -139,7 +140,7 @@
             var title = nearbyToilet[i].toiletNm;
             label = "<span style='background-color: #46414E;color:white'>" + title + "</span>";
             //Marker 객체 생성.
-            toliletMarker = new Tmapv2.Marker({
+            toiletMarker = new Tmapv2.Marker({
                 id : i,
                 position : new Tmapv2.LatLng(nearbyToilet[i].lat, nearbyToilet[i].lng), //Marker의 중심좌표 설정.
                 map : map, //Marker가 표시될 Map 설정.
@@ -148,10 +149,10 @@
             });
             
             //Marker에 클릭이벤트 등록.
-            toliletMarker.addListener("click", function (marker, i) {
+            toiletMarker.addListener("click", function (toiletMarker, marker, i) {
            		return function () {
                            index = i;
-                           target = marker.getPosition();
+                           target = toiletMarker.getPosition();
                            endX = target._lng;
                            endY = target._lat;
                             
@@ -168,15 +169,33 @@
                                handicap = "Y";
                            else
                                handicap = "N";
-                         
+                           
+                           //console.log("toiletMarker : " + toiletMarker)
+                           //console.log("marker : " + marker)
+                           //여기까지 마커(내위치) 들어오는것 확인
+                           
                            var content = "<h5 class='card-title text-uppercase text-muted mb-0'>"+nearbyToilet[i].unisexToiletYn+"</h5>" 
                            content += "<br'><span class='card-title text-uppercase text-muted mb-0'>대변기 : "+toiletBowlNumber+"</span>"
                            content += "<br><span class='card-title text-uppercase text-muted mb-0'>배려실 : "+handicap+"</span>"
-                           content += "<br>"+distime;
-                           content += "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='navigators(" + endX + ',' + endY + ")'>";
+                           content += "<br>"+distime;	
+                           //content += "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='navigators(" + endX + ',' + endY + ")'>";
                            //마커를 클로저방식으로 넘겨서, 그 마커를 네비게이터스가 실행될때 제거할수있도록해야할것같다.
                            /* content += "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='navigators(" + endX + ',' + endY + ',' + marker + ")'>";  */
-	
+							
+                            content += "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='(";
+							content += "function(endX,endY, marker){";
+							content +=     "return function(){";
+	                        			//실시간 길찾기
+	                        //content +=			"console.log('길찾기실행중')"			
+	                        content +=          "setInterval(function(){";
+	                        content += 	            "myLocation(marker);";
+	                       	content +=              "directions(endX, endY);";
+	                       	content +=          "},5000);";
+	                       	content +=     "}";
+	                        content += "}";
+							content += ")(" + endX + "," + endY + "," + marker + ")'>";  
+                          
+                           
                            console.log("target : " + i)
                            setTimeout(function () {
                                InfoWindow.setMap(null)
@@ -190,7 +209,7 @@
                                });
                             }, 0);
                         }
-                    }(toliletMarker, i));
+                    }(toiletMarker, marker, i));
         }
     }//setPositions[E]
     
@@ -214,7 +233,7 @@
   	                success : function(e){
   	                	if(locationFlag==0){
   	                    	locationFlag=1;
-  	                   		setPositions(e);
+  	                   		setPositions(e, marker);
   	                   	}
   	                },
   	                error : function (e) {
@@ -225,17 +244,17 @@
   	            //팝업 생성
   	            var content = "<div style=' position: relative; border-bottom: 1px solid #dcdcdc; line-height: 18px; padding: 0 35px 2px 0;'>" + "<div style='font-size: 12px; line-height: 15px;'>" + "<span style='display: inline-block; width: 14px; height: 14px; background-image: url(/resources/images/common/icon_blet.png); vertical-align: middle; margin-right: 5px;'></span>Your position" + "</div>" + "</div>";
   	               
-  	            console.log(marker)
-  	            setTimeout(function(){
-  		    	  	marker.setMap(null)
-  		        }, 0);
+  	         	console.log(marker)
+	            setTimeout(function(){
+		    	  	marker.setMap(null)
+		        }, 0);     
   		        setTimeout(function(){
   		          	marker = new Tmapv2.Marker({
   		          		position : new Tmapv2.LatLng(lat, lng),
 	           		    map : map
   		           });
   		        }, 0);
-  		                  
+  		     	     
   	            setTimeout(function () {
   	            	InfoWindow.setMap(null)
   	            }, 0);
@@ -254,17 +273,17 @@
   		}
   	}//mylocation[E]
     
-  	//실시간길찾기
-  	function navigators(endX, endY){
+/*   	//실시간길찾기
+  	function navigators(endX, endY, marker){
   		     
   		//실시간 길찾기
   	    setInterval(function(){
-  	    	myLocation();
+  	    	myLocation(marker);
   	       	directions(endX, endY);
   	       	console.log("네비게이터 실행중")
   	   	},5000);
   	        
-  	}
+  	} */
   	    
   		 
     function initTmap () {
