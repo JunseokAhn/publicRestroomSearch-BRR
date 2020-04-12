@@ -7,11 +7,13 @@
 		<typeAlias type="global.sesoc.brr.vo.BoardVO" alias="board" />
 		<typeAlias type="global.sesoc.brr.vo.ReplyVO" alias="reply" />
 		<typeAlias type="global.sesoc.brr.vo.NaverVO" alias="naver" />
+		<typeAlias type="global.sesoc.brr.vo.GoogleLoginVO" alias="googlelogin"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/BoardMapper.xml" />
 		<mapper resource="mapper/ReplyMapper.xml" />
 		<mapper resource="mapper/GoogleMapsMapper.xml" />
 		<mapper resource="mapper/NaverLoginMapper.xml" />
+		<mapper resource="mapper/GoogleLoginMapper.xml"/>
 	</mappers>
 </configuration>

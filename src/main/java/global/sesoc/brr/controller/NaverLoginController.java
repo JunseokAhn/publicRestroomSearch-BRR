@@ -44,7 +44,7 @@ public class NaverLoginController {
 	public String callback (HttpSession httpsession) {
 		logger.info("콜백 하였습니다.");
 		
-		return "callback";
+		return "member/callback";
 	}
 	
 	@GetMapping("viewForm")
@@ -104,7 +104,7 @@ public class NaverLoginController {
 		httpsession.invalidate();
 //			httpsession.removeAttribute("sessionId");
 			
-		return "logoutForm";
+		return "member/logoutForm";
 	}
 	
 	
