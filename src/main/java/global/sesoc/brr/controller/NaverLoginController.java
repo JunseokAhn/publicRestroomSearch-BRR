@@ -92,22 +92,14 @@ public class NaverLoginController {
             
             httpsession.setAttribute("sessionId", id);
             httpsession.setAttribute("sessionNickname", nickname);
+            httpsession.setAttribute("access_token", access_token);
+            httpsession.setAttribute("sessionEmail", email);
+            logger.debug((String)httpsession.getAttribute("access_token"));
+            
+            httpsession.setAttribute("Profile", profile_image);
         
         return "";
         
     }
-	
-	@GetMapping("logout")
-	public String logOut (HttpSession httpsession) {
-		logger.info("로그아웃 페이지로 이동하였습니다.");
-			
-		httpsession.invalidate();
-//			httpsession.removeAttribute("sessionId");
-			
-		return "member/logoutForm";
-	}
-	
-	
-	
 	
 }
