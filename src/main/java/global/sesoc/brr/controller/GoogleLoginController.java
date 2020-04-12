@@ -95,14 +95,16 @@ public class GoogleLoginController {
 			 google.setName(name);
 			 google.setPicture(pictureUrl);
 			 
-//			 int result = dao.getGoogle(userId);
+			 int result = dao.getGoogle(userId);
 			 
-//			 if(result == 0) {
+			 if(result == 0) {
 				 dao.insertGoogle(google);
-//			 }
+			 }
 			 
 			 httpsession.setAttribute("sessionId", userId);
 			 httpsession.setAttribute("sessionName", name);
+			 httpsession.setAttribute("sessionEmail", email);
+			 httpsession.setAttribute("Profile", pictureUrl);
 			 
 			} else {
 			  System.out.println("Invalid ID token.");
