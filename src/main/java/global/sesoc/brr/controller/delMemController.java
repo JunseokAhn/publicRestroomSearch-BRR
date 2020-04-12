@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
 
 import global.sesoc.brr.dao.GoogleLoginDAO;
@@ -60,9 +61,20 @@ public class delMemController {
 		return "";
 	}
 	
-//	@GetMapping("delGoogle")
-//	public String delGoogle (HttpSession httpsession) {
-//		
-//	}
+	@PostMapping("delGoogle")
+	public String googleDelete (HttpSession httpsession) {
+		System.out.println((String)httpsession.getAttribute("sessionId"));
+		int itmp = googledao.deleteGoogle((String)httpsession.getAttribute("sessionId"));
+		
+		if (itmp == 1)
+		{
+			httpsession.invalidate();
+			return "redirect:/";
+		}
+		else
+		{
+			return "deleteGoogle";
+		}
+	}
 	
 }
