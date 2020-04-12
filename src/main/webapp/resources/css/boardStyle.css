@@ -71,8 +71,13 @@ h1 span:nth-child(2) {
 	color: var(--gray);
 }
 
-.replyButton2 {
+/* .replyButton2 {
 	border: 1px solid;
+	color: var(--blue);
+} */
+
+.replyButton2 {
+	border: 3px solid;
 	color: var(--blue);
 }
 

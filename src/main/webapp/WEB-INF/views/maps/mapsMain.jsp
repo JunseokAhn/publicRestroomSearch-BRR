@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script src="<c:url value="/resources/js/jquery-3.4.1.js/"/>"></script>
+
 <html>
 <head>
+<script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx4afb1a7c147445528d8e83f3f1d4fea0"></script>
+<script src="<c:url value="/resources/js/jquery-3.4.1.js/"/>"></script>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>화장실이 급할땐? - 부르르</title>
@@ -14,11 +16,306 @@
 <!-- Icons -->
 <link href="<c:url value="/resources/assets/js/plugins/nucleo/css/nucleo.css"/>" rel="stylesheet" />
 <link href="<c:url value="/resources/assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css"/>" rel="stylesheet" />
+<link href="<c:url value="/resources/css/boardStyle.css"/>" rel="stylesheet" />
 <!-- CSS Files -->
 <link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
+<script type="text/javascript">
+
+    var map, pos, marker, toiletMarker, marker_s, marker_e, marker_p1, marker_p2, label, endX, endY, polyline_, InfoWindow;
+    var toiletType, unisexToiletYn, hour, distance, distime;
+    var menToiletBowlNumber, menHandicapToiletBowlNumber;
+    var ladiesToiletBowlNumber, ladiesHandicapToiletBowlNumber;
+    var totalMarkerArr = [ ];
+    var drawInfoArr = [ ];
+    var nearbyToilet = [ ];
+    var polyFlag = 0;
+    var locationFlag = 0;
+    
+
+    //길찾기
+    function directions (endX, endY) {
+        //  경로탐색 API 사용요청
+        $.ajax({
+                    method : "POST",
+                    url : "https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json&callback=result",//
+                    async : false,
+                    data : {
+                        "appKey" : "l7xx4afb1a7c147445528d8e83f3f1d4fea0",
+                        "startX" : lng,
+                        "startY" : lat,
+                        "endX" : endX,
+                        "endY" : endY,
+                        //"passList" : "126.987319,37.565778_126.983072,37.573028",
+                        "reqCoordType" : "WGS84GEO",
+                        "resCoordType" : "EPSG3857",
+                        "startName" : "출발지",
+                        "endName" : "도착지"
+                    },
+                    success : function (response) {
+                        var resultData = response.features;
+                        
+                        //결과 출력
+                        var tDistance =  ( ( resultData[0].properties.totalDistance ) / 1000 ).toFixed(1) + "km";
+                        var tTime =  ( ( resultData[0].properties.totalTime ) / 60 ).toFixed(0) + "분";
+                        distime = tTime+" "+tDistance;
+                        
+                       // $("#result").text(tDistance + tTime);
+                        
+                        drawInfoArr = [ ];
+                        for( var i in resultData){ //for문 [S]
+                            var geometry = resultData[i].geometry;
+                            var properties = resultData[i].properties;
+                            // var polyline_;
+                            
+                            if(geometry.type == "LineString"){
+                                for( var j in geometry.coordinates){
+                                    // 경로들의 결과값(구간)들을 포인트 객체로 변환 
+                                    var latlng = new Tmapv2.Point(geometry.coordinates[j][0], geometry.coordinates[j][1]);
+                                    // 포인트 객체를 받아 좌표값으로 변환
+                                    var convertPoint = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlng);
+                                    // 포인트객체의 정보로 좌표값 변환 객체로 저장
+                                    var convertChange = new Tmapv2.LatLng(convertPoint._lat, convertPoint._lng);
+                                    // 배열에 담기
+                                    drawInfoArr.push(convertChange);
+                                }
+                                
+                            }
+                            
+                            else{
+                                var markerImg = "";
+                                var pType = "";
+                                var size;
+                                
+                                if(properties.pointType == "S"){ //출발지 마커
+                                    markerImg = "http://tmapapis.sktelecom.com/upload/tmap/marker/pin_r_m_s.png";
+                                    pType = "S";
+                                    size = new Tmapv2.Size(24, 38);
+                                }
+                                else if(properties.pointType == "E"){ //도착지 마커
+                                    markerImg = "http://tmapapis.sktelecom.com/upload/tmap/marker/pin_r_m_e.png";
+                                    pType = "E";
+                                    size = new Tmapv2.Size(24, 38);
+                                }
+                                else{ //각 포인트 마커
+                                    markerImg = "http://topopen.tmap.co.kr/imgs/point.png";
+                                    pType = "P";
+                                    size = new Tmapv2.Size(8, 8);
+                                }
+                                
+                            }
+                        }//for문 [E]
+                        
+                        if(polyFlag){
+                            setTimeout(function () {
+                                polyline_.setMap(null)
+                            }, 0);
+                        }
+                        
+                        setTimeout(function () {
+                            polyline_ = new Tmapv2.Polyline({
+                                path : drawInfoArr,
+                                strokeColor : "#DD0000",
+                                strokeWeight : 6,
+                                map : map
+                            });
+                        }, 0);
+                        
+                        polyFlag = 1;
+                    },
+                    error : function (request, status, error) {
+                        console
+                                .log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                    }
+                });//ajax[E]
+
+       return distime;      
+    }//directions[E]
+    
+    
+    function setPositions (e, marker) {
+        nearbyToilet = e;
+        console.log(nearbyToilet.length)
+        console.log(nearbyToilet);
+        for(i = 0; i < nearbyToilet.length; i++){//for문을 통하여 배열 안에 있는 값을 마커 생성
+            var lonlat = nearbyToilet[i].lat + ',' + nearbyToilet[i].lng;
+            var title = nearbyToilet[i].toiletNm;
+            //label = "<span style='background-color: #46414E;color:white'>" + title + "</span>";
+            //label = title;
+            //Marker 객체 생성.
+            toiletMarker = new Tmapv2.Marker({
+                id : i,
+                position : new Tmapv2.LatLng(nearbyToilet[i].lat, nearbyToilet[i].lng), //Marker의 중심좌표 설정.
+                map : map, //Marker가 표시될 Map 설정.
+                title : title, //Marker 타이틀.
+                //label : label //Marker의 라벨.
+            });
+            
+            //Marker에 클릭이벤트 등록.
+            toiletMarker.addListener("click", function (toiletMarker, i) {
+           		return function () {
+                           index = i;
+                           target = toiletMarker.getPosition();
+                           endX = target._lng;
+                           endY = target._lat;
+                            
+                           //누르자마자 경로탐색 > 나중에 경로안내누르면 실시간안내되도록 바꾸기
+                           distime = directions(endX,endY);
+                           if(nearbyToilet[i].unisexToiletYn=="Y")
+                               nearbyToilet[i].unisexToiletYn = "남녀공용 ";
+                           else
+                               nearbyToilet[i].unisexToiletYn = "남녀별도 ";
+                           
+                           var toiletType = nearbyToilet[i].unisexToiletYn + nearbyToilet[i].toiletType;
+                           var toiletBowlNumber = nearbyToilet[i].menToiletBowlNumber + nearbyToilet[i].ladiesToiletBowlNumber;
+                           var handicap =  nearbyToilet[i].menHandicapToiletBowlNumber + nearbyToilet[i].ladiesHandicapToiletBowlNumber;
+                           if(handicap>0)
+                               handicap = "Y";
+                           else
+                               handicap = "N";
+                           
+                           //console.log("toiletMarker : " + toiletMarker)
+                           //console.log("marker : " + marker)
+                           //여기까지 마커(내위치) 들어오는것 확인
+                           
+                           var content = "<h5 class='card-title text-uppercase text-muted mb-0'>"+toiletType+"</h5>" 
+                           content += "<br'><span class='card-title text-uppercase text-muted mb-0'>대변기 : "+toiletBowlNumber+"</span>"
+                           content += "<br><span class='card-title text-uppercase text-muted mb-0'>장애인 배려실 : "+handicap+"</span><br>"
+                           
+                           //content += "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='navigators(" + endX + ',' + endY + ")'>";
+                           //마커를 클로저방식으로 넘겨서, 그 마커를 네비게이터스가 실행될때 제거할수있도록해야할것같다.
+                           /* content += "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='navigators(" + endX + ',' + endY + ',' + marker + ")'>";  */
+							content += "<div style='position: relative; padding-top: 5px; display:inline-block'>"
+							//content += 	"<div style='display:inline-block; border:3px solid #dcdcdc;'>"
+                            content += "<input class='replyButton2' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='(";
+							content += "function(endX,endY, marker){";
+							content +=     "return function(){";
+	                        			//실시간 길찾기
+	                        //content +=			"console.log('길찾기실행중')"			
+	                        content +=          "setInterval(function(){";
+	                        content += 	            "myLocation(marker);";
+	                       	content +=              "directions(endX, endY);";
+	                       	content +=          "},5000);";
+	                       	content +=     "}";
+	                        content += "}";
+							content += ")(" + endX + "," + endY + "," + marker + ")'>";  
+							content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";	
+                           
+                           console.log("target : " + i)
+                           setTimeout(function () {
+                               InfoWindow.setMap(null)
+                           }, 0);
+                           setTimeout(function () {
+                               InfoWindow = new Tmapv2.InfoWindow({
+                                   position : new Tmapv2.LatLng(target._lat, target._lng),
+                                   content : content,
+                                   type : 1,
+                                   map : map
+                               });
+                            }, 0);
+                        }
+                    }(toiletMarker, i));
+        }
+    }//setPositions[E]
+    
+  	function myLocation(marker){
+  	  	// HTML5의 geolocation으로 사용할 수 있는지 확인합니다      
+  	    if(navigator.geolocation){
+  	   		navigator.geolocation.getCurrentPosition(function (position) {
+  	        	lat = position.coords.latitude;
+  	            lng = position.coords.longitude;
+  	            pos = {
+  	              	lat : lat,
+  	                lng : lng
+  	            };
+  	            $.ajax({
+  	            	url : "<c:url value='/maps/getLocation'/>",
+  	       			data : {
+						lat : pos.lat.toFixed(6),
+  	               	    lng : pos.lng.toFixed(6)
+  	                },
+  	                type : "post",
+  	                success : function(e){
+  	                	if(locationFlag==0){
+  	                    	locationFlag=1;
+  	                   		setPositions(e, marker);
+  	                   	}
+  	                },
+  	                error : function (e) {
+  	                	console.log(e)
+  	              	}
+  	    		})
+
+  	            //팝업 생성
+  	            var content = "<div style=' position: relative; border-bottom: 1px solid #dcdcdc; line-height: 18px; padding: 0 35px 2px 0;'>"  
+  	          	content +=			"<div style='font-size: 12px; line-height: 15px;'>" 
+  	          	content +=				"<i class='ni ni-user-run'></i>"
+  	          	content +=				"<span style='display: inline-block; width: 14px; height: 14px; background-image: url(/resources/images/common/icon_blet.png); vertical-align: middle; margin-right: 5px;'></span>Your location" 
+  	          	content +=			"</div>"
+	        	content +=	  "</div>";
+	        	
+  	        	console.log(marker)
+	            setTimeout(function(){
+		    	  	marker.setMap(null)
+		        }, 0);     
+  		        setTimeout(function(){
+  		          	marker = new Tmapv2.Marker({
+  		          		position : new Tmapv2.LatLng(lat, lng),
+	           		    map : map
+  		           });
+  		        }, 0);
+  		     	     
+  	            setTimeout(function () {
+  	            	InfoWindow.setMap(null)
+  	            }, 0);
+  	            setTimeout(function () {
+  	            	InfoWindow = new Tmapv2.InfoWindow({
+  	                	position : new Tmapv2.LatLng(lat, lng),
+	                    content : content,
+  	                    type : 1,
+  	                    map : map
+  	                });
+  	            }, 0);
+  	                        
+  	            map.setCenter(new Tmapv2.LatLng(lat, lng));
+  	            map.setZoom(15);
+  	           });
+  		}
+  	}//mylocation[E]
+    
+/*   	//실시간길찾기
+  	function navigators(endX, endY, marker){
+  		     
+  		//실시간 길찾기
+  	    setInterval(function(){
+  	    	myLocation(marker);
+  	       	directions(endX, endY);
+  	       	console.log("네비게이터 실행중")
+  	   	},5000);
+  	        
+  	} */
+  	    
+  		 
+    function initTmap () {
+        // Tmap.map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
+        map = new Tmapv2.Map("map_div", {
+            center : new Tmapv2.LatLng(37.566481622437934, 126.98502302169841), // 지도 초기 좌표
+            width : "100%", // map의 width 설정
+            height : "400px" // map의 height 설정	
+            
+        });
+       
+        myLocation();
+        
+        function addComma (num) {
+            var regexp = /\B(?=(\d{3})+(?!\d))/g;
+            return num.toString().replace(regexp, ',');
+        }
+    }//initMap[E]
+   
+</script>
 </head>
 
-<body class="">
+<body class="" onload="initTmap()">
 	<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
 		<div class="container-fluid">
 			<!-- Toggler -->
@@ -125,7 +422,7 @@
 					</a></li>
 				</ul>
 				<ul class="navbar-nav">
-					<li class="nav-item active active-pro"><a class="nav-link" href="<c:url value="/examples/upgrade"/>"> <i class="ni ni-send text-dark"></i> Upgrade to PRO
+					<li class="nav-item active active-pro"><a class="nav-link" href="<c:url value="/examples/upgrade"/>"> <i class="ni ni-send text-dark"></i> Send Feedback
 					</a></li>
 				</ul>
 			</div>
@@ -180,89 +477,7 @@
 		<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
 			<div class="container-fluid">
 				<div class="header-body">
-					<!-- Card stats -->
-					<div class="row">
-						<div class="col-xl-3 col-lg-6">
-							<div class="card card-stats mb-4 mb-xl-0">
-								<div class="card-body">
-									<div class="row">
-										<div class="col">
-											<h5 class="card-title text-uppercase text-muted mb-0">Traffic</h5>
-											<span class="h2 font-weight-bold mb-0">350,897</span>
-										</div>
-										<div class="col-auto">
-											<div class="icon icon-shape bg-danger text-white rounded-circle shadow">
-												<i class="fas fa-chart-bar"></i>
-											</div>
-										</div>
-									</div>
-									<p class="mt-3 mb-0 text-muted text-sm">
-										<span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span> <span class="text-nowrap">Since last month</span>
-									</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-xl-3 col-lg-6">
-							<div class="card card-stats mb-4 mb-xl-0">
-								<div class="card-body">
-									<div class="row">
-										<div class="col">
-											<h5 class="card-title text-uppercase text-muted mb-0">New users</h5>
-											<span class="h2 font-weight-bold mb-0">2,356</span>
-										</div>
-										<div class="col-auto">
-											<div class="icon icon-shape bg-warning text-white rounded-circle shadow">
-												<i class="fas fa-chart-pie"></i>
-											</div>
-										</div>
-									</div>
-									<p class="mt-3 mb-0 text-muted text-sm">
-										<span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 3.48%</span> <span class="text-nowrap">Since last week</span>
-									</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-xl-3 col-lg-6">
-							<div class="card card-stats mb-4 mb-xl-0">
-								<div class="card-body">
-									<div class="row">
-										<div class="col">
-											<h5 class="card-title text-uppercase text-muted mb-0">Sales</h5>
-											<span class="h2 font-weight-bold mb-0">924</span>
-										</div>
-										<div class="col-auto">
-											<div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
-												<i class="fas fa-users"></i>
-											</div>
-										</div>
-									</div>
-									<p class="mt-3 mb-0 text-muted text-sm">
-										<span class="text-warning mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span> <span class="text-nowrap">Since yesterday</span>
-									</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-xl-3 col-lg-6">
-							<div class="card card-stats mb-4 mb-xl-0">
-								<div class="card-body">
-									<div class="row">
-										<div class="col">
-											<h5 class="card-title text-uppercase text-muted mb-0">Performance</h5>
-											<span class="h2 font-weight-bold mb-0">49,65%</span>
-										</div>
-										<div class="col-auto">
-											<div class="icon icon-shape bg-info text-white rounded-circle shadow">
-												<i class="fas fa-percent"></i>
-											</div>
-										</div>
-									</div>
-									<p class="mt-3 mb-0 text-muted text-sm">
-										<span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span> <span class="text-nowrap">Since last month</span>
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
+					
 				</div>
 			</div>
 		</div>
@@ -270,36 +485,120 @@
 			<div class="row">
 				<div class="col">
 					<div class="card shadow border-0">
-						<div id="map" class="map-canvas" style="height: 600px;"></div>
-						<!-- <input type="hidden" id="start"> -->
-   						<!--  <input type="hidden" id="end"> -->
-   						<b>End: </b>
-      					 <div id="floating-panel">
-      						 <input type="hidden" id="start">
-      						<select id="end">
-        					<option value="chicago, il">Chicago</option>
-        					<option value="37.511600,127.061200">St Louis</option>
-      						</select>
-						 </div>
+						<div id="map_wrap" class="map_wrap3">
+							<div id="map_div" class="map-canvas" style="height: 600px;"></div>
+						</div>
+						<div class="map_act_btn_wrap clear_box"></div>
+						<!-- <input type="hidden" id="start"> <input type="hidden" id="end"> -->
+					</div>
+				</div>
+			</div>		
+			
+			<!-- Header -->
+			<div class="header pb-8 pt-5">
+				<div class="container-fluid">
+					<div class="header-body">
+						<!-- Card stats -->
+						<div class="row">
+							<div class="col-xl-3 col-lg-6">
+								<div class="card card-stats mb-4 mb-xl-0">
+									<div class="card-body">
+										<div class="row">
+											<div class="col">
+												<h5 class="card-title text-uppercase text-muted mb-0">Traffic</h5>
+												<span class="h2 font-weight-bold mb-0">350,897</span>
+												<input class="replyButton2" type="button" value="실시간 길찾기">
+											</div>
+											<div class="col-auto">
+												<div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+													<i class="fas fa-chart-bar"></i>
+												</div>
+											</div>
+										</div>
+										<p class="mt-3 mb-0 text-muted text-sm">
+											<span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span> <span class="text-nowrap">Since last month</span>
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-3 col-lg-6">
+								<div class="card card-stats mb-4 mb-xl-0">
+									<div class="card-body">
+										<div class="row">
+											<div class="col">
+												<h5 class="card-title text-uppercase text-muted mb-0">New users</h5>
+												<span class="h2 font-weight-bold mb-0">2,356</span>
+											</div>
+											<div class="col-auto">
+												<div class="icon icon-shape bg-warning text-white rounded-circle shadow">
+													<i class="fas fa-chart-pie"></i>
+												</div>
+											</div>
+										</div>
+										<p class="mt-3 mb-0 text-muted text-sm">
+											<span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 3.48%</span> <span class="text-nowrap">Since last week</span>
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-3 col-lg-6">
+								<div class="card card-stats mb-4 mb-xl-0">
+									<div class="card-body">
+										<div class="row">
+											<div class="col">
+												<h5 class="card-title text-uppercase text-muted mb-0">Sales</h5>
+												<span class="h2 font-weight-bold mb-0">924</span>
+											</div>
+											<div class="col-auto">
+												<div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
+													<i class="fas fa-users"></i>
+												</div>
+											</div>
+										</div>
+										<p class="mt-3 mb-0 text-muted text-sm">
+											<span class="text-warning mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span> <span class="text-nowrap">Since yesterday</span>
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-3 col-lg-6">
+								<div class="card card-stats mb-4 mb-xl-0">
+									<div class="card-body">
+										<div class="row">
+											<div class="col">
+												<h5 class="card-title text-uppercase text-muted mb-0">Performance</h5>
+												<span class="h2 font-weight-bold mb-0">49,65%</span>
+											</div>
+											<div class="col-auto">
+												<div class="icon icon-shape bg-info text-white rounded-circle shadow">
+													<i class="fas fa-percent"></i>
+												</div>
+											</div>
+										</div>
+										<p class="mt-3 mb-0 text-muted text-sm">
+											<span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span> <span class="text-nowrap">Since last month</span>
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-
-			<!-- Footer -->
 			<!-- Footer -->
 			<footer class="footer">
 				<div class="row align-items-center justify-content-xl-between">
 					<div class="col-xl-6">
 						<div class="copyright text-center text-xl-left text-muted">
-							&copy; 2018 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
+							&copy; 2020 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Crispy Donut</a>
 						</div>
 					</div>
 					<div class="col-xl-6">
 						<ul class="nav nav-footer justify-content-center justify-content-xl-end">
-							<li class="nav-item"><a href="https://www.creative-tim.com" class="nav-link" target="_blank">Creative Tim</a></li>
-							<li class="nav-item"><a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">About Us</a></li>
-							<li class="nav-item"><a href="http://blog.creative-tim.com" class="nav-link" target="_blank">Blog</a></li>
-							<li class="nav-item"><a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" class="nav-link" target="_blank">MIT License</a></li>
+							<li class="nav-item"><a href="https://www.creative-tim.com" class="nav-link" target="_blank">About Us</a></li>
+							<li class="nav-item"><a href="https://github.com/JunseokAhn/brr" class="nav-link" target="_blank">Git hub</a></li>
+							<li class="nav-item"><a href="http://tempcat.coo.kr" class="nav-link" target="_blank">Blog</a></li>
+							<li class="nav-item"><a href="http://tradecampus.com/" class="nav-link" target="_blank">SCIT MASTER</a></li>
 						</ul>
 					</div>
 				</div>
@@ -309,187 +608,7 @@
 	<!--   Core   -->
 	<script src="<c:url value="/resources/assets/js/plugins/jquery/dist/jquery.min.js"/>"></script>
 	<script src="<c:url value="/resources/assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"/>"></script>
-	<!--   Optional JS   -->
-	 <script>
-	  // Note: This example requires that you consent to location sharing when
-     // prompted by your browser. If you see the error "The Geolocation service
-     // failed.", it means you probably did not give permission for the browser to
-     // locate you.
-     var map, pos, marker, i;
 
-     window.onload = function() {
-       infowindow =new google.maps.InfoWindow();
-     }
-
-     function initMap() {
-      map = new google.maps.Map(document.getElementById('map'), {
-       center: {lat: 37.511683, lng: 127.061255},
-       zoom: 16,
-       mapTypeId: google.maps.MapTypeId.ROADMAP
-     });
-      infoWindow = new google.maps.InfoWindow();
-
-       // 내위치설정
-       if (navigator.geolocation) {
-       	navigator.geolocation.getCurrentPosition(function(position) {
-          pos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          };
-
-          infoWindow.setPosition(pos);
-          infoWindow.setContent('Location found.');
-          infoWindow.open(map);
-          map.setCenter(pos);
-          console.log("this location : "+JSON.stringify(pos));
-          document.getElementById('start').value = pos.lat + "," + pos.lng
-        }, function() {
-         handleLocationError(true, infoWindow, map.getCenter());
-       });
-       } else {
-         // Browser doesn't support Geolocation
-         handleLocationError(false, infoWindow, map.getCenter());
-       }
-
-
-       //마커설정
-        // Create an array of alphabetical characters used to label the markers.
-        var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-       // Add some markers to the map.
-       // Note: The code uses the JavaScript Array.prototype.map() method to
-       // create an array of markers based on a given "locations" array.
-       // The map() method here has nothing to do with the Google Maps API.
-       
-      /* marker = locations.map(function(location, i) {
-         return new google.maps.Marker({
-           position: {lat : location.lat, lng : location.lng},
-           label: labels[i % labels.length],
-           title: "index"+i,
-           //title: location.contents,
-           content: location.contents
-         });
-         
-       });*/
-
-       for (var i = 0; i < locations.length; i++) {  
-         marker = new google.maps.Marker({
-           id:i,
-           position: new  google.maps.LatLng(locations[i].lat, locations[i].lng),
-           label: labels[i % labels.length],
-           map: map
-         });
-
-         google.maps.event.addListener(marker, 'click', (function(marker, i) {
-           return function() {
-             console.log(i);
-             infowindow.setContent(locations[i].contents);
-             infowindow.open(map, marker);
-           }
-         })(marker, i));
-         if(marker){
-           marker.addListener('click', function() {
-             map.setZoom(15);
-             map.setCenter(this.getPosition());
-             target = this.getPosition()
-             console.log("target location : "+target);
-           });
-         }
-       }
-
-
-
-       // Add a marker clusterer to manage the markers.
-
-       /*var markerCluster = new MarkerClusterer(map, marker,
-       {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});*/
-
-
-       //길찾기설정
-       var directionsService = new google.maps.DirectionsService();
-       var directionsRenderer = new google.maps.DirectionsRenderer();
-       directionsRenderer.setMap(map);
-
-       var onChangeHandler = function() {
-         calculateAndDisplayRoute(directionsService, directionsRenderer);
-       };
-       //document.getElementById('start').addEventListener('change', onChangeHandler);
-       document.getElementById('end').addEventListener('change', onChangeHandler);
-
-     }
-
-     function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-      infoWindow.setPosition(pos);
-      infoWindow.setContent(browserHasGeolocation ?
-       'Error: The Geolocation service failed.' :
-       'Error: Your browser doesn\'t support geolocation.');
-      infoWindow.open(map);
-    }
-
-    function calculateAndDisplayRoute(directionsService, directionsRenderer) {
-     directionsService.route(
-     {
-       origin: {query: document.getElementById('start').value},
-       destination: {query: document.getElementById('end').value},
-       travelMode: 'TRANSIT'
-     },
-     function(response, status) {
-       if (status === 'OK') {
-         directionsRenderer.setDirections(response);
-       } else {
-         window.alert('Directions request failed due to ' + status);
-       }
-     });
-   }
-
-   //마커 위치설정
-   var locations = [
-   {lat: -31.563910, lng: 147.154312, contents: "이게되나?1"},
-   {lat: -33.718234, lng: 150.363181, contents: "이게되나?2"},
-   {lat: -33.727111, lng: 150.371124, contents: "이게되나?3"},
-   {lat: -33.848588, lng: 151.209834, contents: "이게되나?4"},
-   {lat: -33.851702, lng: 151.216968, contents: "이게되나?5"},
-   {lat: -34.671264, lng: 150.863657, contents: "이게되나?6"},
-   {lat: -35.304724, lng: 148.662905, contents: "이게되나?7"},
-   {lat: -36.817685, lng: 175.699196, contents: "이게되나?8"},
-   {lat: -36.828611, lng: 175.790222, contents: "이게되나?9"},
-   {lat: -37.750000, lng: 145.116667, contents: "이게되나?10"},
-   {lat: -37.759859, lng: 145.128708, contents: "이게되나?11"},
-   {lat: -37.765015, lng: 145.133858, contents: "이게되나?12"},
-   {lat: -37.770104, lng: 145.143299, contents: "이게되나?13"},
-   {lat: -37.773700, lng: 145.145187, contents: "이게되나?14"},
-   {lat: -37.774785, lng: 145.137978, contents: "이게되나?15"},
-   {lat: -37.819616, lng: 144.968119, contents: "이게되나?16"},
-   {lat: -38.330766, lng: 144.695692, contents: "이게되나?17"},
-   {lat: -39.927193, lng: 175.053218, contents: "이게되나?18"},
-   {lat: -41.330162, lng: 174.865694, contents: "이게되나?19"},
-   {lat: -42.734358, lng: 147.439506, contents: "이게되나?20"},
-   {lat: -42.734358, lng: 147.501315, contents: "이게되나?21"},
-   {lat: -42.735258, lng: 147.438000, contents: "이게되나?22"},
-   {lat: -43.999792, lng: 170.463352, contents: "이게되나?23"},
-   {lat: 37.559739, lng: 126.843046, contents: "이게되나?24"},
-   {lat: 37.562162, lng: 126.844371, contents: "이게되나?25"},
-   {lat: 37.561116, lng: 126.842429, contents: "이게되나?26"}
-   ]
-
-   /* https://maps.googleapis.com/maps/api/directions/json?origin=41.43206,-81.38992&destination=41.43206,-81.8992&key=AIzaSyDkQ00U2AUBQSS1CJF5YveL-1YWsTjaRGA*/
-
-   /*https://maps.googleapis.com/maps/api/directions/json?origin=37.5728359,126.9746922&destination=37.5129907,127.1005382&key=AIzaSyDkQ00U2AUBQSS1CJF5YveL-1YWsTjaRGA*/
-/*https://maps.googleapis.com/maps/api/directions/
-json?origin=37.5728359,126.9746922&destination=37.5129907,127.1005382&mode=transit&departure_time=now&key=AIzaSyDkQ00U2AUBQSS1CJF5YveL-1YWsTjaRGA&callback=initMap*/
-  </script>
-  <script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkQ00U2AUBQSS1CJF5YveL-1YWsTjaRGA&callback=initMap">
-</script>
-	<!--   Argon JS   -->
-	<%-- <script src="<c:url value="/resources/assets/js/argon-dashboard.min.js?v=1.1.2"/>"></script> --%>
-	<script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
-	<script>
-		window.TrackJS && TrackJS.install({
-			token : "ee6fab19c5a04ac1a32a645abde4613a",
-			application : "argon-dashboard-free"
-		});
-	</script>
 </body>
 
 </html>
