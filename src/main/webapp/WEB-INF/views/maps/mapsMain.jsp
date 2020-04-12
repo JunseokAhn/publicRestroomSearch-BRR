@@ -16,6 +16,7 @@
 <!-- Icons -->
 <link href="<c:url value="/resources/assets/js/plugins/nucleo/css/nucleo.css"/>" rel="stylesheet" />
 <link href="<c:url value="/resources/assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css"/>" rel="stylesheet" />
+<link href="<c:url value="/resources/css/boardStyle.css"/>" rel="stylesheet" />
 <!-- CSS Files -->
 <link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
 <script type="text/javascript">
@@ -138,18 +139,19 @@
         for(i = 0; i < nearbyToilet.length; i++){//for문을 통하여 배열 안에 있는 값을 마커 생성
             var lonlat = nearbyToilet[i].lat + ',' + nearbyToilet[i].lng;
             var title = nearbyToilet[i].toiletNm;
-            label = "<span style='background-color: #46414E;color:white'>" + title + "</span>";
+            //label = "<span style='background-color: #46414E;color:white'>" + title + "</span>";
+            //label = title;
             //Marker 객체 생성.
             toiletMarker = new Tmapv2.Marker({
                 id : i,
                 position : new Tmapv2.LatLng(nearbyToilet[i].lat, nearbyToilet[i].lng), //Marker의 중심좌표 설정.
                 map : map, //Marker가 표시될 Map 설정.
                 title : title, //Marker 타이틀.
-                label : label //Marker의 라벨.
+                //label : label //Marker의 라벨.
             });
             
             //Marker에 클릭이벤트 등록.
-            toiletMarker.addListener("click", function (toiletMarker, marker, i) {
+            toiletMarker.addListener("click", function (toiletMarker, i) {
            		return function () {
                            index = i;
                            target = toiletMarker.getPosition();
@@ -159,10 +161,11 @@
                            //누르자마자 경로탐색 > 나중에 경로안내누르면 실시간안내되도록 바꾸기
                            distime = directions(endX,endY);
                            if(nearbyToilet[i].unisexToiletYn=="Y")
-                               nearbyToilet[i].unisexToiletYn = "남녀공용";
+                               nearbyToilet[i].unisexToiletYn = "남녀공용 ";
                            else
-                               nearbyToilet[i].unisexToiletYn = "남녀별도";
-                            
+                               nearbyToilet[i].unisexToiletYn = "남녀별도 ";
+                           
+                           var toiletType = nearbyToilet[i].unisexToiletYn + nearbyToilet[i].toiletType;
                            var toiletBowlNumber = nearbyToilet[i].menToiletBowlNumber + nearbyToilet[i].ladiesToiletBowlNumber;
                            var handicap =  nearbyToilet[i].menHandicapToiletBowlNumber + nearbyToilet[i].ladiesHandicapToiletBowlNumber;
                            if(handicap>0)
@@ -174,15 +177,16 @@
                            //console.log("marker : " + marker)
                            //여기까지 마커(내위치) 들어오는것 확인
                            
-                           var content = "<h5 class='card-title text-uppercase text-muted mb-0'>"+nearbyToilet[i].unisexToiletYn+"</h5>" 
+                           var content = "<h5 class='card-title text-uppercase text-muted mb-0'>"+toiletType+"</h5>" 
                            content += "<br'><span class='card-title text-uppercase text-muted mb-0'>대변기 : "+toiletBowlNumber+"</span>"
-                           content += "<br><span class='card-title text-uppercase text-muted mb-0'>배려실 : "+handicap+"</span>"
-                           content += "<br>"+distime;	
+                           content += "<br><span class='card-title text-uppercase text-muted mb-0'>장애인 배려실 : "+handicap+"</span><br>"
+                           
                            //content += "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='navigators(" + endX + ',' + endY + ")'>";
                            //마커를 클로저방식으로 넘겨서, 그 마커를 네비게이터스가 실행될때 제거할수있도록해야할것같다.
                            /* content += "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='navigators(" + endX + ',' + endY + ',' + marker + ")'>";  */
-							
-                            content += "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='(";
+							content += "<div style='position: relative; padding-top: 5px; display:inline-block'>"
+							//content += 	"<div style='display:inline-block; border:3px solid #dcdcdc;'>"
+                            content += "<input class='replyButton2' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='(";
 							content += "function(endX,endY, marker){";
 							content +=     "return function(){";
 	                        			//실시간 길찾기
@@ -194,7 +198,7 @@
 	                       	content +=     "}";
 	                        content += "}";
 							content += ")(" + endX + "," + endY + "," + marker + ")'>";  
-                          
+							content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";	
                            
                            console.log("target : " + i)
                            setTimeout(function () {
@@ -209,7 +213,7 @@
                                });
                             }, 0);
                         }
-                    }(toiletMarker, marker, i));
+                    }(toiletMarker, i));
         }
     }//setPositions[E]
     
@@ -242,9 +246,14 @@
   	    		})
 
   	            //팝업 생성
-  	            var content = "<div style=' position: relative; border-bottom: 1px solid #dcdcdc; line-height: 18px; padding: 0 35px 2px 0;'>" + "<div style='font-size: 12px; line-height: 15px;'>" + "<span style='display: inline-block; width: 14px; height: 14px; background-image: url(/resources/images/common/icon_blet.png); vertical-align: middle; margin-right: 5px;'></span>Your position" + "</div>" + "</div>";
-  	               
-  	         	console.log(marker)
+  	            var content = "<div style=' position: relative; border-bottom: 1px solid #dcdcdc; line-height: 18px; padding: 0 35px 2px 0;'>"  
+  	          	content +=			"<div style='font-size: 12px; line-height: 15px;'>" 
+  	          	content +=				"<i class='ni ni-user-run'></i>"
+  	          	content +=				"<span style='display: inline-block; width: 14px; height: 14px; background-image: url(/resources/images/common/icon_blet.png); vertical-align: middle; margin-right: 5px;'></span>Your location" 
+  	          	content +=			"</div>"
+	        	content +=	  "</div>";
+	        	
+  	        	console.log(marker)
 	            setTimeout(function(){
 		    	  	marker.setMap(null)
 		        }, 0);     
@@ -413,7 +422,7 @@
 					</a></li>
 				</ul>
 				<ul class="navbar-nav">
-					<li class="nav-item active active-pro"><a class="nav-link" href="<c:url value="/examples/upgrade"/>"> <i class="ni ni-send text-dark"></i> Upgrade to PRO
+					<li class="nav-item active active-pro"><a class="nav-link" href="<c:url value="/examples/upgrade"/>"> <i class="ni ni-send text-dark"></i> Send Feedback
 					</a></li>
 				</ul>
 			</div>
@@ -468,89 +477,7 @@
 		<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
 			<div class="container-fluid">
 				<div class="header-body">
-					<!-- Card stats -->
-					<div class="row">
-						<div class="col-xl-3 col-lg-6">
-							<div class="card card-stats mb-4 mb-xl-0">
-								<div class="card-body">
-									<div class="row">
-										<div class="col">
-											<h5 class="card-title text-uppercase text-muted mb-0">Traffic</h5>
-											<span class="h2 font-weight-bold mb-0">350,897</span>
-										</div>
-										<div class="col-auto">
-											<div class="icon icon-shape bg-danger text-white rounded-circle shadow">
-												<i class="fas fa-chart-bar"></i>
-											</div>
-										</div>
-									</div>
-									<p class="mt-3 mb-0 text-muted text-sm">
-										<span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span> <span class="text-nowrap">Since last month</span>
-									</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-xl-3 col-lg-6">
-							<div class="card card-stats mb-4 mb-xl-0">
-								<div class="card-body">
-									<div class="row">
-										<div class="col">
-											<h5 class="card-title text-uppercase text-muted mb-0">New users</h5>
-											<span class="h2 font-weight-bold mb-0">2,356</span>
-										</div>
-										<div class="col-auto">
-											<div class="icon icon-shape bg-warning text-white rounded-circle shadow">
-												<i class="fas fa-chart-pie"></i>
-											</div>
-										</div>
-									</div>
-									<p class="mt-3 mb-0 text-muted text-sm">
-										<span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 3.48%</span> <span class="text-nowrap">Since last week</span>
-									</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-xl-3 col-lg-6">
-							<div class="card card-stats mb-4 mb-xl-0">
-								<div class="card-body">
-									<div class="row">
-										<div class="col">
-											<h5 class="card-title text-uppercase text-muted mb-0">Sales</h5>
-											<span class="h2 font-weight-bold mb-0">924</span>
-										</div>
-										<div class="col-auto">
-											<div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
-												<i class="fas fa-users"></i>
-											</div>
-										</div>
-									</div>
-									<p class="mt-3 mb-0 text-muted text-sm">
-										<span class="text-warning mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span> <span class="text-nowrap">Since yesterday</span>
-									</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-xl-3 col-lg-6">
-							<div class="card card-stats mb-4 mb-xl-0">
-								<div class="card-body">
-									<div class="row">
-										<div class="col">
-											<h5 class="card-title text-uppercase text-muted mb-0">Performance</h5>
-											<span class="h2 font-weight-bold mb-0">49,65%</span>
-										</div>
-										<div class="col-auto">
-											<div class="icon icon-shape bg-info text-white rounded-circle shadow">
-												<i class="fas fa-percent"></i>
-											</div>
-										</div>
-									</div>
-									<p class="mt-3 mb-0 text-muted text-sm">
-										<span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span> <span class="text-nowrap">Since last month</span>
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
+					
 				</div>
 			</div>
 		</div>
@@ -565,22 +492,113 @@
 						<!-- <input type="hidden" id="start"> <input type="hidden" id="end"> -->
 					</div>
 				</div>
+			</div>		
+			
+			<!-- Header -->
+			<div class="header pb-8 pt-5">
+				<div class="container-fluid">
+					<div class="header-body">
+						<!-- Card stats -->
+						<div class="row">
+							<div class="col-xl-3 col-lg-6">
+								<div class="card card-stats mb-4 mb-xl-0">
+									<div class="card-body">
+										<div class="row">
+											<div class="col">
+												<h5 class="card-title text-uppercase text-muted mb-0">Traffic</h5>
+												<span class="h2 font-weight-bold mb-0">350,897</span>
+												<input class="replyButton2" type="button" value="실시간 길찾기">
+											</div>
+											<div class="col-auto">
+												<div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+													<i class="fas fa-chart-bar"></i>
+												</div>
+											</div>
+										</div>
+										<p class="mt-3 mb-0 text-muted text-sm">
+											<span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span> <span class="text-nowrap">Since last month</span>
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-3 col-lg-6">
+								<div class="card card-stats mb-4 mb-xl-0">
+									<div class="card-body">
+										<div class="row">
+											<div class="col">
+												<h5 class="card-title text-uppercase text-muted mb-0">New users</h5>
+												<span class="h2 font-weight-bold mb-0">2,356</span>
+											</div>
+											<div class="col-auto">
+												<div class="icon icon-shape bg-warning text-white rounded-circle shadow">
+													<i class="fas fa-chart-pie"></i>
+												</div>
+											</div>
+										</div>
+										<p class="mt-3 mb-0 text-muted text-sm">
+											<span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 3.48%</span> <span class="text-nowrap">Since last week</span>
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-3 col-lg-6">
+								<div class="card card-stats mb-4 mb-xl-0">
+									<div class="card-body">
+										<div class="row">
+											<div class="col">
+												<h5 class="card-title text-uppercase text-muted mb-0">Sales</h5>
+												<span class="h2 font-weight-bold mb-0">924</span>
+											</div>
+											<div class="col-auto">
+												<div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
+													<i class="fas fa-users"></i>
+												</div>
+											</div>
+										</div>
+										<p class="mt-3 mb-0 text-muted text-sm">
+											<span class="text-warning mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span> <span class="text-nowrap">Since yesterday</span>
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-3 col-lg-6">
+								<div class="card card-stats mb-4 mb-xl-0">
+									<div class="card-body">
+										<div class="row">
+											<div class="col">
+												<h5 class="card-title text-uppercase text-muted mb-0">Performance</h5>
+												<span class="h2 font-weight-bold mb-0">49,65%</span>
+											</div>
+											<div class="col-auto">
+												<div class="icon icon-shape bg-info text-white rounded-circle shadow">
+													<i class="fas fa-percent"></i>
+												</div>
+											</div>
+										</div>
+										<p class="mt-3 mb-0 text-muted text-sm">
+											<span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span> <span class="text-nowrap">Since last month</span>
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-
 			<!-- Footer -->
 			<footer class="footer">
 				<div class="row align-items-center justify-content-xl-between">
 					<div class="col-xl-6">
 						<div class="copyright text-center text-xl-left text-muted">
-							&copy; 2018 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
+							&copy; 2020 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Crispy Donut</a>
 						</div>
 					</div>
 					<div class="col-xl-6">
 						<ul class="nav nav-footer justify-content-center justify-content-xl-end">
-							<li class="nav-item"><a href="https://www.creative-tim.com" class="nav-link" target="_blank">Creative Tim</a></li>
-							<li class="nav-item"><a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">About Us</a></li>
-							<li class="nav-item"><a href="http://blog.creative-tim.com" class="nav-link" target="_blank">Blog</a></li>
-							<li class="nav-item"><a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" class="nav-link" target="_blank">MIT License</a></li>
+							<li class="nav-item"><a href="https://www.creative-tim.com" class="nav-link" target="_blank">About Us</a></li>
+							<li class="nav-item"><a href="https://github.com/JunseokAhn/brr" class="nav-link" target="_blank">Git hub</a></li>
+							<li class="nav-item"><a href="http://tempcat.coo.kr" class="nav-link" target="_blank">Blog</a></li>
+							<li class="nav-item"><a href="http://tradecampus.com/" class="nav-link" target="_blank">SCIT MASTER</a></li>
 						</ul>
 					</div>
 				</div>
