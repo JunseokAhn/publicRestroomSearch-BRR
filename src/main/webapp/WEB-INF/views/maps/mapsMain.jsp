@@ -174,7 +174,7 @@
                                handicap = "N";
                            
                            //console.log("toiletMarker : " + toiletMarker)
-                           console.log("marker : " + marker)
+                           console.log(marker)
                            //여기까지 마커(내위치) 들어오는것 확인
                            
                            var content = "<h5 class='card-title text-uppercase text-muted mb-0'>"+toiletType+"</h5>" 
@@ -183,12 +183,13 @@
                            
                            //content += "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='navigators(" + endX + ',' + endY + ")'>";
                            //마커를 클로저방식으로 넘겨서, 그 마커를 네비게이터스가 실행될때 제거할수있도록해야할것같다.
-                           /* content += "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='navigators(" + endX + ',' + endY + ',' + marker + ")'>";  */
+                           content += "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='navigators(" + endX + ',' + endY  + ")'>"; 
 							
                            
 							//content += 	"<div style='display:inline-block; border:3px solid #dcdcdc;'>"
 							//content +=			"console.log('길찾기실행중')"			
-                           content += "<div style='position: relative; padding-top: 5px; display:inline-block'>"
+                           
+							/* content += "<div style='position: relative; padding-top: 5px; display:inline-block'>"
                             content += "<input class='replyButton2' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='(";
 							content += "function(endX,endY, marker){";
 							content +=     "return function(){";
@@ -198,8 +199,8 @@
 	                       	content +=          "},5000);";
 	                       	content +=     "};";
 	                        content += "}";
-							content += ")(" + endX + "," + endY + ", marker);'>";  
-							content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";	
+							content += ")(" + endX + "," + endY + "," + marker + ");'>";  
+							content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";	 */
                            
                            console.log("target : " + i)
                            setTimeout(function () {
@@ -218,7 +219,7 @@
         }
     }//setPositions[E]
     
-  	function myLocation(marker){
+  	function myLocation(){
   	  	// HTML5의 geolocation으로 사용할 수 있는지 확인합니다      
   	    if(navigator.geolocation){
   	   		navigator.geolocation.getCurrentPosition(function (position) {
@@ -256,7 +257,7 @@
   	          	content +=			"</div>"
 	        	content +=	  "</div>";
 	        	
-  	        	console.log(marker)
+  	        	console.log( marker)
 	            setTimeout(function(){
 		    	  	marker.setMap(null)
 		        }, 0);     
@@ -285,17 +286,17 @@
   		}
   	}//mylocation[E]
     
-/*   	//실시간길찾기
-  	function navigators(endX, endY, marker){
+	//실시간길찾기
+  	function navigators(endX, endY){
   		     
   		//실시간 길찾기
   	    setInterval(function(){
-  	    	myLocation(marker);
+  	    	myLocation();
   	       	directions(endX, endY);
   	       	console.log("네비게이터 실행중")
   	   	},5000);
   	        
-  	} */
+  	} 
   	    
   		 
     function initTmap () {
@@ -498,7 +499,7 @@
 			</div>		
 			
 			<!-- Header -->
-			<div class="header pb-8 pt-5">
+			<div class="header pb-5 pt-5">
 				<div class="container-fluid">
 					<div class="header-body">
 						<!-- Card stats -->
