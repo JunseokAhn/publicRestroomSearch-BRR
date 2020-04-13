@@ -111,8 +111,7 @@ String strTokenFull = "";
   
   <input type="hidden" id="txtToken" value="<%=access_token%>">
   
-  <input type = "button" value="홈 화면으로 돌아가기" onclick="gohome()">
-  
+<p>로그인 중 입니다. 잠시만 기다려주세요^^ </p>  
   
   
 </body>

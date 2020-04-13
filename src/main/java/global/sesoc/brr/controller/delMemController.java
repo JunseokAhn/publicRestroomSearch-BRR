@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import global.sesoc.brr.dao.GoogleLoginDAO;
@@ -29,16 +30,17 @@ public class delMemController {
 	public String deleteGoogle () {
 		logger.info("구글 회원 탈퇴로 이동");
 		
-		return "deleteGoogle";
+		return "member/deleteGoogle";
 	}
 	
 	@GetMapping("deleteNaver")
 	public String deleteNaver () {
 		logger.info("네이버 회원 탈퇴로 이동");
-		return "deleteNaver";
+		return "member/deleteNaver";
 	}
 	
 	@GetMapping("delNaver")
+	@ResponseBody
 	public String delNaver (HttpSession httpsession) {
 		String clientId = "z_lyTyQUbIC8kv8VfFwH";
 		String clientSecret = "EdlvjsCOLs";
@@ -73,7 +75,7 @@ public class delMemController {
 		}
 		else
 		{
-			return "deleteGoogle";
+			return "member/deleteGoogle";
 		}
 	}
 	

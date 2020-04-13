@@ -37,7 +37,7 @@ public class NaverLoginController {
 		
 		//token값은 1시간마다 (3600ms) 새로 갱신 된다
 		logger.info("로그인으로 이동하였습니다.");
-		return "naverlogin";
+		return "member/naverlogin";
 	}
 	
 	@GetMapping("/callback")

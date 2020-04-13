@@ -96,19 +96,33 @@
 					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/icons"/>"> <i class="ni ni-planet text-blue"></i> Icons
 					</a></li>
 
-					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/tables"/>"> <i class="ni ni-bullet-list-67 text-red"></i> Tables
-					</a></li>
-					<c:if test="${sessionScope.userID==null }">
+					<c:if test="${sessionScope.sessionId==null }">
 						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/login"/>"> <i class="ni ni-key-25 text-info"></i> Login
 						</a></li>
 						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/register"/>"> <i class="ni ni-circle-08 text-pink"></i> Sign up
 						</a></li>
 					</c:if>
-					<c:if test="${sessionScope.userID!=null }">
+					<c:if test="${sessionScope.sessionId!=null }">
 						<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/profile"/>"> <i class="ni ni-single-02 text-yellow"></i> User profile
 						</a></li>
-						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/login"/>"> <i class="ni ni-key-25 text-info"></i> Logout
-						</a></li>
+						<form action="logout">
+<!-- 						<li > -->
+						 <i class="ni ni-key-25 text-info"><input class="nav-item" type = "submit" value="LogOut"></i>
+<!-- 						</li> -->
+						</form>
+						
+						<!-- 네이버 로그인 시 -->
+						<c:if test="${sessionScope.sessionNickname != null}">
+					<li class="nav-item">
+					<a class="nav-link " href="<c:url value="deleteNaver"/>"> 
+					<i class="ni ni-bullet-list-67 text-red"></i> Naver탈퇴
+					</a></li>
+					</c:if>
+					<!-- 구글 로그인 시 -->
+					<c:if test="${sessionScope.sessionNickname == null}">
+					<li class="nav-item"><a class="nav-link " href="<c:url value="deleteGoogle"/>"> <i class="ni ni-bullet-list-67 text-red"></i> Google탈퇴
+					</a></li>
+					</c:if>
 					</c:if>
 				</ul>
 				<!-- Divider -->
@@ -152,11 +166,22 @@
 				<ul class="navbar-nav align-items-center d-none d-md-flex">
 					<li class="nav-item dropdown"><a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<div class="media align-items-center">
+								<c:if test="${sessionScope.Profile == null}">
 								<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>">
 								</span>
-								<div class="media-body ml-2 d-none d-lg-block">
+									<div class="media-body ml-2 d-none d-lg-block">
 									<span class="mb-0 text-sm  font-weight-bold">Jessica Jones</span>
 								</div>
+								</c:if>
+								
+								<c:if test="${sessionScope.Profile != null}">
+								<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="${sessionScope.Profile}">
+								</span>
+									<div class="media-body ml-2 d-none d-lg-block">
+									<span class="mb-0 text-sm  font-weight-bold">${sessionScope.sessionNickname}</span>
+								</div>
+								</c:if>
+
 							</div>
 					</a>
 						<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
