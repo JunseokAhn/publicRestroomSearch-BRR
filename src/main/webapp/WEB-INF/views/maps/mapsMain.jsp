@@ -179,11 +179,11 @@
                            
                            var content = "<h5 class='card-title text-uppercase text-muted mb-0'>"+toiletType+"</h5>" 
                            content += "<br'><span class='card-title text-uppercase text-muted mb-0'>대변기 : "+toiletBowlNumber+"</span>"
-                           content += "<br><span class='card-title text-uppercase text-muted mb-0'>장애인 배려실 : "+handicap+"</span><br>"
+                           content += "<br><span class='card-title text-uppercase text-muted mb-0'>장애인 배려실 : "+handicap+"</span>"
                            
                            //content += "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='navigators(" + endX + ',' + endY + ")'>";
                            //마커를 클로저방식으로 넘겨서, 그 마커를 네비게이터스가 실행될때 제거할수있도록해야할것같다.
-                           content += "<input class='replyButton2' type='button' id='direction[" + i + "]' value='경로안내' onclick='navigators(" + endX + ',' + endY  + ")'>"; 
+                           content += "<input class='replyButton2 ml-2' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='navigators(" + endX + ',' + endY  + ")'>"; 
 							
                            
 							//content += 	"<div style='display:inline-block; border:3px solid #dcdcdc;'>"
@@ -220,26 +220,24 @@
 						var div1 = document.getElementById('div1');
                        	var content2
 						content2 = "<div class='row'>"
-						content2 +=   "<div class='col'>"
-						content2 +=		"<h5 class='card-title text-uppercase text-muted mb-0'>" + title + "</h5>"
-						content2 +=			"<span class='h2 font-weight-bold mb-0'>" + toiletType + "</span>"
-						content2 +=	"</div>"
-						content2 +="</div>"
-						content2 +="<p class='mt-3 mb-0 text-muted text-sm'>"
-				    	content2 +=	"<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap mr-2'>별점평균</span>"
-						content2 +=	"<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>청결도평균</span>"
-						content2 +="</p>"
-						content2 +="<p class='mt-1 mb-0 text-muted text-sm'>"
-					    content2 +=	"<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>이용자평균</span>"
-					    content2 +=	"<input class='replyButton2' type='button' value='리뷰 목록' onclick='location.href= '<c:url value="
-					    content2 += '"/examples/profile"/>'+"' >'";
-					       
-					    
-					    
-					    /* content2 +=	"<input class='replyButton2' type='button' value='리뷰 목록' onclick=location.href= '<c:url value='/examples/profile'/>'>'" */
-					    
-					    content2 +=	"<input class='replyButton2' type='button' value='리뷰 쓰기' onclick=''>"
-					    content2 +="</p>"
+						content2 +=     "<div class='col'>"
+						content2 +=         "<h5 class='card-title text-uppercase text-muted mb-0'>" + title + "</h5>"
+						content2 +=         "<span class='h2 font-weight-bold mb-0'>" + toiletType + "</span>"
+						content2 +=     "</div>"
+						content2 += "</div>"
+						content2 += "<p class='mt-3 mb-0 text-muted text-sm'>"
+				    	content2 +=     "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap mr-2'>별점평균</span>"
+						content2 +=     "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>청결도평균</span>"
+						content2 += "</p>"
+						content2 += "<p class='mt-1 mb-0 text-muted text-sm'>"
+					    content2 +=     "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>이용자평균</span>"
+					    	//"<c:url value="/examples/maps"/>"
+					    //content2 +=    "<input class='replyButton2' type='button' value='리뷰 목록' onclick=''>"
+					    content2 +=    "<input class='replyButton2' type='button' value='리뷰 목록' onclick='location.href=\"../board/listReview?toiletTitle="+title+"\"'>" 
+					    var id = <%=(String)session.getAttribute("sessionId")%>;
+					    if(id!=null)
+					    content2 +=	   "<input class='replyButton2' type='button' value='리뷰 쓰기' onclick='location.href=\"../board/writeReview?toiletTitle="+title+"&id="+id+"\"'>"
+					    content2 += "</p>"
 										
 						div1.innerHTML = content2;
                         }
