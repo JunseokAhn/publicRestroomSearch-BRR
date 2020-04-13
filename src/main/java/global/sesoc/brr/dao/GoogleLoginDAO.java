@@ -16,23 +16,35 @@ public class GoogleLoginDAO {
 	
 	
 	public int insertGoogle (GoogleLoginVO google) {
-		GoogleLoginMapper mapper = session.getMapper(GoogleLoginMapper.class);
-		int result = 0;
-		result = mapper.insertGoogle(google);
+		int result = -1;
+		try {
+			GoogleLoginMapper mapper = session.getMapper(GoogleLoginMapper.class);
+			result = mapper.insertGoogle(google);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return result;
 	}
 	
 	public int getGoogle (String id) {
-		GoogleLoginMapper mapper = session.getMapper(GoogleLoginMapper.class);
-		int result = 0;
-		result = mapper.getGoogle(id);
+		int result = -1;
+		try {
+			GoogleLoginMapper mapper = session.getMapper(GoogleLoginMapper.class);
+			result = mapper.getGoogle(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return result;
 	}
 	
 	public int deleteGoogle (String id) {
-		GoogleLoginMapper mapper = session.getMapper(GoogleLoginMapper.class);
-		int result = 0;
-		result = mapper.deleteGoogle(id);
+		int result = -1;
+		try {
+			GoogleLoginMapper mapper = session.getMapper(GoogleLoginMapper.class);
+			result = mapper.deleteGoogle(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return result;
 	}
 	

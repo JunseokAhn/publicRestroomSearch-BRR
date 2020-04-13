@@ -35,7 +35,7 @@ private static final Logger logger = LoggerFactory.getLogger(LogoutController.cl
 		System.out.println(result);
 		
 		httpsession.invalidate();
-		return "logoutForm";
+		return "member/logoutForm";
 	}
 	
 	

@@ -14,7 +14,7 @@ $(document).ready(function() {
 
 function BackHome(){
 	
-	location.href = "/test1";
+	location.href = "/brr";
 }
 
 

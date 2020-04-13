@@ -95,6 +95,8 @@ public class GoogleLoginController {
 			 google.setName(name);
 			 google.setPicture(pictureUrl);
 			 
+			 google.setAge(givenName);
+			 
 			 int result = dao.getGoogle(userId);
 			 
 			 if(result == 0) {
@@ -105,6 +107,7 @@ public class GoogleLoginController {
 			 httpsession.setAttribute("sessionName", name);
 			 httpsession.setAttribute("sessionEmail", email);
 			 httpsession.setAttribute("Profile", pictureUrl);
+			 httpsession.setAttribute("sessionGooglename", givenName);
 			 
 			} else {
 			  System.out.println("Invalid ID token.");
