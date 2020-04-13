@@ -10,4 +10,6 @@ public interface NaverLoginMapper {
 	
 	//저장된 회원 정보를 Session에다가 저장시키기 위한 select문
 	public int getNaverMember (String id);
+	//토큰값을 무효화 시키고 세션을 만료
+	public int deleteNaver (String id);
 }
