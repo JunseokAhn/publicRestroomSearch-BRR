@@ -20,7 +20,7 @@
 <!-- CSS Files -->
 <link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
 <script type="text/javascript">
-    var map, pos, marker, toiletMarker, marker_s, marker_e, marker_p1, marker_p2, label, endX, endY, polyline_, InfoWindow, navigatorFlag;
+    var map, pos, marker, toiletMarker, marker_s, marker_e, marker_p1, marker_p2, label, endX, endY, polyline_, myWindow, targetWindow, destinyWindow, realTime;
     var toiletType, unisexToiletYn, hour, distance, distime;
     var menToiletBowlNumber, menHandicapToiletBowlNumber;
     var ladiesToiletBowlNumber, ladiesHandicapToiletBowlNumber;
@@ -184,7 +184,8 @@
                             content += "<br><span class='card-title text-uppercase text-muted mb-0'>장애인 배려실 : " + handicap + "</span>"
                             //content += "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='navigators(" + endX + ',' + endY + ")'>";
                             //마커를 클로저방식으로 넘겨서, 그 마커를 네비게이터스가 실행될때 제거할수있도록해야할것같다.
-                            content += "<br><input class='replyButton2 mt-1' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='navigators(" + endX + ',' + endY + ',' + '"' + title + '"' + ")'>";
+                            //content += "<br><input class='replyButton2 mt-1' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='navigators(" + endX + ',' + endY + ',' + '"' + title + '"' + ")'>";
+                            content += "<br><input class='replyButton2 mt-1' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='navigators(" + endX + ',' + endY + ',' + '"' + title + '"' + ',' + '"' + toiletType + '"' + ',' + '"' + toiletBowlNumber + '"' + ',' + '"' + handicap + '"' + ")'>";
                             content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";
                             
                             //content += 	"<div style='display:inline-block; border:3px solid #dcdcdc;'>"
@@ -205,10 +206,10 @@
 
                             console.log("target : " + i)
                             setTimeout(function () {
-                                InfoWindow.setMap(null)
+                                targetWindow.setMap(null)
                             }, 0);
                             setTimeout(function () {
-                                InfoWindow = new Tmapv2.InfoWindow({
+                                targetWindow = new Tmapv2.InfoWindow({
                                     position : new Tmapv2.LatLng(target._lat, target._lng),
                                     content : content,
                                     type : 1,
@@ -285,7 +286,7 @@
                         content += "<i class='ni ni-user-run'></i>"
 
                         //content +=				"</div>"
-                        content += "<span style='display: inline-block; width: 14px; height: 14px; background-image: url(/resources/images/common/icon_blet.png); vertical-align: middle; margin-right: 5px;'></span>Your location"
+                        content += "<span style='display: inline-block; width: 14px; height: 14px; vertical-align: middle; margin-right: 5px;'></span>Your location"
                         content += "</div>"
                         content += "</div>";
                         
@@ -302,10 +303,10 @@
                         }, 0);
                         
                         setTimeout(function () {
-                            InfoWindow.setMap(null)
+                            myWindow.setMap(null)
                         }, 0);
                         setTimeout(function () {
-                            InfoWindow = new Tmapv2.InfoWindow({
+                            myWindow = new Tmapv2.InfoWindow({
                                 position : new Tmapv2.LatLng(lat, lng),
                                 content : content,
                                 type : 1,
@@ -319,34 +320,71 @@
         }
     }//mylocation[E]
     
+    function terminators () {
+        clearInterval(realTime);
+        destinyWindow.setMap(null);
+    }
+
     //실시간길찾기
-    function navigators (endX, endY, title) {
+    function navigators (endX, endY, title, toiletType, toiletBowlNumber, handicap) {
         var id =
 <%=(String) session.getAttribute("sessionId")%>
     ;
         //DB에 정보저장, title값 필요
         if(id != null){
             $.ajax({
-            	url : "<c:url value='/dayaver/searchedToilet'/>",
-           	 	data : {
-                	toiletTitle : title,
-           	 	    id : id
-            	},
-            	type : "get",
-            	success : function(){
-            		console.log("화장실검색정보 저장성공 id : " + id);
-            	},
-            	error : function(e){
-            	    console.log("화장실검색정보 저장실패");
-            	    console.log(e);
-            	}
+                url : "<c:url value='/dayaver/searchedToilet'/>",
+                data : {
+                    toiletTitle : title,
+                    id : id
+                },
+                type : "get",
+                success : function () {
+                    console.log("화장실검색정보 저장성공 id : " + id);
+                },
+                error : function (e) {
+                    console.log("화장실검색정보 저장실패");
+                    console.log(e);
+                }
             })
         }
-        clearInterval(navigatorFlag);
+        clearInterval(realTime);
+        var content = "<h5 class='card-title text-uppercase text-muted mb-0'>" + toiletType + "</h5>"
+        content += "<br'><span class='card-title text-uppercase text-muted mb-0'>대변기 : " + toiletBowlNumber + "</span>"
+        content += "<br><span class='card-title text-uppercase text-muted mb-0'>장애인 배려실 : " + handicap + "</span>"
+        content += "<br><input class='replyButton2 mt-1' type='button' id='direction[" + i + "]' value='길찾기 중단' onclick='terminators()'>";
+        content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";
+        
+        targetWindow.setMap(null);
+        
+        setTimeout(function () {
+            destinyWindow.setMap(null);
+        }, 0);
+        setTimeout(function () {
+            destinyWindow = new Tmapv2.InfoWindow({
+                position : new Tmapv2.LatLng(endY, endX),
+                content : content,
+                type : 1,
+                map : map
+            });
+        }, 0);
+        /*  setTimeout(function () {
+             targetWindow.setMap(null)
+         }, 0);
+         setTimeout(function () {
+             targetWindow = new Tmapv2.InfoWindow({
+                 position : new Tmapv2.LatLng(endX, endY),
+                 content : content,
+                 type : 1,
+                 map : map
+             });
+         }, 0); */
+
         //실시간 길찾기
-        navigatorFlag = setInterval(function () {
+        realTime = setInterval(function () {
+            
             myLocation();
-            directions(endX, endY);
+            distime = directions(endX, endY);
             console.log("네비게이터 실행중")
         }, 5000);
         
