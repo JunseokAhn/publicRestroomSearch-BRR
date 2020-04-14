@@ -185,7 +185,7 @@
                             //content += "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='navigators(" + endX + ',' + endY + ")'>";
                             //마커를 클로저방식으로 넘겨서, 그 마커를 네비게이터스가 실행될때 제거할수있도록해야할것같다.
                             //content += "<br><input class='replyButton2 mt-1' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='navigators(" + endX + ',' + endY + ',' + '"' + title + '"' + ")'>";
-                            content += "<br><input class='replyButton2 mt-1' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='navigators(" + endX + ',' + endY + ',' + '"' + title + '"' + ',' + '"' + toiletType + '"' + ',' + '"' + toiletBowlNumber + '"' + ',' + '"' + handicap + '"' + ")'>";
+                            content += "<br><input class='replyButton3 mt-1' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='navigators(" + endX + ',' + endY + ',' + '"' + title + '"' + ',' + '"' + toiletType + '"' + ',' + '"' + toiletBowlNumber + '"' + ',' + '"' + handicap + '"' + ")'>";
                             content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";
                             
                             //content += 	"<div style='display:inline-block; border:3px solid #dcdcdc;'>"
@@ -232,16 +232,16 @@
                             content2 += "</p>"
                             content2 += "<p class='mt-1 mb-0 text-muted text-sm'>"
                             content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>이용자수</span>"
-                            content2 += "<input class='replyButton2 ml-1' type='button' value='리뷰 목록' onclick='location.href=\"../board/listReview?toiletTitle=" + title + "\"'>"
+                            content2 += "<input class='replyButton3 ml-1' type='button' value='리뷰 목록' onclick='location.href=\"../board/listReview?toiletTitle=" + title + "\"'>"
                             var id =
 <%=(String) session.getAttribute("sessionId")%>
     ;
                             //로그인
                             if(id == null)
-                                content2 += "<input class='replyButton2 ml-1' type='button' value='리뷰 쓰기' onclick='location.href=\"../board/writeReview?toiletTitle=" + title + "&id=" + id + "\"'>"
+                                content2 += "<input class='replyButton3 ml-1' type='button' value='리뷰 쓰기' onclick='location.href=\"../board/writeReview?toiletTitle=" + title + "&id=" + id + "\"'>"
                                 //리뷰쓰기
                             if(id != null)
-                                content2 += "<input class='replyButton2 ml-1' type='button' value='리뷰 쓰기' onclick='location.href=\"../board/writeReview?toiletTitle=" + title + "&id=" + id + "\"'>"
+                                content2 += "<input class='replyButton3 ml-1' type='button' value='리뷰 쓰기' onclick='location.href=\"../board/writeReview?toiletTitle=" + title + "&id=" + id + "\"'>"
                             content2 += "</p>"
 
                             div1.innerHTML = content2;
@@ -352,7 +352,7 @@
         var content = "<h5 class='card-title text-uppercase text-muted mb-0'>" + toiletType + "</h5>"
         content += "<br'><span class='card-title text-uppercase text-muted mb-0'>대변기 : " + toiletBowlNumber + "</span>"
         content += "<br><span class='card-title text-uppercase text-muted mb-0'>장애인 배려실 : " + handicap + "</span>"
-        content += "<br><input class='replyButton2 mt-1' type='button' id='direction[" + i + "]' value='길찾기 중단' onclick='terminators()'>";
+        content += "<br><input class='replyButton3 mt-1' type='button' id='direction[" + i + "]' value='길찾기 중단' onclick='terminators()'>";
         content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";
         
         targetWindow.setMap(null);
@@ -601,13 +601,18 @@
 		</nav>
 		<!-- End Navbar -->
 		<!-- Header -->
-		<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+		<div class="header bg-gradient-primary pb-7 pt-5 pt-md-8">
 			<div class="container-fluid">
-				<div class="header-body"></div>
-			</div>
+				<div class="header-body">
+					<input class='replyButton1 ml-1' type='button' value='최단거리'>
+					<input class='replyButton1 ml-1' type='button' value='최고 평가'>
+					<input class='replyButton1 ml-1' type='button' value='최고 청결도'>
+					<input class='replyButton1 ml-1' type='button' value='최대 원활도'>
+				</div>				
+			</div>			
 		</div>
 		<div class="container-fluid mt--7">
-			<div class="row">
+			<div class="row">			
 				<div class="col">
 					<div class="card shadow border-0">
 						<div id="map_wrap" class="map_wrap3">
@@ -639,8 +644,6 @@
 										</p>
 										<p class="mt-1 mb-0 text-muted text-sm">
 											<span class="text-warning"><i class="fa fa-arrow-down"></i> 변화량</span> <span class="text-nowrap">이용자수</span>
-											<!-- <input class="replyButton2" type="button" value="리뷰 목록">
-											<input class="replyButton2" type="button" value="리뷰 쓰기"> -->
 										</p>
 									</div>
 								</div>
