@@ -105,11 +105,13 @@
 					<c:if test="${sessionScope.sessionId!=null }">
 						<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/profile"/>"> <i class="ni ni-single-02 text-yellow"></i> User profile
 						</a></li>
-						<form action="logout">
-<!-- 						<li > -->
-						 <i class="ni ni-key-25 text-info"><input class="nav-item" type = "submit" value="LogOut"></i>
-<!-- 						</li> -->
-						</form>
+						<li class="nav-item"><a class="nav-link" href="<c:url value="logout"/>"> <i class="ni ni-key-25 text-info"></i> Logout
+						</a></li>
+<!-- 						<form action="logout"> -->
+<!-- <!-- 						<li > -->
+<!-- 						 <i class="ni ni-key-25 text-info"><input class="nav-item" type = "submit" value="LogOut"></i> -->
+<!-- <!-- 						</li> -->
+<!-- 						</form> -->
 						
 						<!-- 네이버 로그인 시 -->
 						<c:if test="${sessionScope.sessionNickname != null}">
