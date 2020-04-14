@@ -56,6 +56,173 @@ function boardList() {
 	}	
 }
 
+//sns상세글부분
+function deleteSNS() {
+	if(confirm("삭제하시겠습니까?")) {
+		location.href='deleteSNS?snsBoardnum=${snsBoard.snsBoardnum}';
+	}	
+}
+function updateSNS() {
+	if(confirm("수정하시겠습니까?")) {
+		location.href='updateSNS?snsBoardnum=${snsBoard.snsBoardnum}';
+	}	
+}
+function listSNS() {
+	if(confirm("목록으로 돌아가겠습니까?")) {
+		location.href='listSNS';
+	}	
+}
+
+//sns댓글부분(ajax사용)
+//readSNS페이지로 넘어오면 document에 넣은 함수가 한번 실행됨
+$(document).ready(function() {
+	$('.form1').hide();
+	$('.form2').on('click', function() {
+		$('.form1').show();
+	});
+	$('#form').on('click', snsReplySave);
+	init();
+});
+
+function snsReplySave() {
+	var snsBoardnum = $('#snsBoardnum').val();
+	var comments = $('#comments').val();
+
+	//잘 값이 들어갔는지 확인
+	console.log(snsReplynum);
+	console.log(id);
+	console.log(comments);
+
+	if(comments.length == 0) {
+		alert('댓글을 입력해 주세요.');
+		return;
+	}
+
+	$.ajax({
+		url: '../snsReply/insertSnsReply',
+		type: 'POST',
+		data: {
+			snsBoardnum: snsBoardnum,
+			comments: comments
+		},
+		success: function() {
+			alert('댓글이 작성되었습니다.');
+			$('#comments').val('');
+			init();
+		},
+		error: function(e) {
+			alert(JSON.stringify(e));//에러객체를 전달해서 문자열화하는 클래스의 함수사용
+		}
+	});
+}
+
+function init() {
+	var snsBoardnum = $('#snsBoardnum').val();
+
+	$.ajax({
+		url: '../snsReply/listSnsReply',
+		type: 'GET',
+		data: {
+			snsBoardnum: snsBoardnum
+		},
+		success: output
+	});
+}
+
+function output(listSnsReply) {
+	var str = '<div class="mx-auto replyComments form-group"><table>';
+
+	$.each(listSnsReply, function(index, snsReply) {
+		str += '<tr>';
+		str += '<td class="id1">' + snsReply.id + '</td>';
+		str += '<td class="comments1">' + snsReply.comments + '</td>';
+		str += '<td class="inpudate1">' + snsReply.inputdate + '</td>';
+		//사용자정의속성
+		str += '<td class="upd_length"><input type="button" value="댓글수정" class="snsUpd btn btn-secondary btn-sm" freenum="'+ snsReply.snsReplynum +'"></td>';
+		str += '<td class="del_length"><input type="button" value="댓글삭제" class="snsDel btn btn-secondary btn-sm" freenum="'+ snsReply.snsReplynum +'"></td>';
+		str += '</tr>';
+	});
+	str +='</table></div>';
+	//sns댓글목록
+	$('#snsListDiv').html(str);
+	//sns댓글수정
+	$('input:button.snsUpd').on('click', updateSnsReply);
+	//sns댓글삭제
+	$('input:button.snsDel').on('click', deleteSnsReply);
+
+}
+
+//sns댓글수정
+function updateSnsReply() {
+	//1번방법 - .attr('freenum'속성의 값을 받아옴)
+	var snsReplynum = $(this).attr('freenum');
+	//2번방법 / 텍스트-html() / value값-val()
+	var id = $(this).closest('tr').find('.id1').html();
+	var comments = $(this).closest('tr').find('.comments1').html();
+
+	//잘 값이 들어갔는지 확인
+	console.log(snsReplynum);
+	console.log(id);
+	console.log(comments);
+
+	//댓글수정 click시 버튼 숨기기
+	$('.snsUpd').hide();
+
+	var str = '';
+	str += '<tr>';
+	str += '	<td></td>';
+	str += ' 	<td><input type="text" id="replyUpd" value="'+ comments +'"></td>';
+	str += '	<td></td>';
+	str += '	<td class="upd_length"><input type="button" id="confirmUpd" class="btn btn-secondary btn-sm" value="수정 확인"></td>';
+	str += '	<td class="del_length"><input type="button" id="cancelUpd" class="btn btn-secondary btn-sm" value="취소"></td>';	
+	str += '</tr>';
+
+	$(this).closest('tr').after(str);
+
+	$('#confirmUpd').on('click', function() {
+		var replyUpd = $(this).closest('tr').find('#replyUpd').val();
+
+		$.ajax({
+			url: '../snsReply/updateSnsReply',
+			type: 'POST',
+			data: {
+				snsReplynum: snsReplynum,
+				comments: replyUpd
+			},
+			success: function(cnt) {
+				alert(cnt);
+				$('.snsUpd').show();//수정확인후 수정버튼 다시보임
+				init();
+			},
+			error: function(e) {
+				alert(JSON.stringify(e));
+			}
+		});		
+	});
+	//위의 코드가 실행된 이후에 이벤트를 걸어야 제대로 작동됨
+	$('#cancelUpd').on('click', function() {
+		//this(취소버튼)가까운 부모의 tr태그 즉 추가되었던 tr태그 remove(삭제)
+		$(this).closest('tr').remove();
+	});
+}
+
+//sns댓글삭제
+function deleteSnsReply() {
+	var snsReplynum = $(this).attr('freenum');
+
+	$.ajax({
+		url: '../snsReply/deleteSnsReply',
+		type: 'POST',
+		data: {
+			snsReplynum: snsReplynum
+		},
+		success: function(cnt) {
+			alert(cnt);
+			init();
+		}
+	});
+}
+
 </script>
 
 </head>
@@ -325,29 +492,55 @@ function boardList() {
 					<div class="mx-auto form-group">
 					</div>
 					<article>
-							<div class="mx-auto boardButton form-group">
-								<button type="button" class="btn btn-success"
-									onclick="location.href='snsWrite';">sns글쓰기</button>
-								<button type="button" class="btn btn-success"
-									onclick="location.href='snsWrite';">리뷰게시판</button>
+							<div class="mx-auto snsBoardButton form-group">
+								<input class="btn btn-primary" type="button" value="sns글쓰기" onclick="location.href='snsWrite';">
+								<input class="btn btn-primary" type="button" value="리뷰게시판" onclick="location.href='snsWrite';">
 							</div>
-
 
 							<c:forEach var="sns" items="${listSNS}">	
 							<!-- 반복시작 -->
-							<div class="mx-auto block form-group">
+							<div class="mx-auto block form-group" style="position: relative;">
 							<!-- 글쓰기 -->
 								<div class="row">
 									<div class="id col-md-auto"><span>ID: ${sns.id}</span></div>
 									<div class="date col"><span>등록일: ${sns.inputdate}</span></div>
 								</div>
+								<br>
 								<div class="row">
 									<div class="col-md-auto"><span>내용넣기: ${sns.contents}</span></div>
 								</div>
+							<!-- 삭제, 수정, 목록보기 버튼 -->
+								<div class="row1">
+									<button type="button" class="btn btn-primary btn-sm"
+										onclick="deleteSNS()">삭제</button>
+									<button type="button" class="btn btn-primary btn-sm"
+										onclick="updateSNS()">수정</button>
+										
+									<button type="button" class="form2 btn btn-primary btn-sm">댓글쓰기</button>
+										
+								</div>
 							</div>
-							<div class="mx-auto boardButton form-group">
+							<div class="mx-auto snsBoardButton form-group">
+
 								<button type="button" class="btn btn-secondary btn-sm" 
 								onclick="location.href='readSNS?snsBoardnum=${sns.snsBoardnum}';">댓글</button>
+								
+								<!-- 댓글쓰기 -->
+								<div class="form1 mx-auto form-group">
+									<input type="hidden" id="snsBoardnum" value="${snsBoard.snsBoardnum}">
+									<div>
+										<input style="margin-bottom: 5px;" class="form-control" type="text" id="comments" placeholder="댓글등록">
+									</div>
+									<div>
+										<button type="button" class="btn btn-primary btn-sm" id="form">댓글등록</button>
+									</div>										
+								</div>
+								
+								
+<!-- 								<div class="mx-auto boardTitle form-group"> -->
+<!-- 								</div> -->
+								<!-- 댓글 table -->
+								<div id="snsListDiv" class="mx-auto form-group"></div>
 							</div>
 						</c:forEach>
 						<!-- 반복종료 -->

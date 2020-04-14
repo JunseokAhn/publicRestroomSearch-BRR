@@ -32,7 +32,26 @@
 }
 
 
+.boardTitle {
+	width: 70%;	
+	font: 1rem/1.5 var(--font-family-sans-serif);
+	color: var(--blue);
+}
+
+.boardContents {
+	width: 50%;	
+	font: 1rem/1.5 var(--font-family-sans-serif);
+	color: var(--blue);
+}
+
 .boardButton {
+	color: #5f72e4;
+	text-align: right;
+	width: 50%;	
+}
+
+.snsBoardButton {
+	color: #5f72e4;
 	text-align: right;
 	width: 70%;	
 }
@@ -53,6 +72,12 @@
 }
 
 /* snsStyle */
+.row1{ 
+	position:absolute;
+	right:10px;
+	bottom:10px;
+}
+
 .id {
 	font-size: 18px;
 	font-weight: bold;
