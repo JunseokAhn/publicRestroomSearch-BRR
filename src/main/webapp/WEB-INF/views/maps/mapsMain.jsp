@@ -326,7 +326,21 @@
     ;
         //DB에 정보저장, title값 필요
         if(id != null){
-            
+            $.ajax({
+            	url : "<c:url value='/dayever/searchedToilet'/>",
+           	 	data : {
+                	toiletTitle : title,
+           	 	    id : id
+            	},
+            	type : "get",
+            	success : function(){
+            		console.log("화장실검색정보 저장성공 id : " + id);
+            	},
+            	error : function(e){
+            	    console.log("화장실검색정보 저장실패");
+            	    console.log(e);
+            	}
+            })
         }
         clearInterval(navigatorFlag);
         //실시간 길찾기
