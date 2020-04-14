@@ -20,7 +20,7 @@
 <!-- CSS Files -->
 <link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
 <script type="text/javascript">
-    var map, pos, marker, toiletMarker, marker_s, marker_e, marker_p1, marker_p2, label, endX, endY, polyline_, InfoWindow;
+    var map, pos, marker, toiletMarker, marker_s, marker_e, marker_p1, marker_p2, label, endX, endY, polyline_, InfoWindow, navigatorFlag;
     var toiletType, unisexToiletYn, hour, distance, distime;
     var menToiletBowlNumber, menHandicapToiletBowlNumber;
     var ladiesToiletBowlNumber, ladiesHandicapToiletBowlNumber;
@@ -146,7 +146,7 @@
                 id : i,
                 position : new Tmapv2.LatLng(nearbyToilet[i].lat, nearbyToilet[i].lng), //Marker의 중심좌표 설정.
                 map : map, //Marker가 표시될 Map 설정.
-                icon : "../resources/img/toilet5.png",
+                icon : "../resources/img/toilet28.png",
                 title : title, //Marker 타이틀.
             //label : label //Marker의 라벨.
             });
@@ -328,8 +328,9 @@
         if(id != null){
             
         }
+        clearInterval(navigatorFlag);
         //실시간 길찾기
-        setInterval(function () {
+        navigatorFlag = setInterval(function () {
             myLocation();
             directions(endX, endY);
             console.log("네비게이터 실행중")
