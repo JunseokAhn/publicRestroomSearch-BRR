@@ -151,13 +151,13 @@
             });
             
             //Marker에 클릭이벤트 등록.
-            toiletMarker.addListener("click", function (toiletMarker, i) {
+            toiletMarker.addListener("click", function (toiletMarker, i, title) {
            		return function () {
                            index = i;
                            target = toiletMarker.getPosition();
                            endX = target._lng;
                            endY = target._lat;
-                            
+                           
                            //누르자마자 경로탐색 > 나중에 경로안내누르면 실시간안내되도록 바꾸기
                            distime = directions(endX,endY);
                            if(nearbyToilet[i].unisexToiletYn=="Y")
@@ -174,21 +174,21 @@
                                handicap = "N";
                            
                            //console.log("toiletMarker : " + toiletMarker)
-                           console.log("marker : " + marker)
+                           console.log(marker)
                            //여기까지 마커(내위치) 들어오는것 확인
                            
                            var content = "<h5 class='card-title text-uppercase text-muted mb-0'>"+toiletType+"</h5>" 
-                           content += "<br'><span class='card-title text-uppercase text-muted mb-0'>대변기 : "+toiletBowlNumber+"</span>"
-                           content += "<br><span class='card-title text-uppercase text-muted mb-0'>장애인 배려실 : "+handicap+"</span><br>"
-                           
+                           content += "<br'><span class='card-title text-uppercase text-muted mb-0'>대변기 : " + toiletBowlNumber + "</span>"
+                           content += "<br><span class='card-title text-uppercase text-muted mb-0'>장애인 배려실 : " + handicap + "</span>"
                            //content += "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='navigators(" + endX + ',' + endY + ")'>";
                            //마커를 클로저방식으로 넘겨서, 그 마커를 네비게이터스가 실행될때 제거할수있도록해야할것같다.
-                           /* content += "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='navigators(" + endX + ',' + endY + ',' + marker + ")'>";  */
-							
+                           content += "<br><input class='replyButton2 mt-1' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='navigators(" + endX + ',' + endY + ',' + '"' + title + '"' + ")'>"; 
+                           content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";
                            
 							//content += 	"<div style='display:inline-block; border:3px solid #dcdcdc;'>"
 							//content +=			"console.log('길찾기실행중')"			
-                           content += "<div style='position: relative; padding-top: 5px; display:inline-block'>"
+                           
+							/* content += "<div style='position: relative; padding-top: 5px; display:inline-block'>"
                             content += "<input class='replyButton2' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='(";
 							content += "function(endX,endY, marker){";
 							content +=     "return function(){";
@@ -198,9 +198,10 @@
 	                       	content +=          "},5000);";
 	                       	content +=     "};";
 	                        content += "}";
-							content += ")(" + endX + "," + endY + ", marker);'>";  
-							content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";	
+							content += ")(" + endX + "," + endY + "," + marker + ");'>";  
+							content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";	 */
                            
+						
                            console.log("target : " + i)
                            setTimeout(function () {
                                InfoWindow.setMap(null)
@@ -213,12 +214,39 @@
                                    map : map
                                });
                             }, 0);
+                           
+                       	//div1 내용 변경
+						var div1 = document.getElementById('div1');
+                       	var content2
+						content2 = "<div class='row'>"
+						content2 +=     "<div class='col'>"
+						content2 +=         "<h5 class='card-title text-uppercase text-muted mb-0'>" + title + "</h5>"
+						content2 +=         "<span class='h2 font-weight-bold mb-0'>" + toiletType + "</span>"
+						content2 +=     "</div>"
+						content2 += "</div>"
+						content2 += "<p class='mt-3 mb-0 text-muted text-sm'>"
+				    	content2 +=     "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap mr-2'>별점평균</span>"
+						content2 +=     "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>청결도평균</span>"
+						content2 += "</p>"
+						content2 += "<p class='mt-1 mb-0 text-muted text-sm'>"
+					    content2 +=     "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>이용자수</span>"
+					    content2 +=    "<input class='replyButton2 ml-1' type='button' value='리뷰 목록' onclick='location.href=\"../board/listReview?toiletTitle="+title+"\"'>" 
+					    var id = <%=(String)session.getAttribute("sessionId")%>;
+					    //로그인
+					    if(id==null)
+					   	content2 +=	   "<input class='replyButton2 ml-1' type='button' value='리뷰 쓰기' onclick='location.href=\"../board/writeReview?toiletTitle="+title+"&id="+id+"\"'>"
+					    //리뷰쓰기
+					  	if(id!=null)
+					    content2 +=	   "<input class='replyButton2 ml-1' type='button' value='리뷰 쓰기' onclick='location.href=\"../board/writeReview?toiletTitle="+title+"&id="+id+"\"'>"
+					    content2 += "</p>"
+										
+						div1.innerHTML = content2;
                         }
-                    }(toiletMarker, i));
+                    }(toiletMarker, i, title));
         }
     }//setPositions[E]
     
-  	function myLocation(marker){
+  	function myLocation(){
   	  	// HTML5의 geolocation으로 사용할 수 있는지 확인합니다      
   	    if(navigator.geolocation){
   	   		navigator.geolocation.getCurrentPosition(function (position) {
@@ -256,7 +284,7 @@
   	          	content +=			"</div>"
 	        	content +=	  "</div>";
 	        	
-  	        	console.log(marker)
+  	        	console.log( marker)
 	            setTimeout(function(){
 		    	  	marker.setMap(null)
 		        }, 0);     
@@ -285,17 +313,22 @@
   		}
   	}//mylocation[E]
     
-/*   	//실시간길찾기
-  	function navigators(endX, endY, marker){
-  		     
+	//실시간길찾기
+  	function navigators(endX, endY, title){
+  		var id = <%=(String)session.getAttribute("sessionId")%>;
+  		//DB에 정보저장, title값 필요
+  		if(id!=null){
+  			
+  		}
+  		alert(title)
   		//실시간 길찾기
   	    setInterval(function(){
-  	    	myLocation(marker);
+  	    	myLocation();
   	       	directions(endX, endY);
   	       	console.log("네비게이터 실행중")
   	   	},5000);
   	        
-  	} */
+  	} 
   	    
   		 
     function initTmap () {
@@ -357,6 +390,7 @@
 						</a>
 					</div></li>
 			</ul>
+			
 			<!-- Collapse -->
 			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
 				<!-- Collapse header -->
@@ -498,18 +532,18 @@
 			</div>		
 			
 			<!-- Header -->
-			<div class="header pb-8 pt-5">
+			<div class="header pb-7 pt-5">
 				<div class="container-fluid">
 					<div class="header-body">
 						<!-- Card stats -->
 						<div class="row">
 							<div class="col-xl-3 col-lg-6">
 								<div class="card card-stats mb-4 mb-xl-0">
-									<div class="card-body replyButton2">
+									<div class="card-body replyButton2" id="div1">
 										<div class="row">
 											<div class="col">
-												<h5 class="card-title text-uppercase text-muted mb-0">에이스빌딩 화장실</h5>
-												<span class="h2 font-weight-bold mb-0">남녀별도 개방화장실</span>
+												<h5 class="card-title text-uppercase text-muted mb-0">화장실을 선택하세요...</h5>
+												<span class="h2 font-weight-bold mb-0">DEFAULT</span>
 											</div>
 										</div>
 										<p class="mt-3 mb-0 text-muted text-sm">
@@ -517,9 +551,9 @@
 											<span class="text-success"><i class="fa fa-arrow-up"></i> 변화량</span> <span class="text-nowrap">청결도평균</span>
 										</p>
 										<p class="mt-1 mb-0 text-muted text-sm">
-											<span class="text-success"><i class="fa fa-arrow-up"></i> 변화량</span> <span class="text-nowrap">이용자평균</span>
-											<input class="replyButton2" type="button" value="리뷰 목록">
-											<input class="replyButton2" type="button" value="리뷰 쓰기">
+											<span class="text-success"><i class="fa fa-arrow-up"></i> 변화량</span> <span class="text-nowrap">이용자수</span>
+											<!-- <input class="replyButton2" type="button" value="리뷰 목록">
+											<input class="replyButton2" type="button" value="리뷰 쓰기"> -->
 										</p>
 									</div>
 								</div>
