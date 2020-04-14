@@ -4,11 +4,13 @@
 	<typeAliases>
 		<typeAlias type="global.sesoc.brr.vo.NaverVO" alias="naver" />
 		<typeAlias type="global.sesoc.brr.vo.GoogleLoginVO" alias="googlelogin"/>
+		<typeAlias type="global.sesoc.brr.vo.DayAverVO" alias="aver"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/BoardMapper.xml" />
 		<mapper resource="mapper/GoogleMapsMapper.xml" />
 		<mapper resource="mapper/NaverLoginMapper.xml" />
 		<mapper resource="mapper/GoogleLoginMapper.xml"/>
+		<mapper resource="mapper/DayAverMapper.xml"/>
 	</mappers>
 </configuration>

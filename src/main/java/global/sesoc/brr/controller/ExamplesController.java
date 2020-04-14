@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("examples")
 public class ExamplesController {
 
 	private static final Logger logger = LoggerFactory.getLogger(Controller.class);
@@ -30,7 +29,7 @@ public class ExamplesController {
 
 	@GetMapping(value = "login")
 	public String login() {
-		return "examples/login";
+		return "member/login";
 	}
 
 	@GetMapping(value = "map")
@@ -45,13 +44,13 @@ public class ExamplesController {
 
 	@GetMapping(value = "profile")
 	public String profile() {
-		return "examples/profile";
+		return "member/profile";
 	}
 
-	@GetMapping(value = "signup")
-	public String signup() {
-		return "examples/signup";
-	}
+//	@GetMapping(value = "signup")
+//	public String signup() {
+//		return "examples/signup";
+//	}
 
 	@GetMapping(value = "tables")
 	public String tables() {
