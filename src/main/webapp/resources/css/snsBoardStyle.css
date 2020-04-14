@@ -30,40 +30,11 @@
   --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
-/* jocoding참조 */
-h1 {
-	text-align: center;
-	margin-top: 28px;	
-	font-size: 85px;
-}
 
-h1 span:nth-child(1) {
-  color: #5c6fdf;
-}
-
-h1 span:nth-child(2) {
-  color: #03c75a;
-}
-
-.search-bar {
-	width: 850px;
-}
-
-.boardTitle {
-	width: 553px;	
-	font: 1rem/1.5 var(--font-family-sans-serif);
-	color: var(--blue);
-}
-
-.boardContents {
-	width: 553px;	
-	font: 1rem/1.5 var(--font-family-sans-serif);
-	color: var(--blue);
-}
 
 .boardButton {
 	text-align: right;
-	width: 620px;	
+	width: 70%;	
 }
 
 .replyButton1 {
@@ -99,9 +70,10 @@ h1 span:nth-child(2) {
 	position: fixed; left: 0; top: 0; width: 100%; height: 52px;
 	line-height: 52px; color: #343a40; text-align: center; background: #fff;}
 article {
-	padding: 52px 3% 0;
+	padding: 10px 3% 0;
 }
 article .block {
+	background-color: #F8F8FF;
 	padding: 20px;
 	min-height: 500px;
 	border-bottom: 1px solid;
@@ -112,18 +84,19 @@ article .block {
 article .block p {
 	line-height: 22px; 
 	font-size: 16px; 
-	font-weight: 600;
 	font-family: sans-serif;
 }
 article .block:nth-child(2n+1) {
+	background-color: #F8F8FF;
 	font-family: sans-serif;
-	width: 620px;
+	width: 70%;
 	box-shadow: 3px 3px 3px 3px gray;
 	font-family: sans-serif;
 }
 article .block:nth-child(2n) {
+	background-color: #F8F8FF;
 	font-family: sans-serif;
-	width: 620px;
+	width: 70%;
 	box-shadow: 3px 3px 3px 3px gray;
 	font-family: sans-serif;
 }
