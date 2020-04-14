@@ -20,7 +20,6 @@
 <!-- CSS Files -->
 <link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
 <script type="text/javascript">
-
     var map, pos, marker, toiletMarker, marker_s, marker_e, marker_p1, marker_p2, label, endX, endY, polyline_, InfoWindow;
     var toiletType, unisexToiletYn, hour, distance, distime;
     var menToiletBowlNumber, menHandicapToiletBowlNumber;
@@ -31,11 +30,11 @@
     var polyFlag = 0;
     var locationFlag = 0;
     
-
     //길찾기
     function directions (endX, endY) {
         //  경로탐색 API 사용요청
-        $.ajax({
+        $
+                .ajax({
                     method : "POST",
                     url : "https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json&callback=result",//
                     async : false,
@@ -55,11 +54,13 @@
                         var resultData = response.features;
                         
                         //결과 출력
-                        var tDistance =  ( ( resultData[0].properties.totalDistance ) / 1000 ).toFixed(1) + "km";
-                        var tTime =  ( ( resultData[0].properties.totalTime ) / 60 ).toFixed(0) + "분";
-                        distime = tTime+" "+tDistance;
+                        var tDistance = ( ( resultData[0].properties.totalDistance ) / 1000 )
+                                .toFixed(1) + "km";
+                        var tTime = ( ( resultData[0].properties.totalTime ) / 60 )
+                                .toFixed(0) + "분";
+                        distime = tTime + " " + tDistance;
                         
-                       // $("#result").text(tDistance + tTime);
+                        // $("#result").text(tDistance + tTime);
                         
                         drawInfoArr = [ ];
                         for( var i in resultData){ //for문 [S]
@@ -127,10 +128,9 @@
                                 .log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
                     }
                 });//ajax[E]
-
-       return distime;      
+        
+        return distime;
     }//directions[E]
-    
     
     function setPositions (e, marker) {
         nearbyToilet = e;
@@ -146,191 +146,197 @@
                 id : i,
                 position : new Tmapv2.LatLng(nearbyToilet[i].lat, nearbyToilet[i].lng), //Marker의 중심좌표 설정.
                 map : map, //Marker가 표시될 Map 설정.
+                icon : "../resources/img/toilet5.png",
                 title : title, //Marker 타이틀.
-                //label : label //Marker의 라벨.
+            //label : label //Marker의 라벨.
             });
             
             //Marker에 클릭이벤트 등록.
-            toiletMarker.addListener("click", function (toiletMarker, i, title) {
-           		return function () {
-                           index = i;
-                           target = toiletMarker.getPosition();
-                           endX = target._lng;
-                           endY = target._lat;
-                           
-                           //누르자마자 경로탐색 > 나중에 경로안내누르면 실시간안내되도록 바꾸기
-                           distime = directions(endX,endY);
-                           if(nearbyToilet[i].unisexToiletYn=="Y")
-                               nearbyToilet[i].unisexToiletYn = "남녀공용 ";
-                           else
-                               nearbyToilet[i].unisexToiletYn = "남녀별도 ";
-                           
-                           var toiletType = nearbyToilet[i].unisexToiletYn + nearbyToilet[i].toiletType;
-                           var toiletBowlNumber = nearbyToilet[i].menToiletBowlNumber + nearbyToilet[i].ladiesToiletBowlNumber;
-                           var handicap =  nearbyToilet[i].menHandicapToiletBowlNumber + nearbyToilet[i].ladiesHandicapToiletBowlNumber;
-                           if(handicap>0)
-                               handicap = "Y";
-                           else
-                               handicap = "N";
-                           
-                           //console.log("toiletMarker : " + toiletMarker)
-                           console.log(marker)
-                           //여기까지 마커(내위치) 들어오는것 확인
-                           
-                           var content = "<h5 class='card-title text-uppercase text-muted mb-0'>"+toiletType+"</h5>" 
-                           content += "<br'><span class='card-title text-uppercase text-muted mb-0'>대변기 : " + toiletBowlNumber + "</span>"
-                           content += "<br><span class='card-title text-uppercase text-muted mb-0'>장애인 배려실 : " + handicap + "</span>"
-                           //content += "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='navigators(" + endX + ',' + endY + ")'>";
-                           //마커를 클로저방식으로 넘겨서, 그 마커를 네비게이터스가 실행될때 제거할수있도록해야할것같다.
-                           content += "<br><input class='replyButton2 mt-1' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='navigators(" + endX + ',' + endY + ',' + '"' + title + '"' + ")'>"; 
-                           content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";
-                           
-							//content += 	"<div style='display:inline-block; border:3px solid #dcdcdc;'>"
-							//content +=			"console.log('길찾기실행중')"			
-                           
-							/* content += "<div style='position: relative; padding-top: 5px; display:inline-block'>"
+            toiletMarker
+                    .addListener("click", function (toiletMarker, i, title) {
+                        return function () {
+                            index = i;
+                            target = toiletMarker.getPosition();
+                            endX = target._lng;
+                            endY = target._lat;
+                            
+                            //누르자마자 경로탐색 > 나중에 경로안내누르면 실시간안내되도록 바꾸기
+                            distime = directions(endX, endY);
+                            if(nearbyToilet[i].unisexToiletYn == "Y")
+                                nearbyToilet[i].unisexToiletYn = "남녀공용 ";
+                            else
+                                nearbyToilet[i].unisexToiletYn = "남녀별도 ";
+                            
+                            var toiletType = nearbyToilet[i].unisexToiletYn + nearbyToilet[i].toiletType;
+                            var toiletBowlNumber = nearbyToilet[i].menToiletBowlNumber + nearbyToilet[i].ladiesToiletBowlNumber;
+                            var handicap = nearbyToilet[i].menHandicapToiletBowlNumber + nearbyToilet[i].ladiesHandicapToiletBowlNumber;
+                            if(handicap > 0)
+                                handicap = "Y";
+                            else
+                                handicap = "N";
+                            
+                            //console.log("toiletMarker : " + toiletMarker)
+                            console.log(marker)
+                            //여기까지 마커(내위치) 들어오는것 확인
+                            
+                            var content = "<h5 class='card-title text-uppercase text-muted mb-0'>" + toiletType + "</h5>"
+                            content += "<br'><span class='card-title text-uppercase text-muted mb-0'>대변기 : " + toiletBowlNumber + "</span>"
+                            content += "<br><span class='card-title text-uppercase text-muted mb-0'>장애인 배려실 : " + handicap + "</span>"
+                            //content += "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='navigators(" + endX + ',' + endY + ")'>";
+                            //마커를 클로저방식으로 넘겨서, 그 마커를 네비게이터스가 실행될때 제거할수있도록해야할것같다.
+                            content += "<br><input class='replyButton2 mt-1' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='navigators(" + endX + ',' + endY + ',' + '"' + title + '"' + ")'>";
+                            content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";
+                            
+                            //content += 	"<div style='display:inline-block; border:3px solid #dcdcdc;'>"
+                            //content +=			"console.log('길찾기실행중')"			
+                            
+                            /* content += "<div style='position: relative; padding-top: 5px; display:inline-block'>"
                             content += "<input class='replyButton2' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='(";
-							content += "function(endX,endY, marker){";
-							content +=     "return function(){";
-	                        content +=          "setInterval(function(){";
-	                        content += 	            "myLocation(marker);";
-	                       	content +=              "directions(endX, endY);";
-	                       	content +=          "},5000);";
-	                       	content +=     "};";
-	                        content += "}";
-							content += ")(" + endX + "," + endY + "," + marker + ");'>";  
-							content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";	 */
-                           
-						
-                           console.log("target : " + i)
-                           setTimeout(function () {
-                               InfoWindow.setMap(null)
-                           }, 0);
-                           setTimeout(function () {
-                               InfoWindow = new Tmapv2.InfoWindow({
-                                   position : new Tmapv2.LatLng(target._lat, target._lng),
-                                   content : content,
-                                   type : 1,
-                                   map : map
-                               });
+                            content += "function(endX,endY, marker){";
+                            content +=     "return function(){";
+                            content +=          "setInterval(function(){";
+                            content += 	            "myLocation(marker);";
+                            content +=              "directions(endX, endY);";
+                            content +=          "},5000);";
+                            content +=     "};";
+                            content += "}";
+                            content += ")(" + endX + "," + endY + "," + marker + ");'>";  
+                            content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";	 */
+
+                            console.log("target : " + i)
+                            setTimeout(function () {
+                                InfoWindow.setMap(null)
                             }, 0);
-                           
-                       	//div1 내용 변경
-						var div1 = document.getElementById('div1');
-                       	var content2
-						content2 = "<div class='row'>"
-						content2 +=     "<div class='col'>"
-						content2 +=         "<h5 class='card-title text-uppercase text-muted mb-0'>" + title + "</h5>"
-						content2 +=         "<span class='h2 font-weight-bold mb-0'>" + toiletType + "</span>"
-						content2 +=     "</div>"
-						content2 += "</div>"
-						content2 += "<p class='mt-3 mb-0 text-muted text-sm'>"
-				    	content2 +=     "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap mr-2'>별점평균</span>"
-						content2 +=     "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>청결도평균</span>"
-						content2 += "</p>"
-						content2 += "<p class='mt-1 mb-0 text-muted text-sm'>"
-					    content2 +=     "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>이용자수</span>"
-					    content2 +=    "<input class='replyButton2 ml-1' type='button' value='리뷰 목록' onclick='location.href=\"../board/listReview?toiletTitle="+title+"\"'>" 
-					    var id = <%=(String)session.getAttribute("sessionId")%>;
-					    //로그인
-					    if(id==null)
-					   	content2 +=	   "<input class='replyButton2 ml-1' type='button' value='리뷰 쓰기' onclick='location.href=\"../board/writeReview?toiletTitle="+title+"&id="+id+"\"'>"
-					    //리뷰쓰기
-					  	if(id!=null)
-					    content2 +=	   "<input class='replyButton2 ml-1' type='button' value='리뷰 쓰기' onclick='location.href=\"../board/writeReview?toiletTitle="+title+"&id="+id+"\"'>"
-					    content2 += "</p>"
-										
-						div1.innerHTML = content2;
+                            setTimeout(function () {
+                                InfoWindow = new Tmapv2.InfoWindow({
+                                    position : new Tmapv2.LatLng(target._lat, target._lng),
+                                    content : content,
+                                    type : 1,
+                                    map : map
+                                });
+                            }, 0);
+                            
+                            //div1 내용 변경
+                            var div1 = document.getElementById('div1');
+                            var content2
+                            content2 = "<div class='row'>"
+                            content2 += "<div class='col'>"
+                            content2 += "<h5 class='card-title text-uppercase text-muted mb-0'>" + title + "</h5>"
+                            content2 += "<span class='h2 font-weight-bold mb-0'>" + toiletType + "</span>"
+                            content2 += "</div>"
+                            content2 += "</div>"
+                            content2 += "<p class='mt-3 mb-0 text-muted text-sm'>"
+                            content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap mr-2'>별점평균</span>"
+                            content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>청결도평균</span>"
+                            content2 += "</p>"
+                            content2 += "<p class='mt-1 mb-0 text-muted text-sm'>"
+                            content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>이용자수</span>"
+                            content2 += "<input class='replyButton2 ml-1' type='button' value='리뷰 목록' onclick='location.href=\"../board/listReview?toiletTitle=" + title + "\"'>"
+                            var id =
+<%=(String) session.getAttribute("sessionId")%>
+    ;
+                            //로그인
+                            if(id == null)
+                                content2 += "<input class='replyButton2 ml-1' type='button' value='리뷰 쓰기' onclick='location.href=\"../board/writeReview?toiletTitle=" + title + "&id=" + id + "\"'>"
+                                //리뷰쓰기
+                            if(id != null)
+                                content2 += "<input class='replyButton2 ml-1' type='button' value='리뷰 쓰기' onclick='location.href=\"../board/writeReview?toiletTitle=" + title + "&id=" + id + "\"'>"
+                            content2 += "</p>"
+
+                            div1.innerHTML = content2;
                         }
                     }(toiletMarker, i, title));
         }
     }//setPositions[E]
     
-  	function myLocation(){
-  	  	// HTML5의 geolocation으로 사용할 수 있는지 확인합니다      
-  	    if(navigator.geolocation){
-  	   		navigator.geolocation.getCurrentPosition(function (position) {
-  	        	lat = position.coords.latitude;
-  	            lng = position.coords.longitude;
-  	            pos = {
-  	              	lat : lat,
-  	                lng : lng
-  	            };
-  	            $.ajax({
-  	            	url : "<c:url value='/maps/getLocation'/>",
-  	       			data : {
-						lat : pos.lat.toFixed(6),
-  	               	    lng : pos.lng.toFixed(6)
-  	                },
-  	                type : "post",
-  	                success : function(e){
-  	                	if(locationFlag==0){
-  	                    	locationFlag=1;
-  	                   		setPositions(e, marker);
-  	                   	}
-  	                },
-  	                error : function (e) {
-  	                	console.log(e)
-  	              	}
-  	    		})
+    function myLocation () {
+        // HTML5의 geolocation으로 사용할 수 있는지 확인합니다      
+        if(navigator.geolocation){
+            navigator.geolocation
+                    .getCurrentPosition(function (position) {
+                        lat = position.coords.latitude;
+                        lng = position.coords.longitude;
+                        pos = {
+                            lat : lat,
+                            lng : lng
+                        };
+                        $.ajax({
+                            url : "<c:url value='/maps/getLocation'/>",
+                            data : {
+                                lat : pos.lat.toFixed(6),
+                                lng : pos.lng.toFixed(6)
+                            },
+                            type : "post",
+                            success : function (e) {
+                                if(locationFlag == 0){
+                                    locationFlag = 1;
+                                    setPositions(e, marker);
+                                }
+                            },
+                            error : function (e) {
+                                console.log(e)
+                            }
+                        })
 
-  	            //팝업 생성
-  	            var content = "<div style=' position: relative; border-bottom: 1px solid #dcdcdc; line-height: 18px; padding: 0 35px 2px 0;'>"  
-  	          	content +=			"<div style='font-size: 12px; line-height: 15px;'>" 
-  	          	//content +=			 	"<div class='icon icon-shape bg-info text-white rounded-circle shadow'>"
-  	          	content +=					"<i class='ni ni-user-run'></i>"
-  	          	//content +=				"</div>"
-  	          	content +=				"<span style='display: inline-block; width: 14px; height: 14px; background-image: url(/resources/images/common/icon_blet.png); vertical-align: middle; margin-right: 5px;'></span>Your location" 
-  	          	content +=			"</div>"
-	        	content +=	  "</div>";
-	        	
-  	        	console.log( marker)
-	            setTimeout(function(){
-		    	  	marker.setMap(null)
-		        }, 0);     
-  		        setTimeout(function(){
-  		          	marker = new Tmapv2.Marker({
-  		          		position : new Tmapv2.LatLng(lat, lng),
-	           		    map : map
-  		           });
-  		        }, 0);
-  		     	     
-  	            setTimeout(function () {
-  	            	InfoWindow.setMap(null)
-  	            }, 0);
-  	            setTimeout(function () {
-  	            	InfoWindow = new Tmapv2.InfoWindow({
-  	                	position : new Tmapv2.LatLng(lat, lng),
-	                    content : content,
-  	                    type : 1,
-  	                    map : map
-  	                });
-  	            }, 0);
-  	                        
-  	            map.setCenter(new Tmapv2.LatLng(lat, lng));
-  	            map.setZoom(15);
-  	           });
-  		}
-  	}//mylocation[E]
+                        //팝업 생성
+                        var content = "<div style=' position: relative; border-bottom: 1px solid #dcdcdc; line-height: 18px; padding: 0 35px 2px 0;'>"
+                        content += "<div style='font-size: 12px; line-height: 15px;'>"
+                        //content +=			 	"<div class='icon icon-shape bg-info text-white rounded-circle shadow'>"
+                        content += "<i class='ni ni-user-run'></i>"
+
+                        //content +=				"</div>"
+                        content += "<span style='display: inline-block; width: 14px; height: 14px; background-image: url(/resources/images/common/icon_blet.png); vertical-align: middle; margin-right: 5px;'></span>Your location"
+                        content += "</div>"
+                        content += "</div>";
+                        
+                        console.log(marker)
+                        setTimeout(function () {
+                            marker.setMap(null)
+                        }, 0);
+                        setTimeout(function () {
+                            marker = new Tmapv2.Marker({
+                                position : new Tmapv2.LatLng(lat, lng),
+                                icon : "../resources/img/redmarker48.png",
+                                map : map
+                            });
+                        }, 0);
+                        
+                        setTimeout(function () {
+                            InfoWindow.setMap(null)
+                        }, 0);
+                        setTimeout(function () {
+                            InfoWindow = new Tmapv2.InfoWindow({
+                                position : new Tmapv2.LatLng(lat, lng),
+                                content : content,
+                                type : 1,
+                                map : map
+                            });
+                        }, 0);
+                        
+                        map.setCenter(new Tmapv2.LatLng(lat, lng));
+                        map.setZoom(15);
+                    });
+        }
+    }//mylocation[E]
     
-	//실시간길찾기
-  	function navigators(endX, endY, title){
-  		var id = <%=(String)session.getAttribute("sessionId")%>;
-  		//DB에 정보저장, title값 필요
-  		if(id!=null){
-  			
-  		}
-  		alert(title)
-  		//실시간 길찾기
-  	    setInterval(function(){
-  	    	myLocation();
-  	       	directions(endX, endY);
-  	       	console.log("네비게이터 실행중")
-  	   	},5000);
-  	        
-  	} 
-  	    
-  		 
+    //실시간길찾기
+    function navigators (endX, endY, title) {
+        var id =
+<%=(String) session.getAttribute("sessionId")%>
+    ;
+        //DB에 정보저장, title값 필요
+        if(id != null){
+            
+        }
+        //실시간 길찾기
+        setInterval(function () {
+            myLocation();
+            directions(endX, endY);
+            console.log("네비게이터 실행중")
+        }, 5000);
+        
+    }
+
     function initTmap () {
         // Tmap.map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
         map = new Tmapv2.Map("map_div", {
@@ -339,7 +345,7 @@
             height : "400px" // map의 height 설정	
             
         });
-       
+        
         myLocation();
         
         function addComma (num) {
@@ -347,7 +353,6 @@
             return num.toString().replace(regexp, ',');
         }
     }//initMap[E]
-   
 </script>
 </head>
 
@@ -359,14 +364,17 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<!-- Brand -->
-			<a class="navbar-brand pt-0" href="<c:url value="/examples/maps"/>"> <img src="<c:url value="/resources/assets/img/brand/blue.png"/>" class="navbar-brand-img" alt="...">
+			<a class="navbar-brand pt-0" href="<c:url value="/examples/maps"/>">
+				<img src="<c:url value="/resources/assets/img/brand/blue.png"/>" class="navbar-brand-img" alt="...">
 			</a>
 			<!-- User -->
 			<ul class="nav align-items-center d-md-none">
-				<li class="nav-item dropdown"><a class="nav-link nav-link-icon" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="ni ni-bell-55"></i>
-				</a>
+				<li class="nav-item dropdown"><a class="nav-link nav-link-icon" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="ni ni-bell-55"></i>
+					</a>
 					<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right" aria-labelledby="navbar-default_dropdown_1">
-						<a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a>
+						<a class="dropdown-item" href="#">Action</a>
+						<a class="dropdown-item" href="#">Another action</a>
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="#">Something else here</a>
 					</div></li>
@@ -375,29 +383,38 @@
 							<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-1-800x800.jpg"/>">
 							</span>
 						</div>
-				</a>
+					</a>
 					<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
 						<div class=" dropdown-header noti-title">
 							<h6 class="text-overflow m-0">Welcome!</h6>
 						</div>
-						<a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-single-02"></i> <span>My profile</span>
-						</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-settings-gear-65"></i> <span>Settings</span>
-						</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-calendar-grid-58"></i> <span>Activity</span>
-						</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-support-16"></i> <span>Support</span>
+						<a href="<c:url value="/examples/profile"/>" class="dropdown-item">
+							<i class="ni ni-single-02"></i> <span>My profile</span>
+						</a>
+						<a href="<c:url value="/examples/profile"/>" class="dropdown-item">
+							<i class="ni ni-settings-gear-65"></i> <span>Settings</span>
+						</a>
+						<a href="<c:url value="/examples/profile"/>" class="dropdown-item">
+							<i class="ni ni-calendar-grid-58"></i> <span>Activity</span>
+						</a>
+						<a href="<c:url value="/examples/profile"/>" class="dropdown-item">
+							<i class="ni ni-support-16"></i> <span>Support</span>
 						</a>
 						<div class="dropdown-divider"></div>
-						<a href="#!" class="dropdown-item"> <i class="ni ni-user-run"></i> <span>Logout</span>
+						<a href="#!" class="dropdown-item">
+							<i class="ni ni-user-run"></i> <span>Logout</span>
 						</a>
 					</div></li>
 			</ul>
-			
+
 			<!-- Collapse -->
 			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
 				<!-- Collapse header -->
 				<div class="navbar-collapse-header d-md-none">
 					<div class="row">
 						<div class="col-6 collapse-brand">
-							<a href="<c:url value="/examples/index"/>"> <img src="<c:url value="/resources/assets/img/brand/blue.png"/>">
+							<a href="<c:url value="/examples/index"/>">
+								<img src="<c:url value="/resources/assets/img/brand/blue.png"/>">
 							</a>
 						</div>
 						<div class="col-6 collapse-close">
@@ -420,29 +437,37 @@
 				</form>
 				<!-- Navigation -->
 				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link  active " href="<c:url value="/examples/maps"/>"> <i class="ni ni-pin-3 text-orange"></i> Maps
-					</a></li>
-					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/index"/>"> <i class="ni ni-tv-2 text-primary"></i> Board
-					</a></li>
+					<li class="nav-item"><a class="nav-link  active " href="<c:url value="/examples/maps"/>">
+							<i class="ni ni-pin-3 text-orange"></i> Maps
+						</a></li>
+					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/index"/>">
+							<i class="ni ni-tv-2 text-primary"></i> Board
+						</a></li>
 					<%-- <li class="nav-item  active "><a class="nav-link " href="<c:url value="/examples/index"/>">
 							<i class="ni ni-tv-2 text-primary"></i> Dashboard
 						</a></li> //nav-item  active는 무조건 검정색으로 표시됩니다. --%>
-					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/icons"/>"> <i class="ni ni-planet text-blue"></i> Icons
-					</a></li>
+					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/icons"/>">
+							<i class="ni ni-planet text-blue"></i> Icons
+						</a></li>
 
-					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/tables"/>"> <i class="ni ni-bullet-list-67 text-red"></i> Tables
-					</a></li>
+					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/tables"/>">
+							<i class="ni ni-bullet-list-67 text-red"></i> Tables
+						</a></li>
 					<c:if test="${sessionScope.userID==null }">
-						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/login"/>"> <i class="ni ni-key-25 text-info"></i> Login
-						</a></li>
-						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/register"/>"> <i class="ni ni-circle-08 text-pink"></i> Sign up
-						</a></li>
+						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/login"/>">
+								<i class="ni ni-key-25 text-info"></i> Login
+							</a></li>
+						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/register"/>">
+								<i class="ni ni-circle-08 text-pink"></i> Sign up
+							</a></li>
 					</c:if>
 					<c:if test="${sessionScope.userID!=null }">
-						<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/profile"/>"> <i class="ni ni-single-02 text-yellow"></i> User profile
-						</a></li>
-						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/login"/>"> <i class="ni ni-key-25 text-info"></i> Logout
-						</a></li>
+						<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/profile"/>">
+								<i class="ni ni-single-02 text-yellow"></i> User profile
+							</a></li>
+						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/login"/>">
+								<i class="ni ni-key-25 text-info"></i> Logout
+							</a></li>
 					</c:if>
 				</ul>
 				<!-- Divider -->
@@ -451,16 +476,20 @@
 				<h6 class="navbar-heading text-muted">Documentation</h6>
 				<!-- Navigation -->
 				<ul class="navbar-nav mb-md-3">
-					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html"> <i class="ni ni-spaceship"></i> Getting started
-					</a></li>
-					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/foundation/colors.html"> <i class="ni ni-palette"></i> Foundation
-					</a></li>
-					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/components/alerts.html"> <i class="ni ni-ui-04"></i> Components
-					</a></li>
+					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html">
+							<i class="ni ni-spaceship"></i> Getting started
+						</a></li>
+					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/foundation/colors.html">
+							<i class="ni ni-palette"></i> Foundation
+						</a></li>
+					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/components/alerts.html">
+							<i class="ni ni-ui-04"></i> Components
+						</a></li>
 				</ul>
 				<ul class="navbar-nav">
-					<li class="nav-item active active-pro"><a class="nav-link" href="<c:url value="/examples/upgrade"/>"> <i class="ni ni-send text-dark"></i> Send Feedback
-					</a></li>
+					<li class="nav-item active active-pro"><a class="nav-link" href="<c:url value="/examples/upgrade"/>">
+							<i class="ni ni-send text-dark"></i> Send Feedback
+						</a></li>
 				</ul>
 			</div>
 		</div>
@@ -492,18 +521,26 @@
 									<span class="mb-0 text-sm  font-weight-bold">Jessica Jones</span>
 								</div>
 							</div>
-					</a>
+						</a>
 						<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
 							<div class=" dropdown-header noti-title">
 								<h6 class="text-overflow m-0">Welcome!</h6>
 							</div>
-							<a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-single-02"></i> <span>My profile</span>
-							</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-settings-gear-65"></i> <span>Settings</span>
-							</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-calendar-grid-58"></i> <span>Activity</span>
-							</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-support-16"></i> <span>Support</span>
+							<a href="<c:url value="/examples/profile"/>" class="dropdown-item">
+								<i class="ni ni-single-02"></i> <span>My profile</span>
+							</a>
+							<a href="<c:url value="/examples/profile"/>" class="dropdown-item">
+								<i class="ni ni-settings-gear-65"></i> <span>Settings</span>
+							</a>
+							<a href="<c:url value="/examples/profile"/>" class="dropdown-item">
+								<i class="ni ni-calendar-grid-58"></i> <span>Activity</span>
+							</a>
+							<a href="<c:url value="/examples/profile"/>" class="dropdown-item">
+								<i class="ni ni-support-16"></i> <span>Support</span>
 							</a>
 							<div class="dropdown-divider"></div>
-							<a href="#!" class="dropdown-item"> <i class="ni ni-user-run"></i> <span>Logout</span>
+							<a href="#!" class="dropdown-item">
+								<i class="ni ni-user-run"></i> <span>Logout</span>
 							</a>
 						</div></li>
 				</ul>
@@ -513,9 +550,7 @@
 		<!-- Header -->
 		<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
 			<div class="container-fluid">
-				<div class="header-body">
-					
-				</div>
+				<div class="header-body"></div>
 			</div>
 		</div>
 		<div class="container-fluid mt--7">
@@ -529,8 +564,8 @@
 						<!-- <input type="hidden" id="start"> <input type="hidden" id="end"> -->
 					</div>
 				</div>
-			</div>		
-			
+			</div>
+
 			<!-- Header -->
 			<div class="header pb-7 pt-5">
 				<div class="container-fluid">
@@ -547,11 +582,10 @@
 											</div>
 										</div>
 										<p class="mt-3 mb-0 text-muted text-sm">
-											<span class="text-success"><i class="fa fa-arrow-up"></i> 변화량</span> <span class="text-nowrap mr-2">별점평균</span>
-											<span class="text-success"><i class="fa fa-arrow-up"></i> 변화량</span> <span class="text-nowrap">청결도평균</span>
+											<span class="text-success"><i class="fa fa-arrow-up"></i> 변화량</span> <span class="text-nowrap mr-2">별점평균</span> <span class="text-success"><i class="fa fa-arrow-up"></i> 변화량</span> <span class="text-nowrap">청결도평균</span>
 										</p>
 										<p class="mt-1 mb-0 text-muted text-sm">
-											<span class="text-success"><i class="fa fa-arrow-up"></i> 변화량</span> <span class="text-nowrap">이용자수</span>
+											<span class="text-warning"><i class="fa fa-arrow-down"></i> 변화량</span> <span class="text-nowrap">이용자수</span>
 											<!-- <input class="replyButton2" type="button" value="리뷰 목록">
 											<input class="replyButton2" type="button" value="리뷰 쓰기"> -->
 										</p>
@@ -562,21 +596,21 @@
 								<div class="card card-stats mb-4 mb-xl-0">
 									<div class="card-body replyButton2">
 										<div class="row">
-											<div class="col">
-												<h5 class="card-title text-uppercase text-muted mb-0">Title</h5>
-												<span class="h2 font-weight-bold mb-0">Contents</span>
+											<div class="col-8">
+												<!-- <h5 class="card-title text-uppercase text-muted mb-0">Title</h5> -->
+												<span class="card-title text-uppercase text-sm text-muted mb-0">일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십</span>
+												<!-- <span class="h2 font-weight-bold mb-0">Contents</span> -->
 											</div>
-											<div class="col-auto" style="text-align:center;">
-												<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display:inline-block;">
+											<div class="col-auto" style="text-align: center;">
+												<p class="mt-0 mb-2 text-muted text-sm">
+													<span class="text-success">4.0</span><span class="text-nowrap mr-2 ml-2">별점</span> <br> <span class="text-danger">3.5</span><span class="text-nowrap mr-2 ml-2">청결도</span>
+												</p>
+												<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;">
 													<i class="fas fa-chart-pie"></i>
 												</div>
-												<h5 class="card-title text-uppercase text-muted mb-0">Nickname</h5>
+												<h5 class="card-title text-uppercase text-muted mb-0 mt-1">Nickname</h5>
 											</div>
 										</div>
-										<p class="mt-3 mb-0 text-muted text-sm">
-											<span class="text-danger"><i class="fas fa-arrow-down"></i> 3.48%</span> <span class="text-nowrap mr-2">별점</span>
-											<span class="text-danger"><i class="fas fa-arrow-down"></i> 3.48%</span> <span class="text-nowrap">청결도</span>
-										</p>
 									</div>
 								</div>
 							</div>
@@ -584,19 +618,21 @@
 								<div class="card card-stats mb-4 mb-xl-0">
 									<div class="card-body replyButton2">
 										<div class="row">
-											<div class="col">
-												<h5 class="card-title text-uppercase text-muted mb-0">Title</h5>
-												<span class="h2 font-weight-bold mb-0">Contents</span>
+											<div class="col-8">
+												<!-- <h5 class="card-title text-uppercase text-muted mb-0">Title</h5> -->
+												<span class="card-title text-uppercase text-sm text-muted mb-0">일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십</span>
+												<!-- <span class="h2 font-weight-bold mb-0">Contents</span> -->
 											</div>
-											<div class="col-auto">
-												<div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
-													<i class="fas fa-users"></i>
+											<div class="col-auto" style="text-align: center;">
+												<p class="mt-0 mb-2 text-muted text-sm">
+													<span class="text-success">4.0</span><span class="text-nowrap mr-2 ml-2">별점</span> <br> <span class="text-danger">3.5</span><span class="text-nowrap mr-2 ml-2">청결도</span>
+												</p>
+												<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;">
+													<i class="fas fa-chart-pie"></i>
 												</div>
+												<h5 class="card-title text-uppercase text-muted mb-0 mt-1">Nickname</h5>
 											</div>
 										</div>
-										<p class="mt-3 mb-0 text-muted text-sm">
-											<span class="text-warning mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span> <span class="text-nowrap">Since yesterday</span>
-										</p>
 									</div>
 								</div>
 							</div>
@@ -604,19 +640,21 @@
 								<div class="card card-stats mb-4 mb-xl-0">
 									<div class="card-body replyButton2">
 										<div class="row">
-											<div class="col">
-												<h5 class="card-title text-uppercase text-muted mb-0">Title</h5>
-												<span class="h2 font-weight-bold mb-0">Contents</span>
+											<div class="col-8">
+												<!-- <h5 class="card-title text-uppercase text-muted mb-0">Title</h5> -->
+												<span class="card-title text-uppercase text-sm text-muted mb-0">일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십</span>
+												<!-- <span class="h2 font-weight-bold mb-0">Contents</span> -->
 											</div>
-											<div class="col-auto">
-												<div class="icon icon-shape bg-info text-white rounded-circle shadow">
-													<i class="fas fa-percent"></i>
+											<div class="col-auto" style="text-align: center;">
+												<p class="mt-0 mb-2 text-muted text-sm">
+													<span class="text-success">4.0</span><span class="text-nowrap mr-2 ml-2">별점</span> <br> <span class="text-danger">3.5</span><span class="text-nowrap mr-2 ml-2">청결도</span>
+												</p>
+												<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;">
+													<i class="fas fa-chart-pie"></i>
 												</div>
+												<h5 class="card-title text-uppercase text-muted mb-0 mt-1">Nickname</h5>
 											</div>
 										</div>
-										<p class="mt-3 mb-0 text-muted text-sm">
-											<span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span> <span class="text-nowrap">Since last month</span>
-										</p>
 									</div>
 								</div>
 							</div>
@@ -669,7 +707,8 @@
 				<div class="row align-items-center justify-content-xl-between">
 					<div class="col-xl-6">
 						<div class="copyright text-center text-xl-left text-muted">
-							&copy; 2020 <a href="" class="font-weight-bold ml-1" target="_blank">Crispy Donut</a>
+							&copy; 2020
+							<a href="" class="font-weight-bold ml-1" target="_blank">Crispy Donut</a>
 						</div>
 					</div>
 					<div class="col-xl-6">
