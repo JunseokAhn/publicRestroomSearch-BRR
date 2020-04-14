@@ -327,7 +327,7 @@
         //DB에 정보저장, title값 필요
         if(id != null){
             $.ajax({
-            	url : "<c:url value='/dayever/searchedToilet'/>",
+            	url : "<c:url value='/dayaver/searchedToilet'/>",
            	 	data : {
                 	toiletTitle : title,
            	 	    id : id
