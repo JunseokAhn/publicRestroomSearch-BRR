@@ -21,7 +21,7 @@ function onSignIn(googleUser) {
 
 	  var id_token = googleUser.getAuthResponse().id_token;
 		var xhr = new XMLHttpRequest();
-		xhr.open('POST', 'http://localhost:8888/test1/callbackTestGoo');
+		xhr.open('POST', 'http://localhost:8888/brr/callbackTestGoo');
 		xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 		xhr.onload = function() {
 			console.log(id_token);
@@ -36,19 +36,10 @@ function BackHome(){
 	location.href = "/brr/maps/mapsMain";
 }
 
-function signOut() {
-	var auth2 = gapi.auth2.getAuthInstance();
-	auth2.signOut().then(function () {
-		console.log('로그아웃');
-	});
-	auth2.disconnect();
-}
-
 </script>
 </head>
 <body>
 
 <div class="g-signin2" data-onsuccess="onSignIn"></div>
-<a href = "#" onclick="signOut();">Sign out</a>
 </body>
 </html>

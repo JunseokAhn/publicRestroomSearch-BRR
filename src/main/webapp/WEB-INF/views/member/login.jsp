@@ -34,7 +34,7 @@ function onSignIn(googleUser) {
 		setTimeout(function(){ BackHome(); }, 3000);
 	}
 function BackHome(){
-	window.location.replace("/brr");	
+	window.location.replace("/brr/maps/mapsMain");	
 }
 </script>
 <title>Argon Dashboard - Free Dashboard for Bootstrap 4 by Creative Tim</title>
