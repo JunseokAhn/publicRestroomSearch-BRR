@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script src="../resources/js/jquery-3.4.1.js/"/>"></script>
+<script src="../resources/js/jquery-3.4.1.js"></script>
 <html>
 <head>
 <meta charset="utf-8" />
@@ -16,8 +16,7 @@
 <link href="<c:url value="/resources/assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css"/>" rel="stylesheet" />
 <!-- CSS Files -->
 <link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
-
-<%--BootStrap Getting Started--%>
+<!-- snsBoardStyle -->
 <link rel="stylesheet" type="text/css" href="../resources/css/snsBoardStyle.css">
 
 <script>
@@ -39,32 +38,17 @@ window.onscroll = function(e) {
     }
 };
 
-//메모글부분
-function boardDelete() {
-	if(confirm("삭제하시겠습니까?")) {
-		location.href='deleteBoard?boardnum=${board.boardnum}';
-	}	
-}
-function boardUpdate() {
-	if(confirm("수정하시겠습니까?")) {
-		location.href='updateBoard?boardnum=${board.boardnum}';
-	}	
-}
-function boardList() {
-	if(confirm("목록으로 돌아가겠습니까?")) {
-		location.href='listBoard';
-	}	
-}
-
 //sns상세글부분
 function deleteSNS() {
 	if(confirm("삭제하시겠습니까?")) {
-		location.href='deleteSNS?snsBoardnum=${snsBoard.snsBoardnum}';
+		var snsBoardnum = $(this).closest('div').find('#snsBoardnum1').val();
+		console.log(snsBoardnum);
+		location.href='deleteSNS?snsBoardnum=${snsBoardnum}';
 	}	
 }
 function updateSNS() {
 	if(confirm("수정하시겠습니까?")) {
-		location.href='updateSNS?snsBoardnum=${snsBoard.snsBoardnum}';
+		location.href='updateSNS?snsBoardnum=${sns.snsBoardnum}';
 	}	
 }
 function listSNS() {
@@ -85,12 +69,12 @@ $(document).ready(function() {
 });
 
 function snsReplySave() {
-	var snsBoardnum = $('#snsBoardnum').val();
-	var comments = $('#comments').val();
+
+	var snsBoardnum = $(this).closest('div').find('#snsBoardnum').val();
+	var comments = $(this).closest('div').find('#comments').val();
 
 	//잘 값이 들어갔는지 확인
-	console.log(snsReplynum);
-	console.log(id);
+	console.log(snsBoardnum);
 	console.log(comments);
 
 	if(comments.length == 0) {
@@ -337,6 +321,7 @@ function deleteSnsReply() {
 					<li class="nav-item active active-pro"><a class="nav-link" href="<c:url value="/examples/upgrade"/>"> <i class="ni ni-send text-dark"></i> Upgrade to PRO
 					</a></li>
 				</ul>
+
 			</div>
 		</div>
 	</nav>
@@ -509,8 +494,10 @@ function deleteSnsReply() {
 								<div class="row">
 									<div class="col-md-auto"><span>내용넣기: ${sns.contents}</span></div>
 								</div>
-							<!-- 삭제, 수정, 목록보기 버튼 -->
+							<!-- 삭제, 수정  버튼 -->
 								<div class="row1">
+								<!-- 삭제, 수정을 위한 Boardnum 받기 -->	
+								<input type="hidden" id="snsBoardnum1" value="${sns.snsBoardnum}">
 									<button type="button" class="btn btn-primary btn-sm"
 										onclick="deleteSNS()">삭제</button>
 									<button type="button" class="btn btn-primary btn-sm"
@@ -527,18 +514,15 @@ function deleteSnsReply() {
 								
 								<!-- 댓글쓰기 -->
 								<div class="form1 mx-auto form-group">
-									<input type="hidden" id="snsBoardnum" value="${snsBoard.snsBoardnum}">
 									<div>
-										<input style="margin-bottom: 5px;" class="form-control" type="text" id="comments" placeholder="댓글등록">
-									</div>
-									<div>
+										<input type="hidden" id="snsBoardnum" value="${sns.snsBoardnum}">
+										<div>
+											<input style="margin-bottom: 5px;" class="form-control" type="text" id="comments" placeholder="댓글등록">
+										</div>
 										<button type="button" class="btn btn-primary btn-sm" id="form">댓글등록</button>
 									</div>										
 								</div>
 								
-								
-<!-- 								<div class="mx-auto boardTitle form-group"> -->
-<!-- 								</div> -->
 								<!-- 댓글 table -->
 								<div id="snsListDiv" class="mx-auto form-group"></div>
 							</div>
@@ -551,7 +535,6 @@ function deleteSnsReply() {
 					</div>
 				</div>
 			</div>
-			<!-- Footer -->
 			<!-- Footer -->
 			<footer class="footer">
 				<div class="row align-items-center justify-content-xl-between">
@@ -572,6 +555,7 @@ function deleteSnsReply() {
 			</footer>
 		</div>
 	</div>
+
 	<!--   Core   -->
 	<script src="<c:url value="/resources/assets/js/plugins/jquery/dist/jquery.min.js"/>"></script>
 	<script src="<c:url value="/resources/assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"/>"></script>
@@ -588,5 +572,4 @@ function deleteSnsReply() {
 	</script>
 </body>
 
-</html>
 </html>

@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>brr 상세글</title>
-<script src="../resources/js/jquery-3.4.1.js/"/>"></script>
+<script src="../resources/js/jquery-3.4.1.js/"/></script>
 <%--BootStrap Getting Started--%>
 <link rel="stylesheet" type="text/css" href="../resources/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="../resources/css/bootstrap.min.css">

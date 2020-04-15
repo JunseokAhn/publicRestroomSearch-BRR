@@ -32,6 +32,7 @@
 }
 
 
+
 .boardTitle {
 	width: 70%;	
 	font: 1rem/1.5 var(--font-family-sans-serif);
@@ -56,20 +57,16 @@
 	width: 70%;	
 }
 
-.replyButton1 {
-	border: 1px solid;
-	color: var(--gray);
+.snsButton1 {
+	text-align: right;
+
 }
 
-.replyButton2 {
-	border: 1px solid;
-	color: var(--blue);
+.snsButton {
+	text-align: right;
+	width: 70%;	
 }
 
-.replyComments {
-	width: 553px;	
-	font: 1rem/1.5 var(--font-family-sans-serif);
-}
 
 /* snsStyle */
 .row1{ 
@@ -77,6 +74,7 @@
 	right:10px;
 	bottom:10px;
 }
+
 
 .id {
 	font-size: 18px;
@@ -91,35 +89,53 @@
 	color: #5c6fdf;
 }
 
-.pageTitle {
-	position: fixed; left: 0; top: 0; width: 100%; height: 52px;
-	line-height: 52px; color: #343a40; text-align: center; background: #fff;}
 article {
 	padding: 10px 3% 0;
 }
 article .block {
+
 	background-color: #F8F8FF;
+
+	background: #F8F8FF;
+	border-radius: 0.25rem;
+
 	padding: 20px;
 	min-height: 500px;
 	border-bottom: 1px solid;
 	border-bottom-color: #D3D3D3;
 	box-shadow: 3px 3px 3px 3px gray;
-	font-family: sans-serif;	
+	font-family: sans-serif;
+		
 }
 article .block p {
+	background: #F8F8FF;
 	line-height: 22px; 
 	font-size: 16px; 
+
 	font-family: sans-serif;
 }
 article .block:nth-child(2n+1) {
 	background-color: #F8F8FF;
+
+	font-weight: bold;
+	font-family: sans-serif;
+}
+article .block:nth-child(2n+1) {
+	background: #F8F8FF;
+	border-radius: 0.25rem;
+
 	font-family: sans-serif;
 	width: 70%;
 	box-shadow: 3px 3px 3px 3px gray;
 	font-family: sans-serif;
 }
 article .block:nth-child(2n) {
+
 	background-color: #F8F8FF;
+
+	background: #F8F8FF;
+	border-radius: 0.25rem;
+
 	font-family: sans-serif;
 	width: 70%;
 	box-shadow: 3px 3px 3px 3px gray;

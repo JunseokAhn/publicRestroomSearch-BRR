@@ -22,7 +22,7 @@ import global.sesoc.brr.vo.BoardVO;
 
 
 @Controller
-@RequestMapping(value = "board")
+@RequestMapping(value = "review") // review로 바꾸기
 public class BoardController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
