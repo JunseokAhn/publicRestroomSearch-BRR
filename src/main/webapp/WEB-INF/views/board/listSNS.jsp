@@ -39,18 +39,22 @@ window.onscroll = function(e) {
 };
 
 //sns상세글부분
-function deleteSNS() {
+function deleteSNS(e) {
 	if(confirm("삭제하시겠습니까?")) {
-		var snsBoardnum = $(this).closest('div').find('#snsBoardnum1').val();
+		var snsBoardnum = e;
 		console.log(snsBoardnum);
-		location.href='deleteSNS?snsBoardnum=${snsBoardnum}';
+		location.href='deleteSNS?snsBoardnum='+ snsBoardnum;
 	}	
 }
-function updateSNS() {
+
+function updateSNS(e) {
 	if(confirm("수정하시겠습니까?")) {
-		location.href='updateSNS?snsBoardnum=${sns.snsBoardnum}';
+		var snsBoardnum = e;
+		console.log(snsBoardnum);
+		location.href='updateSNS?snsBoardnum='+ snsBoardnum;
 	}	
 }
+
 function listSNS() {
 	if(confirm("목록으로 돌아가겠습니까?")) {
 		location.href='listSNS';
@@ -70,6 +74,7 @@ $(document).ready(function() {
 
 function snsReplySave() {
 
+	//중복되지않게 받는 다른 방법 생각하기!!!
 	var snsBoardnum = $(this).closest('div').find('#snsBoardnum').val();
 	var comments = $(this).closest('div').find('#comments').val();
 
@@ -479,7 +484,7 @@ function deleteSnsReply() {
 					<article>
 							<div class="mx-auto snsBoardButton form-group">
 								<input class="btn btn-primary" type="button" value="sns글쓰기" onclick="location.href='snsWrite';">
-								<input class="btn btn-primary" type="button" value="리뷰게시판" onclick="location.href='snsWrite';">
+								<input class="btn btn-primary" type="button" value="리뷰게시판" onclick="location.href='../review/listBoard';">
 							</div>
 
 							<c:forEach var="sns" items="${listSNS}">	
@@ -497,11 +502,10 @@ function deleteSnsReply() {
 							<!-- 삭제, 수정  버튼 -->
 								<div class="row1">
 								<!-- 삭제, 수정을 위한 Boardnum 받기 -->	
-								<input type="hidden" id="snsBoardnum1" value="${sns.snsBoardnum}">
 									<button type="button" class="btn btn-primary btn-sm"
-										onclick="deleteSNS()">삭제</button>
+										onclick="deleteSNS('${sns.snsBoardnum}')">삭제</button>
 									<button type="button" class="btn btn-primary btn-sm"
-										onclick="updateSNS()">수정</button>
+										onclick="updateSNS('${sns.snsBoardnum}')">수정</button>
 										
 									<button type="button" class="form2 btn btn-primary btn-sm">댓글쓰기</button>
 										
@@ -509,10 +513,10 @@ function deleteSnsReply() {
 							</div>
 							<div class="mx-auto snsBoardButton form-group">
 
-								<button type="button" class="btn btn-secondary btn-sm" 
-								onclick="location.href='readSNS?snsBoardnum=${sns.snsBoardnum}';">댓글</button>
+<!-- 								<button type="button" class="btn btn-secondary btn-sm"  -->
+<%-- 								onclick="location.href='readSNS?snsBoardnum=${sns.snsBoardnum}';">댓글</button> --%>
 								
-								<!-- 댓글쓰기 -->
+							<!-- 댓글쓰기 -->
 								<div class="form1 mx-auto form-group">
 									<div>
 										<input type="hidden" id="snsBoardnum" value="${sns.snsBoardnum}">

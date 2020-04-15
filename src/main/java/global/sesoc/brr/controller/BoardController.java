@@ -63,7 +63,7 @@ public class BoardController {
 //		}
 		
 		dao.insertBoard(board);
-		return "redirect:/board/listBoard";
+		return "redirect:/review/listBoard";
 	}
 	
 	//전체 게시판 글목록
@@ -97,7 +97,7 @@ public class BoardController {
 		dao.deleteBoard(board);
 				
 		//* 주의: redirect를 해야 삭제한후 목록이 나옴
-		return "redirect:/board/listBoard"; 
+		return "redirect:/review/listBoard"; 
 	}
 
 	//상세글 수정
@@ -117,12 +117,12 @@ public class BoardController {
 		String id = "haha";
 		BoardVO exboard = dao.readBoard(board.getBoardnum());
 		if (exboard == null || !exboard.getId().equals(id)) {
-			return "redirect:/board/listBoard";
+			return "redirect:/review/listBoard";
 		}
 		board.setId(id);
 		dao.updateBoard(board);
 				
-		return "redirect:/board/listBoard";
+		return "redirect:/review/listBoard";
 	}
 	
 	
