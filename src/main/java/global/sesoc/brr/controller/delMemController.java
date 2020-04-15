@@ -71,7 +71,7 @@ public class delMemController {
 		if (itmp == 1)
 		{
 			httpsession.invalidate();
-			return "redirect:/";
+			return "redirect:/maps/mapsMain";
 		}
 		else
 		{

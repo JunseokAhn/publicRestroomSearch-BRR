@@ -35,6 +35,7 @@ public class DayAverDAO {
 	 * 모든 이용자 결과를 가지고 옴
 	 * */
 	public ArrayList<DayAverVO> listAll() {
+		
 		ArrayList<DayAverVO> list = null;
 		
 		try {

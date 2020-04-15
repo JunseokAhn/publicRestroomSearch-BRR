@@ -33,7 +33,7 @@ function onSignIn(googleUser) {
 	}
 function BackHome(){
 	
-	location.href = "/brr";
+	location.href = "/brr/maps/mapsMain";
 }
 
 function signOut() {
@@ -50,11 +50,5 @@ function signOut() {
 
 <div class="g-signin2" data-onsuccess="onSignIn"></div>
 <a href = "#" onclick="signOut();">Sign out</a>
-
-<!--   1008960346250-33jebt3kge8r04ac3dh0fqoamfidshjs.apps.googleusercontent.com => 클라이언트 ID %> -->
-<!-- f1MZy7mODbXN11sYkQjtVZO0 => 클라이언트 secret -->
-
-
-
 </body>
 </html>

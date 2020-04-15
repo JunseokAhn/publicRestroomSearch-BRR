@@ -14,7 +14,7 @@ $(document).ready(function() {
 
 function BackHome(){
 	
-	location.href = "/brr";
+	location.href = "/brr/maps/mapsMain";
 }
 
 
