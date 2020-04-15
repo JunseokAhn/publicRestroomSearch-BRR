@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="global.sesoc.brr.mapper.GoogleMapsMapper">
+<mapper namespace="global.sesoc.brr.mapper.NaverLoginMapper">
+
+
+<insert id = "insertNaver" parameterType = "naver">
+insert into navermember
+(
+id, email, nickname, profile_image, gender, birthday, age) 
+
+values(#{id}, #{email}, #{nickname}, #{profile_image}, #{gender}, #{birthday}, #{age})
+</insert>
+
+
+<select id="getNaverMember" parameterType = "String"  resultType = "int">
+select * from navermember
+where id = #{id}
+</select>
+
+<delete id="deleteNaver" parameterType="String">
+delete from navermember
+where id = #{id}
+</delete>
+
 
 
 

@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE configuration
-  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	<typeAliases>
+	<typeAliases>	
 		<typeAlias type="global.sesoc.brr.vo.SnsBoardVO" alias="snsBoard"/>
 		<typeAlias type="global.sesoc.brr.vo.SnsReplyVO" alias="snsReply"/>
-		<typeAlias type="global.sesoc.brr.vo.BoardVO" alias="board"/>
-		<typeAlias type="global.sesoc.brr.vo.ReplyVO" alias="reply"/>
+		<typeAlias type="global.sesoc.brr.vo.ToiletVO" alias="toilet" />
+		<typeAlias type="global.sesoc.brr.vo.LocationVO" alias="location" />
+		<typeAlias type="global.sesoc.brr.vo.NearbyToiletVO" alias="nearbyToilet" />
+		<typeAlias type="global.sesoc.brr.vo.BoardVO" alias="board" />
+		<typeAlias type="global.sesoc.brr.vo.ReplyVO" alias="reply" />
+		<typeAlias type="global.sesoc.brr.vo.NaverVO" alias="naver" />
+		<typeAlias type="global.sesoc.brr.vo.GoogleLoginVO" alias="googlelogin"/>
+		<typeAlias type="global.sesoc.brr.vo.DayAverVO" alias="aver"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/SnsBoardMapper.xml" />
 		<mapper resource="mapper/SnsReplyMapper.xml" />
-	
 		<mapper resource="mapper/BoardMapper.xml" />
 		<mapper resource="mapper/ReplyMapper.xml" />
+		<mapper resource="mapper/ToiletMapper.xml" />
 		<mapper resource="mapper/GoogleMapsMapper.xml" />
 		<mapper resource="mapper/NaverLoginMapper.xml" />
+		<mapper resource="mapper/GoogleLoginMapper.xml"/>
+		<mapper resource="mapper/DayAverMapper.xml"/>
 	</mappers>
 </configuration>

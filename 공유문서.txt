@@ -1,6 +1,8 @@
 안준석 - 구글 api(현재잔고 34만원) - 구글맵 api 열리는페이지는 열때마다 돈들어갑니다. 필요할때빼곤 자제해주세요
 AIzaSyDkQ00U2AUBQSS1CJF5YveL-1YWsTjaRGA
 
+한승엽 - 현재 공중화장실 데이터 불러오는 건 가능하나 ajax로 호출 불가능 java컨트롤러 내에서 받아서 db에 삽입 예정이나 아직 스트링형에서 json객체에서 빼오는 거 못 하고 있음
+
 황정현 - 네이버 api (로그인, 프로필만 무료)
 이름 : BRR 클라이언트 ID : z_lyTyQUbIC8kv8VfFwH, 클라이언트 Secret : EdlvjsCOLs
 
