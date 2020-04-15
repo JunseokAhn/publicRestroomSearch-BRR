@@ -487,7 +487,7 @@
 						<li class="nav-item"><a class="nav-link" href="<c:url value="../logout"/>">
 								<i class="ni ni-key-25 text-info"></i> Logout
 							</a></li>
-						<!-- 네이버 로그인 시 -->
+					<!-- 네이버 로그인 시 -->
 						<c:if test="${sessionScope.sessionNickname != null}">
 					<li class="nav-item">
 					<a class="nav-link " href="<c:url value="/deleteNaver"/>"> 
