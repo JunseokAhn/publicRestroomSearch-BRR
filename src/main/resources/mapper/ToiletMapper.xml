@@ -58,4 +58,36 @@ from brr_toilet
 delete from brr_toilet
 </delete>
 
+<select id="GetToiletInfoByDistance" parameterType="location" resultType="nearbyToilet">
+select * from 
+	(
+		select 
+			toiletNm,
+    		toiletType,
+    		lnmadr,
+    		unisexToiletYn,
+    		menToiletBowlNumber,
+    		menUrineNumber,
+    		menHandicapToiletBowlNumber,
+    		menHandicapUrinalNumber,
+    		menChildrenToiletBowlNumber,
+    		menChildrenUrinalNumber,
+    		ladiesToiletBowlNumber,
+    		ladiesHandicapToiletBowlNumber,
+    		ladiesChildrenToiletBowlNumber,
+    		institutionNm,
+    		phoneNumber,
+    		openTime,
+    		lat,
+    		lng,
+    		trunc(DISTANCE_WGS84(trunc(#{lat},6),trunc(#{lng},6), lat, lng),3)*1000 as distance
+    	from brr_toilet
+		where 
+			(lat between trunc(#{lat},6)-0.019 and trunc(#{lat},6)+0.019)
+    		and 
+    		(lng between trunc(#{lng},6)-0.022 and trunc(#{lng},6)+0.022)
+			order by distance
+	)  where rownum &lt; (select count(*)from brr_toilet)
+</select>
+
 </mapper>
