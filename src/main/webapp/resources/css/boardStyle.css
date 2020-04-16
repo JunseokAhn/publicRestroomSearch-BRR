@@ -73,6 +73,11 @@ h1 span:nth-child(2) {
 	border-radius: 5px;
 }
 
+/* .replyButton2 {
+	border: 1px solid;
+	color: var(--blue);
+} */
+
 .replyButton2 {
 	border: 3px solid;
 	color: var(--blue);
