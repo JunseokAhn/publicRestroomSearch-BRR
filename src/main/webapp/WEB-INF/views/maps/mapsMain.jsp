@@ -686,19 +686,19 @@
 							</div>
 							<div class="col-xl-3 col-lg-6">
 								<div class="card card-stats mb-4 mb-xl-0">
-									<div class="card-body replyButton2">
+									<div class="card-body2 replyButton2">
 										<div class="row">
-											<div class="col-8">
+											<div class="col-8 pr-0" style="float: left;">
 												<!-- <h5 class="card-title text-uppercase text-muted mb-0">Title</h5> -->
 												<span class="card-title text-uppercase text-sm text-muted mb-0">일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십</span>
 												<!-- <span class="h2 font-weight-bold mb-0">Contents</span> -->
 											</div>
-											<div class="col-auto" style="text-align: center;">
+											<div class="col-4" style="text-align: center; float: right;">
 												<p class="mt-0 mb-2 text-muted text-sm">
 													<span class="text-success">4.0</span><span class="text-nowrap mr-2 ml-2">별점</span> <br> <span class="text-danger">3.5</span><span class="text-nowrap mr-2 ml-2">청결도</span>
 												</p>
 												<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;">
-													<i class="fas fa-chart-pie"></i>
+													<!-- <i class="fas fa-chart-pie"></i> -->
 												</div>
 												<h5 class="card-title text-uppercase text-muted mb-0 mt-1">Nickname</h5>
 											</div>
@@ -708,19 +708,19 @@
 							</div>
 							<div class="col-xl-3 col-lg-6">
 								<div class="card card-stats mb-4 mb-xl-0">
-									<div class="card-body replyButton2">
+									<div class="card-body2 replyButton2">
 										<div class="row">
-											<div class="col-8">
+											<div class="col-8 pr-0">
 												<!-- <h5 class="card-title text-uppercase text-muted mb-0">Title</h5> -->
 												<span class="card-title text-uppercase text-sm text-muted mb-0">일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십</span>
 												<!-- <span class="h2 font-weight-bold mb-0">Contents</span> -->
 											</div>
-											<div class="col-auto" style="text-align: center;">
+											<div class="col-4" style="text-align: center;">
 												<p class="mt-0 mb-2 text-muted text-sm">
 													<span class="text-success">4.0</span><span class="text-nowrap mr-2 ml-2">별점</span> <br> <span class="text-danger">3.5</span><span class="text-nowrap mr-2 ml-2">청결도</span>
 												</p>
 												<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;">
-													<i class="fas fa-chart-pie"></i>
+													<!-- <i class="fas fa-chart-pie"></i> -->
 												</div>
 												<h5 class="card-title text-uppercase text-muted mb-0 mt-1">Nickname</h5>
 											</div>
@@ -730,19 +730,19 @@
 							</div>
 							<div class="col-xl-3 col-lg-6">
 								<div class="card card-stats mb-4 mb-xl-0">
-									<div class="card-body replyButton2">
+									<div class="card-body2 replyButton2">
 										<div class="row">
-											<div class="col-8">
+											<div class="col-8 pr-0">
 												<!-- <h5 class="card-title text-uppercase text-muted mb-0">Title</h5> -->
 												<span class="card-title text-uppercase text-sm text-muted mb-0">일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십</span>
 												<!-- <span class="h2 font-weight-bold mb-0">Contents</span> -->
 											</div>
-											<div class="col-auto" style="text-align: center;">
+											<div class="col-4" style="text-align: center;">
 												<p class="mt-0 mb-2 text-muted text-sm">
 													<span class="text-success">4.0</span><span class="text-nowrap mr-2 ml-2">별점</span> <br> <span class="text-danger">3.5</span><span class="text-nowrap mr-2 ml-2">청결도</span>
 												</p>
 												<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;">
-													<i class="fas fa-chart-pie"></i>
+													<!-- <i class="fas fa-chart-pie"></i> -->
 												</div>
 												<h5 class="card-title text-uppercase text-muted mb-0 mt-1">Nickname</h5>
 											</div>
