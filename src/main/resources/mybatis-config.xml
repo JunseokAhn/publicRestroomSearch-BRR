@@ -10,6 +10,7 @@
 		<typeAlias type="global.sesoc.brr.vo.ReplyVO" alias="reply"/>
 		<typeAlias type="global.sesoc.brr.vo.LocationVO" alias="location"/>
 		<typeAlias type="global.sesoc.brr.vo.NearbyToiletVO" alias="nearbyToilet" />
+		<typeAlias type="global.sesoc.brr.vo.HospitalVO" alias="hospital" />
 
 	</typeAliases>
 	<mappers>
@@ -18,5 +19,6 @@
 		<mapper resource="mapper/GoogleMapsMapper.xml" />
 		<!-- <mapper resource="mapper/NaverLoginMapper.xml" /> -->
 		<mapper resource="mapper/ToiletMapper.xml" />
+		<mapper resource="mapper/HospitalMapper.xml" />
 	</mappers>
 </configuration>
