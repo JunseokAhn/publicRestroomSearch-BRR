@@ -67,16 +67,19 @@ h1 span:nth-child(2) {
 }
 
 .replyButton1 {
-	border: 1px solid;
-	color: var(--gray);
+	border: 2px solid;
+	color: var(--indigo);
+	background-color: rgb(249,249,249);
+	border-radius: 5px;
 }
 
-/* .replyButton2 {
-	border: 1px solid;
-	color: var(--blue);
-} */
-
 .replyButton2 {
+	border: 3px solid;
+	color: var(--blue);
+	border-radius: 12px;
+}
+
+.replyButton3 {
 	border: 3px solid;
 	color: var(--blue);
 }
