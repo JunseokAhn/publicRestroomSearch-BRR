@@ -178,8 +178,8 @@
                             //console.log("toiletMarker : " + toiletMarker)
                             console.log(marker)
                             //여기까지 마커(내위치) 들어오는것 확인
-                            
-                            var content = "<h5 class='card-title text-uppercase text-muted mb-0'>" + toiletType + "</h5>"
+                            var content = "<div style='min-width:max-content;'>"
+                            content += "<h5 class='card-title text-uppercase text-muted mb-0'>" + toiletType + "</h5>"
                             content += "<br'><span class='card-title text-uppercase text-muted mb-0'>대변기 : " + toiletBowlNumber + "</span>"
                             content += "<br><span class='card-title text-uppercase text-muted mb-0'>장애인 배려실 : " + handicap + "</span>"
                             //content += "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='navigators(" + endX + ',' + endY + ")'>";
@@ -187,7 +187,7 @@
                             //content += "<br><input class='replyButton2 mt-1' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='navigators(" + endX + ',' + endY + ',' + '"' + title + '"' + ")'>";
                             content += "<br><input class='replyButton3 mt-1' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='navigators(" + endX + ',' + endY + ',' + '"' + title + '"' + ',' + '"' + toiletType + '"' + ',' + '"' + toiletBowlNumber + '"' + ',' + '"' + handicap + '"' + ")'>";
                             content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";
-                            
+                            content += "</div>"
                             //content += 	"<div style='display:inline-block; border:3px solid #dcdcdc;'>"
                             //content +=			"console.log('길찾기실행중')"			
                             
@@ -280,7 +280,8 @@
                         })
 
                         //팝업 생성
-                        var content = "<div style=' position: relative; border-bottom: 1px solid #dcdcdc; line-height: 18px; padding: 0 35px 2px 0;'>"
+                        var content = "<div style='min-width:max-content;'>"
+                        content += "<div style=' position: relative; border-bottom: 1px solid #dcdcdc; line-height: 18px; padding: 0 35px 2px 0;'>"
                         content += "<div style='font-size: 12px; line-height: 15px;'>"
                         //content +=			 	"<div class='icon icon-shape bg-info text-white rounded-circle shadow'>"
                         content += "<i class='ni ni-user-run'></i>"
@@ -288,7 +289,8 @@
                         //content +=				"</div>"
                         content += "<span style='display: inline-block; width: 14px; height: 14px; vertical-align: middle; margin-right: 5px;'></span>Your location"
                         content += "</div>"
-                        content += "</div>";
+                        content += "</div>"
+                        content += "</div>"
                         
                         console.log(marker)
                         setTimeout(function () {
