@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet">
+<script src="../resources/jquery/jquery-3.4.1.min.js"></script>
 <style>
 #chartsize{width:40%; height:40%;}
 p{font-family: 'Gamja Flower', cursive; margin-left:-2em;}
@@ -17,8 +18,16 @@ p{font-family: 'Gamja Flower', cursive; margin-left:-2em;}
 
 
 function save(){
-window.opener.test();
+var result = document.getElementById("1").innerHTML;
+
+ window.opener.test(result);
+	
+	
+	
 }
+
+
+
 </script>
 </head>
 <body onunload="javascript:save();">
@@ -77,11 +86,12 @@ var myChart = new Chart(ctx, {
 
 <table style="margin-top:50%">
 <tr>
+<td id='1' style="display:none">1</td> 
 <td>
 <img id="type1brown" src="../resources/img/normal.png"  style="width:50%"  />
 </td>
 <td>
- <p>영양소는 적당하지만,<Strong>변비</Strong> 증세가 있네요.
+<p>영양소는 적당하지만,<Strong>변비</Strong> 증세가 있네요.
  수분섭취와 스트레스를 줄여보세요.</p> 
 </td>
 </tr>

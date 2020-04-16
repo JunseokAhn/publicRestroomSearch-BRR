@@ -1,45 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>진단</title>
+<table><c:forEach var="list" items="${list}">
+<tr>
 
-<style>
-aside { 
-                float:right; 
-                width: 20%; 
-                
-                background-color: #F5F5DC; 
-                color: white; 
-                padding:5px;  
-                margin:5px; 
-                height:100px; 
-            } 
-          
-</style>
+<c:if test="${list.status==1}">
+<td><img src="../resources/img/normal.png"  style="width:50%"  /></td>
+</c:if>
+<c:if test="${list.status==2}">
+<td><img src="../resources/img/dangerous.png"  style="width:50%"  /></td>
+</c:if>
+<c:if test="${list.status==3}">
+<td><img src="../resources/img/good.png"  style="width:50%"  /></td>
+</c:if>
+<c:if test="${list.status==4}">
+<td><img src="../resources/img/sobad.png"  style="width:50%"  /></td>
+</c:if>
 
-</head>
-<body>
-
-
-
- 
-       
-        <aside>
-        <div>
-        <figure style="background-image:url("../resources/img/ddongselect.png")" style="width:30%;height:100%"></figure>
-        </div>
-  <a class="recommendation-link no-text" href="../api/dairy2" role="button">대변으로 건강체크 CLICK!</a>
-        
-            <p>대변으로 건강체크 CLICK!</p>  
-        </aside> 
-    </body> 
-
-
-
-
-
+<td>${list.inputdate}</td></tr>
+</c:forEach></table>
 </body>
 </html>

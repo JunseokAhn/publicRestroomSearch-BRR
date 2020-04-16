@@ -22,11 +22,28 @@ $(document).ready(function() {
 });
 
 
-function test(){
+function test(result){
 
 if(confirm('진단결과를 저장하시겠습니까?'))
-	console.log('저장되었습니다');
+{
+	console.log(result);
+	$.ajax({
+		url : 'insert',
+		type : 'POST',
+		data : {
+			status : result,
+	    },
+		success : function() {
+			alert('저장완료');
+			
+		},
+		error : function(e) {
+			alert(JSON.stringify(e));
+		}
+	});
+}
 	
+
 }
 
 //type1의 진단결과

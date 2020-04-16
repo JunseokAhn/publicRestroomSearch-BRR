@@ -13,7 +13,12 @@ p{font-family: 'Gamja Flower', cursive; margin-left:-1em;}
 </style>
 <script>
 function save(){
-	window.opener.test();
+	var result = document.getElementById("1").innerHTML;
+
+	 window.opener.test(result);
+		
+		
+		
 	}
 </script>
 </head>
@@ -73,6 +78,7 @@ var myChart = new Chart(ctx, {
 
 <table style="margin-top:50%">
 <tr>
+<td id='1' style="display:none">2</td> 
 <td>
 <img id="type1brown" src="../resources/img/dangerous.png"  style="width:65%"  />
 </td>

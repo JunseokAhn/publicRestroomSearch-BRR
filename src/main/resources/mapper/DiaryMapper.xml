@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="global.sesoc.brr.mapper.DiaryMapper">
+
+
+
+
+<insert id="insert" parameterType="resvo">
+	insert 
+	into 
+		test_result
+	(
+		status
+    )
+	
+	values 
+	(
+         #{status}
+	)
+</insert>
+
+<select id="list" resultType="resvo">
+select *
+from test_result
+
+</select>
+</mapper>

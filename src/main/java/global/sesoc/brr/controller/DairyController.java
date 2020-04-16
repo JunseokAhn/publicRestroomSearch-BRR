@@ -1,12 +1,21 @@
 package global.sesoc.brr.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+
+import global.sesoc.brr.dao.DiaryDAO;
+import global.sesoc.brr.vo.resVO;
+
 
 @RequestMapping(value="api")
 @Controller
 public class DairyController {
+	@Autowired
+	DiaryDAO dao;
 
 	@RequestMapping(value = "/dairy", method = RequestMethod.GET)
 	public String apidairy() {
@@ -87,4 +96,15 @@ public class DairyController {
 	public String type4gray() {
 		return "api/type4gray";
 	}
+	
+	//insert
+	
+	
+	@ResponseBody
+	@RequestMapping (value="insert", method=RequestMethod.POST)
+	public void insert(resVO res) {
+		System.out.println(res);
+		dao.insert(res);
+	}
+
 } 

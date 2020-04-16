@@ -11,6 +11,16 @@
 #chartsize{width:40%; height:40%;}
 p{font-family: 'Gamja Flower', cursive; margin-left:-1em;}
 </style>
+<script>
+function save(){
+	var result = document.getElementById("1").innerHTML;
+
+	 window.opener.test(result);
+		
+		
+		
+	}
+</script>
 </head>
 <body onunload="javascript:save();">
 
@@ -68,6 +78,7 @@ var myChart = new Chart(ctx, {
 
 <table style="margin-top:50%">
 <tr>
+<td id='1' style="display:none">3</td> 
 <td>
 <img id="type2brown" src="../resources/img/good.png"  style="width:60%"  />
 </td>
