@@ -2,27 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="global.sesoc.brr.mapper.GoogleMapsMapper">
-	<select id="getNearbyToilet" parameterType="location" resultType="nearbyToilet">
-		select * from (
-		select toiletNm, toiletType,lnmadr,unisexToiletYn,
-		menToiletBowlNumber, menUrineNumber,
-		menHandicapToiletBowlNumber,menHandicapUrinalNumber,
-		menChildrenToiletBowlNumber,menChildrenUrinalNumber,
-		ladiesToiletBowlNumber,
-		ladiesHandicapToiletBowlNumber,
-		ladiesChildrenToiletBowlNumber,
-		institutionNm, phoneNumber,openTime,
-		lat, lng,
-		trunc(DISTANCE_WGS84(#{lat},#{lng}, lat, lng),3)*1000 as DISTANCE
-		from brr_toilet
-		where (lat between #{lat}-0.021 and
-		#{lat}+0.021)
-		and (lng between #{lng}-0.0246 and
-		#{lng}+0.0246)
-		order by DISTANCE) TMP where rownum &lt; (select
-		count(*)from brr_toilet)
 
-	</select>
 
 
 </mapper>

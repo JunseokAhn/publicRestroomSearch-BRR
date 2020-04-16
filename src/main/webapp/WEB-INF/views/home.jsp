@@ -47,13 +47,13 @@
 						<div class=" dropdown-header noti-title">
 							<h6 class="text-overflow m-0">Welcome!</h6>
 						</div>
-						<a href="<c:url value="profile"/>" class="dropdown-item"> <i class="ni ni-single-02"></i> <span>My profile</span>
-						</a> <a href="<c:url value="profile"/>" class="dropdown-item"> <i class="ni ni-settings-gear-65"></i> <span>Settings</span>
-						</a> <a href="<c:url value="profile"/>" class="dropdown-item"> <i class="ni ni-calendar-grid-58"></i> <span>Activity</span>
-						</a> <a href="<c:url value="profile"/>" class="dropdown-item"> <i class="ni ni-support-16"></i> <span>Support</span>
+						<a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-single-02"></i> <span>My profile</span>
+						</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-settings-gear-65"></i> <span>Settings</span>
+						</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-calendar-grid-58"></i> <span>Activity</span>
+						</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-support-16"></i> <span>Support</span>
 						</a>
 						<div class="dropdown-divider"></div>
-						<a href="logout" class="dropdown-item"> <i class="ni ni-user-run"></i> <span>Logout</span>
+						<a href="#!" class="dropdown-item"> <i class="ni ni-user-run"></i> <span>Logout</span>
 						</a>
 					</div></li>
 			</ul>
@@ -88,7 +88,7 @@
 				<ul class="navbar-nav">
 					<li class="nav-item"><a class="nav-link  active " href="<c:url value="/examples/maps"/>"> <i class="ni ni-pin-3 text-orange"></i> Maps
 					</a></li>
-					<li class="nav-item"><a class="nav-link " href="<c:url value="/board/listBoard"/>"> <i class="ni ni-tv-2 text-primary"></i> Board
+					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/index"/>"> <i class="ni ni-tv-2 text-primary"></i> Board
 					</a></li>
 					<%-- <li class="nav-item  active "><a class="nav-link " href="<c:url value="/examples/index"/>">
 							<i class="ni ni-tv-2 text-primary"></i> Dashboard
@@ -96,35 +96,19 @@
 					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/icons"/>"> <i class="ni ni-planet text-blue"></i> Icons
 					</a></li>
 
-					<c:if test="${sessionScope.sessionId==null }">
-						<li class="nav-item"><a class="nav-link" href="<c:url value="login"/>"> <i class="ni ni-key-25 text-info"></i> Login
+					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/tables"/>"> <i class="ni ni-bullet-list-67 text-red"></i> Tables
+					</a></li>
+					<c:if test="${sessionScope.userID==null }">
+						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/login"/>"> <i class="ni ni-key-25 text-info"></i> Login
 						</a></li>
-<%-- 						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/register"/>"> <i class="ni ni-circle-08 text-pink"></i> Sign up 
-<!-- 						</a></li> -->--%>
+						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/register"/>"> <i class="ni ni-circle-08 text-pink"></i> Sign up
+						</a></li>
 					</c:if>
-					<c:if test="${sessionScope.sessionId!=null }">
+					<c:if test="${sessionScope.userID!=null }">
 						<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/profile"/>"> <i class="ni ni-single-02 text-yellow"></i> User profile
 						</a></li>
-						<li class="nav-item"><a class="nav-link" href="<c:url value="logout"/>"> <i class="ni ni-key-25 text-info"></i> Logout
+						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/login"/>"> <i class="ni ni-key-25 text-info"></i> Logout
 						</a></li>
-<!-- 						<form action="logout"> -->
-<!-- <!-- 						<li > -->
-<!-- 						 <i class="ni ni-key-25 text-info"><input class="nav-item" type = "submit" value="LogOut"></i> -->
-<!-- <!-- 						</li> -->
-<!-- 						</form> -->
-						
-						<!-- 네이버 로그인 시 -->
-						<c:if test="${sessionScope.sessionNickname != null}">
-					<li class="nav-item">
-					<a class="nav-link " href="<c:url value="deleteNaver"/>"> 
-					<i class="ni ni-bullet-list-67 text-red"></i> Naver탈퇴
-					</a></li>
-					</c:if>
-					<!-- 구글 로그인 시 -->
-					<c:if test="${sessionScope.sessionNickname == null}">
-					<li class="nav-item"><a class="nav-link " href="<c:url value="deleteGoogle"/>"> <i class="ni ni-bullet-list-67 text-red"></i> Google탈퇴
-					</a></li>
-					</c:if>
 					</c:if>
 				</ul>
 				<!-- Divider -->
@@ -168,37 +152,24 @@
 				<ul class="navbar-nav align-items-center d-none d-md-flex">
 					<li class="nav-item dropdown"><a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<div class="media align-items-center">
-								<c:if test="${sessionScope.Profile == null}">
 								<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>">
 								</span>
-									<div class="media-body ml-2 d-none d-lg-block">
-									<span class="mb-0 text-sm  font-weight-bold">로그인을 해 주세요.</span>
+								<div class="media-body ml-2 d-none d-lg-block">
+									<span class="mb-0 text-sm  font-weight-bold">Jessica Jones</span>
 								</div>
-								</c:if>
-								
-								<c:if test="${sessionScope.Profile != null}">
-								<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="${sessionScope.Profile}">
-								</span>
-									<div class="media-body ml-2 d-none d-lg-block">
-									<span class="mb-0 text-sm  font-weight-bold">${sessionScope.sessionNickname}</span>
-								</div>
-								</c:if>
-
 							</div>
 					</a>
 						<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
 							<div class=" dropdown-header noti-title">
 								<h6 class="text-overflow m-0">Welcome!</h6>
 							</div>
-							<c:if test="${sessionScope.sessionId != null}">
-							<a href="<c:url value="profile"/>" class="dropdown-item"> <i class="ni ni-single-02"></i> <span>My profile</span>
-							</a> <a href="<c:url value="profile"/>" class="dropdown-item"> <i class="ni ni-settings-gear-65"></i> <span>Settings</span>
-							</a> <a href="<c:url value="profile"/>" class="dropdown-item"> <i class="ni ni-calendar-grid-58"></i> <span>Activity</span>
-							</a> <a href="<c:url value="profile"/>" class="dropdown-item"> <i class="ni ni-support-16"></i> <span>Support</span>
+							<a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-single-02"></i> <span>My profile</span>
+							</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-settings-gear-65"></i> <span>Settings</span>
+							</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-calendar-grid-58"></i> <span>Activity</span>
+							</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-support-16"></i> <span>Support</span>
 							</a>
-							</c:if>
 							<div class="dropdown-divider"></div>
-							<a href="login" class="dropdown-item"> <i class="ni ni-user-run"></i> <span>Login</span>
+							<a href="#!" class="dropdown-item"> <i class="ni ni-user-run"></i> <span>Logout</span>
 							</a>
 						</div></li>
 				</ul>
@@ -380,37 +351,11 @@
 	<%-- <script src="<c:url value="/resources/assets/js/argon-dashboard.min.js?v=1.1.2"/>"></script> --%>
 	<script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
 	<script>
-
-		$.ajax({
-			url:"<c:url value='/checkRecv'/>",
-			type:"get",
-			success:
-				function(flag)
-				{
-					if(flag=="do_not_need")
-					{
-						alert("최신 데이터입니다.");
-					}
-					else
-					{
-						alert("최신 데이터아닙니다. 다운로드 페이지로 이동합니다.");
-						location.href="<c:url value='/toilet/toiletRecv'/>"
-					}
-				}
-			,
-			error:
-				function(e)
-				{
-					console.log(JSON.stringify(e));
-				}
-		});
-	
 		window.TrackJS && TrackJS.install({
 			token : "ee6fab19c5a04ac1a32a645abde4613a",
 			application : "argon-dashboard-free"
 		});
 	</script>
-
 </body>
 
 </html>

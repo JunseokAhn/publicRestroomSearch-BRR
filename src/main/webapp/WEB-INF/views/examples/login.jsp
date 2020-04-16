@@ -1,42 +1,11 @@
-<%@ page import="java.net.URLEncoder" %>
-<%@ page import="java.security.SecureRandom" %>
-<%@ page import="java.math.BigInteger" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script src="<c:url value="/resources/js/jquery-3.4.1.js/"/>"></script>
 <html>
 <head>
+<meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name = "google-signin-client_id"content = "1008960346250-33jebt3kge8r04ac3dh0fqoamfidshjs.apps.googleusercontent.com">
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<script src="https://apis.google.com/js/platform.js" async defer></script>
-<script src="<c:url value="/resources/js/jquery-3.4.1.js/"/>"></script>
-<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
-<script>
-function onSignIn(googleUser) {
-	
-	  var profile = googleUser.getBasicProfile();
-	  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-	  console.log('Name: ' + profile.getName());
-	  console.log('Image URL: ' + profile.getImageUrl());
-	  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-
-	  var id_token = googleUser.getAuthResponse().id_token;
-		var xhr = new XMLHttpRequest();
-		xhr.open('POST', 'http://localhost:8888/brr/callbackTestGoo');
-		xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-		xhr.onload = function() {
-			console.log(id_token);
-		};
-		xhr.send('idtoken=' + id_token);
-		
-		setTimeout(function(){ BackHome(); }, 3000);
-	}
-function BackHome(){
-	window.location.replace("/brr");	
-}
-</script>
 <title>Argon Dashboard - Free Dashboard for Bootstrap 4 by Creative Tim</title>
 <!-- Favicon -->
 <link href="<c:url value="/resources/assets/img/brand/favicon.png"/>" rel="icon" type="image/png">
@@ -48,19 +17,6 @@ function BackHome(){
 <!-- CSS Files -->
 <link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
 </head>
-
-<!-- Naver Login URL -->
-<%
-    String clientId = "z_lyTyQUbIC8kv8VfFwH";
-    String redirectURI = URLEncoder.encode("http://localhost:8888/brr/callback", "UTF-8");
-    SecureRandom random = new SecureRandom();
-    String state = new BigInteger(130, random).toString();
-    String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
-    apiURL += "&client_id=" + clientId;
-    apiURL += "&redirect_uri=" + redirectURI;
-    apiURL += "&state=" + state;
-    session.setAttribute("state", state);
- %>
 
 <body class="bg-default">
 	<div class="main-content">
@@ -126,52 +82,53 @@ function BackHome(){
 					<div class="card bg-secondary shadow border-0">
 						<div class="card-header bg-transparent pb-5">
 							<div class="text-muted text-center mt-2 mb-3">
-								<small>로그인을 선택 해 주세요.</small>
+								<small>Sign in with</small>
 							</div>
 							<div class="btn-wrapper text-center">
-								<a href="<%=apiURL%>"><img height="50" src="http://static.nid.naver.com/oauth/small_g_in.PNG"/></a>
-								<div class="g-signin2" data-onsuccess="onSignIn"></div>
+								<a href="#" class="btn btn-neutral btn-icon"> <span class="btn-inner--icon"><img src="<c:url value="/resources/assets/img/icons/common/github.svg"/>"></span> <span class="btn-inner--text">Github</span>
+								</a> <a href="#" class="btn btn-neutral btn-icon"> <span class="btn-inner--icon"><img src="<c:url value="/resources/assets/img/icons/common/google.svg"/>"></span> <span class="btn-inner--text">Google</span>
+								</a>
 							</div>
 						</div>
 						<div class="card-body px-lg-5 py-lg-5">
 							<div class="text-center text-muted mb-4">
-								<small>이 부근에 로고를 넣으시면 됩니다.</small>
+								<small>Or sign in with credentials</small>
 							</div>
 							<form role="form">
-<!-- 								<div class="form-group mb-3"> -->
-<!-- 									<div class="input-group input-group-alternative"> -->
-<!-- 										<div class="input-group-prepend"> -->
-<!-- 											<span class="input-group-text"><i class="ni ni-email-83"></i></span> -->
-<!-- 										</div> -->
-<!-- 										<input class="form-control" placeholder="Email" type="email"> -->
-<!-- 									</div> -->
-<!-- 								</div> -->
-<!-- 								<div class="form-group"> -->
-<!-- 									<div class="input-group input-group-alternative"> -->
-<!-- 										<div class="input-group-prepend"> -->
-<!-- 											<span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span> -->
-<!-- 										</div> -->
-<!-- 										<input class="form-control" placeholder="Password" type="password"> -->
-<!-- 									</div> -->
-<!-- 								</div> -->
-<!-- 								<div class="custom-control custom-control-alternative custom-checkbox"> -->
-<!-- 									<input class="custom-control-input" id=" customCheckLogin" type="checkbox"> <label class="custom-control-label" for=" customCheckLogin"> <span class="text-muted">Remember me</span> -->
-<!-- 									</label> -->
-<!-- 								</div> -->
-<!-- 								<div class="text-center"> -->
-<!-- 									<button type="button" class="btn btn-primary my-4">Sign in</button> -->
-<!-- 								</div> -->
+								<div class="form-group mb-3">
+									<div class="input-group input-group-alternative">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="ni ni-email-83"></i></span>
+										</div>
+										<input class="form-control" placeholder="Email" type="email">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="input-group input-group-alternative">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+										</div>
+										<input class="form-control" placeholder="Password" type="password">
+									</div>
+								</div>
+								<div class="custom-control custom-control-alternative custom-checkbox">
+									<input class="custom-control-input" id=" customCheckLogin" type="checkbox"> <label class="custom-control-label" for=" customCheckLogin"> <span class="text-muted">Remember me</span>
+									</label>
+								</div>
+								<div class="text-center">
+									<button type="button" class="btn btn-primary my-4">Sign in</button>
+								</div>
 							</form>
 						</div>
 					</div>
-<!-- 					<div class="row mt-3"> -->
-<!-- 						<div class="col-6"> -->
-<!-- 							<a href="#" class="text-light"><small>Forgot password?</small></a> -->
-<!-- 						</div> -->
-<!-- 						<div class="col-6 text-right"> -->
-<!-- 							<a href="#" class="text-light"><small>Create new account</small></a> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
+					<div class="row mt-3">
+						<div class="col-6">
+							<a href="#" class="text-light"><small>Forgot password?</small></a>
+						</div>
+						<div class="col-6 text-right">
+							<a href="#" class="text-light"><small>Create new account</small></a>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -9,32 +9,29 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
- * ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ë¡œê·¸?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½. HandlerInterceptorAdapterï¿½? ?ï¿½ï¿½?ï¿½ï¿½ë°›ì•„?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½.
+ * ?‚¬?š©? ë¡œê·¸?¸ ?™•?¸ ?¸?„°?…‰?„°. HandlerInterceptorAdapterë¥? ?ƒ?†ë°›ì•„?„œ ? •?˜.
  */
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 	private static final Logger logger = LoggerFactory.getLogger(LoginInterceptor.class);
 
-	// ì½˜íŠ¸ë¡¤ëŸ¬?ï¿½ï¿½ ë©”ì„œ?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½ ì²˜ë¦¬
+	// ì½˜íŠ¸ë¡¤ëŸ¬?˜ ë©”ì„œ?“œ ?‹¤?–‰ ? „?— ì²˜ë¦¬
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 
-		logger.debug("LoginInterceptor ?ï¿½ï¿½?ï¿½ï¿½");
+		logger.debug("LoginInterceptor ?‹¤?–‰");
 
-		// ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ë¡œê·¸?ï¿½ï¿½ ?ï¿½ï¿½ï¿½? ?ï¿½ï¿½ï¿½?
-		HttpSession httpsession = request.getSession();
-		String id = (String)httpsession.getAttribute("sessionId");
+		// ?„¸?…˜?˜ ë¡œê·¸?¸ ? •ë³? ?½ê¸?
+		HttpSession session = request.getSession();
+		String id = (String) session.getAttribute("id");
 
-		// ë¡œê·¸?ï¿½ï¿½?ï¿½ï¿½ï¿½? ?ï¿½ï¿½?? ê²½ìš° ë¡œê·¸?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½ï¿½?ï¿½? ?ï¿½ï¿½?ï¿½ï¿½
+		// ë¡œê·¸?¸?˜ì§? ?•Š?? ê²½ìš° ë¡œê·¸?¸ ?˜?´ì§?ë¡? ?´?™
 		if (id == null) {
-			// request.getContextPath()ï¿½? ë£¨íŠ¸ ê²½ë¡œï¿½? êµ¬í•˜?ï¿½ï¿½ ?ï¿½ï¿½?? ê²½ë¡œï¿½? ì²˜ë¦¬
-			
-			//member/login => ë„¤ì´ë²„, êµ¬ê¸€ ë¡œê·¸ì¸ í†µí•© ê²½ë¡œ jspë¥¼ êµ¬í˜„ í›„ ì—°ê²° í•˜ë„ë¡ í•˜ê² ìŒ.
-			
-			response.sendRedirect(request.getContextPath() + "/login");
+			// request.getContextPath()ë¡? ë£¨íŠ¸ ê²½ë¡œë¥? êµ¬í•˜?—¬ ? ˆ?? ê²½ë¡œë¡? ì²˜ë¦¬
+			response.sendRedirect(request.getContextPath() + "/member/login");
 			return false;
 		}
-		// ë¡œê·¸?ï¿½ï¿½ ?ï¿½ï¿½ ê²½ìš° ?ï¿½ï¿½ï¿½??ï¿½ï¿½ ê²½ë¡œï¿½? ì§„í–‰
+		// ë¡œê·¸?¸ ?œ ê²½ìš° ?š”ì²??•œ ê²½ë¡œë¡? ì§„í–‰
 		return super.preHandle(request, response, handler);
 	}
 
