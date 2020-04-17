@@ -31,7 +31,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			
 			//member/login => 네이버, 구글 로그인 통합 경로 jsp를 구현 후 연결 하도록 하겠음.
 			
-			response.sendRedirect(request.getContextPath() + "/login");
+			response.sendRedirect(request.getContextPath() + "member/login");
 			return false;
 		}
 		// 로그?�� ?�� 경우 ?���??�� 경로�? 진행
