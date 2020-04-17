@@ -290,7 +290,7 @@
                         content += "</div>"
                         content += "</div>"
                         content += "</div>"
-                        
+
                         console.log(marker)
                         setTimeout(function () {
                             marker.setMap(null)
@@ -298,7 +298,7 @@
                         setTimeout(function () {
                             marker = new Tmapv2.Marker({
                                 position : new Tmapv2.LatLng(lat, lng),
-                                icon : "../resources/img/redmarker48.png",
+                                icon : "../resources/img/redmarker32.png",
                                 map : map
                             });
                         }, 0);
@@ -337,7 +337,9 @@
                 url : "<c:url value='/dayaver/searchedToilet'/>",
                 data : {
                     toiletTitle : title,
-                    id : id
+                    id : id,
+                    lng : endX,
+                    lat : endY
                 },
                 type : "get",
                 success : function () {
@@ -418,8 +420,8 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<!-- Brand -->
-			<a class="navbar-brand pt-0" href="<c:url value="/examples/maps"/>">
-				<img src="<c:url value="/resources/assets/img/brand/blue.png"/>" class="navbar-brand-img" alt="...">
+			<a class="navbar-brand pt-0 pb-0" href="<c:url value="/maps/mapsMain"/>">
+				<img src="<c:url value="/resources/img/Logo.png"/>" class="navbar-brand-img mt-4" alt="...">
 			</a>
 			<!-- User -->
 			<ul class="nav align-items-center d-md-none">
@@ -491,74 +493,72 @@
 				</form>
 				<!-- Navigation -->
 				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link  active " href="<c:url value="/examples/maps"/>">
+					<li class="nav-item"><a class="nav-link  active " href="<c:url value="/maps/mapsMain"/>">
 							<i class="ni ni-pin-3 text-orange"></i> Maps
 						</a></li>
-					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/index"/>">
-							<i class="ni ni-tv-2 text-primary"></i> Board
+					<li class="nav-item"><a class="nav-link " href="<c:url value="/sns/listSNS"/>">
+							<i class="ni ni-tv-2 text-primary"></i> SNS
 						</a></li>
 					<%-- <li class="nav-item  active "><a class="nav-link " href="<c:url value="/examples/index"/>">
 							<i class="ni ni-tv-2 text-primary"></i> Dashboard
 						</a></li> //nav-item  active는 무조건 검정색으로 표시됩니다. --%>
-					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/icons"/>">
-							<i class="ni ni-planet text-blue"></i> Icons
+				
+
+					<li class="nav-item"><a class="nav-link " href="<c:url value="/diary/diaryMain"/>">
+							<i class="ni ni-bullet-list-67 text-red"></i> Diary
 						</a></li>
 
-					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/tables"/>">
-							<i class="ni ni-bullet-list-67 text-red"></i> Tables
-						</a></li>
-						
-						<!-- 로그인 영역 -->
-						
+					<!-- 로그인 영역 -->
+
 					<c:if test="${sessionScope.sessionId == null }">
-						<li class="nav-item"><a class="nav-link" href="<c:url value="/login"/>">
+						<li class="nav-item"><a class="nav-link" href="<c:url value="/member/login"/>">
 								<i class="ni ni-key-25 text-info"></i> Login
 							</a></li>
-<%-- 						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/register"/>"> --%>
-<!-- 								<i class="ni ni-circle-08 text-pink"></i> Sign up -->
-<!-- 							</a></li> -->
-					</c:if>
-					
-					<c:if test="${sessionScope.sessionId != null }">
-						<li class="nav-item"><a class="nav-link " href="<c:url value="/profile"/>">
+						<li class="nav-item"><a class="nav-link " href="<c:url value="/member/profile"/>">
 								<i class="ni ni-single-02 text-yellow"></i> User profile
 							</a></li>
-						<li class="nav-item"><a class="nav-link" href="<c:url value="../logout"/>">
+					</c:if>
+
+					<c:if test="${sessionScope.sessionId != null }">
+						<li class="nav-item"><a class="nav-link " href="<c:url value="/member/profile"/>">
+								<i class="ni ni-single-02 text-yellow"></i> User profile
+							</a></li>
+						<li class="nav-item"><a class="nav-link" href="<c:url value="/member/logout"/>">
 								<i class="ni ni-key-25 text-info"></i> Logout
 							</a></li>
-					<!-- 네이버 로그인 시 -->
+						<!-- 네이버 로그인 시 -->
 						<c:if test="${sessionScope.sessionNickname != null}">
-					<li class="nav-item">
-					<a class="nav-link " href="<c:url value="/deleteNaver"/>"> 
-					<i class="ni ni-bullet-list-67 text-red"></i> Naver탈퇴
-					</a></li>
-					</c:if>
-					<!-- 구글 로그인 시 -->
-					<c:if test="${sessionScope.sessionNickname == null}">
-					<li class="nav-item"><a class="nav-link " href="<c:url value="/deleteGoogle"/>"> <i class="ni ni-bullet-list-67 text-red"></i> Google탈퇴
-					</a></li>
-					</c:if>
+							<li class="nav-item"><a class="nav-link " href="<c:url value="/member/deleteNaver"/>">
+									<i class="ni ni-bullet-list-67 text-red"></i> Naver탈퇴
+								</a></li>
+						</c:if>
+						<!-- 구글 로그인 시 -->
+						<c:if test="${sessionScope.sessionNickname == null}">
+							<li class="nav-item"><a class="nav-link " href="<c:url value="/member/deleteGoogle"/>">
+									<i class="ni ni-bullet-list-67 text-red"></i> Google탈퇴
+								</a></li>
+						</c:if>
 					</c:if>
 				</ul>
 				<!-- Divider -->
 				<hr class="my-3">
 				<!-- Heading -->
-				<h6 class="navbar-heading text-muted">Documentation</h6>
+				<h6 class="navbar-heading text-muted">NEED LOGIN</h6>
 				<!-- Navigation -->
 				<ul class="navbar-nav mb-md-3">
-					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html">
-							<i class="ni ni-spaceship"></i> Getting started
+					<li class="nav-item"><a class="nav-link" href="https://www.op.gg/champion/maokai/statistics/top">
+							<i class="ni ni-spaceship"></i> 내가 선호하는 화장실
 						</a></li>
 					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/foundation/colors.html">
-							<i class="ni ni-palette"></i> Foundation
+							<i class="ni ni-palette"></i> 최근 검색한 화장실
 						</a></li>
 					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/components/alerts.html">
 							<i class="ni ni-ui-04"></i> Components
 						</a></li>
 				</ul>
 				<ul class="navbar-nav">
-					<li class="nav-item active active-pro"><a class="nav-link" href="<c:url value="/examples/upgrade"/>">
-							<i class="ni ni-send text-dark"></i> Send Feedback
+					<li class="nav-item active active-pro"><a class="nav-link" href="<c:url value="/maps/mapsMain2"/>">
+							<i class="ni ni-send text-dark"></i> Google Maps (Beta)
 						</a></li>
 				</ul>
 			</div>
@@ -577,7 +577,7 @@
 							<div class="input-group-prepend">
 								<span class="input-group-text"><i class="fas fa-search"></i></span>
 							</div>
-							<input class="form-control" placeholder="Search" type="text">
+							<input class="form-control" placeholder="Search Review" type="text">
 						</div>
 					</div>
 				</form>
@@ -585,21 +585,21 @@
 				<ul class="navbar-nav align-items-center d-none d-md-flex">
 					<li class="nav-item dropdown"><a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<div class="media align-items-center">
-							<!-- 회원 네비게이터 영역 -->
-							<c:if test="${sessionScope.sessionId == null}">
-								<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>">
-								</span>
-								<div class="media-body ml-2 d-none d-lg-block">
-									<span class="mb-0 text-sm  font-weight-bold">로그인을 해 주세요.</span>
-								</div>
+								<!-- 회원 네비게이터 영역 -->
+								<c:if test="${sessionScope.sessionId == null}">
+									<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>">
+									</span>
+									<div class="media-body ml-2 d-none d-lg-block">
+										<span class="mb-0 text-sm  font-weight-bold">로그인을 해 주세요.</span>
+									</div>
 								</c:if>
-								
+
 								<c:if test="${sessionScope.sessionId != null}">
-								<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="${sessionScope.sessionProfile}"/>">
-								</span>
-								<div class="media-body ml-2 d-none d-lg-block">
-									<span class="mb-0 text-sm  font-weight-bold">${sessionScope.sessionEmail}</span>
-								</div>
+									<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="${sessionScope.sessionProfile}"/>">
+									</span>
+									<div class="media-body ml-2 d-none d-lg-block">
+										<span class="mb-0 text-sm  font-weight-bold">${sessionScope.sessionEmail}</span>
+									</div>
 								</c:if>
 							</div>
 						</a>
@@ -607,30 +607,32 @@
 							<div class=" dropdown-header noti-title">
 								<h6 class="text-overflow m-0">Welcome!</h6>
 							</div>
-							
+
 							<c:if test="${sessionScope.sessionId == null}">
-							<div class="dropdown-divider"></div>
-							<a href="../login" class="dropdown-item">
-								<i class="ni ni-user-run"></i> <span>Login</span>
-							</a></c:if>
-							
+								<div class="dropdown-divider"></div>
+								<a href="../login" class="dropdown-item">
+									<i class="ni ni-user-run"></i> <span>Login</span>
+								</a>
+							</c:if>
+
 							<c:if test="${sessionScope.sessionId != null}">
-							<a href="<c:url value="../profile"/>" class="dropdown-item">
-								<i class="ni ni-single-02"></i> <span>My profile</span>
-							</a>
-<%-- 							<a href="<c:url value="/examples/profile"/>" class="dropdown-item"> --%>
-<!-- 								<i class="ni ni-settings-gear-65"></i> <span>Settings</span> -->
-<!-- 							</a> -->
-<%-- 							<a href="<c:url value="/examples/profile"/>" class="dropdown-item"> --%>
-<!-- 								<i class="ni ni-calendar-grid-58"></i> <span>Activity</span> -->
-<!-- 							</a> -->
-<%-- 							<a href="<c:url value="/examples/profile"/>" class="dropdown-item"> --%>
-<!-- 								<i class="ni ni-support-16"></i> <span>Support</span> -->
-<!-- 							</a> -->
-							<div class="dropdown-divider"></div>
-							<a href="../logout" class="dropdown-item">
-								<i class="ni ni-user-run"></i> <span>Logout</span>
-							</a></c:if>
+								<a href="<c:url value="../profile"/>" class="dropdown-item">
+									<i class="ni ni-single-02"></i> <span>My profile</span>
+								</a>
+								<%-- 							<a href="<c:url value="/examples/profile"/>" class="dropdown-item"> --%>
+								<!-- 								<i class="ni ni-settings-gear-65"></i> <span>Settings</span> -->
+								<!-- 							</a> -->
+								<%-- 							<a href="<c:url value="/examples/profile"/>" class="dropdown-item"> --%>
+								<!-- 								<i class="ni ni-calendar-grid-58"></i> <span>Activity</span> -->
+								<!-- 							</a> -->
+								<%-- 							<a href="<c:url value="/examples/profile"/>" class="dropdown-item"> --%>
+								<!-- 								<i class="ni ni-support-16"></i> <span>Support</span> -->
+								<!-- 							</a> -->
+								<div class="dropdown-divider"></div>
+								<a href="../logout" class="dropdown-item">
+									<i class="ni ni-user-run"></i> <span>Logout</span>
+								</a>
+							</c:if>
 						</div></li>
 				</ul>
 			</div>
@@ -640,15 +642,12 @@
 		<div class="header bg-gradient-primary pb-7 pt-5 pt-md-8">
 			<div class="container-fluid">
 				<div class="header-body">
-					<input class='replyButton1 ml-1' type='button' value='최단거리'>
-					<input class='replyButton1 ml-1' type='button' value='최고 평가'>
-					<input class='replyButton1 ml-1' type='button' value='최고 청결도'>
-					<input class='replyButton1 ml-1' type='button' value='최대 원활도'>
-				</div>				
-			</div>			
+					<input class='replyButton1 ml-1' type='button' value='최단거리'> <input class='replyButton1 ml-0' type='button' value='최고 평가'> <input class='replyButton1 ml-0' type='button' value='청결우선'> <input class='replyButton1 ml-0' type='button' value='원활도우선'>
+				</div>
+			</div>
 		</div>
 		<div class="container-fluid mt--7">
-			<div class="row">			
+			<div class="row">
 				<div class="col">
 					<div class="card shadow border-0">
 						<div id="map_wrap" class="map_wrap3">
@@ -700,7 +699,7 @@
 												<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;">
 													<!-- <i class="fas fa-chart-pie"></i> -->
 												</div>
-												<h5 class="card-title text-uppercase text-muted mb-0 mt-1">Nickname</h5>
+												<h5 class="card-title text-uppercase text-muted mb-0 mt-0">Nickname</h5>
 											</div>
 										</div>
 									</div>
@@ -722,7 +721,7 @@
 												<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;">
 													<!-- <i class="fas fa-chart-pie"></i> -->
 												</div>
-												<h5 class="card-title text-uppercase text-muted mb-0 mt-1">Nickname</h5>
+												<h5 class="card-title text-uppercase text-muted mb-0 mt-0">Nickname</h5>
 											</div>
 										</div>
 									</div>
@@ -744,7 +743,7 @@
 												<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;">
 													<!-- <i class="fas fa-chart-pie"></i> -->
 												</div>
-												<h5 class="card-title text-uppercase text-muted mb-0 mt-1">Nickname</h5>
+												<h5 class="card-title text-uppercase text-muted mb-0 mt-0">Nickname</h5>
 											</div>
 										</div>
 									</div>
