@@ -34,17 +34,17 @@ public class DayAverDAO {
 	/*
 	 * 모든 이용자 결과를 가지고 옴
 	 * */
-	public ArrayList<DayAverVO> listAll() {
+	public int listAll(double lat, double lng) {
 		
-		ArrayList<DayAverVO> list = null;
+		int result = -1;
 		
 		try {
 			DayAverMapper mapper = session.getMapper(DayAverMapper.class);
-			list = mapper.listAll();
+			result = mapper.listAll(lat, lng);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return list;
+		return result;
 	}
 	
 	/*
@@ -61,6 +61,7 @@ public class DayAverDAO {
 		}
 		return list;
 	}
+	
 	
 	
 }

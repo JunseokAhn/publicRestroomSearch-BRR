@@ -12,5 +12,11 @@ insert into dayaver
 )
 </insert>
 
+<select id="listAll" parameterType="double" resultType="int">
+select count(*) from dayaver
+where lat = #{lat} and lng = #{lng}
+
+</select>
+
 
 </mapper>

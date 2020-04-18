@@ -23,11 +23,13 @@ public class DayAverController {
 	private static final Logger logger = LoggerFactory.getLogger(DayAverController.class);
 	
 	//화장실 길찾기를 실행 할 때에 저장
-	@GetMapping(value = "/searchedToilet") //produces = "applications/json;charset=UTF-8")
+	@GetMapping("/searchedToilet") //produces = "applications/json;charset=UTF-8")
 	@ResponseBody
 	public String insertAver(String id, DayAverVO aver, HttpSession httpsession) {
 		
 		System.out.println("경로를 통해 들어왔습니다.");
+		System.out.println(id);
+		System.out.println((String)httpsession.getAttribute("sessionId"));
 		//VO객체 => aver.setId().equals((String)httpsession.getAttribute("sessionId"))
 		if(id.equals((String)httpsession.getAttribute("sessionId"))) {
 			
@@ -43,6 +45,6 @@ public class DayAverController {
 		return "";
 	}
 	
-	
-	
+//	@GetMapping("allUser")
+//	public String alluser(HttpSession httpsession)
 }
