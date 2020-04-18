@@ -16,9 +16,10 @@
 
 
 
-function  onLoad() {
+function onLoad() {
 	gapi.load('auth2', function() { 
-		gapi.auth2.init(); 
+		gapi.auth2.init();
+		
 	});
 }
 
@@ -28,8 +29,9 @@ function signOut() {
     auth2.signOut().then(function () {
     console.log('로그아웃 완료');
     });
-    auth2.disconnect();
-    goHome();
+    
+	auth2.disconnect();
+	
 }
 
 
@@ -47,10 +49,10 @@ function goHome() {
 
 <h1>로그아웃 되었습니다.</h1>
 
-<!-- <form action=""> -->
-<!-- <input type="submit" value="홈으로 돌아가기"> -->
-<!-- </form> -->
-<input type = "button" value = "홈으로 돌아가기" onclick="signOut()">
+<form action="/brr/maps/mapsMain" method = "GET" onsubmit="signOut()">
+<input type="submit" value="홈으로 돌아가기">
+</form>
+<!-- <input type = "button" value = "홈으로 돌아가기" onclick="signOut()"> -->
 
 
 </body>

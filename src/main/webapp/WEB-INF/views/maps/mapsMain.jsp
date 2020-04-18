@@ -336,18 +336,18 @@
             $.ajax({
                 url : "<c:url value='/dayaver/searchedToilet'/>",
                 data : {
-                    toiletTitle : title,
+                	toiletnm : title,
                     id : id,
                     lng : endX,
                     lat : endY
                 },
-                type : "get",
+                type : "GET",
                 success : function () {
                     console.log("화장실검색정보 저장성공 id : " + id);
                 },
                 error : function (e) {
                     console.log("화장실검색정보 저장실패");
-                    console.log(e);
+                   alert(JSON.stringify(e));
                 }
             });
         }
