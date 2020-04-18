@@ -353,11 +353,13 @@
             });
         }
         clearInterval(realTime);
-        var content = "<h5 class='card-title text-uppercase text-muted mb-0'>" + toiletType + "</h5>"
+        var content = "<div style='min-width:max-content;'>"
+        content += "<h5 class='card-title text-uppercase text-muted mb-0'>" + toiletType + "</h5>"
         content += "<br'><span class='card-title text-uppercase text-muted mb-0'>대변기 : " + toiletBowlNumber + "</span>"
         content += "<br><span class='card-title text-uppercase text-muted mb-0'>장애인 배려실 : " + handicap + "</span>"
         content += "<br><input class='replyButton3 mt-1' type='button' id='direction[" + i + "]' value='길찾기 중단' onclick='terminators()'>";
         content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";
+        content += "</div>"
         
         targetWindow.setMap(null);
         
