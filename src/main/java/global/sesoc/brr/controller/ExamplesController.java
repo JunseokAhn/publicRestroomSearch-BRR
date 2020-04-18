@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@Controller
+@Controller @RequestMapping("examples")
 public class ExamplesController {
 
 	private static final Logger logger = LoggerFactory.getLogger(Controller.class);

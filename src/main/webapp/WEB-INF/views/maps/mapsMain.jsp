@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <html>
 <head>
 <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx4afb1a7c147445528d8e83f3f1d4fea0"></script>
@@ -20,7 +19,7 @@
 <!-- CSS Files -->
 <link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
 <script type="text/javascript">
-    var map, pos, marker, toiletMarker, marker_s, marker_e, marker_p1, marker_p2, label, endX, endY, polyline_, InfoWindow, navigatorFlag;
+    var map, pos, marker, toiletMarker, marker_s, marker_e, marker_p1, marker_p2, label, endX, endY, polyline_, myWindow, targetWindow, destinyWindow, realTime;
     var toiletType, unisexToiletYn, hour, distance, distime;
     var menToiletBowlNumber, menHandicapToiletBowlNumber;
     var ladiesToiletBowlNumber, ladiesHandicapToiletBowlNumber;
@@ -178,15 +177,16 @@
                             //console.log("toiletMarker : " + toiletMarker)
                             console.log(marker)
                             //여기까지 마커(내위치) 들어오는것 확인
-                            
-                            var content = "<h5 class='card-title text-uppercase text-muted mb-0'>" + toiletType + "</h5>"
+                            var content = "<div style='min-width:max-content;'>"
+                            content += "<h5 class='card-title text-uppercase text-muted mb-0'>" + toiletType + "</h5>"
                             content += "<br'><span class='card-title text-uppercase text-muted mb-0'>대변기 : " + toiletBowlNumber + "</span>"
                             content += "<br><span class='card-title text-uppercase text-muted mb-0'>장애인 배려실 : " + handicap + "</span>"
                             //content += "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='navigators(" + endX + ',' + endY + ")'>";
                             //마커를 클로저방식으로 넘겨서, 그 마커를 네비게이터스가 실행될때 제거할수있도록해야할것같다.
-                            content += "<br><input class='replyButton2 mt-1' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='navigators(" + endX + ',' + endY + ',' + '"' + title + '"' + ")'>";
+                            //content += "<br><input class='replyButton2 mt-1' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='navigators(" + endX + ',' + endY + ',' + '"' + title + '"' + ")'>";
+                            content += "<br><input class='replyButton3 mt-1' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='navigators(" + endX + ',' + endY + ',' + '"' + title + '"' + ',' + '"' + toiletType + '"' + ',' + '"' + toiletBowlNumber + '"' + ',' + '"' + handicap + '"' + ")'>";
                             content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";
-                            
+                            content += "</div>"
                             //content += 	"<div style='display:inline-block; border:3px solid #dcdcdc;'>"
                             //content +=			"console.log('길찾기실행중')"			
                             
@@ -205,10 +205,10 @@
 
                             console.log("target : " + i)
                             setTimeout(function () {
-                                InfoWindow.setMap(null)
+                                targetWindow.setMap(null)
                             }, 0);
                             setTimeout(function () {
-                                InfoWindow = new Tmapv2.InfoWindow({
+                                targetWindow = new Tmapv2.InfoWindow({
                                     position : new Tmapv2.LatLng(target._lat, target._lng),
                                     content : content,
                                     type : 1,
@@ -231,16 +231,16 @@
                             content2 += "</p>"
                             content2 += "<p class='mt-1 mb-0 text-muted text-sm'>"
                             content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>이용자수</span>"
-                            content2 += "<input class='replyButton2 ml-1' type='button' value='리뷰 목록' onclick='location.href=\"../board/listReview?toiletTitle=" + title + "\"'>"
+                            content2 += "<input class='replyButton3 ml-1' type='button' value='리뷰 목록' onclick='location.href=\"../board/listReview?toiletTitle=" + title + "\"'>"
                             var id =
 <%=(String) session.getAttribute("sessionId")%>
     ;
                             //로그인
                             if(id == null)
-                                content2 += "<input class='replyButton2 ml-1' type='button' value='리뷰 쓰기' onclick='location.href=\"../board/writeReview?toiletTitle=" + title + "&id=" + id + "\"'>"
+                                content2 += "<input class='replyButton3 ml-1' type='button' value='리뷰 쓰기' onclick='location.href=\"../board/writeReview?toiletTitle=" + title + "&id=" + id + "\"'>"
                                 //리뷰쓰기
                             if(id != null)
-                                content2 += "<input class='replyButton2 ml-1' type='button' value='리뷰 쓰기' onclick='location.href=\"../board/writeReview?toiletTitle=" + title + "&id=" + id + "\"'>"
+                                content2 += "<input class='replyButton3 ml-1' type='button' value='리뷰 쓰기' onclick='location.href=\"../board/writeReview?toiletTitle=" + title + "&id=" + id + "\"'>"
                             content2 += "</p>"
 
                             div1.innerHTML = content2;
@@ -279,16 +279,18 @@
                         })
 
                         //팝업 생성
-                        var content = "<div style=' position: relative; border-bottom: 1px solid #dcdcdc; line-height: 18px; padding: 0 35px 2px 0;'>"
+                        var content = "<div style='min-width:max-content;'>"
+                        content += "<div style=' position: relative; border-bottom: 1px solid #dcdcdc; line-height: 18px; padding: 0 35px 2px 0;'>"
                         content += "<div style='font-size: 12px; line-height: 15px;'>"
                         //content +=			 	"<div class='icon icon-shape bg-info text-white rounded-circle shadow'>"
                         content += "<i class='ni ni-user-run'></i>"
 
                         //content +=				"</div>"
-                        content += "<span style='display: inline-block; width: 14px; height: 14px; background-image: url(/resources/images/common/icon_blet.png); vertical-align: middle; margin-right: 5px;'></span>Your location"
+                        content += "<span style='display: inline-block; width: 14px; height: 14px; vertical-align: middle; margin-right: 5px;'></span>Your location"
                         content += "</div>"
-                        content += "</div>";
-                        
+                        content += "</div>"
+                        content += "</div>"
+
                         console.log(marker)
                         setTimeout(function () {
                             marker.setMap(null)
@@ -296,16 +298,16 @@
                         setTimeout(function () {
                             marker = new Tmapv2.Marker({
                                 position : new Tmapv2.LatLng(lat, lng),
-                                icon : "../resources/img/redmarker48.png",
+                                icon : "../resources/img/redmarker32.png",
                                 map : map
                             });
                         }, 0);
                         
                         setTimeout(function () {
-                            InfoWindow.setMap(null)
+                            myWindow.setMap(null)
                         }, 0);
                         setTimeout(function () {
-                            InfoWindow = new Tmapv2.InfoWindow({
+                            myWindow = new Tmapv2.InfoWindow({
                                 position : new Tmapv2.LatLng(lat, lng),
                                 content : content,
                                 type : 1,
@@ -319,34 +321,73 @@
         }
     }//mylocation[E]
     
+    function terminators () {
+        clearInterval(realTime);
+        destinyWindow.setMap(null);
+    }
+
     //실시간길찾기
-    function navigators (endX, endY, title) {
+    function navigators (endX, endY, title, toiletType, toiletBowlNumber, handicap) {
         var id =
 <%=(String) session.getAttribute("sessionId")%>
     ;
         //DB에 정보저장, title값 필요
         if(id != null){
             $.ajax({
-            	url : "<c:url value='/dayaver/searchedToilet'/>",
-           	 	data : {
-                	toiletTitle : title,
-           	 	    id : id
-            	},
-            	type : "get",
-            	success : function(){
-            		console.log("화장실검색정보 저장성공 id : " + id);
-            	},
-            	error : function(e){
-            	    console.log("화장실검색정보 저장실패");
-            	    console.log(e);
-            	}
+                url : "<c:url value='/dayaver/searchedToilet'/>",
+                data : {
+                    toiletTitle : title,
+                    id : id,
+                    lng : endX,
+                    lat : endY
+                },
+                type : "get",
+                success : function () {
+                    console.log("화장실검색정보 저장성공 id : " + id);
+                },
+                error : function (e) {
+                    console.log("화장실검색정보 저장실패");
+                    console.log(e);
+                }
             })
         }
-        clearInterval(navigatorFlag);
+        clearInterval(realTime);
+        var content = "<h5 class='card-title text-uppercase text-muted mb-0'>" + toiletType + "</h5>"
+        content += "<br'><span class='card-title text-uppercase text-muted mb-0'>대변기 : " + toiletBowlNumber + "</span>"
+        content += "<br><span class='card-title text-uppercase text-muted mb-0'>장애인 배려실 : " + handicap + "</span>"
+        content += "<br><input class='replyButton3 mt-1' type='button' id='direction[" + i + "]' value='길찾기 중단' onclick='terminators()'>";
+        content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";
+        
+        targetWindow.setMap(null);
+        
+        setTimeout(function () {
+            destinyWindow.setMap(null);
+        }, 0);
+        setTimeout(function () {
+            destinyWindow = new Tmapv2.InfoWindow({
+                position : new Tmapv2.LatLng(endY, endX),
+                content : content,
+                type : 1,
+                map : map
+            });
+        }, 0);
+        /*  setTimeout(function () {
+             targetWindow.setMap(null)
+         }, 0);
+         setTimeout(function () {
+             targetWindow = new Tmapv2.InfoWindow({
+                 position : new Tmapv2.LatLng(endX, endY),
+                 content : content,
+                 type : 1,
+                 map : map
+             });
+         }, 0); */
+
         //실시간 길찾기
-        navigatorFlag = setInterval(function () {
+        realTime = setInterval(function () {
+            
             myLocation();
-            directions(endX, endY);
+            distime = directions(endX, endY);
             console.log("네비게이터 실행중")
         }, 5000);
         
@@ -379,8 +420,8 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<!-- Brand -->
-			<a class="navbar-brand pt-0" href="<c:url value="/examples/maps"/>">
-				<img src="<c:url value="/resources/assets/img/brand/blue.png"/>" class="navbar-brand-img" alt="...">
+			<a class="navbar-brand pt-0 pb-0" href="<c:url value="/maps/mapsMain"/>">
+				<img src="<c:url value="/resources/img/Logo.png"/>" class="navbar-brand-img mt-4" alt="...">
 			</a>
 			<!-- User -->
 			<ul class="nav align-items-center d-md-none">
@@ -452,74 +493,72 @@
 				</form>
 				<!-- Navigation -->
 				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link  active " href="<c:url value="/examples/maps"/>">
+					<li class="nav-item"><a class="nav-link  active " href="<c:url value="/maps/mapsMain"/>">
 							<i class="ni ni-pin-3 text-orange"></i> Maps
 						</a></li>
-					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/index"/>">
-							<i class="ni ni-tv-2 text-primary"></i> Board
+					<li class="nav-item"><a class="nav-link " href="<c:url value="/sns/listSNS"/>">
+							<i class="ni ni-tv-2 text-primary"></i> SNS
 						</a></li>
 					<%-- <li class="nav-item  active "><a class="nav-link " href="<c:url value="/examples/index"/>">
 							<i class="ni ni-tv-2 text-primary"></i> Dashboard
 						</a></li> //nav-item  active는 무조건 검정색으로 표시됩니다. --%>
-					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/icons"/>">
-							<i class="ni ni-planet text-blue"></i> Icons
+				
+
+					<li class="nav-item"><a class="nav-link " href="<c:url value="/diary/diaryMain"/>">
+							<i class="ni ni-bullet-list-67 text-red"></i> Diary
 						</a></li>
 
-					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/tables"/>">
-							<i class="ni ni-bullet-list-67 text-red"></i> Tables
-						</a></li>
-						
-						<!-- 로그인 영역 -->
-						
+					<!-- 로그인 영역 -->
+
 					<c:if test="${sessionScope.sessionId == null }">
-						<li class="nav-item"><a class="nav-link" href="<c:url value="/login"/>">
+						<li class="nav-item"><a class="nav-link" href="<c:url value="/member/login"/>">
 								<i class="ni ni-key-25 text-info"></i> Login
 							</a></li>
-<%-- 						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/register"/>"> --%>
-<!-- 								<i class="ni ni-circle-08 text-pink"></i> Sign up -->
-<!-- 							</a></li> -->
-					</c:if>
-					
-					<c:if test="${sessionScope.sessionId != null }">
-						<li class="nav-item"><a class="nav-link " href="<c:url value="/profile"/>">
+						<li class="nav-item"><a class="nav-link " href="<c:url value="/member/profile"/>">
 								<i class="ni ni-single-02 text-yellow"></i> User profile
 							</a></li>
-						<li class="nav-item"><a class="nav-link" href="<c:url value="../logout"/>">
+					</c:if>
+
+					<c:if test="${sessionScope.sessionId != null }">
+						<li class="nav-item"><a class="nav-link " href="<c:url value="/member/profile"/>">
+								<i class="ni ni-single-02 text-yellow"></i> User profile
+							</a></li>
+						<li class="nav-item"><a class="nav-link" href="<c:url value="/member/logout"/>">
 								<i class="ni ni-key-25 text-info"></i> Logout
 							</a></li>
-					<!-- 네이버 로그인 시 -->
+						<!-- 네이버 로그인 시 -->
 						<c:if test="${sessionScope.sessionNickname != null}">
-					<li class="nav-item">
-					<a class="nav-link " href="<c:url value="/deleteNaver"/>"> 
-					<i class="ni ni-bullet-list-67 text-red"></i> Naver탈퇴
-					</a></li>
-					</c:if>
-					<!-- 구글 로그인 시 -->
-					<c:if test="${sessionScope.sessionNickname == null}">
-					<li class="nav-item"><a class="nav-link " href="<c:url value="/deleteGoogle"/>"> <i class="ni ni-bullet-list-67 text-red"></i> Google탈퇴
-					</a></li>
-					</c:if>
+							<li class="nav-item"><a class="nav-link " href="<c:url value="/member/deleteNaver"/>">
+									<i class="ni ni-bullet-list-67 text-red"></i> Naver탈퇴
+								</a></li>
+						</c:if>
+						<!-- 구글 로그인 시 -->
+						<c:if test="${sessionScope.sessionNickname == null}">
+							<li class="nav-item"><a class="nav-link " href="<c:url value="/member/deleteGoogle"/>">
+									<i class="ni ni-bullet-list-67 text-red"></i> Google탈퇴
+								</a></li>
+						</c:if>
 					</c:if>
 				</ul>
 				<!-- Divider -->
 				<hr class="my-3">
 				<!-- Heading -->
-				<h6 class="navbar-heading text-muted">Documentation</h6>
+				<h6 class="navbar-heading text-muted">NEED LOGIN</h6>
 				<!-- Navigation -->
 				<ul class="navbar-nav mb-md-3">
-					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html">
-							<i class="ni ni-spaceship"></i> Getting started
+					<li class="nav-item"><a class="nav-link" href="https://www.op.gg/champion/maokai/statistics/top">
+							<i class="ni ni-spaceship"></i> 내가 선호하는 화장실
 						</a></li>
 					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/foundation/colors.html">
-							<i class="ni ni-palette"></i> Foundation
+							<i class="ni ni-palette"></i> 최근 검색한 화장실
 						</a></li>
 					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/components/alerts.html">
 							<i class="ni ni-ui-04"></i> Components
 						</a></li>
 				</ul>
 				<ul class="navbar-nav">
-					<li class="nav-item active active-pro"><a class="nav-link" href="<c:url value="/examples/upgrade"/>">
-							<i class="ni ni-send text-dark"></i> Send Feedback
+					<li class="nav-item active active-pro"><a class="nav-link" href="<c:url value="/maps/mapsMain2"/>">
+							<i class="ni ni-send text-dark"></i> Google Maps (Beta)
 						</a></li>
 				</ul>
 			</div>
@@ -538,7 +577,7 @@
 							<div class="input-group-prepend">
 								<span class="input-group-text"><i class="fas fa-search"></i></span>
 							</div>
-							<input class="form-control" placeholder="Search" type="text">
+							<input class="form-control" placeholder="Search Review" type="text">
 						</div>
 					</div>
 				</form>
@@ -546,21 +585,21 @@
 				<ul class="navbar-nav align-items-center d-none d-md-flex">
 					<li class="nav-item dropdown"><a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<div class="media align-items-center">
-							<!-- 회원 네비게이터 영역 -->
-							<c:if test="${sessionScope.sessionId == null}">
-								<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>">
-								</span>
-								<div class="media-body ml-2 d-none d-lg-block">
-									<span class="mb-0 text-sm  font-weight-bold">로그인을 해 주세요.</span>
-								</div>
+								<!-- 회원 네비게이터 영역 -->
+								<c:if test="${sessionScope.sessionId == null}">
+									<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>">
+									</span>
+									<div class="media-body ml-2 d-none d-lg-block">
+										<span class="mb-0 text-sm  font-weight-bold">로그인을 해 주세요.</span>
+									</div>
 								</c:if>
-								
+
 								<c:if test="${sessionScope.sessionId != null}">
-								<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="${sessionScope.sessionProfile}"/>">
-								</span>
-								<div class="media-body ml-2 d-none d-lg-block">
-									<span class="mb-0 text-sm  font-weight-bold">${sessionScope.sessionEmail}</span>
-								</div>
+									<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="${sessionScope.sessionProfile}"/>">
+									</span>
+									<div class="media-body ml-2 d-none d-lg-block">
+										<span class="mb-0 text-sm  font-weight-bold">${sessionScope.sessionEmail}</span>
+									</div>
 								</c:if>
 							</div>
 						</a>
@@ -568,39 +607,43 @@
 							<div class=" dropdown-header noti-title">
 								<h6 class="text-overflow m-0">Welcome!</h6>
 							</div>
-							
+
 							<c:if test="${sessionScope.sessionId == null}">
-							<div class="dropdown-divider"></div>
-							<a href="../login" class="dropdown-item">
-								<i class="ni ni-user-run"></i> <span>Login</span>
-							</a></c:if>
-							
+								<div class="dropdown-divider"></div>
+								<a href="../login" class="dropdown-item">
+									<i class="ni ni-user-run"></i> <span>Login</span>
+								</a>
+							</c:if>
+
 							<c:if test="${sessionScope.sessionId != null}">
-							<a href="<c:url value="../profile"/>" class="dropdown-item">
-								<i class="ni ni-single-02"></i> <span>My profile</span>
-							</a>
-<%-- 							<a href="<c:url value="/examples/profile"/>" class="dropdown-item"> --%>
-<!-- 								<i class="ni ni-settings-gear-65"></i> <span>Settings</span> -->
-<!-- 							</a> -->
-<%-- 							<a href="<c:url value="/examples/profile"/>" class="dropdown-item"> --%>
-<!-- 								<i class="ni ni-calendar-grid-58"></i> <span>Activity</span> -->
-<!-- 							</a> -->
-<%-- 							<a href="<c:url value="/examples/profile"/>" class="dropdown-item"> --%>
-<!-- 								<i class="ni ni-support-16"></i> <span>Support</span> -->
-<!-- 							</a> -->
-							<div class="dropdown-divider"></div>
-							<a href="../logout" class="dropdown-item">
-								<i class="ni ni-user-run"></i> <span>Logout</span>
-							</a></c:if>
+								<a href="<c:url value="../profile"/>" class="dropdown-item">
+									<i class="ni ni-single-02"></i> <span>My profile</span>
+								</a>
+								<%-- 							<a href="<c:url value="/examples/profile"/>" class="dropdown-item"> --%>
+								<!-- 								<i class="ni ni-settings-gear-65"></i> <span>Settings</span> -->
+								<!-- 							</a> -->
+								<%-- 							<a href="<c:url value="/examples/profile"/>" class="dropdown-item"> --%>
+								<!-- 								<i class="ni ni-calendar-grid-58"></i> <span>Activity</span> -->
+								<!-- 							</a> -->
+								<%-- 							<a href="<c:url value="/examples/profile"/>" class="dropdown-item"> --%>
+								<!-- 								<i class="ni ni-support-16"></i> <span>Support</span> -->
+								<!-- 							</a> -->
+								<div class="dropdown-divider"></div>
+								<a href="../logout" class="dropdown-item">
+									<i class="ni ni-user-run"></i> <span>Logout</span>
+								</a>
+							</c:if>
 						</div></li>
 				</ul>
 			</div>
 		</nav>
 		<!-- End Navbar -->
 		<!-- Header -->
-		<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+		<div class="header bg-gradient-primary pb-7 pt-5 pt-md-8">
 			<div class="container-fluid">
-				<div class="header-body"></div>
+				<div class="header-body">
+					<input class='replyButton1 ml-1' type='button' value='최단거리'> <input class='replyButton1 ml-0' type='button' value='최고 평가'> <input class='replyButton1 ml-0' type='button' value='청결우선'> <input class='replyButton1 ml-0' type='button' value='원활도우선'>
+				</div>
 			</div>
 		</div>
 		<div class="container-fluid mt--7">
@@ -636,29 +679,27 @@
 										</p>
 										<p class="mt-1 mb-0 text-muted text-sm">
 											<span class="text-warning"><i class="fa fa-arrow-down"></i> 변화량</span> <span class="text-nowrap">이용자수</span>
-											<!-- <input class="replyButton2" type="button" value="리뷰 목록">
-											<input class="replyButton2" type="button" value="리뷰 쓰기"> -->
 										</p>
 									</div>
 								</div>
 							</div>
 							<div class="col-xl-3 col-lg-6">
 								<div class="card card-stats mb-4 mb-xl-0">
-									<div class="card-body replyButton2">
+									<div class="card-body2 replyButton2">
 										<div class="row">
-											<div class="col-8">
+											<div class="col-8 pr-0" style="float: left;">
 												<!-- <h5 class="card-title text-uppercase text-muted mb-0">Title</h5> -->
 												<span class="card-title text-uppercase text-sm text-muted mb-0">일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십</span>
 												<!-- <span class="h2 font-weight-bold mb-0">Contents</span> -->
 											</div>
-											<div class="col-auto" style="text-align: center;">
+											<div class="col-4" style="text-align: center; float: right;">
 												<p class="mt-0 mb-2 text-muted text-sm">
 													<span class="text-success">4.0</span><span class="text-nowrap mr-2 ml-2">별점</span> <br> <span class="text-danger">3.5</span><span class="text-nowrap mr-2 ml-2">청결도</span>
 												</p>
 												<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;">
-													<i class="fas fa-chart-pie"></i>
+													<!-- <i class="fas fa-chart-pie"></i> -->
 												</div>
-												<h5 class="card-title text-uppercase text-muted mb-0 mt-1">Nickname</h5>
+												<h5 class="card-title text-uppercase text-muted mb-0 mt-0">Nickname</h5>
 											</div>
 										</div>
 									</div>
@@ -666,21 +707,21 @@
 							</div>
 							<div class="col-xl-3 col-lg-6">
 								<div class="card card-stats mb-4 mb-xl-0">
-									<div class="card-body replyButton2">
+									<div class="card-body2 replyButton2">
 										<div class="row">
-											<div class="col-8">
+											<div class="col-8 pr-0">
 												<!-- <h5 class="card-title text-uppercase text-muted mb-0">Title</h5> -->
 												<span class="card-title text-uppercase text-sm text-muted mb-0">일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십</span>
 												<!-- <span class="h2 font-weight-bold mb-0">Contents</span> -->
 											</div>
-											<div class="col-auto" style="text-align: center;">
+											<div class="col-4" style="text-align: center;">
 												<p class="mt-0 mb-2 text-muted text-sm">
 													<span class="text-success">4.0</span><span class="text-nowrap mr-2 ml-2">별점</span> <br> <span class="text-danger">3.5</span><span class="text-nowrap mr-2 ml-2">청결도</span>
 												</p>
 												<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;">
-													<i class="fas fa-chart-pie"></i>
+													<!-- <i class="fas fa-chart-pie"></i> -->
 												</div>
-												<h5 class="card-title text-uppercase text-muted mb-0 mt-1">Nickname</h5>
+												<h5 class="card-title text-uppercase text-muted mb-0 mt-0">Nickname</h5>
 											</div>
 										</div>
 									</div>
@@ -688,21 +729,21 @@
 							</div>
 							<div class="col-xl-3 col-lg-6">
 								<div class="card card-stats mb-4 mb-xl-0">
-									<div class="card-body replyButton2">
+									<div class="card-body2 replyButton2">
 										<div class="row">
-											<div class="col-8">
+											<div class="col-8 pr-0">
 												<!-- <h5 class="card-title text-uppercase text-muted mb-0">Title</h5> -->
 												<span class="card-title text-uppercase text-sm text-muted mb-0">일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십</span>
 												<!-- <span class="h2 font-weight-bold mb-0">Contents</span> -->
 											</div>
-											<div class="col-auto" style="text-align: center;">
+											<div class="col-4" style="text-align: center;">
 												<p class="mt-0 mb-2 text-muted text-sm">
 													<span class="text-success">4.0</span><span class="text-nowrap mr-2 ml-2">별점</span> <br> <span class="text-danger">3.5</span><span class="text-nowrap mr-2 ml-2">청결도</span>
 												</p>
 												<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;">
-													<i class="fas fa-chart-pie"></i>
+													<!-- <i class="fas fa-chart-pie"></i> -->
 												</div>
-												<h5 class="card-title text-uppercase text-muted mb-0 mt-1">Nickname</h5>
+												<h5 class="card-title text-uppercase text-muted mb-0 mt-0">Nickname</h5>
 											</div>
 										</div>
 									</div>

@@ -3,7 +3,7 @@
 <configuration>
 	<typeAliases>
 
-
+		<typeAlias type="global.sesoc.brr.vo.HospitalVO" alias="hospital" />
 		<typeAlias type="global.sesoc.brr.vo.ToiletVO" alias="toilet" />
 		<typeAlias type="global.sesoc.brr.vo.LocationVO" alias="location" />
 		<typeAlias type="global.sesoc.brr.vo.NearbyToiletVO" alias="nearbyToilet" />
@@ -16,13 +16,14 @@
 		<typeAlias type="global.sesoc.brr.vo.DayAverVO" alias="aver"/>
 	</typeAliases>
 	<mappers>
-		<mapper resource="mapper/GoogleMapsMapper.xml" />
-		<mapper resource="mapper/BoardMapper.xml" />
-		<mapper resource="mapper/ReplyMapper.xml" />
-		<mapper resource="mapper/ToiletMapper.xml" />
+	
 		<mapper resource="mapper/GoogleMapsMapper.xml" />
 		<mapper resource="mapper/NaverLoginMapper.xml" />
 		<mapper resource="mapper/GoogleLoginMapper.xml"/>
 		<mapper resource="mapper/DayAverMapper.xml"/>
+		<mapper resource="mapper/HospitalMapper.xml" />
+		<mapper resource="mapper/BoardMapper.xml" />
+		<mapper resource="mapper/ReplyMapper.xml" />
+		<mapper resource="mapper/ToiletMapper.xml" />
 	</mappers>
 </configuration>
