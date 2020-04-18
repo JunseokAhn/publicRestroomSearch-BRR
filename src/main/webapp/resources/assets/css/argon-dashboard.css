@@ -12634,6 +12634,7 @@ a.btn-icon-only {
 .card-stats .card-body2 {
 	padding: 0.8rem 1rem;
 	max-height: 12rem;
+	min-height: 10rem;
 	overflow-x: hidden;
 	overflow-y: hidden;
 	overflow-wrap: normal;
