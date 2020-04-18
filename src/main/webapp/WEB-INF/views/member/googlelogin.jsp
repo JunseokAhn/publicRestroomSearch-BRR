@@ -21,7 +21,7 @@ function onSignIn(googleUser) {
 
 	  var id_token = googleUser.getAuthResponse().id_token;
 		var xhr = new XMLHttpRequest();
-		xhr.open('POST', 'http://localhost:8888/test1/callbackTestGoo');
+		xhr.open('POST', 'http://localhost:8888/brr/callbackTestGoo');
 		xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 		xhr.onload = function() {
 			console.log(id_token);
@@ -33,15 +33,7 @@ function onSignIn(googleUser) {
 	}
 function BackHome(){
 	
-	location.href = "/brr";
-}
-
-function signOut() {
-	var auth2 = gapi.auth2.getAuthInstance();
-	auth2.signOut().then(function () {
-		console.log('로그아웃');
-	});
-	auth2.disconnect();
+	location.href = "/brr/maps/mapsMain";
 }
 
 </script>
@@ -49,12 +41,5 @@ function signOut() {
 <body>
 
 <div class="g-signin2" data-onsuccess="onSignIn"></div>
-<a href = "#" onclick="signOut();">Sign out</a>
-
-<!--   1008960346250-33jebt3kge8r04ac3dh0fqoamfidshjs.apps.googleusercontent.com => 클라이언트 ID %> -->
-<!-- f1MZy7mODbXN11sYkQjtVZO0 => 클라이언트 secret -->
-
-
-
 </body>
 </html>

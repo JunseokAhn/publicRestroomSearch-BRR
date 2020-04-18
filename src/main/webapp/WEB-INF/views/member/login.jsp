@@ -34,7 +34,7 @@ function onSignIn(googleUser) {
 		setTimeout(function(){ BackHome(); }, 3000);
 	}
 function BackHome(){
-	window.location.replace("/brr");	
+	window.location.replace("/brr/maps/mapsMain");	
 }
 </script>
 <title>Argon Dashboard - Free Dashboard for Bootstrap 4 by Creative Tim</title>
@@ -67,7 +67,7 @@ function BackHome(){
 		<!-- Navbar -->
 		<nav class="navbar navbar-top navbar-horizontal navbar-expand-md navbar-dark">
 			<div class="container px-4">
-				<a class="navbar-brand" href="<c:url value="/"/>"> <img src="<c:url value="/resources/assets/img/brand/white.png"/>" />
+				<a class="navbar-brand" href="<c:url value="/maps/mapsMain"/>"> <img src="<c:url value="/resources/img/Logo.png"/>" />
 				</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-main" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
@@ -77,7 +77,7 @@ function BackHome(){
 					<div class="navbar-collapse-header d-md-none">
 						<div class="row">
 							<div class="col-6 collapse-brand">
-								<a href="<c:url value="/examples/index"/>"> <img src="<c:url value="/resources/assets/img/brand/blue.png"/>">
+								<a href="<c:url value="/maps/mapsMain"/>"> <img src="<c:url value="/resources/img/Log.png"/>">
 								</a>
 							</div>
 							<div class="col-6 collapse-close">
@@ -107,8 +107,8 @@ function BackHome(){
 				<div class="header-body text-center mb-7">
 					<div class="row justify-content-center">
 						<div class="col-lg-5 col-md-6">
-							<h1 class="text-white">Welcome!</h1>
-							<p class="text-lead text-light">Use these awesome forms to login or create new account in your project for free.</p>
+							<h1 class="text-white">환영합니다! 화장실이 급할땐? brr!!</h1>
+							<p class="text-lead text-light">원하시는 로그인 플랫폼을 선택해서 로그인 해주세요^^</p>
 						</div>
 					</div>
 				</div>

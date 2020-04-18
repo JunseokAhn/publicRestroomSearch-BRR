@@ -98,13 +98,13 @@
 
 					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/tables"/>"> <i class="ni ni-bullet-list-67 text-red"></i> Tables
 					</a></li>
-					<c:if test="${sessionScope.userID==null }">
+					<c:if test="${sessionScope.sessionId == null }">
 						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/login"/>"> <i class="ni ni-key-25 text-info"></i> Login
 						</a></li>
 						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/register"/>"> <i class="ni ni-circle-08 text-pink"></i> Sign up
 						</a></li>
 					</c:if>
-					<c:if test="${sessionScope.userID!=null }">
+					<c:if test="${sessionScope.sessionId != null }">
 						<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/profile"/>"> <i class="ni ni-single-02 text-yellow"></i> User profile
 						</a></li>
 						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/login"/>"> <i class="ni ni-key-25 text-info"></i> Logout

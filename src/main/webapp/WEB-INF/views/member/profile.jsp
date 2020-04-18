@@ -26,7 +26,7 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<!-- Brand -->
-			<a class="navbar-brand pt-0" href="<c:url value="/examples/index"/>"> <img src="<c:url value="/resources/assets/img/brand/blue.png"/>" class="navbar-brand-img" alt="...">
+			<a class="navbar-brand pt-0" href="<c:url value="/maps/mapsMain"/>"> <img src="<c:url value="/resources/img/Logo.png"/>" class="navbar-brand-img" alt="...">
 			</a>
 			<!-- User -->
 			<ul class="nav align-items-center d-md-none">
@@ -47,13 +47,14 @@
 						<div class=" dropdown-header noti-title">
 							<h6 class="text-overflow m-0">Welcome!</h6>
 						</div>
-						<a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-single-02"></i> <span>My profile</span>
-						</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-settings-gear-65"></i> <span>Settings</span>
-						</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-calendar-grid-58"></i> <span>Activity</span>
-						</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-support-16"></i> <span>Support</span>
-						</a>
+						<a href="<c:url value="/profile"/>" class="dropdown-item"> <i class="ni ni-single-02"></i> <span>My profile</span>
+						</a> 
+<%-- 						<a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-settings-gear-65"></i> <span>Settings</span> --%>
+<%-- 						</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-calendar-grid-58"></i> <span>Activity</span> --%>
+<%-- 						</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-support-16"></i> <span>Support</span> --%>
+<!-- 						</a> -->
 						<div class="dropdown-divider"></div>
-						<a href="logout" class="dropdown-item"> <i class="ni ni-user-run"></i> <span>Logout</span>
+						<a href="../logout" class="dropdown-item"> <i class="ni ni-user-run"></i> <span>Logout</span>
 						</a>
 					</div></li>
 			</ul>
@@ -98,17 +99,29 @@
 
 					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/tables"/>"> <i class="ni ni-bullet-list-67 text-red"></i> Tables
 					</a></li>
-					<c:if test="${sessionScope.userID==null }">
-						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/login"/>"> <i class="ni ni-key-25 text-info"></i> Login
+					<c:if test="${sessionScope.sessionId == null }">
+						<li class="nav-item"><a class="nav-link" href="<c:url value="/member/login"/>"> <i class="ni ni-key-25 text-info"></i> Login
 						</a></li>
-						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/register"/>"> <i class="ni ni-circle-08 text-pink"></i> Sign up
-						</a></li>
+<%-- 						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/register"/>"> <i class="ni ni-circle-08 text-pink"></i> Sign up --%>
+<!-- 						</a></li> -->
 					</c:if>
-					<c:if test="${sessionScope.userID!=null }">
-						<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/profile"/>"> <i class="ni ni-single-02 text-yellow"></i> User profile
+					<c:if test="${sessionScope.sessionId != null }">
+<%-- 						<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/profile"/>"> <i class="ni ni-single-02 text-yellow"></i> User profile --%>
+<!-- 						</a></li> -->
+						<li class="nav-item"><a class="nav-link" href="<c:url value="logout"/>"> <i class="ni ni-key-25 text-info"></i> Logout
 						</a></li>
-						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/login"/>"> <i class="ni ni-key-25 text-info"></i> Logout
-						</a></li>
+						<!-- 네이버 로그인 시 -->
+						<c:if test="${sessionScope.sessionNickname != null}">
+					<li class="nav-item">
+					<a class="nav-link " href="<c:url value="/deleteNaver"/>"> 
+					<i class="ni ni-bullet-list-67 text-red"></i> 회원탈퇴
+					</a></li>
+					</c:if>
+					<!-- 구글 로그인 시 -->
+					<c:if test="${sessionScope.sessionNickname == null}">
+					<li class="nav-item"><a class="nav-link " href="<c:url value="/deleteGoogle"/>"> <i class="ni ni-bullet-list-67 text-red"></i> 회원탈퇴
+					</a></li>
+						</c:if>
 					</c:if>
 				</ul>
 				<!-- Divider -->
@@ -152,10 +165,10 @@
 				<ul class="navbar-nav align-items-center d-none d-md-flex">
 					<li class="nav-item dropdown"><a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<div class="media align-items-center">
-								<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>">
+								<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="${sessionScope.Profile}"/>">
 								</span>
 								<div class="media-body ml-2 d-none d-lg-block">
-									<span class="mb-0 text-sm  font-weight-bold">Jessica Jones</span>
+									<span class="mb-0 text-sm  font-weight-bold">${sessionScope.sessionNickname}</span>
 								</div>
 							</div>
 					</a>
@@ -163,13 +176,13 @@
 							<div class=" dropdown-header noti-title">
 								<h6 class="text-overflow m-0">Welcome!</h6>
 							</div>
-							<a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-single-02"></i> <span>My profile</span>
-							</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-settings-gear-65"></i> <span>Settings</span>
-							</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-calendar-grid-58"></i> <span>Activity</span>
-							</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-support-16"></i> <span>Support</span>
-							</a>
+<%-- 							<a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-single-02"></i> <span>My profile</span> --%>
+<%-- 							</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-settings-gear-65"></i> <span>Settings</span> --%>
+<%-- 							</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-calendar-grid-58"></i> <span>Activity</span> --%>
+<%-- 							</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-support-16"></i> <span>Support</span> --%>
+<!-- 							</a> -->
 							<div class="dropdown-divider"></div>
-							<a href="#!" class="dropdown-item"> <i class="ni ni-user-run"></i> <span>Logout</span>
+							<a href="../logout" class="dropdown-item"> <i class="ni ni-user-run"></i> <span>Logout</span>
 							</a>
 						</div></li>
 				</ul>
@@ -177,16 +190,16 @@
 		</nav>
 		<!-- End Navbar -->
 		<!-- Header -->
-		<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url(<c:url value="/resources/assets/img/theme/profile-cover.jpg"/>); background-size: cover; background-position: center top;">
+		<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url(<c:url value="${sessionScope.Profile}"/>); background-size: cover; background-position: center top;">
 			<!-- Mask -->
 			<span class="mask bg-gradient-default opacity-8"></span>
 			<!-- Header container -->
 			<div class="container-fluid d-flex align-items-center">
 				<div class="row">
 					<div class="col-lg-7 col-md-10">
-						<h1 class="display-2 text-white">Hello Jesse</h1>
-						<p class="text-white mt-0 mb-5">This is your profile page. You can see the progress you've made with your work and manage your projects or assigned tasks</p>
-						<a href="#!" class="btn btn-info">Edit profile</a>
+						<h1 class="display-2 text-white">${sessionScope.sessionNickname}</h1>
+						<p class="text-white mt-0 mb-5">${sessionScope.sessionNickname}님 brr를 이용해 주셔서 감사합니다.</p>
+<!-- 						<a href="#!" class="btn btn-info">Edit profile</a> -->
 					</div>
 				</div>
 			</div>
@@ -199,14 +212,14 @@
 						<div class="row justify-content-center">
 							<div class="col-lg-3 order-lg-2">
 								<div class="card-profile-image">
-									<a href="#"> <img src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>" class="rounded-circle">
+									<a href="#"> <img src="<c:url value="${sessionScope.Profile}"/>" class="rounded-circle">
 									</a>
 								</div>
 							</div>
 						</div>
 						<div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
 							<div class="d-flex justify-content-between">
-								<a href="#" class="btn btn-sm btn-info mr-4">Connect</a> <a href="#" class="btn btn-sm btn-default float-right">Message</a>
+<!-- 								<a href="#" class="btn btn-sm btn-info mr-4">Connect</a> <a href="#" class="btn btn-sm btn-default float-right">Message</a> -->
 							</div>
 						</div>
 						<div class="card-body pt-0 pt-md-4">
@@ -253,7 +266,7 @@
 									<h3 class="mb-0">My account</h3>
 								</div>
 								<div class="col-4 text-right">
-									<a href="#!" class="btn btn-sm btn-primary">Settings</a>
+<!-- 									<a href="#!" class="btn btn-sm btn-primary">Settings</a> -->
 								</div>
 							</div>
 						</div>
@@ -264,12 +277,12 @@
 									<div class="row">
 										<div class="col-lg-6">
 											<div class="form-group">
-												<label class="form-control-label" for="input-username">Username</label> <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username" value="lucky.jesse">
+												<label class="form-control-label" for="input-username">Username</label> <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username" value="${sessionScope.sessionNickname}">
 											</div>
 										</div>
 										<div class="col-lg-6">
 											<div class="form-group">
-												<label class="form-control-label" for="input-email">Email address</label> <input type="email" id="input-email" class="form-control form-control-alternative" placeholder="jesse@example.com">
+												<label class="form-control-label" for="input-email">Email address</label> <input type="email" id="input-email" class="form-control form-control-alternative" placeholder="${sessionScope.sessionEmail}">
 											</div>
 										</div>
 									</div>
@@ -334,7 +347,7 @@
 				<div class="row align-items-center justify-content-xl-between">
 					<div class="col-xl-6">
 						<div class="copyright text-center text-xl-left text-muted">
-							&copy; 2018 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
+							&copy; 2020 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
 						</div>
 					</div>
 					<div class="col-xl-6">

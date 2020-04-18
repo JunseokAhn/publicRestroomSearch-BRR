@@ -8,14 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import global.sesoc.brr.dao.GoogleLoginDAO;
 import global.sesoc.brr.dao.NaverLoginDAO;
-import global.sesoc.brr.vo.GoogleLoginVO;
 
-@Controller
+@Controller @RequestMapping("member")
 public class delMemController {
 
 	
@@ -59,6 +59,7 @@ public class delMemController {
 		String result = restTemplate.getForObject(apiURL, String.class);
 		System.out.println(result);
 		
+		httpsession.invalidate();
 		
 		return "";
 	}
@@ -71,7 +72,7 @@ public class delMemController {
 		if (itmp == 1)
 		{
 			httpsession.invalidate();
-			return "redirect:/";
+			return "redirect:/maps/mapsMain";
 		}
 		else
 		{

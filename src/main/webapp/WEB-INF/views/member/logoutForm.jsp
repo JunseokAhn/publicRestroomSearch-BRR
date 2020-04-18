@@ -37,7 +37,7 @@ function signOut() {
 
 function goHome() {
 	
-	location.href = "/brr";
+	location.href = "/brr/maps/mapsMain";
 }
 
 

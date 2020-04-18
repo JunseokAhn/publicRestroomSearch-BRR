@@ -1,69 +1,14 @@
-create table brr_toilet
+create table brr_Hospital
 (
-    toiletNm varchar2(100), -- È­Àå½Ç ÀÌ¸§
-    toiletType varchar2(15), -- È­Àå½Ç Å¸ÀÔ ( °³¹æ or °øÁß)
-    lnmadr varchar2(150), -- È­Àå½Ç ÁÖ¼Ò
-    unisexToiletYn varchar(2), --³²³à°ø¿ëÈ­Àå½Ç ¿©ºÎ
-    menToiletBowlNumber number, --³²¼º¿ë ´ëº¯±â ¼ö
-    menUrineNumber number, -- ³²¼º¿ë-¼Òº¯±â¼ö
-    menHandicapToiletBowlNumber number, --³²¼º¿ë-Àå¾ÖÀÎ¿ë´ëº¯±â¼ö
-    menHandicapUrinalNumber number, --³²¼º¿ë-Àå¾ÖÀÎ¿ë¼Òº¯±â¼ö
-    menChildrenToiletBowlNumber number, --³²¼º¿ë-¾î¸°ÀÌ¿ë´ëº¯±â¼ö
-    menChildrenUrinalNumber number, --³²¼º¿ë-¾î¸°ÀÌ¿ë¼Òº¯±â¼ö
-    ladiesToiletBowlNumber number, --¿©¼º¿ë-´ëº¯±â¼ö
-    ladiesHandicapToiletBowlNumber number, --¿©¼º¿ë-Àå¾ÖÀÎ¿ë´ëº¯±â¼ö
-    ladiesChildrenToiletBowlNumber number, --¿©¼º¿ë-¾î¸°ÀÌ¿ë´ëº¯±â¼ö
-    institutionNm varchar2(100),--°ü¸®±â°ü¸í
-    phoneNumber varchar2(50),--ÀüÈ­¹øÈ£
-    openTime varchar2(200), --°³¹æ½Ã°£
-    lat number, --xÁÂÇ¥(À§µµ)
-    lng number --yÁÂÇ¥(°æµµ)   
+    dutyName varchar2(100),-- ë³‘ì›ì´ë¦„
+    dutyTel1 varchar2(100),-- ë³‘ì›ì „í™”ë²ˆí˜¸
+    dutyAddr varchar2(300),-- ë³‘ì›ì£¼ì†Œ
+    dutyTimeS varchar2(20), -- ì—¬ëŠ” ì‹œê°„
+    dutyTimeC varchar2(20), -- ë‹«ëŠ” ì‹œê°„
+    dutyTimeSatS varchar2(20), --ì£¼ë§ ì—¬ëŠ” ì‹œê°„(í† )
+    dutyTimeSatC varchar2(20),-- ì£¼ë§ ë‹«ëŠ” ì‹œê°„ 
+    dutyTimeSunS varchar2(20), --ì£¼ë§ ì—¬ëŠ” ì‹œê°„(ì¼)
+    dutyTimeSunC varchar2(20),-- ì£¼ë§ ë‹«ëŠ” ì‹œê°„ 
+    lat number, -- ìœ„ë„
+    lng number -- ê²½ë„  
 );
-drop table brr_toilet;
-
-select count(*)
-from brr_toilet;
-
-select *
-from brr_toilet;
-
-delete from brr_toilet;
-
-rollback;
-
-
-
-select * from (
-select toiletNm, toiletType, lat, lng
-    , trunc(DISTANCE_WGS84(34.969373,127.578384, lat, lng),3)*1000 as DISTANCE
-from brr_toilet
-where (lat between 34.969373-0.019 and 34.969373+0.019)
-    and (lng between 127.578384-0.022 and 127.578384+0.022)
-order by DISTANCE) TMP where rownum < (select count(*)from brr_toilet);
-
-
-
-
--- radians = degrees / (180 / pi)
--- RETURN nDegrees / (180 / ACOS(-1));  -- but 180/pi is a constant, so...
-CREATE OR REPLACE FUNCTION RADIANS(nDegrees IN NUMBER) RETURN NUMBER DETERMINISTIC IS
-BEGIN  
-  RETURN nDegrees / 57.29577951308232087679815481410517033235;
-END RADIANS;
-
-
-CREATE OR REPLACE FUNCTION DISTANCE_WGS84( H_LAT in number, H_LNG in number, T_LAT in number, T_LNG in number)
-RETURN NUMBER DETERMINISTIC
-IS
-BEGIN
-  RETURN ( 6371.0 * acos( 
-          cos( radians( H_LAT ) )*cos( radians( T_LAT /* À§µµ */ ) )
-          *cos( radians( T_LNG /* °æµµ */ )-radians( H_LNG ) )
-          +
-          sin( radians( H_LAT ) )*sin( radians( T_LAT /* À§µµ */ ) )       
-         ));
-end DISTANCE_WGS84;
-
-
-
-

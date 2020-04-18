@@ -25,7 +25,7 @@ function init() {
 		type: "GET",
 		success: function() {
 				alert("회원 탈퇴가 정상적으로 이루어졌습니다.");
-				window.location.replace("/brr");
+				window.location.replace("/brr/maps/mapsMain");
 		},
 		error: function(e){
 			alert(JSON.stringify(e));

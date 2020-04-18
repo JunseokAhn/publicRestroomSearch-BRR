@@ -1,5 +1,9 @@
 package global.sesoc.brr.mapper;
 
+import java.util.ArrayList;
+
+import global.sesoc.brr.vo.LocationVO;
+import global.sesoc.brr.vo.NearbyToiletVO;
 import global.sesoc.brr.vo.ToiletVO;
 
 public interface ToiletMapper {
@@ -10,4 +14,6 @@ public interface ToiletMapper {
 	int countToiletInfo();
 	//테이플 속성 전체 삭제
 	int deleteAllToiletInfo();	
+	
+	ArrayList<NearbyToiletVO> GetToiletInfoByDistance(LocationVO input);
 }

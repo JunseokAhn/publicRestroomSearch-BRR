@@ -27,7 +27,7 @@ public class ExamplesController {
 		return "examples/icons";
 	}
 
-	@GetMapping(value = "login")
+	@GetMapping(value = "member/login")
 	public String login() {
 		return "member/login";
 	}
@@ -42,7 +42,7 @@ public class ExamplesController {
 		return "examples/maps";
 	}
 
-	@GetMapping(value = "profile")
+	@GetMapping(value = "member/profile")
 	public String profile() {
 		return "member/profile";
 	}

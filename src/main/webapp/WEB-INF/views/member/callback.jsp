@@ -19,12 +19,6 @@ window.onload = function()
 	setTimeout(function(){ SendToken(); }, 2000);
 }
 
-function gohome() {
-	location.href = "/brr";
-	//main 화면으로 넘어가는 경로를 적어주시면 됩니다.
-}
-
-
 function SendToken()
 {
 	var token = $('#txtToken').val();
@@ -50,7 +44,7 @@ function SendToken()
 
 function init() 
 {
-	location.href = "/brr";
+	location.href = "/brr/maps/mapsMain";
 	//main 화면으로 넘어가는 경로를 적어주시면 됩니다.
 
 }
@@ -110,9 +104,6 @@ String strTokenFull = "";
   
   
   <input type="hidden" id="txtToken" value="<%=access_token%>">
-  
-<p>로그인 중 입니다. 잠시만 기다려주세요^^ </p>  
-  
   
 </body>
 
