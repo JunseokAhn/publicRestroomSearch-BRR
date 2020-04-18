@@ -323,6 +323,7 @@
     
     function terminators () {
         clearInterval(realTime);
+        polyline_.setMap(null)
         destinyWindow.setMap(null);
     }
 
