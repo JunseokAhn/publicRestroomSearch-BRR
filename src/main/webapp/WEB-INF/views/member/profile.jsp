@@ -26,7 +26,7 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<!-- Brand -->
-			<a class="navbar-brand pt-0" href="<c:url value="/examples/index"/>"> <img src="<c:url value="/resources/assets/img/brand/blue.png"/>" class="navbar-brand-img" alt="...">
+			<a class="navbar-brand pt-0" href="<c:url value="/maps/mapsMain"/>"> <img src="<c:url value="/resources/img/Logo.png"/>" class="navbar-brand-img" alt="...">
 			</a>
 			<!-- User -->
 			<ul class="nav align-items-center d-md-none">
@@ -100,7 +100,7 @@
 					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/tables"/>"> <i class="ni ni-bullet-list-67 text-red"></i> Tables
 					</a></li>
 					<c:if test="${sessionScope.sessionId == null }">
-						<li class="nav-item"><a class="nav-link" href="<c:url value="/login"/>"> <i class="ni ni-key-25 text-info"></i> Login
+						<li class="nav-item"><a class="nav-link" href="<c:url value="/member/login"/>"> <i class="ni ni-key-25 text-info"></i> Login
 						</a></li>
 <%-- 						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/register"/>"> <i class="ni ni-circle-08 text-pink"></i> Sign up --%>
 <!-- 						</a></li> -->
@@ -114,12 +114,12 @@
 						<c:if test="${sessionScope.sessionNickname != null}">
 					<li class="nav-item">
 					<a class="nav-link " href="<c:url value="/deleteNaver"/>"> 
-					<i class="ni ni-bullet-list-67 text-red"></i> Naver탈퇴
+					<i class="ni ni-bullet-list-67 text-red"></i> 회원탈퇴
 					</a></li>
 					</c:if>
 					<!-- 구글 로그인 시 -->
 					<c:if test="${sessionScope.sessionNickname == null}">
-					<li class="nav-item"><a class="nav-link " href="<c:url value="/deleteGoogle"/>"> <i class="ni ni-bullet-list-67 text-red"></i> Google탈퇴
+					<li class="nav-item"><a class="nav-link " href="<c:url value="/deleteGoogle"/>"> <i class="ni ni-bullet-list-67 text-red"></i> 회원탈퇴
 					</a></li>
 						</c:if>
 					</c:if>

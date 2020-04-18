@@ -329,7 +329,7 @@
     //실시간길찾기
     function navigators (endX, endY, title, toiletType, toiletBowlNumber, handicap) {
         var id =
-<%=(String) session.getAttribute("sessionId")%>
+<%=(String)session.getAttribute("sessionId")%>
     ;
         //DB에 정보저장, title값 필요
         if(id != null){
@@ -349,7 +349,7 @@
                     console.log("화장실검색정보 저장실패");
                     console.log(e);
                 }
-            })
+            });
         }
         clearInterval(realTime);
         var content = "<h5 class='card-title text-uppercase text-muted mb-0'>" + toiletType + "</h5>"
@@ -610,13 +610,13 @@
 
 							<c:if test="${sessionScope.sessionId == null}">
 								<div class="dropdown-divider"></div>
-								<a href="../login" class="dropdown-item">
+								<a href="../member/login" class="dropdown-item">
 									<i class="ni ni-user-run"></i> <span>Login</span>
 								</a>
 							</c:if>
 
 							<c:if test="${sessionScope.sessionId != null}">
-								<a href="<c:url value="../profile"/>" class="dropdown-item">
+								<a href="<c:url value="../member/profile"/>" class="dropdown-item">
 									<i class="ni ni-single-02"></i> <span>My profile</span>
 								</a>
 								<%-- 							<a href="<c:url value="/examples/profile"/>" class="dropdown-item"> --%>
@@ -629,7 +629,7 @@
 								<!-- 								<i class="ni ni-support-16"></i> <span>Support</span> -->
 								<!-- 							</a> -->
 								<div class="dropdown-divider"></div>
-								<a href="../logout" class="dropdown-item">
+								<a href="../member/logout" class="dropdown-item">
 									<i class="ni ni-user-run"></i> <span>Logout</span>
 								</a>
 							</c:if>

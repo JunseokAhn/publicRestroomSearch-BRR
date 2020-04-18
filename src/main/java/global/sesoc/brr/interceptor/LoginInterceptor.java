@@ -9,32 +9,30 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
- * ?��?��?�� 로그?�� ?��?�� ?��?��?��?��. HandlerInterceptorAdapter�? ?��?��받아?�� ?��?��.
+ * 사용자 로그인 확인 인터셉터. HandlerInterceptorAdapter를 상속받아서 정의.
  */
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 	private static final Logger logger = LoggerFactory.getLogger(LoginInterceptor.class);
 
-	// 콘트롤러?�� 메서?�� ?��?�� ?��?�� 처리
+	//콘트롤러의 메서드 실행 전에 처리
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 
-		logger.debug("LoginInterceptor ?��?��");
+		logger.debug("LoginInterceptor 실행");
 
-		// ?��?��?�� 로그?�� ?���? ?���?
+		//세션의 로그인 정보 읽기
 		HttpSession httpsession = request.getSession();
-		String id = (String)httpsession.getAttribute("sessionId");
+		String sessinId = (String)httpsession.getAttribute("sessionId");
 
-		// 로그?��?���? ?��?? 경우 로그?�� ?��?���?�? ?��?��
-		if (id == null) {
-			// request.getContextPath()�? 루트 경로�? 구하?�� ?��?? 경로�? 처리
-			
-			//member/login => 네이버, 구글 로그인 통합 경로 jsp를 구현 후 연결 하도록 하겠음.
+		//로그인되지 않은 경우 로그인 페이지로 이동
+		if (sessinId == null) {
+			//request.getContextPath()로 루트 경로를 구하여 절대 경로로 처리
 			
 			response.sendRedirect(request.getContextPath() + "member/login");
 			return false;
 		}
-		// 로그?�� ?�� 경우 ?���??�� 경로�? 진행
+		//로그인 된 경우 요청한 경로로 진행
 		return super.preHandle(request, response, handler);
 	}
 

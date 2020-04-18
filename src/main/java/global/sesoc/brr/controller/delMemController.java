@@ -14,7 +14,6 @@ import org.springframework.web.client.RestTemplate;
 
 import global.sesoc.brr.dao.GoogleLoginDAO;
 import global.sesoc.brr.dao.NaverLoginDAO;
-import global.sesoc.brr.vo.GoogleLoginVO;
 
 @Controller @RequestMapping("member")
 public class delMemController {

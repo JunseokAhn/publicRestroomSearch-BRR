@@ -14,7 +14,7 @@ import global.sesoc.brr.dao.DayAverDAO;
 import global.sesoc.brr.vo.DayAverVO;
 
 @Controller
-@RequestMapping("/dayaver")
+@RequestMapping("dayaver")
 public class DayAverController {
 
 	@Autowired
@@ -22,27 +22,25 @@ public class DayAverController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(DayAverController.class);
 	
-	//dayaver/searchedToilet?toiletTitle&id
 	//화장실 길찾기를 실행 할 때에 저장
-	@GetMapping(value = "/searchedToilet", produces = "applications/json;charset=UTF-8")
+	@GetMapping(value = "/searchedToilet") //produces = "applications/json;charset=UTF-8")
 	@ResponseBody
-	public String insertAver(String id, String toiletTitle, DayAverVO aver, HttpSession httpsession) {
+	public String insertAver(String id, DayAverVO aver, HttpSession httpsession) {
 		
-		//jsp 쪽으로 넘어 갈 때 boolean 타입으로 들어감
-		// 목요일 회의를 통해 값들을 어떻게 가지고 오느냐에 따라 달라지기 때문에 기본적인 틀만 가지고 만듬
+		System.out.println("경로를 통해 들어왔습니다.");
 		//VO객체 => aver.setId().equals((String)httpsession.getAttribute("sessionId"))
 		if(id.equals((String)httpsession.getAttribute("sessionId"))) {
 			
 		//ajax통신으로 받아올 자료들 => 경도, 위도, 화장실 이름, 아이디.
-			
-			dao.insertAver(aver);
 			System.out.println("성공하였습니다.");
+			dao.insertAver(aver);
+			
 		} else {
 		
 			System.out.println("객체가 전달 되지 않았습니다.");
-			return "false";
+			return "";
 		}
-		return "true";
+		return "";
 	}
 	
 	
