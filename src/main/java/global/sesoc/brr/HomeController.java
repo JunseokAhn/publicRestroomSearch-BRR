@@ -27,7 +27,7 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {
 		logger.info("메인 화면으로 이동");
-		return "/brr/maps/mapsMain";
+		return "maps/mapsMain";
 	}
 	
 	@ResponseBody

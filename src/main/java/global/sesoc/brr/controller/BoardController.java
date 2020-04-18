@@ -50,8 +50,6 @@ public class BoardController {
 			, MultipartFile upload) {
 		
 		//세션에서 로그인한 사용자의 아이디를 읽어서 Board객체의 작성자 정보에 세팅
-		//String id = (String) session.getAttribute("loginId");
-		//로그인이 안된상태이므로 "haha로 넣음"
 		String id = (String)session.getAttribute("sessionId");
 		board.setId(id);
 		
@@ -69,7 +67,6 @@ public class BoardController {
 	//전체 게시판 글목록
 	@GetMapping(value = "listBoard")
 	public String listBoard(Model model) {
-
 		ArrayList<BoardVO> listBoard = dao.listBoard();
 		model.addAttribute("list", listBoard);
 		return "board/listBoard";
@@ -80,7 +77,7 @@ public class BoardController {
 	public String readBoard(String boardnum, Model model) {
 		BoardVO board = dao.readBoard(boardnum);
 		model.addAttribute("board", board);
-		//return "board/readBoard";
+
 		return "board/readBoard";
 	}
 
