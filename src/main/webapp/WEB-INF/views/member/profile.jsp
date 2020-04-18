@@ -54,7 +54,7 @@
 <%-- 						</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-support-16"></i> <span>Support</span> --%>
 <!-- 						</a> -->
 						<div class="dropdown-divider"></div>
-						<a href="../logout" class="dropdown-item"> <i class="ni ni-user-run"></i> <span>Logout</span>
+						<a href="../member/logout" class="dropdown-item"> <i class="ni ni-user-run"></i> <span>Logout</span>
 						</a>
 					</div></li>
 			</ul>
@@ -87,7 +87,7 @@
 				</form>
 				<!-- Navigation -->
 				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link  active " href="<c:url value="/examples/maps"/>"> <i class="ni ni-pin-3 text-orange"></i> Maps
+					<li class="nav-item"><a class="nav-link  active " href="<c:url value="/maps/mapsMain"/>"> <i class="ni ni-pin-3 text-orange"></i> Maps
 					</a></li>
 					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/index"/>"> <i class="ni ni-tv-2 text-primary"></i> Board
 					</a></li>
@@ -197,8 +197,14 @@
 			<div class="container-fluid d-flex align-items-center">
 				<div class="row">
 					<div class="col-lg-7 col-md-10">
+						<c:if test="${sessionScope.sessionNickname != null}">
 						<h1 class="display-2 text-white">${sessionScope.sessionNickname}</h1>
 						<p class="text-white mt-0 mb-5">${sessionScope.sessionNickname}님 brr를 이용해 주셔서 감사합니다.</p>
+						</c:if>
+						<c:if test="${sessionScope.sessionGooglename != null}">
+						<h1 class="display-2 text-white">${sessionScope.sessionGooglename}</h1>
+						<p class="text-white mt-0 mb-5">${sessionScope.sessionGooglename}님 brr를 이용해 주셔서 감사합니다.</p>
+						</c:if>
 <!-- 						<a href="#!" class="btn btn-info">Edit profile</a> -->
 					</div>
 				</div>
@@ -239,12 +245,19 @@
 								</div>
 							</div>
 							<div class="text-center">
+								<c:if test="${sessionScope.sessionNickname != null}">
 								<h3>
-									Jessica Jones<span class="font-weight-light">, 27</span>
+									${sessionScope.sessionNickname}<span class="font-weight-light"></span>
 								</h3>
-								<div class="h5 font-weight-300">
-									<i class="ni location_pin mr-2"></i>Bucharest, Romania
-								</div>
+								</c:if>
+								<c:if test="${sessionScope.sessionGooglename != null}">
+								<h3>
+									${sessionScope.sessionGooglename}<span class="font-weight-light"></span>
+								</h3>
+								</c:if>
+<!-- 								<div class="h5 font-weight-300"> -->
+<!-- 									<i class="ni location_pin mr-2"></i>Bucharest, Romania -->
+<!-- 								</div> -->
 								<div class="h5 mt-4">
 									<i class="ni business_briefcase-24 mr-2"></i>Solution Manager - Creative Tim Officer
 								</div>
@@ -277,7 +290,12 @@
 									<div class="row">
 										<div class="col-lg-6">
 											<div class="form-group">
+												<c:if test="${sessionScope.sessionNickname != null}">
 												<label class="form-control-label" for="input-username">Username</label> <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username" value="${sessionScope.sessionNickname}">
+												</c:if>
+												<c:if test="${sessionScope.sessionGooglename != null}">
+												<label class="form-control-label" for="input-username">Username</label> <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username" value="${sessionScope.sessionGooglename}">
+												</c:if>
 											</div>
 										</div>
 										<div class="col-lg-6">

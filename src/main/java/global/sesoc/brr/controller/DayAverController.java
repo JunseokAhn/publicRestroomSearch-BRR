@@ -30,21 +30,35 @@ public class DayAverController {
 		System.out.println("경로를 통해 들어왔습니다.");
 		System.out.println(id);
 		System.out.println((String)httpsession.getAttribute("sessionId"));
-		//VO객체 => aver.setId().equals((String)httpsession.getAttribute("sessionId"))
-		if(id.equals((String)httpsession.getAttribute("sessionId"))) {
-			
-		//ajax통신으로 받아올 자료들 => 경도, 위도, 화장실 이름, 아이디.
-			System.out.println("성공하였습니다.");
-			dao.insertAver(aver);
-			
-		} else {
 		
-			System.out.println("객체가 전달 되지 않았습니다.");
-			return "";
-		}
+//		if(id.equals((String)httpsession.getAttribute("sessionId"))) {
+//			System.out.println("성공하였습니다.");
+//			dao.insertAver(aver);
+//		} else {
+//			System.out.println("객체가 전달 되지 않았습니다.");
+//			return "";
+//		}
+		System.out.println("그냥 때려박기");
+		dao.insertAver(aver);
 		return "";
 	}
 	
-//	@GetMapping("allUser")
-//	public String alluser(HttpSession httpsession)
+	@GetMapping("allUser")
+	@ResponseBody
+	public String alluser(Double lat, Double lng, HttpSession httpsession) {
+		logger.info("일일 화장실 사용자 통계 입니다.");
+		
+		int result = dao.listAll(lat, lng);
+		
+		System.out.println("현재 일일 화장실 통계자 수 : " + result);
+		
+		httpsession.setAttribute("result", result);
+		
+		
+		return "";
+	}
+	
+	
+	
+	
 }

@@ -34,7 +34,7 @@ public class DayAverDAO {
 	/*
 	 * 모든 이용자 결과를 가지고 옴
 	 * */
-	public int listAll(double lat, double lng) {
+	public int listAll(Double lat, Double lng) {
 		
 		int result = -1;
 		
