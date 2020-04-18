@@ -177,7 +177,7 @@
                             //console.log("toiletMarker : " + toiletMarker)
                             console.log(marker)
                             //여기까지 마커(내위치) 들어오는것 확인
-                            var content = "<div style='min-width:max-content;'>"
+                            var content = "<div style='min-width:max-content;  z-index:999;'>"
                             content += "<h5 class='card-title text-uppercase text-muted mb-0'>" + toiletType + "</h5>"
                             content += "<br'><span class='card-title text-uppercase text-muted mb-0'>대변기 : " + toiletBowlNumber + "</span>"
                             content += "<br><span class='card-title text-uppercase text-muted mb-0'>장애인 배려실 : " + handicap + "</span>"
@@ -323,6 +323,7 @@
     
     function terminators () {
         clearInterval(realTime);
+        polyline_.setMap(null)
         destinyWindow.setMap(null);
     }
 
@@ -352,11 +353,13 @@
             });
         }
         clearInterval(realTime);
-        var content = "<h5 class='card-title text-uppercase text-muted mb-0'>" + toiletType + "</h5>"
+        var content = "<div style='min-width:max-content; z-index:999;'>"
+        content += "<h5 class='card-title text-uppercase text-muted mb-0'>" + toiletType + "</h5>"
         content += "<br'><span class='card-title text-uppercase text-muted mb-0'>대변기 : " + toiletBowlNumber + "</span>"
         content += "<br><span class='card-title text-uppercase text-muted mb-0'>장애인 배려실 : " + handicap + "</span>"
         content += "<br><input class='replyButton3 mt-1' type='button' id='direction[" + i + "]' value='길찾기 중단' onclick='terminators()'>";
         content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";
+        content += "</div>"
         
         targetWindow.setMap(null);
         
@@ -421,7 +424,7 @@
 			</button>
 			<!-- Brand -->
 			<a class="navbar-brand pt-0 pb-0" href="<c:url value="/maps/mapsMain"/>">
-				<img src="<c:url value="/resources/img/Logo.png"/>" class="navbar-brand-img mt-4" alt="...">
+				<img src="<c:url value="/resources/img/Logo.png"/>" class="navbar-brand-img" alt="...">
 			</a>
 			<!-- User -->
 			<ul class="nav align-items-center d-md-none">
@@ -676,7 +679,7 @@
 						<div class="row">
 							<div class="col-xl-3 col-lg-6">
 								<div class="card card-stats mb-4 mb-xl-0">
-									<div class="card-body replyButton2" id="div1">
+									<div class="card-body2 replyButton2" id="div1">
 										<div class="row">
 											<div class="col">
 												<h5 class="card-title text-uppercase text-muted mb-0">화장실을 선택하세요...</h5>
@@ -686,7 +689,7 @@
 										<p class="mt-3 mb-0 text-muted text-sm">
 											<span class="text-success"><i class="fa fa-arrow-up"></i> 변화량</span> <span class="text-nowrap mr-2">별점평균</span> <span class="text-success"><i class="fa fa-arrow-up"></i> 변화량</span> <span class="text-nowrap">청결도평균</span>
 										</p>
-										<p class="mt-1 mb-0 text-muted text-sm">
+										<p class="mt-2 mb-0 text-muted text-sm">
 											<span class="text-warning"><i class="fa fa-arrow-down"></i> 변화량</span> <span class="text-nowrap">이용자수</span>
 										</p>
 									</div>
@@ -694,15 +697,15 @@
 							</div>
 							<div class="col-xl-3 col-lg-6">
 								<div class="card card-stats mb-4 mb-xl-0">
-									<div class="card-body2 replyButton2">
+									<div class="card-body2 replyButton2" id="div2">
 										<div class="row">
 											<div class="col-8 pr-0" style="float: left;">
 												<!-- <h5 class="card-title text-uppercase text-muted mb-0">Title</h5> -->
-												<span class="card-title text-uppercase text-sm text-muted mb-0">일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십</span>
+												<span class="card-title text-sm text-muted mb-0">Default Review</span>
 												<!-- <span class="h2 font-weight-bold mb-0">Contents</span> -->
 											</div>
 											<div class="col-4" style="text-align: center; float: right;">
-												<p class="mt-0 mb-2 text-muted text-sm">
+												<p class="mt-0 mb-3 text-muted text-sm">
 													<span class="text-success">4.0</span><span class="text-nowrap mr-2 ml-2">별점</span> <br> <span class="text-danger">3.5</span><span class="text-nowrap mr-2 ml-2">청결도</span>
 												</p>
 												<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;">
@@ -716,15 +719,15 @@
 							</div>
 							<div class="col-xl-3 col-lg-6">
 								<div class="card card-stats mb-4 mb-xl-0">
-									<div class="card-body2 replyButton2">
+									<div class="card-body2 replyButton2" id="div3">
 										<div class="row">
 											<div class="col-8 pr-0">
 												<!-- <h5 class="card-title text-uppercase text-muted mb-0">Title</h5> -->
-												<span class="card-title text-uppercase text-sm text-muted mb-0">일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십</span>
+												<span class="card-title  text-sm text-muted mb-0">Default Review</span>
 												<!-- <span class="h2 font-weight-bold mb-0">Contents</span> -->
 											</div>
 											<div class="col-4" style="text-align: center;">
-												<p class="mt-0 mb-2 text-muted text-sm">
+												<p class="mt-0 mb-3 text-muted text-sm">
 													<span class="text-success">4.0</span><span class="text-nowrap mr-2 ml-2">별점</span> <br> <span class="text-danger">3.5</span><span class="text-nowrap mr-2 ml-2">청결도</span>
 												</p>
 												<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;">
@@ -738,15 +741,15 @@
 							</div>
 							<div class="col-xl-3 col-lg-6">
 								<div class="card card-stats mb-4 mb-xl-0">
-									<div class="card-body2 replyButton2">
+									<div class="card-body2 replyButton2" id="div4">
 										<div class="row">
 											<div class="col-8 pr-0">
 												<!-- <h5 class="card-title text-uppercase text-muted mb-0">Title</h5> -->
-												<span class="card-title text-uppercase text-sm text-muted mb-0">일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십</span>
+												<span class="card-title text-sm text-muted mb-0">Default Review</span>
 												<!-- <span class="h2 font-weight-bold mb-0">Contents</span> -->
 											</div>
 											<div class="col-4" style="text-align: center;">
-												<p class="mt-0 mb-2 text-muted text-sm">
+												<p class="mt-0 mb-3 text-muted text-sm">
 													<span class="text-success">4.0</span><span class="text-nowrap mr-2 ml-2">별점</span> <br> <span class="text-danger">3.5</span><span class="text-nowrap mr-2 ml-2">청결도</span>
 												</p>
 												<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;">
