@@ -59,6 +59,7 @@ public class delMemController {
 		String result = restTemplate.getForObject(apiURL, String.class);
 		System.out.println(result);
 		
+		httpsession.invalidate();
 		
 		return "";
 	}

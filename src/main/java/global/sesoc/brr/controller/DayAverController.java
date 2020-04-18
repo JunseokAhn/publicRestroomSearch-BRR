@@ -33,6 +33,8 @@ public class DayAverController {
 		//VO객체 => aver.setId().equals((String)httpsession.getAttribute("sessionId"))
 		if(id.equals((String)httpsession.getAttribute("sessionId"))) {
 			
+		//ajax통신으로 받아올 자료들 => 경도, 위도, 화장실 이름, 아이디.
+			
 			dao.insertAver(aver);
 			System.out.println("성공하였습니다.");
 		} else {
