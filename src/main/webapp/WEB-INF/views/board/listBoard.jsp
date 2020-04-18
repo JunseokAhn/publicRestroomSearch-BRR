@@ -304,9 +304,16 @@
 												</div>
 											</div>
 										</th>
+<<<<<<< Updated upstream
 										<td></td>
 										<td><span class="badge badge-dot mr-4"> </span></td>
 										<td>${board.id}</td>
+=======
+										<td>$2,500 USD</td>
+										<td><span class="badge badge-dot mr-4"> <i class="bg-warning"></i> pending
+										</span></td>
+										<td>${sessionScope.sessionEmail}</td>
+>>>>>>> Stashed changes
 										<td>${board.inputdate}</td>
 										<td class="text-right">
 											<div class="dropdown">
