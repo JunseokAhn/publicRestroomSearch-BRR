@@ -421,7 +421,7 @@
 			</button>
 			<!-- Brand -->
 			<a class="navbar-brand pt-0 pb-0" href="<c:url value="/maps/mapsMain"/>">
-				<img src="<c:url value="/resources/img/Logo.png"/>" class="navbar-brand-img mt-4" alt="...">
+				<img src="<c:url value="/resources/img/Logo.png"/>" class="navbar-brand-img" alt="...">
 			</a>
 			<!-- User -->
 			<ul class="nav align-items-center d-md-none">
