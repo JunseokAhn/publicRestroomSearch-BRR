@@ -273,7 +273,7 @@
     
     function reviewWrite (title, id) {
         var review = document.getElementById("review");
-        $("#review-container").show();
+        $("#review-container").fadeIn();
         $("#review").fadeIn();
         /*   var content = "<div style='background-color: black; position: fixed; width: 10000px; height: 10000px; opacity: 60%; z-index: 998;'>야</div>"
           content += "<div style='background-color: white; position: fixed; width: 35rem; height: 40rem; z-index: 999;'>"
@@ -461,21 +461,22 @@
 				<div class="card-header bg-transparent">
 					<div class="row align-items-center">
 						<div class="col">
+							<h2 class="mb-0" style="display: inline-block">화장실 이름</h2>
+							<input class="btn btn-sm btn-primary" style="width: 2rem; margin-bottom: 0.4rem; margin-left: 0.6rem; float: right;" value="X" onclick='$("#review").fadeOut(), $("#review-container").fadeOut()'>
+							<a href="#!" class="btn btn-sm btn-primary" style="margin-bottom: 0.4rem; margin-left: 0.6rem; float: right;">Register</a>
 							<h6 class="text-uppercase text-muted ls-1 mb-1">당신의 리뷰가 다른 사람들에게 도움이 될 거에요!</h6>
-							<h2 class="mb-0">화장실 이름</h2>
 						</div>
 					</div>
 				</div>
-				<div class="card-body" style="padding-bottom: 0.2rem; text-align:center;">
+				<div class="card-body" style="padding-bottom: 0.2rem; text-align: center;">
 					<div class="col-xl-12 col-lg-6">
 						<div class="card card-stats mb-4 mb-xl-0">
 							<textarea class="card-body2 replyButton2" id="reviews" style="resizalbe: none;"></textarea>
 							<div class="row">
 								<div class="col mt-2">
 									<span class="h2 font-weight mb-0">별점 <img id="star1" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"> <img id="star2" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"> <img id="star3" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"> <img id="star4" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"> <img id="star5" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;">
-									</span>
-									<span class="h2 font-weight mb-0 ml-3">청결도<img id="clean1" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"><img id="clean2" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"><img id="clean3" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"><img id="clean4" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"><img id="clean5" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"></span>
-									<a href="#!" class="btn btn-sm btn-primary" style="margin-bottom: 0.4rem; margin-left: 0.6rem;">Register</a>
+									</span> <span class="h2 font-weight mb-0 ml-3">청결도<img id="clean1" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"><img id="clean2" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"><img id="clean3" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"><img id="clean4" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"><img id="clean5" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"></span>
+									
 								</div>
 							</div>
 						</div>
