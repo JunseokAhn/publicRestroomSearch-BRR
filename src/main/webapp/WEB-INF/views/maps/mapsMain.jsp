@@ -273,7 +273,7 @@
     
     function reviewWrite (title, id) {
         var review = document.getElementById("review");
-        $("#review-container").fadeIn();
+        $("#review-container").show();
         $("#review").fadeIn();
         /*   var content = "<div style='background-color: black; position: fixed; width: 10000px; height: 10000px; opacity: 60%; z-index: 998;'>야</div>"
           content += "<div style='background-color: white; position: fixed; width: 35rem; height: 40rem; z-index: 999;'>"
@@ -462,7 +462,7 @@
 					<div class="row align-items-center">
 						<div class="col">
 							<h2 class="mb-0" style="display: inline-block">화장실 이름</h2>
-							<input class="btn btn-sm btn-primary" style="width: 2rem; margin-bottom: 0.4rem; margin-left: 0.6rem; float: right;" value="X" onclick='$("#review").fadeOut(), $("#review-container").fadeOut()'>
+							<input class="btn btn-sm btn-primary" style="width: 2rem; margin-bottom: 0.4rem; margin-left: 0.6rem; float: right;" value="X" onclick='$("#review").hide(), $("#review-container").fadeOut()'>
 							<a href="#!" class="btn btn-sm btn-primary" style="margin-bottom: 0.4rem; margin-left: 0.6rem; float: right;">Register</a>
 							<h6 class="text-uppercase text-muted ls-1 mb-1">당신의 리뷰가 다른 사람들에게 도움이 될 거에요!</h6>
 						</div>
