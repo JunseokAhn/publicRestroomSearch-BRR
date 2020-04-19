@@ -14,4 +14,7 @@ public interface DayAverMapper {
 	
 	//해당 화장실의 평균 이용량
 	public ArrayList<DayAverVO> getAver (String toiletnm);
+	
+	//해당 회원의 검색 기록 삭제
+	public int deleteRecord (String id);
 }
