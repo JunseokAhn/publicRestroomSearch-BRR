@@ -42,11 +42,11 @@ public class DayAverController {
 		dao.insertAver(aver);
 		return "";
 	}
-	
+	//해당 화장실의 전체 이용자 수
 	@GetMapping("allUser")
 	@ResponseBody
 	public String alluser(Double lat, Double lng, HttpSession httpsession) {
-		logger.info("일일 화장실 사용자 통계 입니다.");
+		logger.info("화장실 사용자 통계 입니다.");
 		
 		int result = dao.listAll(lat, lng);
 		
@@ -54,11 +54,22 @@ public class DayAverController {
 		
 		httpsession.setAttribute("result", result);
 		
-		
 		return "";
 	}
 	
-	
-	
+	//해당 아이디의 기록 삭제 입니다.
+	@GetMapping("deleteRecord")
+	@ResponseBody
+	public String deleteRecord (String id, DayAverVO aver, HttpSession httpsession) {
+		logger.info("검색 기록 삭제로 이동하였습니다.");
+		if(aver.getId().equals((String)httpsession.getAttribute("sessionId"))) {
+			System.out.println("검색 기록이 삭제 되었습니다.");
+			dao.deleteRecord(id);
+		}else {
+			System.out.println("검색 기록 삭제 실패했습니다. 세션Scope아이디와 현재 아이디가 일치 하는지 확인해주세요.");
+			return "false";
+		}
+		return "true";
+	}
 	
 }

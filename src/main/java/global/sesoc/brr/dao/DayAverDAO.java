@@ -62,6 +62,15 @@ public class DayAverDAO {
 		return list;
 	}
 	
-	
+	public int deleteRecord (String id) {
+		int result = -1;
+		try {
+			DayAverMapper mapper = session.getMapper(DayAverMapper.class);
+			result = mapper.deleteRecord(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 	
 }

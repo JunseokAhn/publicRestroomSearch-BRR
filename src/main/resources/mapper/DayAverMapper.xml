@@ -15,8 +15,10 @@ insert into dayaver
 <select id="listAll" parameterType="double" resultType="int">
 select count(*) from dayaver
 where lat = #{lat} and lng = #{lng}
-
 </select>
 
+<delete id="deleteRecord" parameterType="String">
+delete from dayaver where id = #{id}
+</delete>
 
 </mapper>
