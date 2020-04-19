@@ -14536,6 +14536,11 @@ button.section-darker:focus {
 .text-sm {
   font-size: 0.875rem !important;
 }
+@media(max-width: 1600px){
+	.text-sm {
+ 	 font-size: 0.775rem !important;
+	}
+}
 
 .text-lg {
   font-size: 1.25rem !important;
@@ -15497,6 +15502,15 @@ a.btn-icon-only {
 }
 
 .card-stats .card-body3 {
+	padding: 0.8rem 1rem;
+	max-height: 10rem;
+	min-height: 10rem;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	overflow-wrap: normal;
+}
+
+.card-stats .card-body4 {
 	padding: 0.8rem 1rem;
 	max-height: 18rem;
 	min-height: 10rem;

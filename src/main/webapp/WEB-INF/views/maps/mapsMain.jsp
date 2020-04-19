@@ -582,7 +582,7 @@
 				<div class="card-body2">
 					<div class="col-xl-12 col-lg-6">
 						<div class="card card-stats mb-4 mb-xl-0">
-							<textarea class="card-body3 replyButton2" id="reviews" onkeydown="resize(this)" onkeyup="resize(this)" style="resize: none;"></textarea>
+							<textarea class="card-body4 replyButton2" id="reviews" onkeydown="resize(this)" onkeyup="resize(this)" style="resize: none;"></textarea>
 							<div class="row">
 								<div class="col mt-2">
 									<span id="" class="h2 font-weight mb-0">별점<img id="star1" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star2" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star3" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star4" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star5" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>">
@@ -848,6 +848,7 @@
 												<h5 class="card-title text-uppercase text-muted mb-0">화장실을 선택하세요...</h5>
 												<span class="h2 font-weight-bold mb-0">DEFAULT</span>
 											</div>
+	
 										</div>
 										<p class="mt-3 mb-0 text-muted text-sm">
 											<span class="text-success"><i class="fa fa-arrow-up"></i> 변화량</span> <span class="text-nowrap mr-2">별점평균</span> <span class="text-success"><i class="fa fa-arrow-up"></i> 변화량</span> <span class="text-nowrap">청결도평균</span>
