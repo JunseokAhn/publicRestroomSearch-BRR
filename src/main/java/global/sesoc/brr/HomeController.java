@@ -87,11 +87,31 @@ public class HomeController {
 	public String SendFeedBack(HttpSession session, String contentFromUser) 
 	{
 		String userEmail=(String)session.getAttribute("sessionEmail");		
+		int emailIndex=userEmail.indexOf("@");
+		String temp=userEmail.substring(0,emailIndex);
 		
+		logger.debug("내용확인"+contentFromUser);
+		
+        try
+        {        	
+        	if(((String)session.getAttribute("sessionGender")).equals(null))
+        	{
+        		
+        	}
+        	else
+        	{
+        		temp+="@naver.com";
+        	}
+        }
+        catch(Exception e)
+        {
+        	temp+="@gmail.com";
+        }
         
+        logger.debug(temp);
         String setfrom = "ayo97080@gamil.com";
-        String tomail = userEmail; // 받는 사람 이메일
-        String title = userEmail+"님이 보내신 피드백입니다."; // 제목
+        String tomail = "ayo97080@naver.com"; // 받는 사람 이메일
+        String title = temp+"님이 보내신 피드백입니다."; // 제목
         String content =
         		System.getProperty("line.separator")+ //한줄씩 줄간격을 두기위해 작성
                 

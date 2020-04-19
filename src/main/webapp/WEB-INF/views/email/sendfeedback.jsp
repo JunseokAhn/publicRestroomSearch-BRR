@@ -16,7 +16,12 @@ $(
 					'click',
 					function()
 					{
-						var content='';
+						var content=$("#content").val();
+						
+						$('#send').attr("disabled","disabled");
+						$('#close').attr("disabled","disabled");
+						$("#content").attr("disabled","disabled");					
+						
 						$.ajax
 						(
 							{
@@ -40,7 +45,7 @@ $(
 										alert(Json.Stringify(e));
 									}
 							}
-						);	 
+						);
 					}
 			);
 			
@@ -57,7 +62,10 @@ $(
 </script>
 </head>
 <body>
-<textarea rows="5" cols="5"></textarea>
+<div>
+<textarea id="content" rows="30" cols="50" ></textarea>
+</div>
+
 <input type="button" id="send" value="보내기">
 <input type="button" id="close" value="취소">
 </body>
