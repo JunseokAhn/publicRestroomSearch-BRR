@@ -19,7 +19,7 @@
 <!-- CSS Files -->
 <link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
 <script type="text/javascript">
-    var map, pos, marker, toiletMarker, marker_s, marker_e, marker_p1, marker_p2, label, endX, endY, polyline_, myWindow, targetWindow, destinyWindow, realTime;
+    var map, pos, marker, toiletMarker, marker_s, marker_e, marker_p1, marker_p2, title, id, label, endX, endY, polyline_, myWindow, targetWindow, destinyWindow, realTime;
     var tDistance, tTime;
     var shortestDistance, highestRating, highestClean, highestSmooth;
     var toiletType, unisexToiletYn, hour, distance, distime;
@@ -32,6 +32,10 @@
     var locationFlag = 0;
     //var shortFlag = 1;
     
+    $(function () {
+        //$("#review-container").hide();
+        //$("#review").hide();
+    })
     //화장실 추천기능
     function searchShortest () {
         directions(shortestDistance)
@@ -237,13 +241,13 @@
                             content2 += "</p>"
                             content2 += "<p class='mt-1 mb-0 text-muted text-sm'>"
                             content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>이용자수</span>"
-                            content2 += "<input class='replyButton3 ml-1' type='button' value='리뷰 목록' onclick='location.href=\"/brr/board/listReview?toiletTitle=" + title + "\"'>"
+                            content2 += "<input class='replyButton3 ml-1' type='button' value='리뷰 목록' onclick='location.href=\"/brr/review/reviewMain?toiletTitle=" + title + "\"'>"
 
                             var id =
 <%=(String) session.getAttribute("sessionId")%>
     ;
                             //리뷰쓰기
-                            content2 += "<input class='replyButton3 ml-1' type='button' value='리뷰 쓰기' onclick='location.href=\"/brr/board/writeReview?toiletTitle=" + title + "&id=" + id + "\"'>"
+                            content2 += "<input class='replyButton3 ml-1' type='button' value='리뷰 쓰기' onclick='reviewWrite(" + "\"" + title + "\"," + "\"" + id + "\")'>"
                             content2 += "</p>"
 
                             div1.innerHTML = content2;
@@ -267,6 +271,18 @@
          shortFlag = 0;*/
     }//setPositions[E]
     
+    function reviewWrite (title, id) {
+        var review = document.getElementById("review");
+        $("#review-container").show();
+        $("#review").fadeIn();
+        /*   var content = "<div style='background-color: black; position: fixed; width: 10000px; height: 10000px; opacity: 60%; z-index: 998;'>야</div>"
+          content += "<div style='background-color: white; position: fixed; width: 35rem; height: 40rem; z-index: 999;'>"
+          content += "<input type='text'>"
+          content += "</div>"
+          review.innerHTML = content */
+
+        //location.href=\"/brr/reivew/reviewWrite?toiletTitle=" + title + "&id=" + id + "\"
+    }
     function myLocation () {
         // HTML5의 geolocation으로 사용할 수 있는지 확인합니다      
         if(navigator.geolocation){
@@ -300,10 +316,7 @@
                         var content = "<div style='min-width:max-content;'>"
                         content += "<div style=' position: relative; border-bottom: 1px solid #dcdcdc; line-height: 18px; padding: 0 35px 2px 0;'>"
                         content += "<div style='font-size: 12px; line-height: 15px;'>"
-                        //content +=			 	"<div class='icon icon-shape bg-info text-white rounded-circle shadow'>"
                         content += "<i class='ni ni-user-run'></i>"
-
-                        //content +=				"</div>"
                         content += "<span style='display: inline-block; width: 14px; height: 14px; vertical-align: middle; margin-right: 5px;'></span>Your location"
                         content += "</div>"
                         content += "</div>"
@@ -371,7 +384,7 @@
             });
         }
         clearInterval(realTime);
-        var content = "<div style='min-width:max-content; z-index:999;'>"
+        var content = "<div style='min-width:max-content;'>"
         content += "<h5 class='card-title text-uppercase text-muted mb-0'>" + toiletType + "</h5>"
         content += "<br'><span class='card-title text-uppercase text-muted mb-0'>대변기 : " + toiletBowlNumber + "</span>"
         content += "<br><span class='card-title text-uppercase text-muted mb-0'>장애인 배려실 : " + handicap + "</span>"
@@ -432,8 +445,45 @@
     }//initMap[E]
 </script>
 </head>
-
 <body class="" onload="initTmap()">
+
+	<!--  var content = "<div style='background-color: black; position: fixed; width: 10000px; height: 10000px; opacity: 60%; z-index: 998;'>야</div>"
+          content += "<div style='background-color: white; position: fixed; width: 35rem; height: 40rem; z-index: 999;'>"
+          content += "<input type='text'>"
+          content += "</div>"
+          review.innerHTML = content 
+
+        //location.href=\"/brr/reivew/reviewWrite?toiletTitle=" + title + "&id=" + id + "\" -->
+	<div id="">
+		<div id="review-container" style='background-color: black; position: fixed; width: 200rem; height: 100rem; opacity: 60%; z-index: 998;'></div>
+		<div id="review" class="col-xl-4" style="position: fixed; z-index: 999; top: 25%; left: 40%;">
+			<div class="card shadow">
+				<div class="card-header bg-transparent">
+					<div class="row align-items-center">
+						<div class="col">
+							<h6 class="text-uppercase text-muted ls-1 mb-1">당신의 리뷰가 다른 사람들에게 도움이 될 거에요!</h6>
+							<h2 class="mb-0">화장실 이름</h2>
+						</div>
+					</div>
+				</div>
+				<div class="card-body" style="padding-bottom: 0.2rem; text-align:center;">
+					<div class="col-xl-12 col-lg-6">
+						<div class="card card-stats mb-4 mb-xl-0">
+							<textarea class="card-body2 replyButton2" id="reviews" style="resizalbe: none;"></textarea>
+							<div class="row">
+								<div class="col mt-2">
+									<span class="h2 font-weight mb-0">별점 <img id="star1" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"> <img id="star2" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"> <img id="star3" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"> <img id="star4" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"> <img id="star5" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;">
+									</span>
+									<span class="h2 font-weight mb-0 ml-3">청결도<img id="clean1" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"><img id="clean2" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"><img id="clean3" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"><img id="clean4" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"><img id="clean5" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"></span>
+									<a href="#!" class="btn btn-sm btn-primary" style="margin-bottom: 0.4rem; margin-left: 0.6rem;">Register</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
 		<div class="container-fluid">
 			<!-- Toggler -->

@@ -89,6 +89,12 @@ h1 span:nth-child(2) {
 	color: var(--blue);
 }
 
+.replyButton4 {
+	border: 3px solid;
+	color: var(--primary);
+	border-radius: 5px;
+}
+
 .replyComments {
 	width: 553px;	
 	font: 1rem/1.5 var(--font-family-sans-serif);

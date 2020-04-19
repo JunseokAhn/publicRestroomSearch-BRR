@@ -16884,7 +16884,7 @@ textarea[resize="horizontal"] {
 @media(max-width: 768px){
  .navbar-vertical .navbar-brand-img,
  .navbar-vertical .navbar-brand>img{
- max-width: 100%;
+  max-width: 100%;
   max-height: 2.2rem;
   margin-right: auto;
   margin-top: auto;
