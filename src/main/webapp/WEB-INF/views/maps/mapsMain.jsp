@@ -412,6 +412,40 @@
             return num.toString().replace(regexp, ',');
         }
     }//initMap[E]
+
+    function SendFeedback()
+    {
+    	$.ajax
+		(
+			{
+				url:"<c:url value="/checkAvailSend"/>",
+				type:"get",				
+				dataType:"text",
+				success:
+					function(flag)
+					{
+						if(flag=="success")
+						{
+							var popupX = (window.screen.width / 2) - (400 / 2);
+							var popupY= (window.screen.height / 2) - (400 / 2);
+							prove_form=window.open("<c:url value="/openFeedBackPopUp"/>",
+									"manager_prove_form","left="+popupX+", top="+popupY+", width=400, height=400, location=no"); 
+						}
+						else if(flag=="error")
+						{
+							alert("로그인을 해야 사용할 수 있는 기능입니다.\n로그인 페이지로 이동합니다.");
+							location.href="<c:url value='/member/login'/>";
+						}						
+					}
+				,
+				error:
+					function(e)
+					{
+						alert(Json.Stringify(e));
+					}
+			}
+		);	 
+     }
 </script>
 </head>
 
@@ -555,9 +589,11 @@
 					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/foundation/colors.html">
 							<i class="ni ni-palette"></i> 최근 검색한 화장실
 						</a></li>
-					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/components/alerts.html">
-							<i class="ni ni-ui-04"></i> Components
-						</a></li>
+					<li class="nav-item">
+							<a class="nav-link" href="javascript:SendFeedback();">
+								<i class="ni ni-ui-04"></i> Send Feedback
+							</a>
+					</li>
 				</ul>
 				<ul class="navbar-nav">
 					<li class="nav-item active active-pro"><a class="nav-link" href="<c:url value="/maps/mapsMain2"/>">
