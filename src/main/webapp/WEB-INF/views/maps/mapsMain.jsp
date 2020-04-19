@@ -751,7 +751,7 @@
 		<nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
 			<div class="container-fluid">
 				<!-- Brand -->
-				<a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="<c:url value="/examples/index"/>">Maps</a>
+				<a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="<c:url value="/maps/mapsMain"/>">Maps</a>
 				<!-- Form -->
 				<form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
 					<div class="form-group mb-0">
@@ -815,7 +815,7 @@
 		<div class="header bg-gradient-primary pb-7 pt-5 pt-md-8">
 			<div class="container-fluid">
 				<div class="header-body">
-					<input class='replyButton1 ml-1' type='button' value='최단거리' onclick='searchShortest()'> <input class='replyButton1 ml-0' type='button' value='최고 평가' onclick='searchRating()'> <input class='replyButton1 ml-0' type='button' value='최대 청결도' onclick='searchClan()'> <input class='replyButton1 ml-0' type='button' value='최대 원활도' onclick='searchSmooth()'>
+					<input class='replyButton1 ml-1' type='button' value='최단거리' onclick='searchShortest()'> <input class='replyButton1 ml-0' type='button' value='최고 평가' onclick='searchRating()'> <input class='replyButton1 ml-0' type='button' value='최고 청결도' onclick='searchClan()'> <input class='replyButton1 ml-0' type='button' value='최대 원활도' onclick='searchSmooth()'>
 				</div>
 			</div>
 		</div>
