@@ -145,7 +145,7 @@
                 id : i,
                 position : new Tmapv2.LatLng(nearbyToilet[i].lat, nearbyToilet[i].lng), //Marker의 중심좌표 설정.
                 map : map, //Marker가 표시될 Map 설정.
-                icon : "../resources/img/toilet28.png",
+                icon : "<c:url value = '/resources/img/toilet28.png'/>",
                 title : title, //Marker 타이틀.
             //label : label //Marker의 라벨.
             });
@@ -231,16 +231,13 @@
                             content2 += "</p>"
                             content2 += "<p class='mt-1 mb-0 text-muted text-sm'>"
                             content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>이용자수</span>"
-                            content2 += "<input class='replyButton3 ml-1' type='button' value='리뷰 목록' onclick='location.href=\"../board/listReview?toiletTitle=" + title + "\"'>"
+                            content2 += "<input class='replyButton3 ml-1' type='button' value='리뷰 목록' onclick='location.href=\"/brr/board/listReview?toiletTitle=" + title + "\"'>"
+                            
                             var id =
 <%=(String) session.getAttribute("sessionId")%>
-    ;
-                            //로그인
-                            if(id == null)
-                                content2 += "<input class='replyButton3 ml-1' type='button' value='리뷰 쓰기' onclick='location.href=\"../board/writeReview?toiletTitle=" + title + "&id=" + id + "\"'>"
-                                //리뷰쓰기
-                            if(id != null)
-                                content2 += "<input class='replyButton3 ml-1' type='button' value='리뷰 쓰기' onclick='location.href=\"../board/writeReview?toiletTitle=" + title + "&id=" + id + "\"'>"
+    ; 
+                          	//리뷰쓰기
+                            content2 += "<input class='replyButton3 ml-1' type='button' value='리뷰 쓰기' onclick='location.href=\"/brr/board/writeReview?toiletTitle=" + title + "&id=" + id + "\"'>"
                             content2 += "</p>"
 
                             div1.innerHTML = content2;
@@ -298,7 +295,7 @@
                         setTimeout(function () {
                             marker = new Tmapv2.Marker({
                                 position : new Tmapv2.LatLng(lat, lng),
-                                icon : "../resources/img/redmarker32.png",
+                                icon : "<c:url value = '/resources/img/redmarker32.png'/>",
                                 map : map
                             });
                         }, 0);
@@ -550,10 +547,10 @@
 				<!-- Navigation -->
 				<ul class="navbar-nav mb-md-3">
 					<li class="nav-item"><a class="nav-link" href="https://www.op.gg/champion/maokai/statistics/top">
-							<i class="ni ni-spaceship"></i> 내가 선호하는 화장실
+							<i class="ni ni-spaceship"></i> Preferred toilet
 						</a></li>
 					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/foundation/colors.html">
-							<i class="ni ni-palette"></i> 최근 검색한 화장실
+							<i class="ni ni-palette"></i> Recent toilet
 						</a></li>
 					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/components/alerts.html">
 							<i class="ni ni-ui-04"></i> Components
@@ -613,13 +610,13 @@
 
 							<c:if test="${sessionScope.sessionId == null}">
 								<div class="dropdown-divider"></div>
-								<a href="../member/login" class="dropdown-item">
+								<a href="<c:url value="/member/login"/>" class="dropdown-item">
 									<i class="ni ni-user-run"></i> <span>Login</span>
 								</a>
 							</c:if>
 
 							<c:if test="${sessionScope.sessionId != null}">
-								<a href="<c:url value="../member/profile"/>" class="dropdown-item">
+								<a href="<c:url value="/member/profile"/>" class="dropdown-item">
 									<i class="ni ni-single-02"></i> <span>My profile</span>
 								</a>
 								<%-- 							<a href="<c:url value="/examples/profile"/>" class="dropdown-item"> --%>
@@ -632,7 +629,7 @@
 								<!-- 								<i class="ni ni-support-16"></i> <span>Support</span> -->
 								<!-- 							</a> -->
 								<div class="dropdown-divider"></div>
-								<a href="../member/logout" class="dropdown-item">
+								<a href="<c:url value="/member/logout"/>" class="dropdown-item">
 									<i class="ni ni-user-run"></i> <span>Logout</span>
 								</a>
 							</c:if>
