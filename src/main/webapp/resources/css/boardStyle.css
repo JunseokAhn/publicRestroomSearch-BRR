@@ -112,12 +112,38 @@ h1 span:nth-child(2) {
 	position: fixed;
 	z-index: 999;
 	top: 25%;
-	left: 40%;
+	left: 35%;
 }
 #clean{
 	margin-left: 1rem;	
 }
-
+@media(max-width: 1600px){
+	#review {
+  		position: fixed;
+		z-index: 999;
+		top: 25%;
+		left: 35%;
+ 	}
+ 	#clean{
+ 		white-space: nowrap;
+ 		margin-left: 0rem;		
+ 	}
+}
+@media(max-width: 1400px){
+	#review {
+  		position: fixed;
+		z-index: 999;
+		top: 25%;
+		left: 35%;
+ 	}
+ 	#review-ment {
+ 		display: none;
+ 	}
+ 	#clean{
+ 		white-space: nowrap;
+ 		margin-left: 0rem;		
+ 	}
+}
 @media(max-width: 768px){
 	#review {
   		position: fixed;

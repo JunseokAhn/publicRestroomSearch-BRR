@@ -683,9 +683,12 @@
 						</a></li>
 					<%-- <li class="nav-item  active "><a class="nav-link " href="<c:url value="/examples/index"/>">
 							<i class="ni ni-tv-2 text-primary"></i> Dashboard
-						</a></li> //nav-item  active는 무조건 검정색으로 표시됩니다. --%>
-
-
+						</a></li> //nav-item  active는 무조건 검정색으로 표시됩니다. 
+					
+						<%-- <li class="nav-item"><a class="icon icon-shape bg-danger text-white rounded-circle shadow" href="<c:url value="/diary/diaryMain"/>">
+							<i class="fas fa-chart-bar"></i> Diary				
+						</li>	
+					 --%>
 					<li class="nav-item"><a class="nav-link " href="<c:url value="/diary/diaryMain"/>">
 							<i class="ni ni-bullet-list-67 text-red"></i> Diary
 						</a></li>

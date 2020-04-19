@@ -4972,7 +4972,7 @@ input[type="button"].btn-block {
   text-align: center;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1400px) {
 	.card-body2 {
 		flex: 1 1 auto;
 		padding: 1.5rem;
