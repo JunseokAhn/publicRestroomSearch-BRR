@@ -455,15 +455,15 @@
 
         //location.href=\"/brr/reivew/reviewWrite?toiletTitle=" + title + "&id=" + id + "\" -->
 	<div id="">
-		<div id="review-container" style='background-color: black; position: fixed; width: 200rem; height: 100rem; opacity: 60%; z-index: 998;'></div>
-		<div id="review" class="col-xl-4" style="position: fixed; z-index: 999; top: 25%; left: 40%;">
+		<div id="review-container"></div>
+		<div id="review" class="col-xl-4">
 			<div class="card shadow">
 				<div class="card-header bg-transparent">
 					<div class="row align-items-center">
 						<div class="col">
 							<h2 class="mb-0" style="display: inline-block">화장실 이름</h2>
-							<input class="btn btn-sm btn-primary" style="width: 2rem; margin-bottom: 0.4rem; margin-left: 0.6rem; float: right;" value="X" onclick='$("#review").hide(), $("#review-container").fadeOut()'>
-							<a href="#!" class="btn btn-sm btn-primary" style="margin-bottom: 0.4rem; margin-left: 0.6rem; float: right;">Register</a>
+							<input id="x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#review").hide(), $("#review-container").fadeOut()'>
+							<a href="#!" id="register" class="btn btn-sm btn-primary">Register</a>
 							<h6 class="text-uppercase text-muted ls-1 mb-1">당신의 리뷰가 다른 사람들에게 도움이 될 거에요!</h6>
 						</div>
 					</div>
@@ -476,7 +476,7 @@
 								<div class="col mt-2">
 									<span class="h2 font-weight mb-0">별점 <img id="star1" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"> <img id="star2" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"> <img id="star3" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"> <img id="star4" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"> <img id="star5" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;">
 									</span> <span class="h2 font-weight mb-0 ml-3">청결도<img id="clean1" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"><img id="clean2" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"><img id="clean3" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"><img id="clean4" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"><img id="clean5" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"></span>
-									
+
 								</div>
 							</div>
 						</div>
