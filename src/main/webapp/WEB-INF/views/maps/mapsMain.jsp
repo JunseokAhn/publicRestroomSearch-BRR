@@ -697,7 +697,7 @@
 								<i class="ni ni-key-25 text-info"></i> Login
 							</a></li>
 						<li class="nav-item"><a class="nav-link " href="<c:url value="/member/profile"/>">
-								<i class="ni ni-single-02 text-yellow"></i> User profile
+								<i class="ni ni-single-02 text-gray-dark"></i> User profile
 							</a></li>
 					</c:if>
 
@@ -728,19 +728,19 @@
 				<h6 class="navbar-heading text-muted">NEED LOGIN</h6>
 				<!-- Navigation -->
 				<ul class="navbar-nav mb-md-3">
-					<li class="nav-item"><a class="nav-link" href="https://www.op.gg/champion/maokai/statistics/top">
-							<i class="ni ni-spaceship"></i> Preferred toilet
-						</a></li>
 					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/foundation/colors.html">
-							<i class="ni ni-palette"></i> Recent toilet
+							<i class="ni ni-watch-time text-indigo"></i> <span>Recent toilet</span>
+						</a></li>
+					<li class="nav-item"><a class="nav-link" href="https://www.op.gg/champion/maokai/statistics/top">
+							<i class="ni ni-favourite-28 text-pink"></i> <span>Preferred toilet</span>
 						</a></li>
 					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/components/alerts.html">
-							<i class="ni ni-ui-04"></i> Components
+							<i class="ni ni-send text-blue"></i> <span>Send Feedback</span>
 						</a></li>
 				</ul>
 				<ul class="navbar-nav">
 					<li class="nav-item active active-pro"><a class="nav-link" href="<c:url value="/maps/mapsMain2"/>">
-							<i class="ni ni-send text-dark"></i> Google Maps (Beta)
+							<i class="ni ni-bus-front-12"></i> Google Maps (Beta)
 						</a></li>
 				</ul>
 			</div>
