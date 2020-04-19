@@ -14,7 +14,7 @@ values(#{id}, #{email}, #{nickname}, #{profile_image}, #{gender}, #{birthday}, #
 
 
 <select id="getNaverMember" parameterType = "String"  resultType = "int">
-select * from navermember
+select count(*) from navermember
 where id = #{id}
 </select>
 
