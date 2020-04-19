@@ -20,6 +20,8 @@
 <link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
 <script type="text/javascript">
     var map, pos, marker, toiletMarker, marker_s, marker_e, marker_p1, marker_p2, label, endX, endY, polyline_, myWindow, targetWindow, destinyWindow, realTime;
+    var tDistance, tTime;
+    var shortestDistance, highestRating, highestClean, highestSmooth;
     var toiletType, unisexToiletYn, hour, distance, distime;
     var menToiletBowlNumber, menHandicapToiletBowlNumber;
     var ladiesToiletBowlNumber, ladiesHandicapToiletBowlNumber;
@@ -28,7 +30,22 @@
     var nearbyToilet = [ ];
     var polyFlag = 0;
     var locationFlag = 0;
+    //var shortFlag = 1;
     
+    //화장실 추천기능
+    function searchShortest () {
+        directions(shortestDistance)
+    }
+    function searchRating () {
+        
+    }
+    function searchClan () {
+        
+    }
+    function searchSmooth () {
+        
+    }
+
     //길찾기
     function directions (endX, endY) {
         //  경로탐색 API 사용요청
@@ -53,9 +70,9 @@
                         var resultData = response.features;
                         
                         //결과 출력
-                        var tDistance = ( ( resultData[0].properties.totalDistance ) / 1000 )
+                        tDistance = ( ( resultData[0].properties.totalDistance ) / 1000 )
                                 .toFixed(1) + "km";
-                        var tTime = ( ( resultData[0].properties.totalTime ) / 60 )
+                        tTime = ( ( resultData[0].properties.totalTime ) / 60 )
                                 .toFixed(0) + "분";
                         distime = tTime + " " + tDistance;
                         
@@ -104,7 +121,7 @@
                                 
                             }
                         }//for문 [E]
-                        
+                        //if(shortFlag == 0){
                         if(polyFlag){
                             setTimeout(function () {
                                 polyline_.setMap(null)
@@ -121,6 +138,7 @@
                         }, 0);
                         
                         polyFlag = 1;
+                        //}
                     },
                     error : function (request, status, error) {
                         console
@@ -135,6 +153,7 @@
         nearbyToilet = e;
         console.log(nearbyToilet.length)
         console.log(nearbyToilet);
+        
         for(i = 0; i < nearbyToilet.length; i++){//for문을 통하여 배열 안에 있는 값을 마커 생성
             var lonlat = nearbyToilet[i].lat + ',' + nearbyToilet[i].lng;
             var title = nearbyToilet[i].toiletNm;
@@ -150,6 +169,10 @@
             //label : label //Marker의 라벨.
             });
             
+            //최단거리 화장실 등록
+            if(i == 0){
+                shortestDistance = toiletMarker;
+            }
             //Marker에 클릭이벤트 등록.
             toiletMarker
                     .addListener("click", function (toiletMarker, i, title) {
@@ -181,27 +204,10 @@
                             content += "<h5 class='card-title text-uppercase text-muted mb-0'>" + toiletType + "</h5>"
                             content += "<br'><span class='card-title text-uppercase text-muted mb-0'>대변기 : " + toiletBowlNumber + "</span>"
                             content += "<br><span class='card-title text-uppercase text-muted mb-0'>장애인 배려실 : " + handicap + "</span>"
-                            //content += "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='navigators(" + endX + ',' + endY + ")'>";
-                            //마커를 클로저방식으로 넘겨서, 그 마커를 네비게이터스가 실행될때 제거할수있도록해야할것같다.
-                            //content += "<br><input class='replyButton2 mt-1' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='navigators(" + endX + ',' + endY + ',' + '"' + title + '"' + ")'>";
+
                             content += "<br><input class='replyButton3 mt-1' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='navigators(" + endX + ',' + endY + ',' + '"' + title + '"' + ',' + '"' + toiletType + '"' + ',' + '"' + toiletBowlNumber + '"' + ',' + '"' + handicap + '"' + ")'>";
                             content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";
                             content += "</div>"
-                            //content += 	"<div style='display:inline-block; border:3px solid #dcdcdc;'>"
-                            //content +=			"console.log('길찾기실행중')"			
-                            
-                            /* content += "<div style='position: relative; padding-top: 5px; display:inline-block'>"
-                            content += "<input class='replyButton2' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='(";
-                            content += "function(endX,endY, marker){";
-                            content +=     "return function(){";
-                            content +=          "setInterval(function(){";
-                            content += 	            "myLocation(marker);";
-                            content +=              "directions(endX, endY);";
-                            content +=          "},5000);";
-                            content +=     "};";
-                            content += "}";
-                            content += ")(" + endX + "," + endY + "," + marker + ");'>";  
-                            content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";	 */
 
                             console.log("target : " + i)
                             setTimeout(function () {
@@ -232,18 +238,33 @@
                             content2 += "<p class='mt-1 mb-0 text-muted text-sm'>"
                             content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>이용자수</span>"
                             content2 += "<input class='replyButton3 ml-1' type='button' value='리뷰 목록' onclick='location.href=\"/brr/board/listReview?toiletTitle=" + title + "\"'>"
-                            
+
                             var id =
 <%=(String) session.getAttribute("sessionId")%>
-    ; 
-                          	//리뷰쓰기
+    ;
+                            //리뷰쓰기
                             content2 += "<input class='replyButton3 ml-1' type='button' value='리뷰 쓰기' onclick='location.href=\"/brr/board/writeReview?toiletTitle=" + title + "&id=" + id + "\"'>"
                             content2 += "</p>"
 
                             div1.innerHTML = content2;
                         }
                     }(toiletMarker, i, title));
-        }
+        }//마커생성 for[E]
+        /*  (function looper (i) {
+         	setTimeout(function() {
+         	    tDistance1 = tDistance;
+         	    console.log(i)
+                 directions(nearbyToilet[i].lng, nearbyToilet[i].lat)
+
+                 if(tDistance1 > tDistance){
+                     shortestDistance = toiletMarker;
+                 }
+         		if ( nearbyToilet.length < ++i )
+         			looper (i);
+         	}, 0)
+         })(0);
+          
+         shortFlag = 0;*/
     }//setPositions[E]
     
     function myLocation () {
@@ -327,14 +348,14 @@
     //실시간길찾기
     function navigators (endX, endY, title, toiletType, toiletBowlNumber, handicap) {
         var id =
-<%=(String)session.getAttribute("sessionId")%>
+<%=(String) session.getAttribute("sessionId")%>
     ;
         //DB에 정보저장, title값 필요
         if(id != null){
             $.ajax({
                 url : "<c:url value='/dayaver/searchedToilet'/>",
                 data : {
-                	toiletnm : title,
+                    toiletnm : title,
                     id : id,
                     lng : endX,
                     lat : endY
@@ -345,7 +366,7 @@
                 },
                 error : function (e) {
                     console.log("화장실검색정보 저장실패");
-                   alert(JSON.stringify(e));
+                    alert(JSON.stringify(e));
                 }
             });
         }
@@ -357,7 +378,7 @@
         content += "<br><input class='replyButton3 mt-1' type='button' id='direction[" + i + "]' value='길찾기 중단' onclick='terminators()'>";
         content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";
         content += "</div>"
-        
+
         targetWindow.setMap(null);
         
         setTimeout(function () {
@@ -502,7 +523,7 @@
 					<%-- <li class="nav-item  active "><a class="nav-link " href="<c:url value="/examples/index"/>">
 							<i class="ni ni-tv-2 text-primary"></i> Dashboard
 						</a></li> //nav-item  active는 무조건 검정색으로 표시됩니다. --%>
-				
+
 
 					<li class="nav-item"><a class="nav-link " href="<c:url value="/diary/diaryMain"/>">
 							<i class="ni ni-bullet-list-67 text-red"></i> Diary
@@ -619,15 +640,6 @@
 								<a href="<c:url value="/member/profile"/>" class="dropdown-item">
 									<i class="ni ni-single-02"></i> <span>My profile</span>
 								</a>
-								<%-- 							<a href="<c:url value="/examples/profile"/>" class="dropdown-item"> --%>
-								<!-- 								<i class="ni ni-settings-gear-65"></i> <span>Settings</span> -->
-								<!-- 							</a> -->
-								<%-- 							<a href="<c:url value="/examples/profile"/>" class="dropdown-item"> --%>
-								<!-- 								<i class="ni ni-calendar-grid-58"></i> <span>Activity</span> -->
-								<!-- 							</a> -->
-								<%-- 							<a href="<c:url value="/examples/profile"/>" class="dropdown-item"> --%>
-								<!-- 								<i class="ni ni-support-16"></i> <span>Support</span> -->
-								<!-- 							</a> -->
 								<div class="dropdown-divider"></div>
 								<a href="<c:url value="/member/logout"/>" class="dropdown-item">
 									<i class="ni ni-user-run"></i> <span>Logout</span>
@@ -642,7 +654,7 @@
 		<div class="header bg-gradient-primary pb-7 pt-5 pt-md-8">
 			<div class="container-fluid">
 				<div class="header-body">
-					<input class='replyButton1 ml-1' type='button' value='최단거리'> <input class='replyButton1 ml-0' type='button' value='최고 평가'> <input class='replyButton1 ml-0' type='button' value='청결우선'> <input class='replyButton1 ml-0' type='button' value='원활도우선'>
+					<input class='replyButton1 ml-1' type='button' value='최단거리' onclick='searchShortest()'> <input class='replyButton1 ml-0' type='button' value='최고 평가' onclick='searchRating()'> <input class='replyButton1 ml-0' type='button' value='최대 청결도' onclick='searchClan()'> <input class='replyButton1 ml-0' type='button' value='최대 원활도' onclick='searchSmooth()'>
 				</div>
 			</div>
 		</div>
@@ -654,7 +666,6 @@
 							<div id="map_div" class="map-canvas" style="height: 600px;"></div>
 						</div>
 						<div class="map_act_btn_wrap clear_box"></div>
-						<!-- <input type="hidden" id="start"> <input type="hidden" id="end"> -->
 					</div>
 				</div>
 			</div>
