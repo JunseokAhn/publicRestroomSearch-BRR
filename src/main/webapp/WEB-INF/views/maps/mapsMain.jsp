@@ -30,12 +30,117 @@
     var nearbyToilet = [ ];
     var polyFlag = 0;
     var locationFlag = 0;
+    var starFlag = 1;
+    var cleanFlag = 1;
     //var shortFlag = 1;
     
     $(function () {
         //$("#review-container").hide();
         //$("#review").hide();
+         $("#star5").on("click",
+        function (){
+            starFlag=0;
+        	$("#star5").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        })
+        $("#star4").on("click",
+        function(){
+            starFlag=0;
+            $("#star4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        })
+        $("#star3").on("click",
+        function(){
+            starFlag=0;
+            $("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        })
+        $("#star2").on("click",
+        function(){
+            starFlag=0;
+            $("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        })
+        $("#star1").on("click",
+        function(){
+            starFlag=0;
+            $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        })
+        
+        if(starFlag){
+     	    $("#star5").hover(
+      	    function(){
+       	        $("#star5").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#star4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                }, 
+            function(){
+           		$("#star5").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+           		$("#star4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+                $("#star3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+                $("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+                $("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+            }) 
+        
+            $("#star4").hover(
+            function(){
+                $("#star4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            }, 
+            function(){
+                $("#star4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+                $("#star3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+                $("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+                $("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+            }) 
+            
+            $("#star3").hover(
+            function(){
+                $("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            }, 
+            function(){
+                $("#star3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+                $("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+                $("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+            }) 
+            $("#star2").hover(
+            function(){
+                $("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            }, 
+            function(){
+                $("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+                $("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+            }) 
+            $("#star1").hover(
+            function(){
+                $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            }, 
+            function(){
+                $("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+            }) 
+        } 
+       
     })
+    
+    //리뷰등록 검사
+    function reviewCheck(){
+        //청결도, 별점입력했는지
+        alert("reviewCheck")
+        //몇글자이상 등록해야됨
+    }
     //화장실 추천기능
     function searchShortest () {
         directions(shortestDistance)
@@ -443,6 +548,7 @@
             return num.toString().replace(regexp, ',');
         }
     }//initMap[E]
+    
 </script>
 </head>
 <body class="" onload="initTmap()">
@@ -454,9 +560,9 @@
           review.innerHTML = content 
 
         //location.href=\"/brr/reivew/reviewWrite?toiletTitle=" + title + "&id=" + id + "\" -->
-	<div id="">
-		<div id="review-container"></div>
-		<div id="review" class="col-xl-4">
+	<div id="review-container"></div>
+	<div id="review" class="col-xl-4">
+		<form action="review/reviewWrite" onsubmit="return reviewCheck()">
 			<div class="card shadow">
 				<div class="card-header bg-transparent">
 					<div class="row align-items-center">
@@ -468,21 +574,21 @@
 						</div>
 					</div>
 				</div>
-				<div class="card-body" style="padding-bottom: 0.2rem; text-align: center;">
+				<div class="card-body2">
 					<div class="col-xl-12 col-lg-6">
 						<div class="card card-stats mb-4 mb-xl-0">
 							<textarea class="card-body2 replyButton2" id="reviews" style="resizalbe: none;"></textarea>
 							<div class="row">
 								<div class="col mt-2">
-									<span id="" class="h2 font-weight mb-0">별점 <img id="star1" class="stars" src="<c:url value="/resources/img/starOff.png"/>"> <img id="star2" class="stars" src="<c:url value="/resources/img/starOff.png"/>"> <img id="star3" class="stars" src="<c:url value="/resources/img/starOff.png"/>"> <img id="star4" class="stars" src="<c:url value="/resources/img/starOff.png"/>"> <img id="star5" class="stars" src="<c:url value="/resources/img/starOff.png"/>">
-									</span> <span id="clean" class="h2 font-weight mb-0">청결도 <img id="clean1" class="stars" src="<c:url value="/resources/img/starOff.png"/>"> <img id="clean2" class="stars" src="<c:url value="/resources/img/starOff.png"/>"> <img id="clean3" class="stars" src="<c:url value="/resources/img/starOff.png"/>"> <img id="clean4" class="stars" src="<c:url value="/resources/img/starOff.png"/>"> <img id="clean5" class="stars" src="<c:url value="/resources/img/starOff.png"/>"></span>
+									<span id="" class="h2 font-weight mb-0">별점<img id="star1" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star2" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star3" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star4" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star5" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>">
+									</span> <span id="clean" class="h2 font-weight mb-0">청결도<img id="clean1" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean2" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean3" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean4" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean5" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"></span>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</form>
 	</div>
 	<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
 		<div class="container-fluid">
@@ -728,7 +834,7 @@
 						<div class="row">
 							<div class="col-xl-3 col-lg-6">
 								<div class="card card-stats mb-4 mb-xl-0">
-									<div class="card-body2 replyButton2" id="div1">
+									<div class="card-body3 replyButton2" id="div1">
 										<div class="row">
 											<div class="col">
 												<h5 class="card-title text-uppercase text-muted mb-0">화장실을 선택하세요...</h5>

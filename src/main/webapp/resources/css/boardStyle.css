@@ -156,3 +156,9 @@ h1 span:nth-child(2) {
 	max-height: 1.7rem; 
 	margin-bottom: 0.4rem;
 }
+
+.stars:hover{
+	max-height: 1.7rem; 
+	margin-bottom: 0.4rem;
+	/* content: url( "/brr/resources/img/starOn.png" ); */
+}

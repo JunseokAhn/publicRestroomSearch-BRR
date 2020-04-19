@@ -4966,6 +4966,22 @@ input[type="button"].btn-block {
   padding: 1.5rem;
 }
 
+.card-body2 {
+  flex: 1 1 auto;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+	.card-body2 {
+		flex: 1 1 auto;
+		padding: 1.5rem;
+		padding-left: 0;
+		padding-right: 0;
+		padding-bottom: 0.2rem;
+		text-align: center;
+	}
+}
 .card-title {
   margin-bottom: 1.25rem;
 }
@@ -15480,7 +15496,7 @@ a.btn-icon-only {
   padding: 1rem 1.5rem;
 }
 
-.card-stats .card-body2 {
+.card-stats .card-body3 {
 	padding: 0.8rem 1rem;
 	max-height: 12rem;
 	min-height: 10rem;
