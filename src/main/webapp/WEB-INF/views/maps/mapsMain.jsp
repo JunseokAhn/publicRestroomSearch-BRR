@@ -464,7 +464,7 @@
 							<h2 class="mb-0" style="display: inline-block">화장실 이름</h2>
 							<input id="x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#review").hide(), $("#review-container").fadeOut()'>
 							<a href="#!" id="register" class="btn btn-sm btn-primary">Register</a>
-							<h6 class="text-uppercase text-muted ls-1 mb-1">당신의 리뷰가 다른 사람들에게 도움이 될 거에요!</h6>
+							<h6 id="review-ment" class="text-uppercase text-muted ls-1 mb-1">당신의 리뷰가 다른 사람들에게 도움이 될 거에요!</h6>
 						</div>
 					</div>
 				</div>
@@ -474,9 +474,8 @@
 							<textarea class="card-body2 replyButton2" id="reviews" style="resizalbe: none;"></textarea>
 							<div class="row">
 								<div class="col mt-2">
-									<span class="h2 font-weight mb-0">별점 <img id="star1" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"> <img id="star2" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"> <img id="star3" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"> <img id="star4" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"> <img id="star5" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;">
-									</span> <span class="h2 font-weight mb-0 ml-3">청결도<img id="clean1" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"><img id="clean2" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"><img id="clean3" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"><img id="clean4" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"><img id="clean5" src="<c:url value="/resources/img/starOff.png"/>" style="max-height: 1.7rem; margin-bottom: 0.4rem;"></span>
-
+									<span id="" class="h2 font-weight mb-0">별점 <img id="star1" class="stars" src="<c:url value="/resources/img/starOff.png"/>"> <img id="star2" class="stars" src="<c:url value="/resources/img/starOff.png"/>"> <img id="star3" class="stars" src="<c:url value="/resources/img/starOff.png"/>"> <img id="star4" class="stars" src="<c:url value="/resources/img/starOff.png"/>"> <img id="star5" class="stars" src="<c:url value="/resources/img/starOff.png"/>">
+									</span> <span id="clean" class="h2 font-weight mb-0">청결도 <img id="clean1" class="stars" src="<c:url value="/resources/img/starOff.png"/>"> <img id="clean2" class="stars" src="<c:url value="/resources/img/starOff.png"/>"> <img id="clean3" class="stars" src="<c:url value="/resources/img/starOff.png"/>"> <img id="clean4" class="stars" src="<c:url value="/resources/img/starOff.png"/>"> <img id="clean5" class="stars" src="<c:url value="/resources/img/starOff.png"/>"></span>
 								</div>
 							</div>
 						</div>

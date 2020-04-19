@@ -114,7 +114,25 @@ h1 span:nth-child(2) {
 	top: 25%;
 	left: 40%;
 }
+#clean{
+	margin-left: 1rem;	
+}
 
+@media(max-width: 768px){
+	#review {
+  		position: fixed;
+		z-index: 999;
+		top: 25%;
+		left: 0%;
+ 	}
+ 	#review-ment {
+ 		display: none;
+ 	}
+ 	#clean{
+ 		white-space: nowrap;
+ 		margin-left: 0rem;	
+ 	}
+}
 #x-button {
 	width: 2rem;
 	margin-bottom: 0.4rem;
@@ -126,4 +144,15 @@ h1 span:nth-child(2) {
 	margin-bottom: 0.4rem;
 	margin-left: 0.6rem;
 	float: right;
+}
+
+@media(max-width: 768px){
+	.container-fluid > .header-body > input{
+		font-size: 95%;
+	}
+}
+
+.stars{
+	max-height: 1.7rem; 
+	margin-bottom: 0.4rem;
 }
