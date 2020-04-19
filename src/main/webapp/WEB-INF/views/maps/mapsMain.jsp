@@ -549,6 +549,10 @@
         }
     }//initMap[E]
     
+    function resize (obj) {
+        obj.style.height = "1px";
+        obj.style.height = ( 12 + obj.scrollHeight ) + "px";
+    }
 </script>
 </head>
 <body class="" onload="initTmap()">
@@ -574,10 +578,11 @@
 						</div>
 					</div>
 				</div>
+				
 				<div class="card-body2">
 					<div class="col-xl-12 col-lg-6">
 						<div class="card card-stats mb-4 mb-xl-0">
-							<textarea class="card-body2 replyButton2" id="reviews" style="resizalbe: none;"></textarea>
+							<textarea class="card-body3 replyButton2" id="reviews" onkeydown="resize(this)" onkeyup="resize(this)" style="resize: none;"></textarea>
 							<div class="row">
 								<div class="col mt-2">
 									<span id="" class="h2 font-weight mb-0">별점<img id="star1" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star2" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star3" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star4" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star5" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>">
@@ -852,7 +857,7 @@
 							</div>
 							<div class="col-xl-3 col-lg-6">
 								<div class="card card-stats mb-4 mb-xl-0">
-									<div class="card-body2 replyButton2" id="div2">
+									<div class="card-body3 replyButton2" id="div2">
 										<div class="row">
 											<div class="col-8 pr-0" style="float: left;">
 												<!-- <h5 class="card-title text-uppercase text-muted mb-0">Title</h5> -->
@@ -874,7 +879,7 @@
 							</div>
 							<div class="col-xl-3 col-lg-6">
 								<div class="card card-stats mb-4 mb-xl-0">
-									<div class="card-body2 replyButton2" id="div3">
+									<div class="card-body3 replyButton2" id="div3">
 										<div class="row">
 											<div class="col-8 pr-0">
 												<!-- <h5 class="card-title text-uppercase text-muted mb-0">Title</h5> -->
@@ -896,7 +901,7 @@
 							</div>
 							<div class="col-xl-3 col-lg-6">
 								<div class="card card-stats mb-4 mb-xl-0">
-									<div class="card-body2 replyButton2" id="div4">
+									<div class="card-body3 replyButton2" id="div4">
 										<div class="row">
 											<div class="col-8 pr-0">
 												<!-- <h5 class="card-title text-uppercase text-muted mb-0">Title</h5> -->
