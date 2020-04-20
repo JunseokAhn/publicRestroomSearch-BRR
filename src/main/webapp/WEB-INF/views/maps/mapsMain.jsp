@@ -553,13 +553,11 @@
 
     //실시간길찾기
     function navigators (endX, endY, title, toiletType, toiletBowlNumber, handicap) {
-        var id =
-<%=(String) session.getAttribute("sessionId")%>
+        var id =$("#hiddenId").val();
+<%-- <%=(String) session.getAttribute("sessionId")%> --%>
     ;    	
         //DB에 정보저장, title값 필요
         if(id != null){
-        	id = {id:id}
-        	alert(id)
             $.ajax({
                 url : "<c:url value='/dayaver/searchedToilet'/>",
                 data : {
@@ -682,7 +680,7 @@
 </script>
 </head>
 <body class="" onload="initTmap()">
-
+	<input type = "hidden" value="${sessionScope.sessionId}" id = "hiddenId">
 	<div id="review-container"></div>
 	<div id="review" class="col-xl-4">
 		<form action="review/reviewWrite" method="post">
