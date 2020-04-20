@@ -31,15 +31,13 @@ public class DayAverController {
 		System.out.println(id);
 		System.out.println((String)httpsession.getAttribute("sessionId"));
 		
-//		if(id.equals((String)httpsession.getAttribute("sessionId"))) {
-//			System.out.println("성공하였습니다.");
-//			dao.insertAver(aver);
-//		} else {
-//			System.out.println("객체가 전달 되지 않았습니다.");
-//			return "";
-//		}
-		System.out.println("그냥 때려박기");
-		dao.insertAver(aver);
+		if(id.equals((String)httpsession.getAttribute("sessionId"))) {
+			System.out.println("성공하였습니다.");
+			dao.insertAver(aver);
+		} else {
+			System.out.println("객체가 전달 되지 않았습니다.");
+			return "";
+		}
 		return "";
 	}
 	//해당 화장실의 전체 이용자 수
