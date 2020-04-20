@@ -10,8 +10,11 @@ public interface DayAverMapper {
 	public int insertAver (DayAverVO aver);
 	
 	//하루 이용한 사람들의 정보들을 서버에서 가지고 옴
-	public int listAll (double lat, double lng);
+	public int listAll (Double lat, Double lng);
 	
 	//해당 화장실의 평균 이용량
 	public ArrayList<DayAverVO> getAver (String toiletnm);
+	
+	//해당 회원의 검색 기록 삭제
+	public int deleteRecord (String id);
 }

@@ -638,11 +638,47 @@
             return num.toString().replace(regexp, ',');
         }
     }//initMap[E]
+
+    function SendFeedback()
+    {
+    	$.ajax
+		(
+			{
+				url:"<c:url value="/checkAvailSend"/>",
+				type:"get",				
+				dataType:"text",
+				success:
+					function(flag)
+					{
+						if(flag=="success")
+						{
+							var popupX = (window.screen.width / 2) - (400 / 2);
+							var popupY= (window.screen.height / 2) - (400 / 2);
+							prove_form=window.open("<c:url value="/openFeedBackPopUp"/>",
+									"manager_prove_form","left="+popupX+", top="+popupY+", width=400, height=400, location=no"); 
+						}
+						else if(flag=="error")
+						{
+							alert("로그인을 해야 사용할 수 있는 기능입니다.\n로그인 페이지로 이동합니다.");
+							location.href="<c:url value='/member/login'/>";
+						}						
+					}
+				,
+				error:
+					function(e)
+					{
+						alert(Json.Stringify(e));
+					}
+			}
+		);	 
+     }
+
     
     function resize (obj) {
         obj.style.height = "1px";
         obj.style.height = ( 12 + obj.scrollHeight ) + "px";
     }
+
 </script>
 </head>
 <body class="" onload="initTmap()">
@@ -821,9 +857,11 @@
 					<li class="nav-item"><a class="nav-link" href="https://www.op.gg/champion/maokai/statistics/top">
 							<i class="ni ni-favourite-28 text-pink"></i> <span>Preferred toilet</span>
 						</a></li>
+
 					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/components/alerts.html">
 							<i class="ni ni-send text-blue"></i> <span>Send Feedback</span>
 						</a></li>
+
 				</ul>
 				<ul class="navbar-nav">
 					<li class="nav-item active active-pro"><a class="nav-link" href="<c:url value="/maps/mapsMain2"/>">
@@ -864,11 +902,20 @@
 								</c:if>
 
 								<c:if test="${sessionScope.sessionId != null}">
-									<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="${sessionScope.sessionProfile}"/>">
+								<c:if test="${sessionScope.sessionNickname != null}">
+									<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="${sessionScope.Profile}"/>">
 									</span>
 									<div class="media-body ml-2 d-none d-lg-block">
-										<span class="mb-0 text-sm  font-weight-bold">${sessionScope.sessionEmail}</span>
+										<span class="mb-0 text-sm  font-weight-bold">${sessionScope.sessionNickname}</span>
 									</div>
+									</c:if>
+									<c:if test="${sessionScope.sessionGooglename != null}">
+									<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="${sessionScope.Profile}"/>">
+									</span>
+									<div class="media-body ml-2 d-none d-lg-block">
+										<span class="mb-0 text-sm  font-weight-bold">${sessionScope.sessionGooglename}</span>
+									</div>
+									</c:if>
 								</c:if>
 							</div>
 						</a>

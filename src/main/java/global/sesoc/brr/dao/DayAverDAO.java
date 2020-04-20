@@ -34,7 +34,7 @@ public class DayAverDAO {
 	/*
 	 * 모든 이용자 결과를 가지고 옴
 	 * */
-	public int listAll(double lat, double lng) {
+	public int listAll(Double lat, Double lng) {
 		
 		int result = -1;
 		
@@ -62,6 +62,15 @@ public class DayAverDAO {
 		return list;
 	}
 	
-	
+	public int deleteRecord (String id) {
+		int result = -1;
+		try {
+			DayAverMapper mapper = session.getMapper(DayAverMapper.class);
+			result = mapper.deleteRecord(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 	
 }

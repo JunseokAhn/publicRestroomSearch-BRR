@@ -94,6 +94,9 @@ public class NaverLoginController {
             httpsession.setAttribute("sessionNickname", nickname);
             httpsession.setAttribute("access_token", access_token);
             httpsession.setAttribute("sessionEmail", email);
+            httpsession.setAttribute("sessionAge", age);
+            httpsession.setAttribute("sessionGender", gender);
+            httpsession.setAttribute("sessionBirthday", birthday);
             logger.debug((String)httpsession.getAttribute("access_token"));
             
             httpsession.setAttribute("Profile", profile_image);
