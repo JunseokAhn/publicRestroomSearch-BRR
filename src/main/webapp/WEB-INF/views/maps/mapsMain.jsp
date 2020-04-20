@@ -19,7 +19,9 @@
 <!-- CSS Files -->
 <link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
 <script type="text/javascript">
-    var map, pos, marker, toiletMarker, marker_s, marker_e, marker_p1, marker_p2, label, endX, endY, polyline_, myWindow, targetWindow, destinyWindow, realTime;
+    var map, pos, marker, toiletMarker, marker_s, marker_e, marker_p1, marker_p2, title, id, label, endX, endY, polyline_, myWindow, targetWindow, destinyWindow, realTime;
+    var tDistance, tTime;
+    var shortestDistance, highestRating, highestClean, highestSmooth;
     var toiletType, unisexToiletYn, hour, distance, distime;
     var menToiletBowlNumber, menHandicapToiletBowlNumber;
     var ladiesToiletBowlNumber, ladiesHandicapToiletBowlNumber;
@@ -28,7 +30,131 @@
     var nearbyToilet = [ ];
     var polyFlag = 0;
     var locationFlag = 0;
+    var starFlag = 1;
+    var cleanFlag = 1;
+    //var shortFlag = 1;
     
+    $(function () {
+        //$("#review-container").hide();
+        //$("#review").hide();
+         $("#star5").on("click",
+        function (){
+            starFlag=0;
+        	$("#star5").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        })
+        $("#star4").on("click",
+        function(){
+            starFlag=0;
+            $("#star4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        })
+        $("#star3").on("click",
+        function(){
+            starFlag=0;
+            $("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        })
+        $("#star2").on("click",
+        function(){
+            starFlag=0;
+            $("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        })
+        $("#star1").on("click",
+        function(){
+            starFlag=0;
+            $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        })
+        
+        if(starFlag){
+     	    $("#star5").hover(
+      	    function(){
+       	        $("#star5").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#star4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                }, 
+            function(){
+           		$("#star5").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+           		$("#star4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+                $("#star3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+                $("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+                $("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+            }) 
+        
+            $("#star4").hover(
+            function(){
+                $("#star4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            }, 
+            function(){
+                $("#star4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+                $("#star3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+                $("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+                $("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+            }) 
+            
+            $("#star3").hover(
+            function(){
+                $("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            }, 
+            function(){
+                $("#star3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+                $("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+                $("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+            }) 
+            $("#star2").hover(
+            function(){
+                $("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            }, 
+            function(){
+                $("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+                $("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+            }) 
+            $("#star1").hover(
+            function(){
+                $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            }, 
+            function(){
+                $("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+            }) 
+        } 
+       
+    })
+    
+    //리뷰등록 검사
+    function reviewCheck(){
+        //청결도, 별점입력했는지
+        alert("reviewCheck")
+        //몇글자이상 등록해야됨
+    }
+    //화장실 추천기능
+    function searchShortest () {
+        directions(shortestDistance)
+    }
+    function searchRating () {
+        
+    }
+    function searchClan () {
+        
+    }
+    function searchSmooth () {
+        
+    }
+
     //길찾기
     function directions (endX, endY) {
         //  경로탐색 API 사용요청
@@ -53,9 +179,9 @@
                         var resultData = response.features;
                         
                         //결과 출력
-                        var tDistance = ( ( resultData[0].properties.totalDistance ) / 1000 )
+                        tDistance = ( ( resultData[0].properties.totalDistance ) / 1000 )
                                 .toFixed(1) + "km";
-                        var tTime = ( ( resultData[0].properties.totalTime ) / 60 )
+                        tTime = ( ( resultData[0].properties.totalTime ) / 60 )
                                 .toFixed(0) + "분";
                         distime = tTime + " " + tDistance;
                         
@@ -104,7 +230,7 @@
                                 
                             }
                         }//for문 [E]
-                        
+                        //if(shortFlag == 0){
                         if(polyFlag){
                             setTimeout(function () {
                                 polyline_.setMap(null)
@@ -121,6 +247,7 @@
                         }, 0);
                         
                         polyFlag = 1;
+                        //}
                     },
                     error : function (request, status, error) {
                         console
@@ -135,6 +262,7 @@
         nearbyToilet = e;
         console.log(nearbyToilet.length)
         console.log(nearbyToilet);
+        
         for(i = 0; i < nearbyToilet.length; i++){//for문을 통하여 배열 안에 있는 값을 마커 생성
             var lonlat = nearbyToilet[i].lat + ',' + nearbyToilet[i].lng;
             var title = nearbyToilet[i].toiletNm;
@@ -145,11 +273,15 @@
                 id : i,
                 position : new Tmapv2.LatLng(nearbyToilet[i].lat, nearbyToilet[i].lng), //Marker의 중심좌표 설정.
                 map : map, //Marker가 표시될 Map 설정.
-                icon : "../resources/img/toilet28.png",
+                icon : "<c:url value = '/resources/img/toilet28.png'/>",
                 title : title, //Marker 타이틀.
             //label : label //Marker의 라벨.
             });
             
+            //최단거리 화장실 등록
+            if(i == 0){
+                shortestDistance = toiletMarker;
+            }
             //Marker에 클릭이벤트 등록.
             toiletMarker
                     .addListener("click", function (toiletMarker, i, title) {
@@ -181,27 +313,10 @@
                             content += "<h5 class='card-title text-uppercase text-muted mb-0'>" + toiletType + "</h5>"
                             content += "<br'><span class='card-title text-uppercase text-muted mb-0'>대변기 : " + toiletBowlNumber + "</span>"
                             content += "<br><span class='card-title text-uppercase text-muted mb-0'>장애인 배려실 : " + handicap + "</span>"
-                            //content += "<input type='button' id='direction[" + i + "]' value='경로안내' onclick='navigators(" + endX + ',' + endY + ")'>";
-                            //마커를 클로저방식으로 넘겨서, 그 마커를 네비게이터스가 실행될때 제거할수있도록해야할것같다.
-                            //content += "<br><input class='replyButton2 mt-1' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='navigators(" + endX + ',' + endY + ',' + '"' + title + '"' + ")'>";
+
                             content += "<br><input class='replyButton3 mt-1' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='navigators(" + endX + ',' + endY + ',' + '"' + title + '"' + ',' + '"' + toiletType + '"' + ',' + '"' + toiletBowlNumber + '"' + ',' + '"' + handicap + '"' + ")'>";
                             content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";
                             content += "</div>"
-                            //content += 	"<div style='display:inline-block; border:3px solid #dcdcdc;'>"
-                            //content +=			"console.log('길찾기실행중')"			
-                            
-                            /* content += "<div style='position: relative; padding-top: 5px; display:inline-block'>"
-                            content += "<input class='replyButton2' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='(";
-                            content += "function(endX,endY, marker){";
-                            content +=     "return function(){";
-                            content +=          "setInterval(function(){";
-                            content += 	            "myLocation(marker);";
-                            content +=              "directions(endX, endY);";
-                            content +=          "},5000);";
-                            content +=     "};";
-                            content += "}";
-                            content += ")(" + endX + "," + endY + "," + marker + ");'>";  
-                            content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";	 */
 
                             console.log("target : " + i)
                             setTimeout(function () {
@@ -231,24 +346,48 @@
                             content2 += "</p>"
                             content2 += "<p class='mt-1 mb-0 text-muted text-sm'>"
                             content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>이용자수</span>"
-                            content2 += "<input class='replyButton3 ml-1' type='button' value='리뷰 목록' onclick='location.href=\"../board/listReview?toiletTitle=" + title + "\"'>"
+                            content2 += "<input class='replyButton3 ml-1' type='button' value='리뷰 목록' onclick='location.href=\"/brr/review/reviewMain?toiletTitle=" + title + "\"'>"
+
                             var id =
 <%=(String) session.getAttribute("sessionId")%>
     ;
-                            //로그인
-                            if(id == null)
-                                content2 += "<input class='replyButton3 ml-1' type='button' value='리뷰 쓰기' onclick='location.href=\"../board/writeReview?toiletTitle=" + title + "&id=" + id + "\"'>"
-                                //리뷰쓰기
-                            if(id != null)
-                                content2 += "<input class='replyButton3 ml-1' type='button' value='리뷰 쓰기' onclick='location.href=\"../board/writeReview?toiletTitle=" + title + "&id=" + id + "\"'>"
+                            //리뷰쓰기
+                            content2 += "<input class='replyButton3 ml-1' type='button' value='리뷰 쓰기' onclick='reviewWrite(" + "\"" + title + "\"," + "\"" + id + "\")'>"
                             content2 += "</p>"
 
                             div1.innerHTML = content2;
                         }
                     }(toiletMarker, i, title));
-        }
+        }//마커생성 for[E]
+        /*  (function looper (i) {
+         	setTimeout(function() {
+         	    tDistance1 = tDistance;
+         	    console.log(i)
+                 directions(nearbyToilet[i].lng, nearbyToilet[i].lat)
+
+                 if(tDistance1 > tDistance){
+                     shortestDistance = toiletMarker;
+                 }
+         		if ( nearbyToilet.length < ++i )
+         			looper (i);
+         	}, 0)
+         })(0);
+          
+         shortFlag = 0;*/
     }//setPositions[E]
     
+    function reviewWrite (title, id) {
+        var review = document.getElementById("review");
+        $("#review-container").show();
+        $("#review").fadeIn();
+        /*   var content = "<div style='background-color: black; position: fixed; width: 10000px; height: 10000px; opacity: 60%; z-index: 998;'>야</div>"
+          content += "<div style='background-color: white; position: fixed; width: 35rem; height: 40rem; z-index: 999;'>"
+          content += "<input type='text'>"
+          content += "</div>"
+          review.innerHTML = content */
+
+        //location.href=\"/brr/reivew/reviewWrite?toiletTitle=" + title + "&id=" + id + "\"
+    }
     function myLocation () {
         // HTML5의 geolocation으로 사용할 수 있는지 확인합니다      
         if(navigator.geolocation){
@@ -282,10 +421,7 @@
                         var content = "<div style='min-width:max-content;'>"
                         content += "<div style=' position: relative; border-bottom: 1px solid #dcdcdc; line-height: 18px; padding: 0 35px 2px 0;'>"
                         content += "<div style='font-size: 12px; line-height: 15px;'>"
-                        //content +=			 	"<div class='icon icon-shape bg-info text-white rounded-circle shadow'>"
                         content += "<i class='ni ni-user-run'></i>"
-
-                        //content +=				"</div>"
                         content += "<span style='display: inline-block; width: 14px; height: 14px; vertical-align: middle; margin-right: 5px;'></span>Your location"
                         content += "</div>"
                         content += "</div>"
@@ -298,7 +434,7 @@
                         setTimeout(function () {
                             marker = new Tmapv2.Marker({
                                 position : new Tmapv2.LatLng(lat, lng),
-                                icon : "../resources/img/redmarker32.png",
+                                icon : "<c:url value = '/resources/img/redmarker32.png'/>",
                                 map : map
                             });
                         }, 0);
@@ -330,14 +466,14 @@
     //실시간길찾기
     function navigators (endX, endY, title, toiletType, toiletBowlNumber, handicap) {
         var id =
-<%=(String)session.getAttribute("sessionId")%>
+<%=(String) session.getAttribute("sessionId")%>
     ;
         //DB에 정보저장, title값 필요
         if(id != null){
             $.ajax({
                 url : "<c:url value='/dayaver/searchedToilet'/>",
                 data : {
-                	toiletnm : title,
+                    toiletnm : title,
                     id : id,
                     lng : endX,
                     lat : endY
@@ -348,19 +484,19 @@
                 },
                 error : function (e) {
                     console.log("화장실검색정보 저장실패");
-                   alert(JSON.stringify(e));
+                    alert(JSON.stringify(e));
                 }
             });
         }
         clearInterval(realTime);
-        var content = "<div style='min-width:max-content; z-index:999;'>"
+        var content = "<div style='min-width:max-content;'>"
         content += "<h5 class='card-title text-uppercase text-muted mb-0'>" + toiletType + "</h5>"
         content += "<br'><span class='card-title text-uppercase text-muted mb-0'>대변기 : " + toiletBowlNumber + "</span>"
         content += "<br><span class='card-title text-uppercase text-muted mb-0'>장애인 배려실 : " + handicap + "</span>"
         content += "<br><input class='replyButton3 mt-1' type='button' id='direction[" + i + "]' value='길찾기 중단' onclick='terminators()'>";
         content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";
         content += "</div>"
-        
+
         targetWindow.setMap(null);
         
         setTimeout(function () {
@@ -446,10 +582,55 @@
 			}
 		);	 
      }
+
+    
+    function resize (obj) {
+        obj.style.height = "1px";
+        obj.style.height = ( 12 + obj.scrollHeight ) + "px";
+    }
+
 </script>
 </head>
-
 <body class="" onload="initTmap()">
+
+	<!--  var content = "<div style='background-color: black; position: fixed; width: 10000px; height: 10000px; opacity: 60%; z-index: 998;'>야</div>"
+          content += "<div style='background-color: white; position: fixed; width: 35rem; height: 40rem; z-index: 999;'>"
+          content += "<input type='text'>"
+          content += "</div>"
+          review.innerHTML = content 
+
+        //location.href=\"/brr/reivew/reviewWrite?toiletTitle=" + title + "&id=" + id + "\" -->
+	<div id="review-container"></div>
+	<div id="review" class="col-xl-4">
+		<form action="review/reviewWrite" onsubmit="return reviewCheck()">
+			<div class="card shadow">
+				<div class="card-header bg-transparent">
+					<div class="row align-items-center">
+						<div class="col">
+							<h2 class="mb-0" style="display: inline-block">화장실 이름</h2>
+							<input id="x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#review").hide(), $("#review-container").fadeOut()'>
+							<a href="#!" id="register" class="btn btn-sm btn-primary">Register</a>
+							<h6 id="review-ment" class="text-uppercase text-muted ls-1 mb-1">당신의 리뷰가 다른 사람들에게 도움이 될 거에요!</h6>
+						</div>
+					</div>
+				</div>
+				
+				<div class="card-body2">
+					<div class="col-xl-12 col-lg-6">
+						<div class="card card-stats mb-4 mb-xl-0">
+							<textarea class="card-body4 replyButton2" id="reviews" onkeydown="resize(this)" onkeyup="resize(this)" style="resize: none;"></textarea>
+							<div class="row">
+								<div class="col mt-2">
+									<span id="" class="h2 font-weight mb-0">별점<img id="star1" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star2" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star3" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star4" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star5" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>">
+									</span> <span id="clean" class="h2 font-weight mb-0">청결도<img id="clean1" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean2" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean3" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean4" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean5" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
 	<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
 		<div class="container-fluid">
 			<!-- Toggler -->
@@ -538,9 +719,12 @@
 						</a></li>
 					<%-- <li class="nav-item  active "><a class="nav-link " href="<c:url value="/examples/index"/>">
 							<i class="ni ni-tv-2 text-primary"></i> Dashboard
-						</a></li> //nav-item  active는 무조건 검정색으로 표시됩니다. --%>
-				
-
+						</a></li> //nav-item  active는 무조건 검정색으로 표시됩니다. 
+					
+						<%-- <li class="nav-item"><a class="icon icon-shape bg-danger text-white rounded-circle shadow" href="<c:url value="/diary/diaryMain"/>">
+							<i class="fas fa-chart-bar"></i> Diary				
+						</li>	
+					 --%>
 					<li class="nav-item"><a class="nav-link " href="<c:url value="/diary/diaryMain"/>">
 							<i class="ni ni-bullet-list-67 text-red"></i> Diary
 						</a></li>
@@ -552,7 +736,7 @@
 								<i class="ni ni-key-25 text-info"></i> Login
 							</a></li>
 						<li class="nav-item"><a class="nav-link " href="<c:url value="/member/profile"/>">
-								<i class="ni ni-single-02 text-yellow"></i> User profile
+								<i class="ni ni-single-02 text-gray-dark"></i> User profile
 							</a></li>
 					</c:if>
 
@@ -583,21 +767,21 @@
 				<h6 class="navbar-heading text-muted">NEED LOGIN</h6>
 				<!-- Navigation -->
 				<ul class="navbar-nav mb-md-3">
-					<li class="nav-item"><a class="nav-link" href="https://www.op.gg/champion/maokai/statistics/top">
-							<i class="ni ni-spaceship"></i> 내가 선호하는 화장실
-						</a></li>
 					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/foundation/colors.html">
-							<i class="ni ni-palette"></i> 최근 검색한 화장실
+							<i class="ni ni-watch-time text-indigo"></i> <span>Recent toilet</span>
 						</a></li>
-					<li class="nav-item">
-							<a class="nav-link" href="javascript:SendFeedback();">
-								<i class="ni ni-ui-04"></i> Send Feedback
-							</a>
-					</li>
+					<li class="nav-item"><a class="nav-link" href="https://www.op.gg/champion/maokai/statistics/top">
+							<i class="ni ni-favourite-28 text-pink"></i> <span>Preferred toilet</span>
+						</a></li>
+
+					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/components/alerts.html">
+							<i class="ni ni-send text-blue"></i> <span>Send Feedback</span>
+						</a></li>
+
 				</ul>
 				<ul class="navbar-nav">
 					<li class="nav-item active active-pro"><a class="nav-link" href="<c:url value="/maps/mapsMain2"/>">
-							<i class="ni ni-send text-dark"></i> Google Maps (Beta)
+							<i class="ni ni-bus-front-12"></i> Google Maps (Beta)
 						</a></li>
 				</ul>
 			</div>
@@ -608,7 +792,7 @@
 		<nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
 			<div class="container-fluid">
 				<!-- Brand -->
-				<a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="<c:url value="/examples/index"/>">Maps</a>
+				<a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="<c:url value="/maps/mapsMain"/>">Maps</a>
 				<!-- Form -->
 				<form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
 					<div class="form-group mb-0">
@@ -658,26 +842,17 @@
 
 							<c:if test="${sessionScope.sessionId == null}">
 								<div class="dropdown-divider"></div>
-								<a href="../member/login" class="dropdown-item">
+								<a href="<c:url value="/member/login"/>" class="dropdown-item">
 									<i class="ni ni-user-run"></i> <span>Login</span>
 								</a>
 							</c:if>
 
 							<c:if test="${sessionScope.sessionId != null}">
-								<a href="<c:url value="../member/profile"/>" class="dropdown-item">
+								<a href="<c:url value="/member/profile"/>" class="dropdown-item">
 									<i class="ni ni-single-02"></i> <span>My profile</span>
 								</a>
-								<%-- 							<a href="<c:url value="/examples/profile"/>" class="dropdown-item"> --%>
-								<!-- 								<i class="ni ni-settings-gear-65"></i> <span>Settings</span> -->
-								<!-- 							</a> -->
-								<%-- 							<a href="<c:url value="/examples/profile"/>" class="dropdown-item"> --%>
-								<!-- 								<i class="ni ni-calendar-grid-58"></i> <span>Activity</span> -->
-								<!-- 							</a> -->
-								<%-- 							<a href="<c:url value="/examples/profile"/>" class="dropdown-item"> --%>
-								<!-- 								<i class="ni ni-support-16"></i> <span>Support</span> -->
-								<!-- 							</a> -->
 								<div class="dropdown-divider"></div>
-								<a href="../member/logout" class="dropdown-item">
+								<a href="<c:url value="/member/logout"/>" class="dropdown-item">
 									<i class="ni ni-user-run"></i> <span>Logout</span>
 								</a>
 							</c:if>
@@ -690,7 +865,7 @@
 		<div class="header bg-gradient-primary pb-7 pt-5 pt-md-8">
 			<div class="container-fluid">
 				<div class="header-body">
-					<input class='replyButton1 ml-1' type='button' value='최단거리'> <input class='replyButton1 ml-0' type='button' value='최고 평가'> <input class='replyButton1 ml-0' type='button' value='청결우선'> <input class='replyButton1 ml-0' type='button' value='원활도우선'>
+					<input class='replyButton1 ml-1' type='button' value='최단거리' onclick='searchShortest()'> <input class='replyButton1 ml-0' type='button' value='최고 평가' onclick='searchRating()'> <input class='replyButton1 ml-0' type='button' value='최고 청결도' onclick='searchClan()'> <input class='replyButton1 ml-0' type='button' value='최대 원활도' onclick='searchSmooth()'>
 				</div>
 			</div>
 		</div>
@@ -702,7 +877,6 @@
 							<div id="map_div" class="map-canvas" style="height: 600px;"></div>
 						</div>
 						<div class="map_act_btn_wrap clear_box"></div>
-						<!-- <input type="hidden" id="start"> <input type="hidden" id="end"> -->
 					</div>
 				</div>
 			</div>
@@ -715,12 +889,13 @@
 						<div class="row">
 							<div class="col-xl-3 col-lg-6">
 								<div class="card card-stats mb-4 mb-xl-0">
-									<div class="card-body2 replyButton2" id="div1">
+									<div class="card-body3 replyButton2" id="div1">
 										<div class="row">
 											<div class="col">
 												<h5 class="card-title text-uppercase text-muted mb-0">화장실을 선택하세요...</h5>
 												<span class="h2 font-weight-bold mb-0">DEFAULT</span>
 											</div>
+	
 										</div>
 										<p class="mt-3 mb-0 text-muted text-sm">
 											<span class="text-success"><i class="fa fa-arrow-up"></i> 변화량</span> <span class="text-nowrap mr-2">별점평균</span> <span class="text-success"><i class="fa fa-arrow-up"></i> 변화량</span> <span class="text-nowrap">청결도평균</span>
@@ -733,7 +908,7 @@
 							</div>
 							<div class="col-xl-3 col-lg-6">
 								<div class="card card-stats mb-4 mb-xl-0">
-									<div class="card-body2 replyButton2" id="div2">
+									<div class="card-body3 replyButton2" id="div2">
 										<div class="row">
 											<div class="col-8 pr-0" style="float: left;">
 												<!-- <h5 class="card-title text-uppercase text-muted mb-0">Title</h5> -->
@@ -755,7 +930,7 @@
 							</div>
 							<div class="col-xl-3 col-lg-6">
 								<div class="card card-stats mb-4 mb-xl-0">
-									<div class="card-body2 replyButton2" id="div3">
+									<div class="card-body3 replyButton2" id="div3">
 										<div class="row">
 											<div class="col-8 pr-0">
 												<!-- <h5 class="card-title text-uppercase text-muted mb-0">Title</h5> -->
@@ -777,7 +952,7 @@
 							</div>
 							<div class="col-xl-3 col-lg-6">
 								<div class="card card-stats mb-4 mb-xl-0">
-									<div class="card-body2 replyButton2" id="div4">
+									<div class="card-body3 replyButton2" id="div4">
 										<div class="row">
 											<div class="col-8 pr-0">
 												<!-- <h5 class="card-title text-uppercase text-muted mb-0">Title</h5> -->
