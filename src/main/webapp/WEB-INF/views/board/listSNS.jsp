@@ -527,12 +527,12 @@ function deleteSnsReply() {
 							<div class="mx-auto block form-group" style="position: relative;">
 							<!-- 글쓰기 -->
 								<div class="row">
-									<div class="id col-md-auto"><span>ID: ${sns.id}</span></div>
+									<div class="id col-md-auto"><span>${sns.email}</span></div>
 									<div class="date col"><span>등록일: ${sns.inputdate}</span></div>
 								</div>
 								<br>
 								<div class="row">
-									<div class="col-md-auto"><span>내용넣기: ${sns.contents}</span></div>
+									<div class="col-md-auto"><span>${sns.contents}</span></div>
 								</div>
 							<!-- 삭제, 수정  버튼 -->
 								<div class="row1">

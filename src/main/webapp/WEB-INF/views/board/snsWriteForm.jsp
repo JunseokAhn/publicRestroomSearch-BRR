@@ -305,6 +305,7 @@ function formCheck() {
 						<form action="snsWrite" method="post" onsubmit="return formCheck()">
 							<div class="mx-auto boardTitle form-group">
 								<input type="hidden" value="${sessionScope.sessionId}" name="id">
+								<input type="hidden" value="${sessionScope.sessionEmail}" name="email">
 								<label for="exampleFormControlInput1">제목</label> <input
 									type="text" class="form-control" id="exampleFormControlInput1"
 									placeholder="제목을 입력해주세요." id="title" name="title">

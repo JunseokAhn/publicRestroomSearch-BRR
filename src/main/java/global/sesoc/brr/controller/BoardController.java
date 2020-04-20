@@ -51,8 +51,9 @@ public class BoardController {
 		
 		//세션에서 로그인한 사용자의 아이디를 읽어서 Board객체의 작성자 정보에 세팅
 		String id = (String)session.getAttribute("sessionId");
+		String email = (String)session.getAttribute("sessionEmail");
 		board.setId(id);
-		
+		board.setEmail(email);
 		//첨부파일이 있는 경우 지정된 경로에 저장하고, 원본 파일명과 저장된 파일명을 Board객체에 세팅
 //		if (!upload.isEmpty()) {
 //			String savedfile = FileService.saveFile(upload, uploadPath);
