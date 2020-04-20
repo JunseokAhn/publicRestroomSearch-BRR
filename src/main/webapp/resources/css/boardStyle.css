@@ -114,7 +114,7 @@ h1 span:nth-child(2) {
 	top: 25%;
 	left: 35%;
 }
-#clean{
+#clean-margin{
 	margin-left: 1rem;	
 }
 @media(max-width: 1600px){
@@ -124,7 +124,7 @@ h1 span:nth-child(2) {
 		top: 25%;
 		left: 35%;
  	}
- 	#clean{
+ 	#clean-margin{
  		white-space: nowrap;
  		margin-left: 0rem;		
  	}
@@ -139,7 +139,7 @@ h1 span:nth-child(2) {
  	#review-ment {
  		display: none;
  	}
- 	#clean{
+ 	#clean-margin{
  		white-space: nowrap;
  		margin-left: 0rem;		
  	}
@@ -154,7 +154,7 @@ h1 span:nth-child(2) {
  	#review-ment {
  		display: none;
  	}
- 	#clean{
+ 	#clean-margin{
  		white-space: nowrap;
  		margin-left: 0rem;	
  	}

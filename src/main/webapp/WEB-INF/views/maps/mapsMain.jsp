@@ -30,14 +30,15 @@
     var nearbyToilet = [ ];
     var polyFlag = 0;
     var locationFlag = 0;
-    var starFlag = 1;
-    var cleanFlag = 1;
+    var starFlag = 0;
     //var shortFlag = 1;
     
     $(function () {
-        //$("#review-container").hide();
-        //$("#review").hide();
-         $("#star5").on("click",
+        $("#review-container").hide();
+        $("#review").hide();
+
+        //별점
+        $("#star5").on("click",
         function (){
             starFlag=0;
         	$("#star5").attr("src", "<c:url value='/resources/img/starOn.png'/>");
@@ -45,34 +46,97 @@
             $("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             $("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star").val(5);
         })
         $("#star4").on("click",
         function(){
             starFlag=0;
+            $("#star5").attr("src", "<c:url value='/resources/img/starOff.png'/>");
             $("#star4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             $("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             $("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star").val(4);
         })
         $("#star3").on("click",
         function(){
-            starFlag=0;
+            $("#star5").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+       		$("#star4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
             $("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             $("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star").val(3);
+            $("#star1").unbind('mouseenter mouseleave');
         })
         $("#star2").on("click",
         function(){
             starFlag=0;
+            $("#star5").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+       		$("#star4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+            $("#star3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
             $("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star").val(2);
         })
         $("#star1").on("click",
         function(){
             starFlag=0;
+            $("#star5").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+       		$("#star4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+            $("#star3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+            $("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
             $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star").val(1);
+        })
+        //청결도
+        $("#clean5").on("click",
+        function (){
+        	$("#clean5").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#clean4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#clean3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#clean2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#clean").val(5);
+        })
+        $("#clean4").on("click",
+        function(){
+            $("#clean5").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+            $("#clean4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#clean3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#clean2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#clean").val(4);
+        })
+        $("#clean3").on("click",
+        function(){
+            $("#clean5").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+       		$("#clean4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+            $("#clean3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#clean2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#clean").val(3);
+        })
+        $("#clean2").on("click",
+        function(){
+            $("#clean5").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+       		$("#clean4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+            $("#clean3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+            $("#clean2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#clean").val(2);
+        })
+        $("#clean1").on("click",
+        function(){
+            $("#clean5").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+       		$("#clean4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+            $("#clean3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+            $("#clean2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+            $("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#clean").val(1);
         })
         
+        /* starFlag가 안받아져서 실패 
+        setTimeout(function(starFlag){
         if(starFlag){
      	    $("#star5").hover(
       	    function(){
@@ -131,15 +195,44 @@
             function(){
                 $("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
             }) 
-        } 
+        } }) */
        
     })
     
     //리뷰등록 검사
     function reviewCheck(){
         //청결도, 별점입력했는지
-        alert("reviewCheck")
+        var star = document.getElementById("star").value
+        var clean = document.getElementById("clean").value
+        var reviews = document.getElementById("reviews").value
+        var reviewFlag = true;
+		var id =
+<%=(String) session.getAttribute("sessionId")%>
+    ;
         //몇글자이상 등록해야됨
+        if(reviews.length<10){
+            alert("리뷰는 10자이상 적어주세요");
+            reviewFlag = false;
+        }
+        if(reviews.length<100){
+            alert("리뷰는 100자 이내료 적어주세요");
+            reviewFlag = false;
+        }
+        if(star.length<1){
+            alert("별점을 등록해주세요");
+            reviewFlag = false;
+        }
+        if(clean.length<1){
+            alert("청결도를 등록해주세요");
+            reviewFlag = false;
+        }
+        if(id==null){
+            alert("로그인 페이지로 이동합니다.")
+            location.href="<c:url value='/member/login'/>"
+        }
+        if(reviewFlag){
+            
+        }
     }
     //화장실 추천기능
     function searchShortest () {
@@ -359,34 +452,29 @@
                         }
                     }(toiletMarker, i, title));
         }//마커생성 for[E]
-        /*  (function looper (i) {
-         	setTimeout(function() {
-         	    tDistance1 = tDistance;
-         	    console.log(i)
-                 directions(nearbyToilet[i].lng, nearbyToilet[i].lat)
-
-                 if(tDistance1 > tDistance){
-                     shortestDistance = toiletMarker;
-                 }
-         		if ( nearbyToilet.length < ++i )
-         			looper (i);
-         	}, 0)
-         })(0);
-          
-         shortFlag = 0;*/
+    
     }//setPositions[E]
     
     function reviewWrite (title, id) {
-        var review = document.getElementById("review");
+        document.getElementById("review-toilet").innerHTML=title;
+        
         $("#review-container").show();
         $("#review").fadeIn();
-        /*   var content = "<div style='background-color: black; position: fixed; width: 10000px; height: 10000px; opacity: 60%; z-index: 998;'>야</div>"
-          content += "<div style='background-color: white; position: fixed; width: 35rem; height: 40rem; z-index: 999;'>"
-          content += "<input type='text'>"
-          content += "</div>"
-          review.innerHTML = content */
 
-        //location.href=\"/brr/reivew/reviewWrite?toiletTitle=" + title + "&id=" + id + "\"
+        var star = document.getElementById("star");
+        var clean = document.getElementById("clean");
+        
+/*         document.getElementById("star1").onclick=function(){star.innerHTML = 1}
+        document.getElementById("star2").onclick=function(){star.innerHTML = 2}
+        document.getElementById("star3").onclick=function(){star.innerHTML = 3}
+        document.getElementById("star4").onclick=function(){star.innerHTML = 4}
+        document.getElementById("star5").onclick=function(){star.innerHTML = 5}
+        
+        document.getElementById("clean1").onclick=function(){clean.innerHTML = 1}
+        document.getElementById("clean2").onclick=function(){clean.innerHTML = 2}
+        document.getElementById("clean3").onclick=function(){clean.innerHTML = 3}
+        document.getElementById("clean4").onclick=function(){clean.innerHTML = 4}
+        document.getElementById("clean5").onclick=function(){clean.innerHTML = 5} */
     }
     function myLocation () {
         // HTML5의 geolocation으로 사용할 수 있는지 확인합니다      
@@ -467,9 +555,11 @@
     function navigators (endX, endY, title, toiletType, toiletBowlNumber, handicap) {
         var id =
 <%=(String) session.getAttribute("sessionId")%>
-    ;
+    ;    	
         //DB에 정보저장, title값 필요
         if(id != null){
+        	id = {id:id}
+        	alert(id)
             $.ajax({
                 url : "<c:url value='/dayaver/searchedToilet'/>",
                 data : {
@@ -600,36 +690,30 @@
 </head>
 <body class="" onload="initTmap()">
 
-	<!--  var content = "<div style='background-color: black; position: fixed; width: 10000px; height: 10000px; opacity: 60%; z-index: 998;'>야</div>"
-          content += "<div style='background-color: white; position: fixed; width: 35rem; height: 40rem; z-index: 999;'>"
-          content += "<input type='text'>"
-          content += "</div>"
-          review.innerHTML = content 
-
-        //location.href=\"/brr/reivew/reviewWrite?toiletTitle=" + title + "&id=" + id + "\" -->
 	<div id="review-container"></div>
 	<div id="review" class="col-xl-4">
-		<form action="review/reviewWrite" onsubmit="return reviewCheck()">
+		<form action="review/reviewWrite" method="post">
 			<div class="card shadow">
 				<div class="card-header bg-transparent">
 					<div class="row align-items-center">
 						<div class="col">
-							<h2 class="mb-0" style="display: inline-block">화장실 이름</h2>
-							<input id="x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#review").hide(), $("#review-container").fadeOut()'>
-							<a href="#!" id="register" class="btn btn-sm btn-primary">Register</a>
+							<h2 id="review-toilet" class="mb-0" style="display: inline-block"></h2>
+							<input id="x-button" class="btn btn-sm btn-primary" type="button" value="X" onclick='$("#review").hide(), $("#review-container").fadeOut()'>
+							<input id="register" class="btn btn-sm btn-primary" type="button" value="Register" onclick='reviewCheck()'>
 							<h6 id="review-ment" class="text-uppercase text-muted ls-1 mb-1">당신의 리뷰가 다른 사람들에게 도움이 될 거에요!</h6>
 						</div>
 					</div>
 				</div>
-				
 				<div class="card-body2">
 					<div class="col-xl-12 col-lg-6">
 						<div class="card card-stats mb-4 mb-xl-0">
 							<textarea class="card-body4 replyButton2" id="reviews" onkeydown="resize(this)" onkeyup="resize(this)" style="resize: none;"></textarea>
 							<div class="row">
 								<div class="col mt-2">
-									<span id="" class="h2 font-weight mb-0">별점<img id="star1" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star2" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star3" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star4" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star5" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>">
-									</span> <span id="clean" class="h2 font-weight mb-0">청결도<img id="clean1" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean2" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean3" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean4" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean5" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"></span>
+									<input type="hidden" id="star">
+									<input type="hidden" id="clean">
+									<span class="h2 font-weight mb-0">별점<img id="star1" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star2" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star3" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star4" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star5" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>">
+									</span> <span id="clean-margin" class="h2 font-weight mb-0">청결도<img id="clean1" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean2" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean3" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean4" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean5" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"></span>
 								</div>
 							</div>
 						</div>
