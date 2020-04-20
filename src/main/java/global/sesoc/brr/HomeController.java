@@ -12,7 +12,6 @@ import global.sesoc.brr.dao.HospitalDAO;
 import global.sesoc.brr.dao.ToiletDAO;
 
 
-
 @Controller
 public class HomeController {
 	

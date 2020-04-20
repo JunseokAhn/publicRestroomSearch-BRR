@@ -8,7 +8,8 @@
 insert into
 	brr_board(
 		boardnum  
-    	,id       
+    	,id 
+    	,email      
     	,title    
     	,contents 
     	<if test="originalfile != null and savedfile != null">
@@ -17,7 +18,8 @@ insert into
     	</if>
 		)values(
 		brr_board_seq.nextval  
-    	,#{id}       
+    	,#{id}  
+    	,#{email}     
     	,#{title}    
     	,#{contents}
     	<if test="originalfile != null and savedfile != null">
@@ -32,6 +34,7 @@ insert into
 select
 	boardnum
 	,id
+	,email
 	,title
 	,to_char(inputdate, 'YYYY/MM/DD HH24:MI:SS') as inputdate
 from
@@ -50,6 +53,7 @@ order by
 select
 	boardnum
 	,id
+	,email
 	,title
 	,contents
 	,to_char(inputdate, 'YYYY/MM/DD HH24:MI:SS') as inputdate

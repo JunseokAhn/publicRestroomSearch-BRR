@@ -42,10 +42,7 @@ public class SnsBoardController {
 	//sns게시판 글저장
 	@RequestMapping(value = "snsWrite", method = RequestMethod.POST)
 	public String snsWrite(HttpSession session, SnsBoardVO snsBoard) {
-		//String id = (String)session.getAttribute("loginId");
-		String id = "haha";
-		snsBoard.setId(id);
-		
+		logger.info("전달된 객체 글저장: {}", snsBoard);
 		dao.insertSNS(snsBoard);
 		return "redirect:/sns/listSNS";
 	}
@@ -72,9 +69,7 @@ public class SnsBoardController {
 	//sns상세글 삭제
 	@RequestMapping(value = "deleteSNS", method = RequestMethod.GET)
 	public String deleteSNS(String snsBoardnum, HttpSession session) {
-		//String id = (String)session.getAttribute("loginId");
-		String id = "haha";
-		
+		String id = (String)session.getAttribute("sessionId");
 		SnsBoardVO snsBoard = new SnsBoardVO();
 		snsBoard.setSnsBoardnum(snsBoardnum);
 		snsBoard.setId(id);
@@ -99,8 +94,7 @@ public class SnsBoardController {
 	//sns상세글 수정2
 	@RequestMapping(value = "updateSNS", method = RequestMethod.POST)
 	public String update(SnsBoardVO snsBoard, HttpSession session) {
-		//String id = (String)session.getAttribute("loginId");
-		String id = "haha";
+		String id = (String)session.getAttribute("sessionId");
 		SnsBoardVO exboard = dao.readSNS(snsBoard.getSnsBoardnum());
 		logger.info("전달된 객체 수정2: {}", snsBoard);
 		

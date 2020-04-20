@@ -8,7 +8,8 @@
 insert into
 	snsBoard(
 		snsBoardnum  
-    	,id       
+    	,id    
+    	,email   
     	,title    
     	,contents 
     	<if test="originalfile != null and savedfile != null">
@@ -17,7 +18,8 @@ insert into
     	</if>
 		)values(
 		snsBoard_seq.nextval  
-    	,#{id}       
+    	,#{id}
+    	,#{email}       
     	,#{title}    
     	,#{contents}
     	<if test="originalfile != null and savedfile != null">
@@ -32,6 +34,7 @@ insert into
 select
 	snsBoardnum
 	,id
+	,email
 	,title
 	,contents
 	,to_char(inputdate, 'YYYY/MM/DD HH24:MI:SS') as inputdate
@@ -51,6 +54,7 @@ order by
 select
 	snsBoardnum
 	,id
+	,email
 	,title
 	,contents
 	,to_char(inputdate, 'YYYY/MM/DD HH24:MI:SS') as inputdate

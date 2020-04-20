@@ -5,10 +5,11 @@ import lombok.Data;
 @Data
 public class SnsReplyVO {
 	
-	String snsReplynum;			//리플번호
-	String snsBoardnum;			//게시글번호
-	String id;					//작성자 ID
-	String comments;			//리플내용
-	String inputdate;			//작성날짜
+	private String snsReplynum;			//리플번호
+	private String snsBoardnum;			//게시글번호
+	private String id;					//작성자 ID
+	private String email;				//작성자email
+	private String comments;			//리플내용
+	private String inputdate;			//작성날짜
 
 }

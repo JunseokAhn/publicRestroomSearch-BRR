@@ -11,6 +11,7 @@ public class BoardVO {
 
 	private String boardnum;		//게시판 글번호
 	private String id;				//작성자ID
+	private String email;			//작성자email
 	private String title;			//제목
 	private String contents;		//내용
 	private String inputdate;		//작성일
