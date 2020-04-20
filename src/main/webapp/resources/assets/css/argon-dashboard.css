@@ -4966,6 +4966,22 @@ input[type="button"].btn-block {
   padding: 1.5rem;
 }
 
+.card-body2 {
+  flex: 1 1 auto;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+@media (max-width: 1400px) {
+	.card-body2 {
+		flex: 1 1 auto;
+		padding: 1.5rem;
+		padding-left: 0;
+		padding-right: 0;
+		padding-bottom: 0.2rem;
+		text-align: center;
+	}
+}
 .card-title {
   margin-bottom: 1.25rem;
 }
@@ -4992,7 +5008,9 @@ input[type="button"].btn-block {
   margin-bottom: 0;
   background-color: #fff;
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding-bottom: 0.2rem;
 }
+
 
 .card-header:first-child {
   border-radius: calc(0.375rem - 1px) calc(0.375rem - 1px) 0 0;
@@ -14518,6 +14536,11 @@ button.section-darker:focus {
 .text-sm {
   font-size: 0.875rem !important;
 }
+@media(max-width: 1600px){
+	.text-sm {
+ 	 font-size: 0.775rem !important;
+	}
+}
 
 .text-lg {
   font-size: 1.25rem !important;
@@ -15478,12 +15501,22 @@ a.btn-icon-only {
   padding: 1rem 1.5rem;
 }
 
-.card-stats .card-body2 {
-  padding: 0.8rem 1rem;
-  max-height: 12rem;
-  overflow-x: hidden;
-  overflow-y: hidden;
-  overflow-wrap: normal;
+.card-stats .card-body3 {
+	padding: 0.8rem 1rem;
+	max-height: 10rem;
+	min-height: 10rem;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	overflow-wrap: normal;
+}
+
+.card-stats .card-body4 {
+	padding: 0.8rem 1rem;
+	max-height: 18rem;
+	min-height: 10rem;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	overflow-wrap: normal;
 }
 
 .card-stats .card-status-bullet {
@@ -15855,6 +15888,7 @@ a.btn-icon-only {
 .footer {
   background: #f7fafc;
   padding: 2.5rem 0;
+  padding-bottom: 1.7rem;
 }
 
 .footer .col-footer .heading {
@@ -16878,8 +16912,17 @@ textarea[resize="horizontal"] {
   max-width: 100%;
   max-height: 2.2rem;
   margin-right: 3.5rem;
+  margin-top: 1.5rem;
 }
-
+@media(max-width: 768px){
+ .navbar-vertical .navbar-brand-img,
+ .navbar-vertical .navbar-brand>img{
+  max-width: 100%;
+  max-height: 2.2rem;
+  margin-right: auto;
+  margin-top: auto;
+	}
+}
 @media (min-width: 768px) {
   .navbar-vertical .navbar-collapse {
     margin-left: -1rem;
