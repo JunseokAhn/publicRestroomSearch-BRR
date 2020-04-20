@@ -287,8 +287,8 @@
 										<th scope="col">화장실이름</th>
 										<th scope="col"></th>
 										<th scope="col">사용자</th>
-										<th scope="col">작성일</th>
 										<th scope="col"></th>
+										<th scope="col">작성일</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -307,12 +307,11 @@
 
 										<td></td>
 										<td><span class="badge badge-dot mr-4"> </span></td>
-										<td>${board.id}</td>
+										<td>${board.email}</td>
 
 										<td></td>
 										<td><span class="badge badge-dot mr-4"> <i class="bg-warning"></i> </span></td>
-										<td>${board.email}</td>
-
+										
 										<td>${board.inputdate}</td>
 										<td class="text-right">
 											<div class="dropdown">
