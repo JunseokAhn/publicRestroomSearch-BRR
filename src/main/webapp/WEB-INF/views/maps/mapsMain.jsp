@@ -680,13 +680,6 @@
 
     function FeedbackShow()
     {
-    	 $("#feedback-container").show();
-         $("#feedback").fadeIn();
-    }
-
-    function SendFeedback()
-    {
-        
     	$.ajax
 		(
 			{
@@ -698,10 +691,12 @@
 					{
 						if(flag=="success")
 						{
-							var popupX = (window.screen.width / 2) - (400 / 2);
-							var popupY= (window.screen.height / 2) - (400 / 2);
-							prove_form=window.open("<c:url value="/openFeedBackPopUp"/>",
-									"manager_prove_form","left="+popupX+", top="+popupY+", width=400, height=400, location=no"); 
+							$("#feedback-contents").val("");
+							$("input[name='feed-x-button']").removeAttr("disabled","disabled");
+							$("input[name='feedback-send']").removeAttr("disabled","disabled");
+							$("#feedback-contents").removeAttr("disabled","disabled");
+							$("#feedback-container").show();
+					        $("#feedback").fadeIn();
 						}
 						else if(flag=="error")
 						{
@@ -716,7 +711,50 @@
 						alert(Json.Stringify(e));
 					}
 			}
-		);	 
+		);	    	
+    }
+
+    function SendFeedback()
+    {
+       	var contents = $("#feedback-contents").val();
+    	
+		if(contents.length==0||contents.length<=10)
+		{
+			alert("내용을 충분히 입력해주세요(최소 10자 이상)");
+			return;
+		}
+
+		$("input[name='feed-x-button']").attr("disabled","disabled");
+		$("input[name='feedback-send']").attr("disabled","disabled");
+		$("#feedback-contents").attr("disabled","disabled");
+
+		$.ajax
+		(
+			{
+				url:"<c:url value="/sendFeedBack"/>",
+				type:"post",
+				data:{contentFromUser:contents},		
+				dataType:"text",
+				success:
+					function(flag)
+					{
+						if(flag=="success")
+						{
+							alert("피드백을 보내주셔서 감사합니다.\n더 나은 서비스를 제공하기 위해서 더욱 힘쓰겠습니다.");
+							$("#feedback").hide();
+							$("#feedback-container").fadeOut();
+							return;
+						}										
+					}
+				,
+				error:
+					function(e)
+					{
+						alert(Json.Stringify(e));
+						return;
+					}
+			}
+		);     	
      }
 
     
@@ -761,14 +799,14 @@
 	
 	<div id="feedback-container"></div>
 	<div id="feedback" class="col-xl-4">
-		<form action="review/reviewWrite" onsubmit="return reviewCheck()">
+		<form action="">
 			<div class="card shadow">
 				<div class="card-header bg-transparent">
 					<div class="row align-items-center">
 						<div class="col">
 							<h2 class="mb-0" style="display: inline-block">Feedback Send</h2>
-							<input id="x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#feedback").hide(), $("#feedback-container").fadeOut()'>
-							<a href="javascript:SendFeedback()" id="register" class="btn btn-sm btn-primary"> Send </a>
+							<input id="x-button" name="feed-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#feedback").hide(), $("#feedback-container").fadeOut()'>
+							<input id="register" name="feedback-send" class="btn btn-sm btn-primary" type="button" value="Send Feedback" onclick="SendFeedback()">							
 							<h6 id="review-ment" class="text-uppercase text-muted ls-1 mb-1">사용자님의 의견을 적어주세요! 적극 반영하겠습니다.</h6>
 						</div>
 					</div>
@@ -777,7 +815,7 @@
 				<div class="card-body2">
 					<div class="col-xl-12 col-lg-6">
 						<div class="card card-stats mb-4 mb-xl-0">
-							<textarea class="card-body4 replyButton2" id="reviews" onkeydown="resize(this)" onkeyup="resize(this)" style="resize: none;"></textarea>							
+							<textarea class="card-body4 replyButton2" id="feedback-contents" onkeydown="resize(this)" onkeyup="resize(this)" style="resize: none;"></textarea>							
 						</div>
 					</div>
 				</div>
