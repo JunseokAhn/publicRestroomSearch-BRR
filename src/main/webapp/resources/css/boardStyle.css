@@ -106,6 +106,7 @@ h1 span:nth-child(2) {
 	height: 100rem;
 	opacity: 60%;
 	z-index: 998;
+	display: none;
 }
 
 #review, #feedback {
@@ -113,6 +114,7 @@ h1 span:nth-child(2) {
 	z-index: 999;
 	top: 25%;
 	left: 35%;
+	display: none;
 }
 #clean-margin{
 	margin-left: 1rem;	
@@ -123,6 +125,7 @@ h1 span:nth-child(2) {
 		z-index: 999;
 		top: 25%;
 		left: 35%;
+		display: none;
  	}
  	#clean-margin{
  		white-space: nowrap;
@@ -135,6 +138,7 @@ h1 span:nth-child(2) {
 		z-index: 999;
 		top: 25%;
 		left: 35%;
+		display: none;
  	}
  	#review-ment {
  		display: none;
@@ -150,6 +154,7 @@ h1 span:nth-child(2) {
 		z-index: 999;
 		top: 25%;
 		left: 0%;
+		display: none;
  	}
  	#review-ment {
  		display: none;

@@ -34,29 +34,34 @@
     //var shortFlag = 1;
     
     $(function () {
-        $("#review-container").hide();
-        $("#review").hide();
-
         //별점
         $("#star5").on("click",
         function (){
-            starFlag=0;
         	$("#star5").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             $("#star4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             $("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             $("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             $("#star").val(5);
+            $("#star1").unbind('mouseenter mouseleave');
+            $("#star2").unbind('mouseenter mouseleave');
+            $("#star3").unbind('mouseenter mouseleave');
+            $("#star4").unbind('mouseenter mouseleave');
+            $("#star5").unbind('mouseenter mouseleave');
         })
         $("#star4").on("click",
         function(){
-            starFlag=0;
             $("#star5").attr("src", "<c:url value='/resources/img/starOff.png'/>");
             $("#star4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             $("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             $("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             $("#star").val(4);
+            $("#star1").unbind('mouseenter mouseleave');
+            $("#star2").unbind('mouseenter mouseleave');
+            $("#star3").unbind('mouseenter mouseleave');
+            $("#star4").unbind('mouseenter mouseleave');
+            $("#star5").unbind('mouseenter mouseleave');
         })
         $("#star3").on("click",
         function(){
@@ -67,6 +72,10 @@
             $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             $("#star").val(3);
             $("#star1").unbind('mouseenter mouseleave');
+            $("#star2").unbind('mouseenter mouseleave');
+            $("#star3").unbind('mouseenter mouseleave');
+            $("#star4").unbind('mouseenter mouseleave');
+            $("#star5").unbind('mouseenter mouseleave');
         })
         $("#star2").on("click",
         function(){
@@ -77,6 +86,11 @@
             $("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             $("#star").val(2);
+            $("#star1").unbind('mouseenter mouseleave');
+            $("#star2").unbind('mouseenter mouseleave');
+            $("#star3").unbind('mouseenter mouseleave');
+            $("#star4").unbind('mouseenter mouseleave');
+            $("#star5").unbind('mouseenter mouseleave');
         })
         $("#star1").on("click",
         function(){
@@ -87,6 +101,11 @@
             $("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
             $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             $("#star").val(1);
+            $("#star1").unbind('mouseenter mouseleave');
+            $("#star2").unbind('mouseenter mouseleave');
+            $("#star3").unbind('mouseenter mouseleave');
+            $("#star4").unbind('mouseenter mouseleave');
+            $("#star5").unbind('mouseenter mouseleave');
         })
         //청결도
         $("#clean5").on("click",
@@ -97,6 +116,11 @@
             $("#clean2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             $("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             $("#clean").val(5);
+            $("#clean1").unbind('mouseenter mouseleave');
+            $("#clean2").unbind('mouseenter mouseleave');
+            $("#clean3").unbind('mouseenter mouseleave');
+            $("#clean4").unbind('mouseenter mouseleave');
+            $("#clean5").unbind('mouseenter mouseleave');
         })
         $("#clean4").on("click",
         function(){
@@ -106,6 +130,11 @@
             $("#clean2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             $("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             $("#clean").val(4);
+            $("#clean1").unbind('mouseenter mouseleave');
+            $("#clean2").unbind('mouseenter mouseleave');
+            $("#clean3").unbind('mouseenter mouseleave');
+            $("#clean4").unbind('mouseenter mouseleave');
+            $("#clean5").unbind('mouseenter mouseleave');
         })
         $("#clean3").on("click",
         function(){
@@ -115,6 +144,11 @@
             $("#clean2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             $("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             $("#clean").val(3);
+            $("#clean1").unbind('mouseenter mouseleave');
+            $("#clean2").unbind('mouseenter mouseleave');
+            $("#clean3").unbind('mouseenter mouseleave');
+            $("#clean4").unbind('mouseenter mouseleave');
+            $("#clean5").unbind('mouseenter mouseleave');
         })
         $("#clean2").on("click",
         function(){
@@ -124,6 +158,11 @@
             $("#clean2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             $("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             $("#clean").val(2);
+            $("#clean1").unbind('mouseenter mouseleave');
+            $("#clean2").unbind('mouseenter mouseleave');
+            $("#clean3").unbind('mouseenter mouseleave');
+            $("#clean4").unbind('mouseenter mouseleave');
+            $("#clean5").unbind('mouseenter mouseleave');
         })
         $("#clean1").on("click",
         function(){
@@ -133,11 +172,14 @@
             $("#clean2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
             $("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             $("#clean").val(1);
+            $("#clean1").unbind('mouseenter mouseleave');
+            $("#clean2").unbind('mouseenter mouseleave');
+            $("#clean3").unbind('mouseenter mouseleave');
+            $("#clean4").unbind('mouseenter mouseleave');
+            $("#clean5").unbind('mouseenter mouseleave');
         })
         
-        /* starFlag가 안받아져서 실패 
-        setTimeout(function(starFlag){
-        if(starFlag){
+        
      	    $("#star5").hover(
       	    function(){
        	        $("#star5").attr("src", "<c:url value='/resources/img/starOn.png'/>");
@@ -195,7 +237,7 @@
             function(){
                 $("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
             }) 
-        } }) */
+       
        
     })
     
@@ -457,8 +499,7 @@
     
     function reviewWrite (title, id) {
         document.getElementById("review-toilet").innerHTML=title;
-        
-        $("#review-container").show();
+        $("#review-container").fadeIn();
         $("#review").fadeIn();
 
         var star = document.getElementById("star");
@@ -691,8 +732,7 @@
 					<div class="row align-items-center">
 						<div class="col">
 							<h2 id="review-toilet" class="mb-0" style="display: inline-block"></h2>
-							<input id="x-button" class="btn btn-sm btn-primary" type="button" value="X" onclick='$("#review").hide(), $("#review-container").fadeOut()'>
-							<input id="register" class="btn btn-sm btn-primary" type="button" value="Register" onclick='reviewCheck()'>
+							<input id="x-button" class="btn btn-sm btn-primary" type="button" value="X" onclick='$("#review").hide(), $("#review-container").fadeOut()'> <input id="register" class="btn btn-sm btn-primary" type="button" value="Register" onclick='reviewCheck()'>
 							<h6 id="review-ment" class="text-uppercase text-muted ls-1 mb-1">당신의 리뷰가 다른 사람들에게 도움이 될 거에요!</h6>
 						</div>
 					</div>
@@ -703,9 +743,7 @@
 							<textarea class="card-body4 replyButton2" id="reviews" onkeydown="resize(this)" onkeyup="resize(this)" style="resize: none;"></textarea>
 							<div class="row">
 								<div class="col mt-2">
-									<input type="hidden" id="star">
-									<input type="hidden" id="clean">
-									<span class="h2 font-weight mb-0">별점<img id="star1" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star2" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star3" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star4" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star5" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>">
+									<input type="hidden" id="star"> <input type="hidden" id="clean"> <span class="h2 font-weight mb-0">별점<img id="star1" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star2" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star3" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star4" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star5" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>">
 									</span> <span id="clean-margin" class="h2 font-weight mb-0">청결도<img id="clean1" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean2" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean3" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean4" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean5" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"></span>
 								</div>
 							</div>
@@ -902,19 +940,19 @@
 								</c:if>
 
 								<c:if test="${sessionScope.sessionId != null}">
-								<c:if test="${sessionScope.sessionNickname != null}">
-									<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="${sessionScope.Profile}"/>">
-									</span>
-									<div class="media-body ml-2 d-none d-lg-block">
-										<span class="mb-0 text-sm  font-weight-bold">${sessionScope.sessionNickname}</span>
-									</div>
+									<c:if test="${sessionScope.sessionNickname != null}">
+										<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="${sessionScope.Profile}"/>">
+										</span>
+										<div class="media-body ml-2 d-none d-lg-block">
+											<span class="mb-0 text-sm  font-weight-bold">${sessionScope.sessionNickname}</span>
+										</div>
 									</c:if>
 									<c:if test="${sessionScope.sessionGooglename != null}">
-									<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="${sessionScope.Profile}"/>">
-									</span>
-									<div class="media-body ml-2 d-none d-lg-block">
-										<span class="mb-0 text-sm  font-weight-bold">${sessionScope.sessionGooglename}</span>
-									</div>
+										<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="${sessionScope.Profile}"/>">
+										</span>
+										<div class="media-body ml-2 d-none d-lg-block">
+											<span class="mb-0 text-sm  font-weight-bold">${sessionScope.sessionGooglename}</span>
+										</div>
 									</c:if>
 								</c:if>
 							</div>
@@ -979,7 +1017,7 @@
 												<h5 class="card-title text-uppercase text-muted mb-0">화장실을 선택하세요...</h5>
 												<span class="h2 font-weight-bold mb-0">DEFAULT</span>
 											</div>
-	
+
 										</div>
 										<p class="mt-3 mb-0 text-muted text-sm">
 											<span class="text-success"><i class="fa fa-arrow-up"></i> 변화량</span> <span class="text-nowrap mr-2">별점평균</span> <span class="text-success"><i class="fa fa-arrow-up"></i> 변화량</span> <span class="text-nowrap">청결도평균</span>
