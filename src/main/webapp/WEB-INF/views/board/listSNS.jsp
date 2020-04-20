@@ -118,63 +118,52 @@ function init() {
 	});
 }
 
+// function output1(listSnsReply) {
+// 	var str = '<div class="mx-auto replyComments form-group"><table>';
+
+// 	$.each(listSnsReply, function(index, snsReply) {
+// 		str += '<tr>';
+// 		str += '<td class="id1">' + snsReply.email + '</td>';
+// 		str += '<td class="comments1">' + snsReply.comments + '</td>';
+// 		str += '<td class="inpudate1">' + snsReply.inputdate + '</td>';
+// 		//사용자정의속성
+// 		str += '<td class="upd_length"><input type="button" value="댓글수정" class="snsUpd btn btn-secondary btn-sm" freenum="'+ snsReply.snsReplynum +'"></td>';
+// 		str += '<td class="del_length"><input type="button" value="댓글삭제" class="snsDel btn btn-secondary btn-sm" freenum="'+ snsReply.snsReplynum +'"></td>';
+// 		str += '</tr>';
+// 	});
+// 	str +='</table></div>';
+// 	//sns댓글목록
+// 	$('#snsListDiv').html(str);
+// 	//sns댓글수정
+// 	$('input:button.snsUpd').on('click', updateSnsReply);
+// 	//sns댓글삭제
+// 	$('input:button.snsDel').on('click', deleteSnsReply);
+
+// }
+
 function output(listSnsReply) {
-	var str = '<div class="mx-auto replyComments form-group"><table>';
+	var str = '<div class="list-group">';
 
 	$.each(listSnsReply, function(index, snsReply) {
-		str += '<tr>';
-		str += '<td class="id1">' + snsReply.id + '</td>';
-		str += '<td class="comments1">' + snsReply.comments + '</td>';
-		str += '<td class="inpudate1">' + snsReply.inputdate + '</td>';
+		str += '<a href="#" class="list-group-item list-group-item-action">';
+		str += '<div class="d-flex w-100 justify-content-between">';
+		str += '<h5 class="mb-1">'+ snsReply.email +'</h5>';
+		str += '<small>'+ snsReply.inputdate +'</small> </div>';
+		str += '<p class="mb-1">'+ snsReply.comments +'</p>';
+		str += '<small>Donec id elit non mi porta.</small> </a>';
 		//사용자정의속성
-		str += '<td class="upd_length"><input type="button" value="댓글수정" class="snsUpd btn btn-secondary btn-sm" freenum="'+ snsReply.snsReplynum +'"></td>';
-		str += '<td class="del_length"><input type="button" value="댓글삭제" class="snsDel btn btn-secondary btn-sm" freenum="'+ snsReply.snsReplynum +'"></td>';
-		str += '</tr>';
+		str += '<small class="upd_length"><input type="button" value="댓글수정" class="snsUpd btn btn-secondary btn-sm" freenum="'+ snsReply.snsReplynum +'"></small>';
+		str += '<small class="del_length"><input type="button" value="댓글삭제" class="snsDel btn btn-secondary btn-sm" freenum="'+ snsReply.snsReplynum +'"></small>';
 	});
-	str +='</table></div>';
+	str +='</div>';
 	//sns댓글목록
 	$('#snsListDiv').html(str);
 	//sns댓글수정
 	$('input:button.snsUpd').on('click', updateSnsReply);
 	//sns댓글삭제
 	$('input:button.snsDel').on('click', deleteSnsReply);
-
+	
 }
-
-// function(result) {
-
-// 	var htmls = "";
-
-// 	if(result.length < 1){
-// 		htmls = "등록된 댓글이 없습니다.";
-// 	} else {
-
-// 	$(result).each(function(){
-
-// 	htmls += '<div class="media text-muted pt-3" id="rid' + this.rid + '">';
-// 	htmls += '<svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder:32x32">';
-// 	htmls += '<title>Placeholder</title>';
-// 	htmls += '<rect width="100%" height="100%" fill="#007bff"></rect>';
-// 	htmls += '<text x="50%" fill="#007bff" dy=".3em">32x32</text>';
-// 	htmls += '</svg>';
-// 	htmls += '<p class="media-body pb-3 mb-0 small lh-125 border-bottom horder-gray">';
-// 	htmls += '<span class="d-block">';
-// 	htmls += '<strong class="text-gray-dark">' + this.reg_id + '</strong>';
-// 	htmls += '<span style="padding-left: 7px; font-size: 9pt">';
-// 	htmls += '<a href="javascript:void(0)" onclick="fn_editReply(' + this.rid + ', \'' + this.reg_id + '\', \'' + this.content + '\' )" style="padding-right:5px">수정</a>';
-// 	htmls += '<a href="javascript:void(0)" onclick="fn_deleteReply(' + this.rid + ')" >삭제</a>';
-// 	htmls += '</span>';
-// 	htmls += '</span>';
-// 	htmls += this.content;
-// 	htmls += '</p>';
-// 	htmls += '</div>';
-// 	});	//each end
-
-// 	}
-
-// 	$("#replyList").html(htmls);
-
-// }	// Ajax success end
 
 //sns댓글수정
 function updateSnsReply() {
@@ -331,13 +320,13 @@ function deleteSnsReply() {
 
 					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/tables"/>"> <i class="ni ni-bullet-list-67 text-red"></i> Tables
 					</a></li>
-					<c:if test="${sessionScope.sessionID==null }">
+					<c:if test="${sessionScope.sessionId==null }">
 						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/login"/>"> <i class="ni ni-key-25 text-info"></i> Login
 						</a></li>
 						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/register"/>"> <i class="ni ni-circle-08 text-pink"></i> Sign up
 						</a></li>
 					</c:if>
-					<c:if test="${sessionScope.sessionID!=null }">
+					<c:if test="${sessionScope.sessionId!=null }">
 						<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/profile"/>"> <i class="ni ni-single-02 text-yellow"></i> User profile
 						</a></li>
 						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/login"/>"> <i class="ni ni-key-25 text-info"></i> Logout
@@ -566,15 +555,8 @@ function deleteSnsReply() {
 								
 								<!-- 댓글 table -->
 								<div id="snsListDiv" class="mx-auto form-group"></div>
-								
-<!-- 								Reply List {s} -->
-<!-- 								<div class="my-3 p-3 bg-white rounded shadow-sm" style="padding-top: 10px"> -->
-<!-- 									<h6 class="border-bottom pb-2 mb-0">Reply list</h6> -->
-<!-- 									<div id="replyList"></div> -->
-<!-- 								</div> -->
-<!-- 								Reply List {e} -->
-								
-								</div>
+						
+							</div>
 						</c:forEach>
 						<!-- 반복종료 -->
 					<!-- 반복 -->	
