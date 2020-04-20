@@ -22,7 +22,7 @@ import global.sesoc.brr.vo.BoardVO;
 
 
 @Controller
-@RequestMapping(value = "board")
+@RequestMapping(value = "review") // review로 바꾸기
 public class BoardController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
@@ -50,11 +50,10 @@ public class BoardController {
 			, MultipartFile upload) {
 		
 		//세션에서 로그인한 사용자의 아이디를 읽어서 Board객체의 작성자 정보에 세팅
-		//String id = (String) session.getAttribute("loginId");
-		//로그인이 안된상태이므로 "haha로 넣음"
-		String id = "haha";
+		String id = (String)session.getAttribute("sessionId");
+		String email = (String)session.getAttribute("sessionEmail");
 		board.setId(id);
-		
+		board.setEmail(email);
 		//첨부파일이 있는 경우 지정된 경로에 저장하고, 원본 파일명과 저장된 파일명을 Board객체에 세팅
 //		if (!upload.isEmpty()) {
 //			String savedfile = FileService.saveFile(upload, uploadPath);
@@ -63,13 +62,12 @@ public class BoardController {
 //		}
 		
 		dao.insertBoard(board);
-		return "redirect:/board/listBoard";
+		return "redirect:/review/listBoard";
 	}
 	
 	//전체 게시판 글목록
 	@GetMapping(value = "listBoard")
-	public String ahnTables(Model model) {
-
+	public String listBoard(Model model) {
 		ArrayList<BoardVO> listBoard = dao.listBoard();
 		model.addAttribute("list", listBoard);
 		return "board/listBoard";
@@ -80,14 +78,14 @@ public class BoardController {
 	public String readBoard(String boardnum, Model model) {
 		BoardVO board = dao.readBoard(boardnum);
 		model.addAttribute("board", board);
+
 		return "board/readBoard";
 	}
 
 	//상세글 삭제
 	@GetMapping(value = "deleteBoard")
 	public String delete(HttpSession session, String boardnum) {
-		//String id = (String)session.getAttribute("loginId");
-		String id = "haha";
+		String id = (String)session.getAttribute("sessionId");
 		
 		BoardVO board = new BoardVO();
 		board.setBoardnum(boardnum);
@@ -96,7 +94,7 @@ public class BoardController {
 		dao.deleteBoard(board);
 				
 		//* 주의: redirect를 해야 삭제한후 목록이 나옴
-		return "redirect:/board/listBoard"; 
+		return "redirect:/review/listBoard"; 
 	}
 
 	//상세글 수정
@@ -112,16 +110,15 @@ public class BoardController {
 	//메모수정2
 	@RequestMapping(value = "updateBoard", method = RequestMethod.POST)
 	public String update(HttpSession session, BoardVO board) {
-		//String id = (String)session.getAttribute("loginId");
-		String id = "haha";
+		String id = (String)session.getAttribute("sessionId");
 		BoardVO exboard = dao.readBoard(board.getBoardnum());
 		if (exboard == null || !exboard.getId().equals(id)) {
-			return "redirect:/board/listBoard";
+			return "redirect:/review/listBoard";
 		}
 		board.setId(id);
 		dao.updateBoard(board);
 				
-		return "redirect:/board/listBoard";
+		return "redirect:/review/listBoard";
 	}
 	
 	

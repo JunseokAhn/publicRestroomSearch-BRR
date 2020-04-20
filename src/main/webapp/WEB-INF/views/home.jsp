@@ -88,7 +88,7 @@
 				<ul class="navbar-nav">
 					<li class="nav-item"><a class="nav-link  active " href="<c:url value="/examples/maps"/>"> <i class="ni ni-pin-3 text-orange"></i> Maps
 					</a></li>
-					<li class="nav-item"><a class="nav-link " href="<c:url value="/board/listBoard"/>"> <i class="ni ni-tv-2 text-primary"></i> Board
+					<li class="nav-item"><a class="nav-link " href="<c:url value="/sns/listSNS"/>"> <i class="ni ni-tv-2 text-primary"></i> Board
 					</a></li>
 					<%-- <li class="nav-item  active "><a class="nav-link " href="<c:url value="/examples/index"/>">
 							<i class="ni ni-tv-2 text-primary"></i> Dashboard

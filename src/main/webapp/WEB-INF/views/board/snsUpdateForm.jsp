@@ -302,20 +302,20 @@ function formCheck() {
 						<h1>
 							<span>b</span><span>rr</span>
 						</h1>
-						<form action="updateBoard" method="post"
+						<form action="updateSNS" method="post"
 							onsubmit="return formCheck()">
 							<div class="mx-auto boardTitle form-group">
-								<input type="hidden" name="boardnum" value="${board.boardnum}">
+								<input type="hidden" name="snsBoardnum" value="${snsBoard.snsBoardnum}">
 								<label for="exampleFormControlInput1">제목</label> <input
 									type="text" class="form-control" id="exampleFormControlInput1"
-									placeholder="제목을 입력해주세요." id="title" name="title"
-									value="${board.title}">
+									placeholder="제목을 입력해주세요." name="title"
+									value="${snsBoard.title}">
 							</div>
 
 							<div class="mx-auto boardContents form-group">
 								<label for="exampleFormControlTextarea1">내용</label>
 								<textarea class="form-control" id="exampleFormControlTextarea1"
-									rows="15" id="contents" name="contents">${board.contents}</textarea>
+									rows="15" name="contents">${snsBoard.contents}</textarea>
 							</div>
 
 							<div class="mx-auto boardButton form-group">

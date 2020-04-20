@@ -15,7 +15,7 @@ public class ReplyDAO {
 	@Autowired
 	private SqlSession session;
 	
-		//리플삽입 
+	//리플삽입 
 	public void insertReply(ReplyVO reply) {
 		ReplyMapper mapper = session.getMapper(ReplyMapper.class);
 		mapper.insertReply(reply);

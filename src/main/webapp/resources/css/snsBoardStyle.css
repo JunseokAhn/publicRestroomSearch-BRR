@@ -1,0 +1,144 @@
+@charset "UTF-8";
+/* Bootstrap color & font */
+:root {
+  --blue: #007bff;
+  --indigo: #6610f2;
+  --purple: #6f42c1;
+  --pink: #e83e8c;
+  --red: #dc3545;
+  --orange: #fd7e14;
+  --yellow: #ffc107;
+  --green: #28a745;
+  --teal: #20c997;
+  --cyan: #17a2b8;
+  --white: #fff;
+  --gray: #6c757d;
+  --gray-dark: #343a40;
+  --primary: #007bff;
+  --secondary: #6c757d;
+  --success: #28a745;
+  --info: #17a2b8;
+  --warning: #ffc107;
+  --danger: #dc3545;
+  --light: #f8f9fa;
+  --dark: #343a40;
+  --breakpoint-xs: 0;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+
+
+.boardTitle {
+	width: 70%;	
+	font: 1rem/1.5 var(--font-family-sans-serif);
+	color: var(--blue);
+}
+
+.boardContents {
+	width: 50%;	
+	font: 1rem/1.5 var(--font-family-sans-serif);
+	color: var(--blue);
+}
+
+.boardButton {
+	color: #5f72e4;
+	text-align: right;
+	width: 50%;	
+}
+
+.snsBoardButton {
+	color: #5f72e4;
+	text-align: right;
+	width: 70%;	
+}
+
+.snsButton1 {
+	text-align: right;
+
+}
+
+.snsButton {
+	text-align: right;
+	width: 70%;	
+}
+
+
+/* snsStyle */
+.row1{ 
+	position:absolute;
+	right:10px;
+	bottom:10px;
+}
+
+
+.id {
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.date {
+	font-size: 13px;
+	text-align: right;
+	font-weight: bold;
+	font-style: italic;
+	color: #5c6fdf;
+}
+
+article {
+	padding: 10px 3% 0;
+}
+article .block {
+
+	background-color: #F8F8FF;
+
+	background: #F8F8FF;
+	border-radius: 0.25rem;
+
+	padding: 20px;
+	min-height: 500px;
+	border-bottom: 1px solid;
+	border-bottom-color: #D3D3D3;
+	box-shadow: 3px 3px 3px 3px gray;
+	font-family: sans-serif;
+		
+}
+article .block p {
+	background: #F8F8FF;
+	line-height: 22px; 
+	font-size: 16px; 
+
+	font-family: sans-serif;
+}
+article .block:nth-child(2n+1) {
+	background-color: #F8F8FF;
+
+	font-weight: bold;
+	font-family: sans-serif;
+}
+article .block:nth-child(2n+1) {
+	background: #F8F8FF;
+	border-radius: 0.25rem;
+
+	font-family: sans-serif;
+	width: 70%;
+	box-shadow: 3px 3px 3px 3px gray;
+	font-family: sans-serif;
+}
+article .block:nth-child(2n) {
+
+	background-color: #F8F8FF;
+
+	background: #F8F8FF;
+	border-radius: 0.25rem;
+
+	font-family: sans-serif;
+	width: 70%;
+	box-shadow: 3px 3px 3px 3px gray;
+	font-family: sans-serif;
+}
+

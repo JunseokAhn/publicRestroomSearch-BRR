@@ -31,9 +31,10 @@
 	--font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
+/* jocoding참조 */
 h1 {
 	text-align: center;
-	margin-top: 48px;
+	margin-top: 28px;	
 	font-size: 85px;
 }
 
@@ -50,20 +51,20 @@ h1 span:nth-child(2) {
 }
 
 .boardTitle {
-	width: 553px;
+	width: 70%;	
 	font: 1rem/1.5 var(--font-family-sans-serif);
 	color: var(--blue);
 }
 
 .boardContents {
-	width: 553px;
+	width: 70%;	
 	font: 1rem/1.5 var(--font-family-sans-serif);
 	color: var(--blue);
 }
 
 .boardButton {
+	width: 70%;
 	text-align: right;
-	width: 553px;
 }
 
 .replyButton1 {
@@ -95,7 +96,7 @@ h1 span:nth-child(2) {
 }
 
 .replyComments {
-	width: 553px;
+	width: 70%;	
 	font: 1rem/1.5 var(--font-family-sans-serif);
 }
 

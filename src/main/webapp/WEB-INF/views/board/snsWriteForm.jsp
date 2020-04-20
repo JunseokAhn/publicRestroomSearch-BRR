@@ -124,13 +124,13 @@ function formCheck() {
 
 					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/tables"/>"> <i class="ni ni-bullet-list-67 text-red"></i> Tables
 					</a></li>
-					<c:if test="${sessionScope.userID==null }">
+					<c:if test="${sessionScope.sessionId==null }">
 						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/login"/>"> <i class="ni ni-key-25 text-info"></i> Login
 						</a></li>
 						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/register"/>"> <i class="ni ni-circle-08 text-pink"></i> Sign up
 						</a></li>
 					</c:if>
-					<c:if test="${sessionScope.userID!=null }">
+					<c:if test="${sessionScope.sessionId!=null }">
 						<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/profile"/>"> <i class="ni ni-single-02 text-yellow"></i> User profile
 						</a></li>
 						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/login"/>"> <i class="ni ni-key-25 text-info"></i> Logout
@@ -182,7 +182,7 @@ function formCheck() {
 								<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>">
 								</span>
 								<div class="media-body ml-2 d-none d-lg-block">
-									<span class="mb-0 text-sm  font-weight-bold">Jessica Jones</span>
+									<span class="mb-0 text-sm  font-weight-bold">${sessionScope.sessionId}</span>
 								</div>
 							</div>
 					</a>
@@ -302,20 +302,19 @@ function formCheck() {
 						<h1>
 							<span>b</span><span>rr</span>
 						</h1>
-						<form action="updateBoard" method="post"
-							onsubmit="return formCheck()">
+						<form action="snsWrite" method="post" onsubmit="return formCheck()">
 							<div class="mx-auto boardTitle form-group">
-								<input type="hidden" name="boardnum" value="${board.boardnum}">
+								<input type="hidden" value="${sessionScope.sessionId}" name="id">
+								<input type="hidden" value="${sessionScope.sessionEmail}" name="email">
 								<label for="exampleFormControlInput1">제목</label> <input
 									type="text" class="form-control" id="exampleFormControlInput1"
-									placeholder="제목을 입력해주세요." id="title" name="title"
-									value="${board.title}">
+									placeholder="제목을 입력해주세요." id="title" name="title">
 							</div>
 
 							<div class="mx-auto boardContents form-group">
 								<label for="exampleFormControlTextarea1">내용</label>
 								<textarea class="form-control" id="exampleFormControlTextarea1"
-									rows="15" id="contents" name="contents">${board.contents}</textarea>
+									rows="15" id="contents" name="contents"></textarea>
 							</div>
 
 							<div class="mx-auto boardButton form-group">

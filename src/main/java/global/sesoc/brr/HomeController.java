@@ -20,7 +20,6 @@ import global.sesoc.brr.dao.HospitalDAO;
 import global.sesoc.brr.dao.ToiletDAO;
 
 
-
 @Controller
 public class HomeController {
 	
@@ -39,11 +38,6 @@ public class HomeController {
 	public String home() {
 		logger.info("메인 화면으로 이동");
 		return "/maps/mapsMain";
-	}
-	
-	@RequestMapping(value = "/openFeedBackPopUp", method = RequestMethod.GET)
-	public String openPopup() {
-		return "/email/sendfeedback";
 	}
 	
 	@ResponseBody
