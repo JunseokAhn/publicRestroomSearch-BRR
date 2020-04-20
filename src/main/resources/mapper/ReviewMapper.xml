@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="global.sesoc.brr.mapper.ReviewMapper">
+	<insert id="reviewWrite" parameterType="review">
+		insert into brr_review
+		(toilet_title, sessionId, nickname, pictureUrl, profile_image, review, star, clean)
+		values
+		(#{toilet_title}, #{sessionId}, #{nickname}, #{pictureUrl}, #{profile_image}, #{review}, #{star}, #{clean})
+	</insert>
+</mapper>
