@@ -89,7 +89,7 @@
 				<ul class="navbar-nav">
 					<li class="nav-item"><a class="nav-link  active " href="<c:url value="/maps/mapsMain"/>"> <i class="ni ni-pin-3 text-orange"></i> Maps
 					</a></li>
-					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/index"/>"> <i class="ni ni-tv-2 text-primary"></i> Board
+					<li class="nav-item"><a class="nav-link " href="<c:url value="/board/listBoard"/>"> <i class="ni ni-tv-2 text-primary"></i> Board
 					</a></li>
 					<%-- <li class="nav-item  active "><a class="nav-link " href="<c:url value="/examples/index"/>">
 							<i class="ni ni-tv-2 text-primary"></i> Dashboard
@@ -113,13 +113,13 @@
 						<!-- 네이버 로그인 시 -->
 						<c:if test="${sessionScope.sessionNickname != null}">
 					<li class="nav-item">
-					<a class="nav-link " href="<c:url value="/deleteNaver"/>"> 
+					<a class="nav-link " href="<c:url value="./deleteNaver"/>"> 
 					<i class="ni ni-bullet-list-67 text-red"></i> 회원탈퇴
 					</a></li>
 					</c:if>
 					<!-- 구글 로그인 시 -->
 					<c:if test="${sessionScope.sessionNickname == null}">
-					<li class="nav-item"><a class="nav-link " href="<c:url value="/deleteGoogle"/>"> <i class="ni ni-bullet-list-67 text-red"></i> 회원탈퇴
+					<li class="nav-item"><a class="nav-link " href="<c:url value="./deleteGoogle"/>"> <i class="ni ni-bullet-list-67 text-red"></i> 회원탈퇴
 					</a></li>
 						</c:if>
 					</c:if>
