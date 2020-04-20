@@ -549,8 +549,15 @@
         }
     }//initMap[E]
 
+    function FeedbackShow()
+    {
+    	 $("#feedback-container").show();
+         $("#feedback").fadeIn();
+    }
+
     function SendFeedback()
     {
+        
     	$.ajax
 		(
 			{
@@ -631,6 +638,34 @@
 			</div>
 		</form>
 	</div>
+	
+	<div id="feedback-container"></div>
+	<div id="feedback" class="col-xl-4">
+		<form action="review/reviewWrite" onsubmit="return reviewCheck()">
+			<div class="card shadow">
+				<div class="card-header bg-transparent">
+					<div class="row align-items-center">
+						<div class="col">
+							<h2 class="mb-0" style="display: inline-block">Feedback Send</h2>
+							<input id="x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#feedback").hide(), $("#feedback-container").fadeOut()'>
+							<a href="javascript:SendFeedback()" id="register" class="btn btn-sm btn-primary"> Send </a>
+							<h6 id="review-ment" class="text-uppercase text-muted ls-1 mb-1">사용자님의 의견을 적어주세요! 적극 반영하겠습니다.</h6>
+						</div>
+					</div>
+				</div>
+				
+				<div class="card-body2">
+					<div class="col-xl-12 col-lg-6">
+						<div class="card card-stats mb-4 mb-xl-0">
+							<textarea class="card-body4 replyButton2" id="reviews" onkeydown="resize(this)" onkeyup="resize(this)" style="resize: none;"></textarea>							
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	
+	
 	<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
 		<div class="container-fluid">
 			<!-- Toggler -->
@@ -774,7 +809,7 @@
 							<i class="ni ni-favourite-28 text-pink"></i> <span>Preferred toilet</span>
 						</a></li>
 
-					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/components/alerts.html">
+					<li class="nav-item"><a class="nav-link" href="javascript:FeedbackShow();">
 							<i class="ni ni-send text-blue"></i> <span>Send Feedback</span>
 						</a></li>
 
