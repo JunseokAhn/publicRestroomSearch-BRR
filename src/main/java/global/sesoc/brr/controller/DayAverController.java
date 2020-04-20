@@ -70,4 +70,14 @@ public class DayAverController {
 		return "true";
 	}
 	
+	@GetMapping("average")
+	@ResponseBody
+	public String average (Double lat, Double lng) {
+		logger.info("7일 평균 계산 컨트롤러 이동");
+		dao.getAver(lat, lng);
+		return"";
+	}
+	
+	
+	
 }
