@@ -731,6 +731,22 @@
 
                             div1.innerHTML = content2;
                             reviewRefresh(title);
+							
+                    		$.ajax({
+                    			url : "<c:url value='/dayaver/average'/>",
+                    			type : "POST",
+                    			data : {
+                    				lng : endX, lat : endY
+                    			},
+                    			success : function (res) {
+                    				alert(res);
+                    				consloe.log(res);
+                    			},
+                    			error : function (e) {
+                    				alert(JSON.stringify(e));
+                    			}
+                    			
+                    		});
                             
                         }
                     }(toiletMarker, i, title));
@@ -844,21 +860,6 @@
                 }
             });
         }
-		$.ajax({
-			url : "<c:url value='/dayaver/average'/>",
-			type : "POST",
-			data : {
-				lng : endX, lat : endY
-			},
-			success : function (res) {
-				alert(res);
-				consloe.log(res);
-			},
-			error : function (e) {
-				alert(JSON.stringify(e));
-			}
-			
-		});
         
         clearInterval(realTime);
         var content = "<div style='min-width:max-content;'>"
