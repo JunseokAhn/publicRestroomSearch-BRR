@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="global.sesoc.brr.mapper.ReviewMapper">
+	<insert id="reviewWrite" parameterType="review">
+		insert into brr_review
+		(toilet_title, sessionId, sessionNickname, Profile, review, star, clean)
+		values
+		(#{toilet_title}, #{sessionId}, #{sessionNickname}, #{Profile}, #{review}, #{star}, #{clean})
+	</insert>
+	
+	<select id="reviewList" parameterType="String" resultType="review">
+		select * 
+		from (select * from brr_review 
+			 where toilet_title like #{toilet_title}
+			 order by inputdate desc) 
+		where rownum &lt; 4
+	</select>
+</mapper>

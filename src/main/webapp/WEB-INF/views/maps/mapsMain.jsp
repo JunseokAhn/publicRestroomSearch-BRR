@@ -28,6 +28,7 @@
     var totalMarkerArr = [ ];
     var drawInfoArr = [ ];
     var nearbyToilet = [ ];
+    var reviewList = [ ];
     var polyFlag = 0;
     var locationFlag = 0;
     var starFlag = 0;
@@ -179,102 +180,340 @@
             $("#clean5").unbind('mouseenter mouseleave');
         })
         
+        //별점 호버이벤트
+     	$("#star5").hover(
+      	function(){
+            $("#star5").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            }, 
+        function(){
+       		$("#star5").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+       		$("#star4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+            $("#star3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+            $("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+            $("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        }) 
         
-     	    $("#star5").hover(
-      	    function(){
-       	        $("#star5").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-                $("#star4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-                $("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-                $("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-                $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        $("#star4").hover(
+        function(){
+            $("#star4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        }, 
+        function(){
+            $("#star4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+            $("#star3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+            $("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+            $("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        }) 
+            
+        $("#star3").hover(
+        function(){
+            $("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        }, 
+        function(){
+            $("#star3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+            $("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+            $("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        }) 
+        $("#star2").hover(
+        function(){
+            $("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        }, 
+        function(){
+            $("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+            $("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        }) 
+        $("#star1").hover(
+        function(){
+            $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        }, 
+        function(){
+            $("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        }) 
+       
+        //청결도 호버이벤트
+        $("#clean5").hover(
+          	function(){
+                $("#clean5").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#clean4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#clean3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#clean2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
                 }, 
             function(){
-           		$("#star5").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-           		$("#star4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-                $("#star3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-                $("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-                $("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-            }) 
-        
-            $("#star4").hover(
-            function(){
-                $("#star4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-                $("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-                $("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-                $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-            }, 
-            function(){
-                $("#star4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-                $("#star3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-                $("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-                $("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+           		$("#clean5").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+           		$("#clean4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+                $("#clean3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+                $("#clean2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+                $("#clean1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
             }) 
             
-            $("#star3").hover(
+            $("#clean4").hover(
             function(){
-                $("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-                $("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-                $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#clean4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#clean3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#clean2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             }, 
             function(){
-                $("#star3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-                $("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-                $("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+                $("#clean4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+                $("#clean3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+                $("#clean2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+                $("#clean1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
             }) 
-            $("#star2").hover(
+                
+            $("#clean3").hover(
             function(){
-                $("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-                $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#clean3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#clean2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             }, 
             function(){
-                $("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-                $("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+                $("#clean3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+                $("#clean2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+                $("#clean1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
             }) 
-            $("#star1").hover(
+            $("#clean2").hover(
             function(){
-                $("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#clean2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+                $("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
             }, 
             function(){
-                $("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+                $("#clean2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+                $("#clean1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
             }) 
-       
-       
-    })
+            $("#clean1").hover(
+            function(){
+                $("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+            }, 
+            function(){
+                $("#clean1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+            }) 
+    })//window.onload[E]
     
+    function reviewRefresh(title){
+        $.ajax({
+            url: "<c:url value='/review/reviewList'/>",
+            data: {
+                toilet_title: title
+            },
+            type: "post",
+            success: function(e){
+                reviewList = e
+                
+                var reviews0 = document.getElementById("reviews-0");
+                var reviews1 = document.getElementById("reviews-1");
+                var reviews2 = document.getElementById("reviews-2");
+                var starreview0 = document.getElementById("star-review-0");
+                var starreview1 = document.getElementById("star-review-1");
+                var starreview2 = document.getElementById("star-review-2");
+                var cleanreview0 = document.getElementById("clean-review-0");
+                var cleanreview1 = document.getElementById("clean-review-1");
+                var cleanreview2 = document.getElementById("clean-review-2");
+                var nickreview0 = document.getElementById("nick-review-0");
+                var nickreview1 = document.getElementById("nick-review-1");
+                var nickreview2 = document.getElementById("nick-review-2");
+                var profilereview0 = document.getElementById("profile-review-0");
+                var profilereview1 = document.getElementById("profile-review-1");
+                var profilereview2 = document.getElementById("profile-review-2");
+               
+                switch(reviewList.length){
+                    case 0:
+                        reviews0.innerHTML = "Default Review";
+                        reviews1.innerHTML = "Default Review";
+                        reviews2.innerHTML = "Default Review";
+                        starreview0.innerHTML = "";
+                        starreview1.innerHTML = "";
+                        starreview2.innerHTML = "";
+                        cleanreview0.innerHTML = "";
+                        cleanreview1.innerHTML = "";
+                        cleanreview2.innerHTML = "";
+                        nickreview0.innerHTML = "NICKNAME";
+                        nickreview1.innerHTML = "NICKNAME";
+                        nickreview2.innerHTML = "NICKNAME"; 
+                        profilereview0.innerHTML = "<div class='icon icon-shape bg-warning text-white rounded-circle shadow' style='display: inline-block;'></div>"
+                        profilereview1.innerHTML = "<div class='icon icon-shape bg-warning text-white rounded-circle shadow' style='display: inline-block;'></div>"
+                        profilereview2.innerHTML = "<div class='icon icon-shape bg-warning text-white rounded-circle shadow' style='display: inline-block;'></div>"
+                        break;
+                    case 1:
+                        reviews0.innerHTML = reviewList[0].review;
+                        reviews1.innerHTML = "Default Review";
+                        reviews2.innerHTML = "Default Review";
+                        if(reviewList[0].star>2)
+                            $("#star-review-0").attr("class", "text-success");
+                        else
+                            $("#star-review-0").attr("class", "text-warning");
+                        starreview0.innerHTML = reviewList[0].star;
+                        starreview1.innerHTML = "";
+                        starreview2.innerHTML = "";
+                        if(reviewList[0].clean>2)
+                            $("#clean-review-0").attr("class", "text-success");
+                        else
+                            $("#clean-review-0").attr("class", "text-warning");
+                        cleanreview0.innerHTML = reviewList[0].clean;
+                        cleanreview1.innerHTML = "";
+                        cleanreview2.innerHTML = "";
+                        nickreview0.innerHTML = reviewList[0].sessionNickname;
+                        nickreview1.innerHTML = "NICKNAME";
+                        nickreview2.innerHTML = "NICKNAME"; 
+                        profilereview0.innerHTML = "<span class='avatar avatar-sm rounded-circle'> <img alt='Image placeholder' src='<c:url value='" + reviewList[0].profile + "'/>'></span>"
+                        profilereview1.innerHTML = "<div class='icon icon-shape bg-warning text-white rounded-circle shadow' style='display: inline-block;'></div>"
+                        profilereview2.innerHTML = "<div class='icon icon-shape bg-warning text-white rounded-circle shadow' style='display: inline-block;'></div>"
+                        break;
+                    case 2:
+                        reviews0.innerHTML = reviewList[0].review;
+                        reviews1.innerHTML = reviewList[1].review;
+                        reviews2.innerHTML = "Default Review";
+                        if(reviewList[0].star>2)
+                            $("#star-review-0").attr("class", "text-success");
+                        else
+                            $("#star-review-0").attr("class", "text-warning");
+                        if(reviewList[1].star>2)
+                            $("#star-review-1").attr("class", "text-success");
+                        else
+                            $("#star-review-1").attr("class", "text-warning");
+                        starreview0.innerHTML = reviewList[0].star;
+                        starreview1.innerHTML = reviewList[1].star;
+                        starreview2.innerHTML = "";
+                        if(reviewList[0].clean>2)
+                            $("#clean-review-0").attr("class", "text-success");
+                        else
+                            $("#clean-review-0").attr("class", "text-warning");
+                        if(reviewList[1].clean>2)
+                            $("#clean-review-1").attr("class", "text-success");
+                        else
+                            $("#clean-review-1").attr("class", "text-warning");
+                        cleanreview0.innerHTML = reviewList[0].clean;
+                        cleanreview1.innerHTML = reviewList[1].clean
+                        cleanreview2.innerHTML = "";
+                        nickreview0.innerHTML = reviewList[0].sessionNickname;
+                        nickreview1.innerHTML = reviewList[1].sessionNickname;
+                        nickreview2.innerHTML = "NICKNAME"; 
+                        profilereview0.innerHTML = "<span class='avatar avatar-sm rounded-circle'> <img alt='Image placeholder' src='<c:url value='" + reviewList[0].profile + "'/>'></span>"
+                        profilereview1.innerHTML = "<span class='avatar avatar-sm rounded-circle'> <img alt='Image placeholder' src='<c:url value='" + reviewList[1].profile + "'/>'></span>"
+                        profilereview2.innerHTML = "<div class='icon icon-shape bg-warning text-white rounded-circle shadow' style='display: inline-block;'></div>"                                                                          
+                        break;
+                    case 3:
+                        reviews0.innerHTML = reviewList[0].review;
+                        reviews1.innerHTML = reviewList[1].review;
+                        reviews2.innerHTML = reviewList[2].review;
+                        if(reviewList[0].star>2)
+                            $("#star-review-0").attr("class", "text-success");
+                        else
+                            $("#star-review-0").attr("class", "text-warning");
+                        if(reviewList[1].star>2)
+                            $("#star-review-1").attr("class", "text-success");
+                        else
+                            $("#star-review-1").attr("class", "text-warning");
+                        if(reviewList[2].star>2)
+                            $("#star-review-2").attr("class", "text-success");
+                        else
+                            $("#star-review-2").attr("class", "text-warning");
+                        starreview0.innerHTML = reviewList[0].star;
+                        starreview1.innerHTML = reviewList[1].star;
+                        starreview2.innerHTML = reviewList[2].star;
+                        if(reviewList[0].clean>2)
+                            $("#clean-review-0").attr("class", "text-success");
+                        else
+                            $("#clean-review-0").attr("class", "text-warning");
+                        if(reviewList[1].clean>2)
+                            $("#clean-review-1").attr("class", "text-success");
+                        else
+                            $("#clean-review-1").attr("class", "text-warning");
+                        if(reviewList[2].clean>2)
+                            $("#clean-review-2").attr("class", "text-success");
+                        else
+                            $("#clean-review-2").attr("class", "text-warning");
+                        cleanreview0.innerHTML = reviewList[0].clean;
+                        cleanreview1.innerHTML = reviewList[1].clean;
+                        cleanreview2.innerHTML = reviewList[2].clean;
+                        nickreview0.innerHTML = reviewList[0].sessionNickname;
+                        nickreview1.innerHTML = reviewList[1].sessionNickname;
+                        nickreview2.innerHTML = reviewList[2].sessionNickname;
+                        profilereview0.innerHTML = "<span class='avatar avatar-sm rounded-circle'> <img alt='Image placeholder' src='<c:url value='" + reviewList[0].profile + "'/>'></span>"
+                        profilereview1.innerHTML = "<span class='avatar avatar-sm rounded-circle'> <img alt='Image placeholder' src='<c:url value='" + reviewList[1].profile + "'/>'></span>"
+                        profilereview2.innerHTML = "<span class='avatar avatar-sm rounded-circle'> <img alt='Image placeholder' src='<c:url value='" + reviewList[2].profile + "'/>'></span>"                                          
+                        break;
+                } //switch[E]
+            	//이런 변화된내용을 즉시 적용하려면? 이 스위치를 비동기로??
+            }//success[E]
+        })//ajax[E]
+        
+    }//reviewRefresh[E]
+   
     //리뷰등록 검사
     function reviewCheck(){
         //청결도, 별점입력했는지
+        var toilet_title = document.getElementById("toilet_title").value
+        var sessionId = document.getElementById("sessionId").value
+        var sessionNickname = document.getElementById("sessionNickname").value
+        var Profile = document.getElementById("Profile").value
+        var review = document.getElementById("review-area").value
         var star = document.getElementById("star").value
         var clean = document.getElementById("clean").value
-        var reviews = document.getElementById("reviews").value
-        var reviewFlag = true;
-		var id =
-<%=(String) session.getAttribute("sessionId")%>
-    ;
+        var id = <%=(String) session.getAttribute("sessionId")%>;
+   		if(id==null){
+ 	    	var result= confirm("로그인이 필요합니다. 로그인하시겠습니까?")
+ 	    	if(result){
+        		location.href="<c:url value='/member/login'/>"
+        		return;
+ 	    	}
+        	else
+        	    return;
+		}
+   		
         //몇글자이상 등록해야됨
-        if(reviews.length<10){
+        if(review.length<10){
             alert("리뷰는 10자이상 적어주세요");
-            reviewFlag = false;
+            return;
         }
-        if(reviews.length<100){
+        if(review.length>100){
             alert("리뷰는 100자 이내료 적어주세요");
-            reviewFlag = false;
+            return;
         }
         if(star.length<1){
             alert("별점을 등록해주세요");
-            reviewFlag = false;
+            return;
         }
         if(clean.length<1){
             alert("청결도를 등록해주세요");
-            reviewFlag = false;
+            return;
         }
-        if(id==null){
-            alert("로그인 페이지로 이동합니다.")
-            location.href="<c:url value='/member/login'/>"
-        }
-        if(reviewFlag){
-            
-        }
+        //리뷰등록
+        $.ajax({
+            url : "<c:url value='/review/reviewWrite'/>",
+            data : {
+                toilet_title: toilet_title,
+                sessionId: sessionId,
+                sessionNickname: sessionNickname,
+                Profile: Profile,
+                review: review,
+                star: star,
+                clean: clean
+            },
+            type : "post",
+            success: function(e){
+                $("#review").hide();
+                $("#review-container").fadeOut();  
+                $("#review-area").val("");
+            },
+            error: function(e){
+                $("#review").hide();
+                $("#review-container").fadeOut();  
+                $("#review-area").val("");
+                console.log("리뷰쓰기 실패");
+                console.log(e);
+            }
+        })//리뷰등록[E]
+        reviewRefresh(toilet_title);
     }
     //화장실 추천기능
     function searchShortest () {
@@ -483,14 +722,16 @@
                             content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>이용자수</span>"
                             content2 += "<input class='replyButton3 ml-1' type='button' value='리뷰 목록' onclick='location.href=\"/brr/review/reviewMain?toiletTitle=" + title + "\"'>"
 
-                            var id =
-<%=(String) session.getAttribute("sessionId")%>
-    ;
+                            var id = $("#sessionId").val();
+<%-- <%=(String) session.getAttribute("sessionId")%>
+    ; --%>
                             //리뷰쓰기
                             content2 += "<input class='replyButton3 ml-1' type='button' value='리뷰 쓰기' onclick='reviewWrite(" + "\"" + title + "\"," + "\"" + id + "\")'>"
                             content2 += "</p>"
 
                             div1.innerHTML = content2;
+                            reviewRefresh(title);
+                            
                         }
                     }(toiletMarker, i, title));
         }//마커생성 for[E]
@@ -499,23 +740,9 @@
     
     function reviewWrite (title, id) {
         document.getElementById("review-toilet").innerHTML=title;
+        $("#toilet_title").val(title)
         $("#review-container").fadeIn();
         $("#review").fadeIn();
-
-        var star = document.getElementById("star");
-        var clean = document.getElementById("clean");
-        
-/*         document.getElementById("star1").onclick=function(){star.innerHTML = 1}
-        document.getElementById("star2").onclick=function(){star.innerHTML = 2}
-        document.getElementById("star3").onclick=function(){star.innerHTML = 3}
-        document.getElementById("star4").onclick=function(){star.innerHTML = 4}
-        document.getElementById("star5").onclick=function(){star.innerHTML = 5}
-        
-        document.getElementById("clean1").onclick=function(){clean.innerHTML = 1}
-        document.getElementById("clean2").onclick=function(){clean.innerHTML = 2}
-        document.getElementById("clean3").onclick=function(){clean.innerHTML = 3}
-        document.getElementById("clean4").onclick=function(){clean.innerHTML = 4}
-        document.getElementById("clean5").onclick=function(){clean.innerHTML = 5} */
     }
     function myLocation () {
         // HTML5의 geolocation으로 사용할 수 있는지 확인합니다      
@@ -594,7 +821,7 @@
 
     //실시간길찾기
     function navigators (endX, endY, title, toiletType, toiletBowlNumber, handicap) {
-        var id =$("#hiddenId").val();
+        var id =$("#sessionId").val();
 <%-- <%=(String) session.getAttribute("sessionId")%> --%>
     ;    	
         //DB에 정보저장, title값 필요
@@ -766,37 +993,38 @@
 </script>
 </head>
 <body class="" onload="initTmap()">
-	<input type = "hidden" value="${sessionScope.sessionId}" id = "hiddenId">
+	<input type="hidden" id="Profile" name="profile_image" value="${sessionScope.Profile}">
+	<input type="hidden" id="sessionNickname" name="nickname" value="${sessionScope.sessionNickname}">
+	<input type="hidden" id="sessionId" name="sessionId" value="${sessionScope.sessionId}">
 	<div id="review-container"></div>
 	<div id="review" class="col-xl-4">
-		<form action="review/reviewWrite" method="post">
-			<div class="card shadow">
-				<div class="card-header bg-transparent">
-					<div class="row align-items-center">
-						<div class="col">
-							<h2 id="review-toilet" class="mb-0" style="display: inline-block"></h2>
-							<input id="x-button" class="btn btn-sm btn-primary" type="button" value="X" onclick='$("#review").hide(), $("#review-container").fadeOut()'> <input id="register" class="btn btn-sm btn-primary" type="button" value="Register" onclick='reviewCheck()'>
-							<h6 id="review-ment" class="text-uppercase text-muted ls-1 mb-1">당신의 리뷰가 다른 사람들에게 도움이 될 거에요!</h6>
-						</div>
+		<div class="card shadow">
+			<div class="card-header bg-transparent">
+				<div class="row align-items-center">
+					<div class="col">
+						<h2 id="review-toilet" class="mb-0" style="display: inline-block"></h2>
+						<input type="hidden" id="toilet_title"> <input id="x-button" class="btn btn-sm btn-primary" type="button" value="X" onclick='$("#review").hide(), $("#review-container").fadeOut()'> <input id="register" class="btn btn-sm btn-primary" type="button" value="Register" onclick='reviewCheck()'>
+						<h6 id="review-ment" class="text-uppercase text-muted ls-1 mb-1">당신의 리뷰가 다른 사람들에게 도움이 될 거에요!</h6>
 					</div>
 				</div>
-				<div class="card-body2">
-					<div class="col-xl-12 col-lg-6">
-						<div class="card card-stats mb-4 mb-xl-0">
-							<textarea class="card-body4 replyButton2" id="reviews" onkeydown="resize(this)" onkeyup="resize(this)" style="resize: none;"></textarea>
-							<div class="row">
-								<div class="col mt-2">
-									<input type="hidden" id="star"> <input type="hidden" id="clean"> <span class="h2 font-weight mb-0">별점<img id="star1" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star2" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star3" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star4" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star5" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>">
-									</span> <span id="clean-margin" class="h2 font-weight mb-0">청결도<img id="clean1" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean2" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean3" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean4" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean5" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"></span>
-								</div>
+			</div>
+			<div class="card-body2">
+				<div class="col-xl-12 col-lg-6">
+					<div class="card card-stats mb-4 mb-xl-0">
+						<textarea class="card-body4 replyButton2" id="review-area" name="review" onkeydown="resize(this)" onkeyup="resize(this)" style="resize: none;"></textarea>
+						<div class="row">
+							<div class="col mt-2">
+								<span class="h2 font-weight mb-0">별점<img id="star1" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star2" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star3" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star4" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star5" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>">
+								</span> <span id="clean-margin" class="h2 font-weight mb-0">청결도<img id="clean1" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean2" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean3" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean4" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean5" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"></span>
 							</div>
+							<input type="hidden" id="star" name="star"> <input type="hidden" id="clean" name="clean">
 						</div>
 					</div>
 				</div>
 			</div>
-		</form>
+		</div>
 	</div>
-	
+
 	<div id="feedback-container"></div>
 	<div id="feedback" class="col-xl-4">
 		<form action="">
@@ -805,25 +1033,24 @@
 					<div class="row align-items-center">
 						<div class="col">
 							<h2 class="mb-0" style="display: inline-block">Feedback Send</h2>
-							<input id="x-button" name="feed-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#feedback").hide(), $("#feedback-container").fadeOut()'>
-							<input id="register" name="feedback-send" class="btn btn-sm btn-primary" type="button" value="Send Feedback" onclick="SendFeedback()">							
+							<input id="x-button" name="feed-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#feedback").hide(), $("#feedback-container").fadeOut()'> <input id="register" name="feedback-send" class="btn btn-sm btn-primary" type="button" value="Send Feedback" onclick="SendFeedback()">
 							<h6 id="review-ment" class="text-uppercase text-muted ls-1 mb-1">사용자님의 의견을 적어주세요! 적극 반영하겠습니다.</h6>
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="card-body2">
 					<div class="col-xl-12 col-lg-6">
 						<div class="card card-stats mb-4 mb-xl-0">
-							<textarea class="card-body4 replyButton2" id="feedback-contents" onkeydown="resize(this)" onkeyup="resize(this)" style="resize: none;"></textarea>							
+							<textarea class="card-body4 replyButton2" id="feedback-contents" onkeydown="resize(this)" onkeyup="resize(this)" style="resize: none;"></textarea>
 						</div>
 					</div>
 				</div>
 			</div>
 		</form>
 	</div>
-	
-	
+
+
 	<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
 		<div class="container-fluid">
 			<!-- Toggler -->
@@ -1072,7 +1299,7 @@
 		<div class="header bg-gradient-primary pb-7 pt-5 pt-md-8">
 			<div class="container-fluid">
 				<div class="header-body">
-					<input class='replyButton1 ml-1' type='button' value='최단거리' onclick='searchShortest()'> <input class='replyButton1 ml-0' type='button' value='최고 평가' onclick='searchRating()'> <input class='replyButton1 ml-0' type='button' value='최고 청결도' onclick='searchClan()'> <input class='replyButton1 ml-0' type='button' value='최대 원활도' onclick='searchSmooth()'>
+					<input class='replyButton1 ml-1' type='button' value='최단거리' onclick='searchShortest()'> <input class='replyButton1 ml-0' type='button' value='최고 평가' onclick='searchRating()'> <input class='replyButton1 ml-0' type='button' value='최고 청결도' onclick='searchClan()'><input class='replyButton1 ml-0' type='button' value='최대 원활도' onclick='searchSmooth()'>
 				</div>
 			</div>
 		</div>
@@ -1102,7 +1329,6 @@
 												<h5 class="card-title text-uppercase text-muted mb-0">화장실을 선택하세요...</h5>
 												<span class="h2 font-weight-bold mb-0">DEFAULT</span>
 											</div>
-
 										</div>
 										<p class="mt-3 mb-0 text-muted text-sm">
 											<span class="text-success"><i class="fa fa-arrow-up"></i> 변화량</span> <span class="text-nowrap mr-2">별점평균</span> <span class="text-success"><i class="fa fa-arrow-up"></i> 변화량</span> <span class="text-nowrap">청결도평균</span>
@@ -1118,18 +1344,16 @@
 									<div class="card-body3 replyButton2" id="div2">
 										<div class="row">
 											<div class="col-8 pr-0" style="float: left;">
-												<!-- <h5 class="card-title text-uppercase text-muted mb-0">Title</h5> -->
-												<span class="card-title text-sm text-muted mb-0">Default Review</span>
-												<!-- <span class="h2 font-weight-bold mb-0">Contents</span> -->
+												<span class="card-title text-sm text-muted mb-0" id="reviews-0">Default Review</span>
 											</div>
 											<div class="col-4" style="text-align: center; float: right;">
 												<p class="mt-0 mb-3 text-muted text-sm">
-													<span class="text-success">4.0</span><span class="text-nowrap mr-2 ml-2">별점</span> <br> <span class="text-danger">3.5</span><span class="text-nowrap mr-2 ml-2">청결도</span>
+													<span class="text-success" id="star-review-0"></span><span class="text-nowrap mr-2 ml-2">별점</span> <br> <span class="text-danger" id="clean-review-0"></span><span class="text-nowrap mr-2 ml-2">청결도</span>
 												</p>
-												<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;">
-													<!-- <i class="fas fa-chart-pie"></i> -->
+												<div id="profile-review-0">
+													<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;"></div>
 												</div>
-												<h5 class="card-title text-uppercase text-muted mb-0 mt-0">Nickname</h5>
+												<h5 class="card-title text-uppercase text-muted mb-0 mt-0" id="nick-review-0">Nickname</h5>
 											</div>
 										</div>
 									</div>
@@ -1140,18 +1364,16 @@
 									<div class="card-body3 replyButton2" id="div3">
 										<div class="row">
 											<div class="col-8 pr-0">
-												<!-- <h5 class="card-title text-uppercase text-muted mb-0">Title</h5> -->
-												<span class="card-title  text-sm text-muted mb-0">Default Review</span>
-												<!-- <span class="h2 font-weight-bold mb-0">Contents</span> -->
+												<span class="card-title  text-sm text-muted mb-0" id="reviews-1">Default Review</span>
 											</div>
 											<div class="col-4" style="text-align: center;">
 												<p class="mt-0 mb-3 text-muted text-sm">
-													<span class="text-success">4.0</span><span class="text-nowrap mr-2 ml-2">별점</span> <br> <span class="text-danger">3.5</span><span class="text-nowrap mr-2 ml-2">청결도</span>
+													<span class="text-success" id="star-review-1"></span><span class="text-nowrap mr-2 ml-2">별점</span> <br> <span class="text-danger" id="clean-review-1"></span><span class="text-nowrap mr-2 ml-2">청결도</span>
 												</p>
-												<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;">
-													<!-- <i class="fas fa-chart-pie"></i> -->
+												<div id="profile-review-1">
+													<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;"></div>
 												</div>
-												<h5 class="card-title text-uppercase text-muted mb-0 mt-0">Nickname</h5>
+												<h5 class="card-title text-uppercase text-muted mb-0 mt-0" id="nick-review-1">Nickname</h5>
 											</div>
 										</div>
 									</div>
@@ -1162,18 +1384,16 @@
 									<div class="card-body3 replyButton2" id="div4">
 										<div class="row">
 											<div class="col-8 pr-0">
-												<!-- <h5 class="card-title text-uppercase text-muted mb-0">Title</h5> -->
-												<span class="card-title text-sm text-muted mb-0">Default Review</span>
-												<!-- <span class="h2 font-weight-bold mb-0">Contents</span> -->
+												<span class="card-title text-sm text-muted mb-0" id="reviews-2">Default Review</span>
 											</div>
 											<div class="col-4" style="text-align: center;">
 												<p class="mt-0 mb-3 text-muted text-sm">
-													<span class="text-success">4.0</span><span class="text-nowrap mr-2 ml-2">별점</span> <br> <span class="text-danger">3.5</span><span class="text-nowrap mr-2 ml-2">청결도</span>
+													<span class="text-success" id="star-review-2"></span><span class="text-nowrap mr-2 ml-2">별점</span> <br> <span class="text-danger" id="clean-review-2"></span><span class="text-nowrap mr-2 ml-2">청결도</span>
 												</p>
-												<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;">
-													<!-- <i class="fas fa-chart-pie"></i> -->
+												<div id="profile-review-2">
+													<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;"></div>
 												</div>
-												<h5 class="card-title text-uppercase text-muted mb-0 mt-0">Nickname</h5>
+												<h5 class="card-title text-uppercase text-muted mb-0 mt-0" id="nick-review-2">Nickname</h5>
 											</div>
 										</div>
 									</div>
