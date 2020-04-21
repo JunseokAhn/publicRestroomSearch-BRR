@@ -1268,6 +1268,7 @@
 								</c:if>
 
 								<c:if test="${sessionScope.sessionId != null}">
+								
 									<c:if test="${sessionScope.sessionNaver != null}">
 										<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="${sessionScope.Profile}"/>">
 										</span>
@@ -1275,6 +1276,7 @@
 											<span class="mb-0 text-sm  font-weight-bold">${sessionScope.sessionNickname}</span>
 										</div>
 									</c:if>
+									
 									<c:if test="${sessionScope.sessionGooglename != null}">
 										<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="${sessionScope.Profile}"/>">
 										</span>
@@ -1282,6 +1284,7 @@
 											<span class="mb-0 text-sm  font-weight-bold">${sessionScope.sessionNickname}</span>
 										</div>
 									</c:if>
+									
 								</c:if>
 							</div>
 						</a>
