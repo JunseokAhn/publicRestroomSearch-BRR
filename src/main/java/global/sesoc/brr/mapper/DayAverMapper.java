@@ -16,5 +16,5 @@ public interface DayAverMapper {
 	public int deleteRecord (String id);
 	
 	//통계를 내기 위한 객체 불러오기
-	public int getAver (@Param("lat")Double lat, @Param("lng")Double lng);
+	public int average (@Param("lat")Double lat, @Param("lng")Double lng);
 }

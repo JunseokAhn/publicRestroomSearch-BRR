@@ -89,15 +89,15 @@
 				<ul class="navbar-nav">
 					<li class="nav-item"><a class="nav-link  active " href="<c:url value="/maps/mapsMain"/>"> <i class="ni ni-pin-3 text-orange"></i> Maps
 					</a></li>
-					<li class="nav-item"><a class="nav-link " href="<c:url value="/board/listSNS"/>"> <i class="ni ni-tv-2 text-primary"></i> Board
+					<li class="nav-item"><a class="nav-link " href="<c:url value="/board/listSNS"/>"> <i class="ni ni-tv-2 text-primary"></i> SNS
 					</a></li>
 					<%-- <li class="nav-item  active "><a class="nav-link " href="<c:url value="/examples/index"/>">
 							<i class="ni ni-tv-2 text-primary"></i> Dashboard
 						</a></li> //nav-item  active는 무조건 검정색으로 표시됩니다. --%>
-					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/icons"/>"> <i class="ni ni-planet text-blue"></i> Icons
-					</a></li>
+<%-- 					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/icons"/>"> <i class="ni ni-planet text-blue"></i> Icons --%>
+<!-- 					</a></li> -->
 
-					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/tables"/>"> <i class="ni ni-bullet-list-67 text-red"></i> Tables
+					<li class="nav-item"><a class="nav-link " href="<c:url value="/diary/diaryMain"/>"> <i class="ni ni-bullet-list-67 text-red"></i> diary
 					</a></li>
 					<c:if test="${sessionScope.sessionId == null }">
 						<li class="nav-item"><a class="nav-link" href="<c:url value="/member/login"/>"> <i class="ni ni-key-25 text-info"></i> Login
@@ -114,7 +114,7 @@
 						<c:if test="${sessionScope.sessionNaver != null}">
 					<li class="nav-item">
 					<a class="nav-link " href="<c:url value="./deleteNaver"/>"> 
-					<i class="ni ni-bullet-list-67 text-red"></i> 회원탈퇴
+					<i class="ni ni-single-02 text-gray-dark""></i> 회원탈퇴
 					</a></li>
 					</c:if>
 					<!-- 구글 로그인 시 -->

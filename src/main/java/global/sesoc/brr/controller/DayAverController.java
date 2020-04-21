@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -41,7 +42,7 @@ public class DayAverController {
 		return "";
 	}
 	//해당 화장실의 전체 이용자 수
-	@GetMapping("/allUser")
+	@PostMapping("/allUser")
 	@ResponseBody
 	public String alluser(Double lat, Double lng, HttpSession httpsession) {
 		logger.info("화장실 사용자 통계 입니다.");
@@ -72,16 +73,20 @@ public class DayAverController {
 		return "true";
 	}
 	
-	@GetMapping("/average")
+	@PostMapping("/average")
 	@ResponseBody
-	public String average (Double lat, Double lng, HttpSession httpsession) {
+	public int average (Double lat, Double lng, HttpSession httpsession) {
 		logger.info("7일 평균 계산 컨트롤러 이동");
-		int result = dao.getAver(lat, lng);
+		
+		int result = dao.average(lat, lng);
+		
 		//userAvg => 이용자 평균
+		
 		System.out.println("7일 평균 이용자 수 : " + result);
+		
 		httpsession.setAttribute("userAvg", result);
 		
-		return"";
+		return result;
 	}
 	
 	

@@ -844,6 +844,22 @@
                 }
             });
         }
+		$.ajax({
+			url : "<c:url value='/dayaver/average'/>",
+			type : "POST",
+			data : {
+				lng : endX, lat : endY
+			},
+			success : function (res) {
+				alert(res);
+				consloe.log(res);
+			},
+			error : function (e) {
+				alert(JSON.stringify(e));
+			}
+			
+		});
+        
         clearInterval(realTime);
         var content = "<div style='min-width:max-content;'>"
         content += "<h5 class='card-title text-uppercase text-muted mb-0'>" + toiletType + "</h5>"
@@ -1162,7 +1178,7 @@
 
 					<c:if test="${sessionScope.sessionId != null }">
 						<li class="nav-item"><a class="nav-link " href="<c:url value="/member/profile"/>">
-								<i class="ni ni-single-02 text-yellow"></i> User profile
+								<i class="ni ni-single-02 text-gray-dark"></i> User profile
 							</a></li>
 						<li class="nav-item"><a class="nav-link" href="<c:url value="/member/logout"/>">
 								<i class="ni ni-key-25 text-info"></i> Logout
