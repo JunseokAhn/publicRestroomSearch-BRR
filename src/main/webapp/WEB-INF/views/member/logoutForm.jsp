@@ -28,26 +28,9 @@ function signOut() {
     console.log('로그아웃 완료');
     });
 	auth2.disconnect();
-// 	naverOut();
-	
+	goHome();
 }
 
-// function naverOut () {
-// 	 console.log("Naver Logout!");
-//      var open = window.open("https://nid.naver.com/nidlogin.logout");
-//      open.open();
-     
-//      setTimeout(function()
-//      {
-//          open.close();
-//          Logout();
-//      }, 1000);
-// }
-
-// function Logout() {
-// 	console.log("Redirect!");
-//     window.location.replace("http://localhost:8888/brr/maps/mapsMain");
-// }
 
 
 function goHome() {
@@ -65,7 +48,6 @@ function goHome() {
 <form action="/brr/maps/mapsMain" method = "GET" onsubmit="signOut()">
 <input type="submit" value="홈으로 돌아가기">
 </form>
-<!-- <input type = "button" value = "홈으로 돌아가기" onclick="signOut()"> -->
 
 
 </body>
