@@ -1,5 +1,7 @@
 package global.sesoc.brr.controller;
 
+import java.util.ArrayList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,17 @@ public class ReviewController {
 		logger.debug("리뷰write : " + VO.toString());
 		res = dao.reviewWrite(VO);
 
-		return "야, 넣을게";
+		return "";
+	}
+
+	// 최신리뷰 3개조회
+	@ResponseBody
+	@PostMapping(value = "reviewList")
+	public ArrayList<ReviewVO> write(String toilet_title) {
+		logger.debug("리뷰write : " + toilet_title);
+		ArrayList<ReviewVO> list = dao.reviewList(toilet_title);
+		for(ReviewVO i : list)
+			System.out.println(i);
+		return list;
 	}
 }

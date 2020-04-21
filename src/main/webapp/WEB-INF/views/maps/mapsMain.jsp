@@ -28,6 +28,7 @@
     var totalMarkerArr = [ ];
     var drawInfoArr = [ ];
     var nearbyToilet = [ ];
+    var reviewList = [ ];
     var polyFlag = 0;
     var locationFlag = 0;
     var starFlag = 0;
@@ -301,11 +302,10 @@
     //리뷰등록 검사
     function reviewCheck(){
         //청결도, 별점입력했는지
-        var toilet_title = document.getElementById("review-toilet").value
+        var toilet_title = document.getElementById("toilet_title").value
         var sessionId = document.getElementById("sessionId").value
-        var nickname = document.getElementById("nickname").value
-        var pictureUrl = document.getElementById("pictureUrl").value
-        var profile_image = document.getElementById("profile_image").value
+        var sessionNickname = document.getElementById("sessionNickname").value
+        var Profile = document.getElementById("Profile").value
         var review = document.getElementById("review-area").value
         var star = document.getElementById("star").value
         var clean = document.getElementById("clean").value
@@ -337,17 +337,14 @@
             alert("청결도를 등록해주세요");
             return;
         }
-       
-        //document.getElementById("review-form").submit();
-     
+        //리뷰등록
         $.ajax({
             url : "<c:url value='/review/reviewWrite'/>",
             data : {
                 toilet_title: toilet_title,
                 sessionId: sessionId,
-                nickname: nickname,
-                pictureUrl: pictureUrl,
-                profile_image: profile_image,
+                sessionNickname: sessionNickname,
+                Profile: Profile,
                 review: review,
                 star: star,
                 clean: clean
@@ -582,6 +579,56 @@
                             content2 += "</p>"
 
                             div1.innerHTML = content2;
+                            
+                            $.ajax({
+                                url: "<c:url value='/review/reviewList'/>",
+                                data: {
+                                    toilet_title: title
+                                },
+                                type: "post",
+                                success: function(e){
+                                    reviewList = e
+                                    starreview0 = document.getElementById("star-review-0");
+                                    starreview1 = document.getElementById("star-review-1");
+                                    starreview2 = document.getElementById("star-review-2");
+                                    cleanreview0 = document.getElementById("clean-review-0");
+                                    cleanreview1 = document.getElementById("clean-review-1");
+                                    cleanreview2 = document.getElementById("clean-review-2");
+                                    nickreview0 = document.getElementById("nick-review-0");
+                                    nickreview1 = document.getElementById("nick-review-1");
+                                    nickreview2 = document.getElementById("nick-review-2");
+                                    profilereview0 = document.getElementById("profile-review-0");
+                                    profilereview1 = document.getElementById("profile-review-1");
+                                    profilereview2 = document.getElementById("profile-review-2");
+                                    //<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="${sessionScope.Profile}"/>"></span>
+                                    switch(reviewList.length){
+                                        case 1:
+                                            
+                                            break;
+                                        case 2:
+                                            
+                                            break;
+                                        case 3:
+                                            
+                                            break;
+                                    }
+                                    console.log(reviewList.length)
+                                    
+                                  /*   <div class="row">
+									<div class="col-8 pr-0" style="float: left;">
+										<span class="card-title text-sm text-muted mb-0">Default Review</span>
+									</div>
+									<div class="col-4" style="text-align: center; float: right;">
+										<p class="mt-0 mb-3 text-muted text-sm">
+											<span class="text-success">4.0</span><span class="text-nowrap mr-2 ml-2">별점</span> <br> <span class="text-danger">3.5</span><span class="text-nowrap mr-2 ml-2">청결도</span>
+										</p>
+										<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;"></div>
+										<h5 class="card-title text-uppercase text-muted mb-0 mt-0">Nickname</h5>
+									</div>
+								</div> */
+                                }
+                            })
+                            
                         }
                     }(toiletMarker, i, title));
         }//마커생성 for[E]
@@ -590,6 +637,7 @@
     
     function reviewWrite (title, id) {
         document.getElementById("review-toilet").innerHTML=title;
+        $("#toilet_title").val(title)
         $("#review-container").fadeIn();
         $("#review").fadeIn();
     }
@@ -842,9 +890,8 @@
 </script>
 </head>
 <body class="" onload="initTmap()">
-	<input type="hidden" id="profile_image" name="profile_image" value="${sessionScope.profile_image}">
-	<input type="hidden" id="pictureUrl" name="pictureUrl" value="${sessionScope.pictureUrl}">
-	<input type="hidden" id="nickname" name="nickname" value="${sessionScope.nickname}">
+	<input type="hidden" id="Profile" name="profile_image" value="${sessionScope.Profile}">
+	<input type="hidden" id="sessionNickname" name="nickname" value="${sessionScope.sessionNickname}">
 	<input type="hidden" id="sessionId" name="sessionId" value="${sessionScope.sessionId}">
 	<div id="review-container"></div>
 	<div id="review" class="col-xl-4">
@@ -853,7 +900,7 @@
 				<div class="row align-items-center">
 					<div class="col">
 						<h2 id="review-toilet" class="mb-0" style="display: inline-block"></h2>
-						<input id="x-button" class="btn btn-sm btn-primary" type="button" value="X" onclick='$("#review").hide(), $("#review-container").fadeOut()'> <input id="register" class="btn btn-sm btn-primary" type="button" value="Register" onclick='reviewCheck()'>
+						<input type="hidden" id="toilet_title"> <input id="x-button" class="btn btn-sm btn-primary" type="button" value="X" onclick='$("#review").hide(), $("#review-container").fadeOut()'> <input id="register" class="btn btn-sm btn-primary" type="button" value="Register" onclick='reviewCheck()'>
 						<h6 id="review-ment" class="text-uppercase text-muted ls-1 mb-1">당신의 리뷰가 다른 사람들에게 도움이 될 거에요!</h6>
 					</div>
 				</div>
@@ -1135,11 +1182,7 @@
 		<div class="header bg-gradient-primary pb-7 pt-5 pt-md-8">
 			<div class="container-fluid">
 				<div class="header-body">
-					<input class='replyButton1 ml-1' type='button' value='최단거리' onclick='searchShortest()'> <input class='replyButton1 ml-0' type='button' value='최고 평가' onclick='searchRating()'> <input class='replyButton1 ml-0' type='button' value='최고 청결도' onclick='searchClan()'> 
-	console.log(${sessionScope.profile_image})
-	console.log(${sessionScope.pictureUrl})
-	console.log(${sessionScope.nickname})
-	console.log(${sessionScope.sessionId})<input class='replyButton1 ml-0' type='button' value='최대 원활도' onclick='searchSmooth()'>
+					<input class='replyButton1 ml-1' type='button' value='최단거리' onclick='searchShortest()'> <input class='replyButton1 ml-0' type='button' value='최고 평가' onclick='searchRating()'> <input class='replyButton1 ml-0' type='button' value='최고 청결도' onclick='searchClan()'><input class='replyButton1 ml-0' type='button' value='최대 원활도' onclick='searchSmooth()'>
 				</div>
 			</div>
 		</div>
@@ -1169,7 +1212,6 @@
 												<h5 class="card-title text-uppercase text-muted mb-0">화장실을 선택하세요...</h5>
 												<span class="h2 font-weight-bold mb-0">DEFAULT</span>
 											</div>
-
 										</div>
 										<p class="mt-3 mb-0 text-muted text-sm">
 											<span class="text-success"><i class="fa fa-arrow-up"></i> 변화량</span> <span class="text-nowrap mr-2">별점평균</span> <span class="text-success"><i class="fa fa-arrow-up"></i> 변화량</span> <span class="text-nowrap">청결도평균</span>
@@ -1185,18 +1227,16 @@
 									<div class="card-body3 replyButton2" id="div2">
 										<div class="row">
 											<div class="col-8 pr-0" style="float: left;">
-												<!-- <h5 class="card-title text-uppercase text-muted mb-0">Title</h5> -->
-												<span class="card-title text-sm text-muted mb-0">Default Review</span>
-												<!-- <span class="h2 font-weight-bold mb-0">Contents</span> -->
+												<span class="card-title text-sm text-muted mb-0" id="reviews-0">Default Review</span>
 											</div>
 											<div class="col-4" style="text-align: center; float: right;">
 												<p class="mt-0 mb-3 text-muted text-sm">
-													<span class="text-success">4.0</span><span class="text-nowrap mr-2 ml-2">별점</span> <br> <span class="text-danger">3.5</span><span class="text-nowrap mr-2 ml-2">청결도</span>
+													<span class="text-success" id="star-review-0"></span><span class="text-nowrap mr-2 ml-2">별점</span> <br> <span class="text-danger" id="clean-review-0"></span><span class="text-nowrap mr-2 ml-2">청결도</span>
 												</p>
-												<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;">
-													<!-- <i class="fas fa-chart-pie"></i> -->
+												<div id="profile-review-0">
+													<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;"></div>
 												</div>
-												<h5 class="card-title text-uppercase text-muted mb-0 mt-0">Nickname</h5>
+												<h5 class="card-title text-uppercase text-muted mb-0 mt-0" id="nick-review-0">Nickname</h5>
 											</div>
 										</div>
 									</div>
@@ -1207,18 +1247,14 @@
 									<div class="card-body3 replyButton2" id="div3">
 										<div class="row">
 											<div class="col-8 pr-0">
-												<!-- <h5 class="card-title text-uppercase text-muted mb-0">Title</h5> -->
-												<span class="card-title  text-sm text-muted mb-0">Default Review</span>
-												<!-- <span class="h2 font-weight-bold mb-0">Contents</span> -->
+												<span class="card-title  text-sm text-muted mb-0" id="reviews-1">Default Review</span>
 											</div>
 											<div class="col-4" style="text-align: center;">
 												<p class="mt-0 mb-3 text-muted text-sm">
-													<span class="text-success">4.0</span><span class="text-nowrap mr-2 ml-2">별점</span> <br> <span class="text-danger">3.5</span><span class="text-nowrap mr-2 ml-2">청결도</span>
+													<span class="text-success" id="star-review-1"></span><span class="text-nowrap mr-2 ml-2">별점</span> <br> <span class="text-danger" id="clean-review-1"></span><span class="text-nowrap mr-2 ml-2">청결도</span>
 												</p>
-												<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;">
-													<!-- <i class="fas fa-chart-pie"></i> -->
-												</div>
-												<h5 class="card-title text-uppercase text-muted mb-0 mt-0">Nickname</h5>
+												<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;"></div>
+												<h5 class="card-title text-uppercase text-muted mb-0 mt-0" id="nick-review-1">Nickname</h5>
 											</div>
 										</div>
 									</div>
@@ -1229,18 +1265,14 @@
 									<div class="card-body3 replyButton2" id="div4">
 										<div class="row">
 											<div class="col-8 pr-0">
-												<!-- <h5 class="card-title text-uppercase text-muted mb-0">Title</h5> -->
-												<span class="card-title text-sm text-muted mb-0">Default Review</span>
-												<!-- <span class="h2 font-weight-bold mb-0">Contents</span> -->
+												<span class="card-title text-sm text-muted mb-0" id="reviews-2">Default Review</span>
 											</div>
 											<div class="col-4" style="text-align: center;">
 												<p class="mt-0 mb-3 text-muted text-sm">
-													<span class="text-success">4.0</span><span class="text-nowrap mr-2 ml-2">별점</span> <br> <span class="text-danger">3.5</span><span class="text-nowrap mr-2 ml-2">청결도</span>
+													<span class="text-success" id="star-review-2"></span><span class="text-nowrap mr-2 ml-2">별점</span> <br> <span class="text-danger" id="clean-review-2"></span><span class="text-nowrap mr-2 ml-2">청결도</span>
 												</p>
-												<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;">
-													<!-- <i class="fas fa-chart-pie"></i> -->
-												</div>
-												<h5 class="card-title text-uppercase text-muted mb-0 mt-0">Nickname</h5>
+												<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;"></div>
+												<h5 class="card-title text-uppercase text-muted mb-0 mt-0" id="nick-review-2">Nickname</h5>
 											</div>
 										</div>
 									</div>

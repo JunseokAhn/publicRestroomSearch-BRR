@@ -12,4 +12,6 @@ public interface ReviewMapper {
 
 	int reviewWrite(ReviewVO vO);
 
+	ArrayList<ReviewVO> reviewList(String toilet_title);
+
 }

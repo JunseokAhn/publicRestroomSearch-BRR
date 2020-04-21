@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 public class ReviewVO {
 	private String toilet_title;
 	private String sessionId;
-	private String nickname;
-	private String pictureUrl;
-	private String profile_image;
+	private String sessionNickname;
+	private String Profile;
 	private String review;
 	private int star;
 	private int clean;
+	private String inputdate;
 }

@@ -4,8 +4,16 @@
 <mapper namespace="global.sesoc.brr.mapper.ReviewMapper">
 	<insert id="reviewWrite" parameterType="review">
 		insert into brr_review
-		(toilet_title, sessionId, nickname, pictureUrl, profile_image, review, star, clean)
+		(toilet_title, sessionId, sessionNickname, Profile, review, star, clean)
 		values
-		(#{toilet_title}, #{sessionId}, #{nickname}, #{pictureUrl}, #{profile_image}, #{review}, #{star}, #{clean})
+		(#{toilet_title}, #{sessionId}, #{sessionNickname}, #{Profile}, #{review}, #{star}, #{clean})
 	</insert>
+	
+	<select id="reviewList" parameterType="String" resultType="review">
+		select * 
+		from (select * from brr_review 
+			 where toilet_title like #{toilet_title}
+			 order by inputdate desc) 
+		where rownum &lt; 4
+	</select>
 </mapper>
