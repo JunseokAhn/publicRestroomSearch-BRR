@@ -31,7 +31,8 @@ if(confirm('진단결과를 저장하시겠습니까?'))
 		url : 'insert',
 		type : 'POST',
 		data : {
-			status : result,
+			status : result
+			
 	    },
 		success : function() {
 			alert('저장완료');
@@ -67,78 +68,78 @@ function clickFunc(){
 	{
 		//type1에 대한 건강진단
 	   if(result=="type1brown"){
-       window.open('type1brown','t1brown','top=200,left=200,width=330,height=250,resizable=no'); 
+       window.open('type1brown','t1brown','top=200,left=200,width=330,height=300,resizable=no'); 
        result ='type1';
            	}
 	
       if(result=="type1red"){
-	       window.open('type1red','t1brown','top=200,left=200,width=330,height=250,resizable=no'); 
+	       window.open('type1red','t1brown','top=200,left=200,width=330,height=300,resizable=no'); 
 	       result ='type1';
 	       
 			}
 	   if(result=="type1yellow"){
-	       window.open('type1yellow','t1brown','top=200,left=200,width=330,height=250,resizable=no'); 
+	       window.open('type1yellow','t1brown','top=200,left=200,width=330,height=300,resizable=no'); 
 	       result ='type1';
 			}
 	   if(result=="type1gray"){
-	       window.open('type1gray','t1brown','top=200,left=200,width=330,height=250,resizable=no'); 
+	       window.open('type1gray','t1brown','top=200,left=200,width=330,height=300,resizable=no'); 
 	       result ='type1';
 			}
         //type2에 대한 건강진단
 	     if(result=="type2brown"){
-	       window.open('type2brown','t2brown','top=200,left=200,width=330,height=250,resizable=no'); 
+	       window.open('type2brown','t2brown','top=200,left=200,width=330,height=300,resizable=no'); 
 	       result ='type2';
 	           	}
 		
 	      if(result=="type2red"){
-		       window.open('type2red','t2brown','top=200,left=200,width=330,height=250,resizable=no'); 
+		       window.open('type2red','t2brown','top=200,left=200,width=330,height=300,resizable=no'); 
 		       result ='type2';
 		       
 				}
 		   if(result=="type2yellow"){
-		       window.open('type2yellow','t2brown','top=200,left=200,width=330,height=250,resizable=no'); 
+		       window.open('type2yellow','t2brown','top=200,left=200,width=330,height=300,resizable=no'); 
 		       result ='type2';
 				}
 		   if(result=="type2gray"){
-		       window.open('type2gray','t2brown','top=200,left=200,width=330,height=250,resizable=no'); 
+		       window.open('type2gray','t2brown','top=200,left=200,width=330,height=300,resizable=no'); 
 		       result ='type2';
 				}
          //type3에 대한 건강진단
 		   if(result=="type3brown"){
-		       window.open('type3brown','t3brown','top=200,left=200,width=330,height=250,resizable=no'); 
+		       window.open('type3brown','t3brown','top=200,left=200,width=330,height=300,resizable=no'); 
 		       result ='type3';
 		           	}
 			
 		      if(result=="type3red"){
-			       window.open('type3red','t3brown','top=200,left=200,width=330,height=250,resizable=no'); 
+			       window.open('type3red','t3brown','top=200,left=200,width=330,height=300,resizable=no'); 
 			       result ='type3';
 			       
 					}
 			   if(result=="type3yellow"){
-			       window.open('type3yellow','t3brown','top=200,left=200,width=330,height=250,resizable=no'); 
+			       window.open('type3yellow','t3brown','top=200,left=200,width=330,height=300,resizable=no'); 
 			       result ='type3';
 					}
 			   if(result=="type3gray"){
-			       window.open('type3gray','t3brown','top=200,left=200,width=330,height=250,resizable=no'); 
+			       window.open('type3gray','t3brown','top=200,left=200,width=330,height=300,resizable=no'); 
 			       result ='type3';
 					}
           //type4에 대한 건강진단
 			   if(result=="type4brown"){
-			       window.open('type4brown','t4brown','top=200,left=200,width=330,height=250,resizable=no'); 
+			       window.open('type4brown','t4brown','top=200,left=200,width=330,height=300,resizable=no'); 
 			       result ='type4';
 			           	}
 				
 			      if(result=="type4red"){
-				       window.open('type4red','t4brown','top=200,left=200,width=330,height=250,resizable=no'); 
+				       window.open('type4red','t4brown','top=200,left=200,width=330,height=300,resizable=no'); 
 				       result ='type4';
 				       
 						}
 				   if(result=="type4yellow"){
-				       window.open('type4yellow','t4brown','top=200,left=200,width=330,height=250,resizable=no'); 
+				       window.open('type4yellow','t4brown','top=200,left=200,width=330,height=300,resizable=no'); 
 				       result ='type4';
 						}
 				   if(result=="type4gray"){
-				       window.open('type4gray','t4brown','top=200,left=200,width=330,height=250,resizable=no'); 
+				       window.open('type4gray','t4brown','top=200,left=200,width=330,height=300,resizable=no'); 
 				       result ='type4';
 						}
 		}

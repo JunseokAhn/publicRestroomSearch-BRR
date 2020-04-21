@@ -6,23 +6,39 @@
 
 
 
-<insert id="insert" parameterType="resvo">
+<insert id="insert" parameterType="resVO">
 	insert 
 	into 
-		test_result
+		diary_result
 	(
-		status
+	    resNum,
+		status,
+		inputdate,
+		resvalue
+		
     )
 	
 	values 
 	(
-         #{status}
+	   diary_result_seq.nextval,
+         #{status},
+         sysdate,
+         #{resvalue}
 	)
 </insert>
 
-<select id="list" resultType="resvo">
+<select id="list" resultType="resVO" parameterType="string">
 select *
-from test_result
+
+
+
+from DIARY_RESULT
+where to_char(sysdate,'fmmm') = #{db_startDate} 
+and to_char(sysdate,'yyyy') = #{db_endDate}
+ 
+  
 
 </select>
+
+
 </mapper>

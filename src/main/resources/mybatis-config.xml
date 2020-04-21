@@ -5,7 +5,8 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="global.sesoc.brr.vo.VO" alias="VO" />
-		<typeAlias type="global.sesoc.brr.vo.resVO" alias="resvo"/>
+		<typeAlias type="global.sesoc.brr.vo.DateData" alias="datedata"/>
+		<typeAlias type="global.sesoc.brr.vo.resVO" alias="resVO"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/BoardMapper.xml" />

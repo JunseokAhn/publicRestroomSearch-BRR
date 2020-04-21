@@ -83,10 +83,11 @@ var myChart = new Chart(ctx, {
 });
 </script>
 </div>
-
+<form action="insert" method="post">
 <table style="margin-top:50%">
 <tr>
-<td id='1' style="display:none">1</td> 
+<td id='1'  style="display:none">1</td> 
+<td id='resvalue' style="display:none">1</td> 
 <td>
 <img id="type1brown" src="../resources/img/normal.png"  style="width:50%"  />
 </td>
@@ -95,7 +96,9 @@ var myChart = new Chart(ctx, {
  수분섭취와 스트레스를 줄여보세요.</p> 
 </td>
 </tr>
-</table>
 
+</table>
+<input id="bt" style=" margin-top:-33px; width:50pt; height:25pt; font-size:10px;" type="submit" value="저장">
+</form>
 </body>
 </html>

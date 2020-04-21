@@ -1,7 +1,10 @@
 package global.sesoc.brr.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -97,16 +100,28 @@ public class DiaryController {
 	
 	@ResponseBody
 	@RequestMapping (value="insert", method=RequestMethod.POST)
-	public void insert(resVO res) {
-		System.out.println(res);
-		dao.insert(res);
+	public void insert(resVO resVO) {
+		System.out.println(resVO);
+		dao.insert(resVO);
 	}
 
 	
-	@RequestMapping(value = "/diaryRecord", method = RequestMethod.GET)
-	public String record() {
-		return "diary/diaryRecord";
+//	@RequestMapping(value = "/diaryRecord", method = RequestMethod.GET)
+//	public String record() {
+//		return "diary/diaryRecord";
+//	}
+	@RequestMapping(value = "/rcd", method = RequestMethod.GET)
+	public String record2() {
+		return "diary/rcd";
 	}
 	
+//	 @RequestMapping(value = "/diaryRecord", method = RequestMethod.GET)
+//		public String apihospital(Model model) {
+//			
+//			ArrayList<resVO> list = dao.list();
+//			
+//			model.addAttribute("list",list);
+//			return "diary/diaryRecord";
+//		}
 	
 } 

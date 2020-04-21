@@ -79,6 +79,7 @@ var myChart = new Chart(ctx, {
 <table style="margin-top:50%">
 <tr>
 <td id='1' style="display:none">1</td> 
+<td id='resvalue' style="display:none">8</td> 
 <td>
 <img id="type2yellow" src="../resources/img/normal.png"  style="width:60%"  />
 </td>
