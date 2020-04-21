@@ -49,7 +49,7 @@
 						</div>
 						<a href="<c:url value="/profile"/>" class="dropdown-item"> <i class="ni ni-single-02"></i> <span>My profile</span>
 						</a> 
-<%-- 						<a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-settings-gear-65"></i> <span>Settings</span> --%>
+						<a href="<c:url value="/board/listSNS"/>" class="dropdown-item"> <i class="ni ni-settings-gear-65"></i> <span>SNS</span></a>
 <%-- 						</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-calendar-grid-58"></i> <span>Activity</span> --%>
 <%-- 						</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-support-16"></i> <span>Support</span> --%>
 <!-- 						</a> -->
@@ -89,7 +89,7 @@
 				<ul class="navbar-nav">
 					<li class="nav-item"><a class="nav-link  active " href="<c:url value="/maps/mapsMain"/>"> <i class="ni ni-pin-3 text-orange"></i> Maps
 					</a></li>
-					<li class="nav-item"><a class="nav-link " href="<c:url value="/board/listBoard"/>"> <i class="ni ni-tv-2 text-primary"></i> Board
+					<li class="nav-item"><a class="nav-link " href="<c:url value="/board/listSNS"/>"> <i class="ni ni-tv-2 text-primary"></i> Board
 					</a></li>
 					<%-- <li class="nav-item  active "><a class="nav-link " href="<c:url value="/examples/index"/>">
 							<i class="ni ni-tv-2 text-primary"></i> Dashboard
