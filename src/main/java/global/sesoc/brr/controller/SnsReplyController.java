@@ -34,8 +34,7 @@ public class SnsReplyController {
 	@ResponseBody
 	@RequestMapping(value = "insertSnsReply", method = RequestMethod.POST)
 	public void insertSnsReply(SnsReplyVO snsReply, HttpSession session) {
-		//String id = (String)session.getAttribute("loginId");
-		String id = "haha";
+		String id = (String)session.getAttribute("sessionId");
 		snsReply.setId(id);
 		logger.info("전달된 객체1: {}", snsReply);
 		dao.insertSnsReply(snsReply);
@@ -54,8 +53,7 @@ public class SnsReplyController {
 	@ResponseBody
 	@RequestMapping(value = "deleteSnsReply", method = RequestMethod.POST, produces="text/plain;charset=UTF-8")
 	public String deleteSnsReply(SnsReplyVO snsReply, HttpSession session) {
-		//String id = (String)session.getAttribute("loginId");
-		String id = "haha";
+		String id = (String)session.getAttribute("sessionId");
 		snsReply.setId(id);
 		logger.info("전달된 객체2: {}", snsReply);
 		int cnt = dao.deleteSnsReply(snsReply);
@@ -71,9 +69,10 @@ public class SnsReplyController {
 	@ResponseBody
 	@RequestMapping(value = "updateSnsReply", method = RequestMethod.POST, produces="text/plain;charset=UTF-8")
 	public String updateSnsReply(SnsReplyVO snsReply, HttpSession session) {
-		//String id = (String)session.getAttribute("loginId");
-		String id = "haha";
+		String id = (String)session.getAttribute("sessionId");
+		String email = (String)session.getAttribute("sessionEmail");
 		snsReply.setId(id);
+		snsReply.setEmail(email);
 		logger.info("전달된 객채3: {}", snsReply);
 		int cnt = dao.updateSnsReply(snsReply);
 		
