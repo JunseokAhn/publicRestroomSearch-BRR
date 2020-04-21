@@ -48,25 +48,25 @@ public class DayAverDAO {
 	}
 	
 	/*
-	 * 해당 화장실의 이용 현황을 가지고 옴
+	 * 검색기록 삭제
 	 * */
-	public ArrayList<DayAverVO> getAver (String toiletnm) {
-		ArrayList<DayAverVO> list = null;
-		
-		try {
-			DayAverMapper mapper = session.getMapper(DayAverMapper.class);
-			list = mapper.getAver(toiletnm);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
 	
 	public int deleteRecord (String id) {
 		int result = -1;
 		try {
 			DayAverMapper mapper = session.getMapper(DayAverMapper.class);
 			result = mapper.deleteRecord(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public int average (Double lat, Double lng) {
+		int result = 0;
+		try {
+			DayAverMapper mapper = session.getMapper(DayAverMapper.class);
+			result = mapper.average(lat, lng);	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

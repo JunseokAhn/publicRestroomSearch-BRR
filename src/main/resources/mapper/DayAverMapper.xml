@@ -21,4 +21,17 @@ where lat = #{lat} and lng = #{lng}
 delete from dayaver where id = #{id}
 </delete>
 
+
+<select id="average" resultType="int">
+SELECT
+    avg(count(*))
+FROM dayaver
+where lat = #{lat} and lng = #{lng}
+GROUP by inputdate
+having inputdate BETWEEN sysdate - '7' and sysdate
+</select>
+
+
+
+
 </mapper>

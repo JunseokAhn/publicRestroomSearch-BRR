@@ -104,7 +104,7 @@ public class GoogleLoginController {
 			 }
 			 
 			 httpsession.setAttribute("sessionId", userId);
-			 httpsession.setAttribute("sessionName", name);
+			 httpsession.setAttribute("sessionNickname", name);
 			 httpsession.setAttribute("sessionEmail", email);
 			 httpsession.setAttribute("Profile", pictureUrl);
 			 httpsession.setAttribute("sessionGooglename", givenName);
