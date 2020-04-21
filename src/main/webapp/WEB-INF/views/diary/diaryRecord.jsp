@@ -255,6 +255,7 @@
 							<p class="date_subject">
 							
 							 <c:if test="${scheduleList.status==1}">
+							 
 							<img id="type1brown" src="../resources/img/normal.png"  style="width:10%"  />
 							</c:if> 
 							<c:if test="${scheduleList.status==2}">
