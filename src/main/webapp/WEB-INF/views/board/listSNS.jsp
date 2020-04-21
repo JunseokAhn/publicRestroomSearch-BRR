@@ -72,7 +72,7 @@ $(document).ready(function() {
 		$('.form1[data-num="'+num+'"]').toggle();
 	});
 	//$("#form").on('click', snsReplySave);
-// 	$("#form + ${sns.snsBoardnum}").on('click', snsReplySave);
+	$("#form + ${sns.snsBoardnum}").on('click', snsReplySave);
 	var replyUpd = $("span.review" + snsReplynum).find('#replyUpd').val();
 	init();
 });
