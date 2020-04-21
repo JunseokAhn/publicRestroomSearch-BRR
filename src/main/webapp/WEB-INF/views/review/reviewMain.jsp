@@ -15,11 +15,39 @@
 <link href="<c:url value="/resources/assets/js/plugins/nucleo/css/nucleo.css"/>" rel="stylesheet" />
 <link href="<c:url value="/resources/assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css"/>" rel="stylesheet" />
 <!-- CSS Files -->
+<link href="<c:url value="/resources/css/boardStyle.css"/>" rel="stylesheet" />
 <link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
 </head>
 
 <body class="">
-		<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
+	<!-- 네비게이션[S] -->
+	<div id="feedback-container"></div>
+	<div id="feedback" class="col-xl-4">
+		<form action="">
+			<div class="card shadow">
+				<div class="card-header bg-transparent">
+					<div class="row align-items-center">
+						<div class="col">
+							<h2 class="mb-0" style="display: inline-block">Feedback Send</h2>
+							<input id="x-button" name="feed-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#feedback").hide(), $("#feedback-container").fadeOut()'> <input id="register" name="feedback-send" class="btn btn-sm btn-primary" type="button" value="Send Feedback" onclick="SendFeedback()">
+							<h6 id="review-ment" class="text-uppercase text-muted ls-1 mb-1">사용자님의 의견을 적어주세요! 적극 반영하겠습니다.</h6>
+						</div>
+					</div>
+				</div>
+
+				<div class="card-body2">
+					<div class="col-xl-12 col-lg-6">
+						<div class="card card-stats mb-4 mb-xl-0">
+							<textarea class="card-body4 replyButton2" id="feedback-contents" onkeydown="resize(this)" onkeyup="resize(this)" style="resize: none;"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+
+
+	<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
 		<div class="container-fluid">
 			<!-- Toggler -->
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
@@ -107,9 +135,12 @@
 						</a></li>
 					<%-- <li class="nav-item  active "><a class="nav-link " href="<c:url value="/examples/index"/>">
 							<i class="ni ni-tv-2 text-primary"></i> Dashboard
-						</a></li> //nav-item  active는 무조건 검정색으로 표시됩니다. --%>
-
-
+						</a></li> //nav-item  active는 무조건 검정색으로 표시됩니다. 
+					
+						<%-- <li class="nav-item"><a class="icon icon-shape bg-danger text-white rounded-circle shadow" href="<c:url value="/diary/diaryMain"/>">
+							<i class="fas fa-chart-bar"></i> Diary				
+						</li>	
+					 --%>
 					<li class="nav-item"><a class="nav-link " href="<c:url value="/diary/diaryMain"/>">
 							<i class="ni ni-bullet-list-67 text-red"></i> Diary
 						</a></li>
@@ -121,29 +152,29 @@
 								<i class="ni ni-key-25 text-info"></i> Login
 							</a></li>
 						<li class="nav-item"><a class="nav-link " href="<c:url value="/member/profile"/>">
-								<i class="ni ni-single-02 text-yellow"></i> User profile
+								<i class="ni ni-single-02 text-gray-dark"></i> User profile
 							</a></li>
 					</c:if>
 
 					<c:if test="${sessionScope.sessionId != null }">
 						<li class="nav-item"><a class="nav-link " href="<c:url value="/member/profile"/>">
-								<i class="ni ni-single-02 text-yellow"></i> User profile
+								<i class="ni ni-single-02 text-gray-dark"></i> User profile
 							</a></li>
 						<li class="nav-item"><a class="nav-link" href="<c:url value="/member/logout"/>">
 								<i class="ni ni-key-25 text-info"></i> Logout
 							</a></li>
-						<!-- 네이버 로그인 시 -->
-						<c:if test="${sessionScope.sessionNickname != null}">
-							<li class="nav-item"><a class="nav-link " href="<c:url value="/member/deleteNaver"/>">
-									<i class="ni ni-bullet-list-67 text-red"></i> Naver탈퇴
-								</a></li>
-						</c:if>
-						<!-- 구글 로그인 시 -->
-						<c:if test="${sessionScope.sessionNickname == null}">
-							<li class="nav-item"><a class="nav-link " href="<c:url value="/member/deleteGoogle"/>">
-									<i class="ni ni-bullet-list-67 text-red"></i> Google탈퇴
-								</a></li>
-						</c:if>
+						<!-- 						네이버 로그인 시 -->
+						<%-- 						<c:if test="${sessionScope.sessionNaver != null}"> --%>
+						<%-- 							<li class="nav-item"><a class="nav-link " href="<c:url value="/member/deleteNaver"/>"> --%>
+						<!-- 									<i class="ni ni-bullet-list-67 text-red"></i> Naver탈퇴 -->
+						<!-- 								</a></li> -->
+						<%-- 						</c:if> --%>
+						<!-- 						구글 로그인 시 -->
+						<%-- 						<c:if test="${sessionScope.sessionNaver == null}"> --%>
+						<%-- 							<li class="nav-item"><a class="nav-link " href="<c:url value="/member/deleteGoogle"/>"> --%>
+						<!-- 									<i class="ni ni-bullet-list-67 text-red"></i> Google탈퇴 -->
+						<!-- 								</a></li> -->
+						<%-- 						</c:if> --%>
 					</c:if>
 				</ul>
 				<!-- Divider -->
@@ -152,24 +183,37 @@
 				<h6 class="navbar-heading text-muted">NEED LOGIN</h6>
 				<!-- Navigation -->
 				<ul class="navbar-nav mb-md-3">
-					<li class="nav-item"><a class="nav-link" href="https://www.op.gg/champion/maokai/statistics/top">
-							<i class="ni ni-spaceship"></i> Preferred toilet
-						</a></li>
 					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/foundation/colors.html">
-							<i class="ni ni-palette"></i> Recent toilet
+							<i class="ni ni-watch-time text-indigo"></i> <span>Recent toilet</span>
 						</a></li>
-					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/components/alerts.html">
-							<i class="ni ni-ui-04"></i> Components
+					<li class="nav-item"><a class="nav-link" href="https://www.op.gg/champion/maokai/statistics/top">
+							<i class="ni ni-favourite-28 text-pink"></i> <span>Preferred toilet</span>
 						</a></li>
+
+					<li class="nav-item"><a class="nav-link" href="javascript:FeedbackShow();">
+							<i class="ni ni-send text-blue"></i> <span>Send Feedback</span>
+						</a></li>
+
+					<li class="nav-item"><br> <br>
+						<div id="openweathermap-widget-18"></div> <script>
+                            /* window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = []; 
+                            window.myWidgetParam.push({id: 18,cityid: '1835848',appid: 'c08b376c4c1ca3b5e593c4991d91eb3c',
+                            units: 'metric',containerid: 'openweathermap-widget-18',  });  
+                            (function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";
+                            script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
+                            var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })(); */
+                        </script></li>
+
 				</ul>
 				<ul class="navbar-nav">
 					<li class="nav-item active active-pro"><a class="nav-link" href="<c:url value="/maps/mapsMain2"/>">
-							<i class="ni ni-send text-dark"></i> Google Maps (Beta)
+							<i class="ni ni-bus-front-12"></i> Google Maps (Beta)
 						</a></li>
 				</ul>
 			</div>
 		</div>
 	</nav>
+	<!-- 네비게이션[E] -->
 	<div class="main-content">
 		<!-- Navbar -->
 		<nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
@@ -238,78 +282,194 @@
 		<!-- Header -->
 		<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
 			<div class="container-fluid">
-				<div class="header-body">
-					
-				</div>
+				<div class="header-body"></div>
 			</div>
 		</div>
 		<div class="container-fluid mt--7">
-			<!-- Table -->
+			<!-- Dark table -->
 			<div class="row">
 				<div class="col">
-					<div class="card shadow">
-						<div class="card-header border-0">
-							<h3 class="mb-0">Card tables</h3>
+					<div class="card bg-default shadow">
+						<div class="card-header bg-transparent border-0">
+							<h3 class="text-white mb-0">All reviews</h3>
 						</div>
 						<div class="table-responsive">
-							<table class="table align-items-center table-flush">
-								<thead class="thead-light">
+							<table class="table align-items-center table-dark table-flush">
+								<thead class="thead-dark">
 									<tr>
-										<th scope="col">Project</th>
-										<th scope="col">Budget</th>
-										<th scope="col">Status</th>
-										<th scope="col">Users</th>
-										<th scope="col">Completion</th>
-										<th scope="col"></th>
+										<th scope="col">Toilet Title</th>
+										<th scope="col">contents</th>
+										<th scope="col">User</th>
+										<th scope="col">Star</th>
+										<th scope="col">Clean</th>
+										<th scope="col">Date</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
 										<th scope="row">
 											<div class="media align-items-center">
-												<a href="#" class="avatar rounded-circle mr-3"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/bootstrap.jpg"/>">
-												</a>
 												<div class="media-body">
-													<span class="mb-0 text-sm">Argon Design System</span>
+													<span class="mb-0 text-sm">화장실이름</span>
 												</div>
 											</div>
 										</th>
-										<td>$2,500 USD</td>
-										<td><span class="badge badge-dot mr-4"> <i class="bg-warning"></i> pending
-										</span></td>
+										<td>내용내용내용내용내용내용내용내용내용내용내용내용내용내용</td>
+										<td><span class="avatar avatar-sm rounded-circle"> <img src="${sessionScope.Profile}">
+										</span>닉네임</td>
 										<td>
 											<div class="avatar-group">
-												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-1-800x800.jpg"/>" class="rounded-circle">
-												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-2-800x800.jpg"/>" class="rounded-circle">
-												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-3-800x800.jpg"/>" class="rounded-circle">
-												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>" class="rounded-circle">
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
 												</a>
 											</div>
 										</td>
 										<td>
-											<div class="d-flex align-items-center">
-												<span class="mr-2">60%</span>
-												<div>
-													<div class="progress">
-														<div class="progress-bar bg-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-													</div>
-												</div>
+											<div class="avatar-group">
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
 											</div>
 										</td>
-										<td class="text-right">
-											<div class="dropdown">
-												<a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-ellipsis-v"></i>
-												</a>
-												<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-													<a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a> <a class="dropdown-item" href="#">Something else here</a>
-												</div>
-											</div>
+										<td>
+											<div class="avatar-group">2020/04/22</div>
 										</td>
 									</tr>
 									<tr>
 										<th scope="row">
 											<div class="media align-items-center">
-												<a href="#" class="avatar rounded-circle mr-3"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/angular.jpg"/>">
+												<div class="media-body">
+													<span class="mb-0 text-sm">화장실이름</span>
+												</div>
+											</div>
+										</th>
+										<td>내용내용내용내용내용내용내용내용내용내용내용내용내용내용</td>
+										<td><span class="avatar avatar-sm rounded-circle"> <img src="${sessionScope.Profile}">
+										</span>닉네임</td>
+										<td>
+											<div class="avatar-group">
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+											</div>
+										</td>
+										<td>
+											<div class="avatar-group">
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+											</div>
+										</td>
+										<td>
+											<div class="avatar-group">2020/04/22</div>
+										</td>
+									</tr>
+									<tr>
+										<th scope="row">
+											<div class="media align-items-center">
+												<div class="media-body">
+													<span class="mb-0 text-sm">화장실이름</span>
+												</div>
+											</div>
+										</th>
+										<td>내용내용내용내용내용내용내용내용내용내용내용내용내용내용</td>
+										<td><span class="avatar avatar-sm rounded-circle"> <img src="${sessionScope.Profile}">
+										</span>닉네임</td>
+										<td>
+											<div class="avatar-group">
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+											</div>
+										</td>
+										<td>
+											<div class="avatar-group">
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+											</div>
+										</td>
+										<td>
+											<div class="avatar-group">2020/04/22</div>
+										</td>
+									</tr>
+									<tr>
+										<th scope="row">
+											<div class="media align-items-center">
+												<a href="#" class="avatar rounded-circle mr-3">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/angular.jpg"/>">
 												</a>
 												<div class="media-body">
 													<span class="mb-0 text-sm">Angular Now UI Kit PRO</span>
@@ -321,10 +481,17 @@
 										</span></td>
 										<td>
 											<div class="avatar-group">
-												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-1-800x800.jpg"/>" class="rounded-circle">
-												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-2-800x800.jpg"/>" class="rounded-circle">
-												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-3-800x800.jpg"/>" class="rounded-circle">
-												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>" class="rounded-circle">
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-1-800x800.jpg"/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-2-800x800.jpg"/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-3-800x800.jpg"/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>" class="rounded-circle">
 												</a>
 											</div>
 										</td>
@@ -340,10 +507,13 @@
 										</td>
 										<td class="text-right">
 											<div class="dropdown">
-												<a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-ellipsis-v"></i>
+												<a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+													<i class="fas fa-ellipsis-v"></i>
 												</a>
 												<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-													<a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a> <a class="dropdown-item" href="#">Something else here</a>
+													<a class="dropdown-item" href="#">Action</a>
+													<a class="dropdown-item" href="#">Another action</a>
+													<a class="dropdown-item" href="#">Something else here</a>
 												</div>
 											</div>
 										</td>
@@ -351,7 +521,8 @@
 									<tr>
 										<th scope="row">
 											<div class="media align-items-center">
-												<a href="#" class="avatar rounded-circle mr-3"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/sketch.jpg"/>">
+												<a href="#" class="avatar rounded-circle mr-3">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/sketch.jpg"/>">
 												</a>
 												<div class="media-body">
 													<span class="mb-0 text-sm">Black Dashboard</span>
@@ -363,10 +534,17 @@
 										</span></td>
 										<td>
 											<div class="avatar-group">
-												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-1-800x800.jpg"/>" class="rounded-circle">
-												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-2-800x800.jpg"/>" class="rounded-circle">
-												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-3-800x800.jpg"/>" class="rounded-circle">
-												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>" class="rounded-circle">
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-1-800x800.jpg"/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-2-800x800.jpg"/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-3-800x800.jpg"/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>" class="rounded-circle">
 												</a>
 											</div>
 										</td>
@@ -382,10 +560,13 @@
 										</td>
 										<td class="text-right">
 											<div class="dropdown">
-												<a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-ellipsis-v"></i>
+												<a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+													<i class="fas fa-ellipsis-v"></i>
 												</a>
 												<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-													<a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a> <a class="dropdown-item" href="#">Something else here</a>
+													<a class="dropdown-item" href="#">Action</a>
+													<a class="dropdown-item" href="#">Another action</a>
+													<a class="dropdown-item" href="#">Something else here</a>
 												</div>
 											</div>
 										</td>
@@ -393,7 +574,8 @@
 									<tr>
 										<th scope="row">
 											<div class="media align-items-center">
-												<a href="#" class="avatar rounded-circle mr-3"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/react.jpg"/>">
+												<a href="#" class="avatar rounded-circle mr-3">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/react.jpg"/>">
 												</a>
 												<div class="media-body">
 													<span class="mb-0 text-sm">React Material Dashboard</span>
@@ -405,10 +587,17 @@
 										</span></td>
 										<td>
 											<div class="avatar-group">
-												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-1-800x800.jpg"/>" class="rounded-circle">
-												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-2-800x800.jpg"/>" class="rounded-circle">
-												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-3-800x800.jpg"/>" class="rounded-circle">
-												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>" class="rounded-circle">
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-1-800x800.jpg"/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-2-800x800.jpg"/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-3-800x800.jpg"/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>" class="rounded-circle">
 												</a>
 											</div>
 										</td>
@@ -424,10 +613,13 @@
 										</td>
 										<td class="text-right">
 											<div class="dropdown">
-												<a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-ellipsis-v"></i>
+												<a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+													<i class="fas fa-ellipsis-v"></i>
 												</a>
 												<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-													<a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a> <a class="dropdown-item" href="#">Something else here</a>
+													<a class="dropdown-item" href="#">Action</a>
+													<a class="dropdown-item" href="#">Another action</a>
+													<a class="dropdown-item" href="#">Something else here</a>
 												</div>
 											</div>
 										</td>
@@ -435,7 +627,8 @@
 									<tr>
 										<th scope="row">
 											<div class="media align-items-center">
-												<a href="#" class="avatar rounded-circle mr-3"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/vue.jpg"/>">
+												<a href="#" class="avatar rounded-circle mr-3">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/vue.jpg"/>">
 												</a>
 												<div class="media-body">
 													<span class="mb-0 text-sm">Vue Paper UI Kit PRO</span>
@@ -447,10 +640,17 @@
 										</span></td>
 										<td>
 											<div class="avatar-group">
-												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-1-800x800.jpg"/>" class="rounded-circle">
-												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-2-800x800.jpg"/>" class="rounded-circle">
-												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-3-800x800.jpg"/>" class="rounded-circle">
-												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>" class="rounded-circle">
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-1-800x800.jpg"/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-2-800x800.jpg"/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-3-800x800.jpg"/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>" class="rounded-circle">
 												</a>
 											</div>
 										</td>
@@ -466,10 +666,316 @@
 										</td>
 										<td class="text-right">
 											<div class="dropdown">
-												<a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-ellipsis-v"></i>
+												<a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+													<i class="fas fa-ellipsis-v"></i>
 												</a>
 												<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-													<a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a> <a class="dropdown-item" href="#">Something else here</a>
+													<a class="dropdown-item" href="#">Action</a>
+													<a class="dropdown-item" href="#">Another action</a>
+													<a class="dropdown-item" href="#">Something else here</a>
+												</div>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="card-footer py-4 card bg-default shadow">
+							<nav aria-label="...">
+								<ul class="pagination justify-content-end mb-0">
+									<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">
+											<i class="fas fa-angle-left"></i> <span class="sr-only">Previous</span>
+										</a></li>
+									<li class="page-item active"><a class="page-link" href="#">1</a></li>
+									<li class="page-item"><a class="page-link" href="#">
+											2 <span class="sr-only">(current)</span>
+										</a></li>
+									<li class="page-item"><a class="page-link" href="#">3</a></li>
+									<li class="page-item"><a class="page-link" href="#">
+											<i class="fas fa-angle-right"></i> <span class="sr-only">Next</span>
+										</a></li>
+								</ul>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Table -->
+			<div class="row mt-5">
+				<div class="col">
+					<div class="card shadow">
+						<div class="card-header border-0">
+							<h3 class="mb-0">All reviews</h3>
+						</div>
+						<div class="table-responsive">
+							<table class="table align-items-center table-flush">
+								<thead class="thead-light">
+									<tr>
+										<th scope="col">Toilet Title</th>
+										<th scope="col">contents</th>
+										<th scope="col">User</th>
+										<th scope="col">Star</th>
+										<th scope="col">Clean</th>
+										<th scope="col">date</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<th scope="row">
+											<div class="media align-items-center">
+												<div class="media-body">
+													<span class="mb-0 text-sm">화장실이름</span>
+												</div>
+											</div>
+										</th>
+										<td>내용내용내용내용내용내용내용내용내용내용내용내용내용내용</td>
+										<td><span class="avatar avatar-sm rounded-circle"> <img src="${sessionScope.Profile}">
+										</span>닉네임</td>
+										<td>
+											<div class="avatar-group">
+												<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="stars ml-0"> <img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="stars ml-0"> <img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="stars ml-0"> <img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="stars ml-0">
+												<%-- <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a> --%>
+											</div>
+										</td>
+										<td>
+											<div class="avatar-group">
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
+													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
+												</a>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<th scope="row">
+											<div class="media align-items-center">
+												<a href="#" class="avatar rounded-circle mr-3">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/angular.jpg"/>">
+												</a>
+												<div class="media-body">
+													<span class="mb-0 text-sm">Angular Now UI Kit PRO</span>
+												</div>
+											</div>
+										</th>
+										<td>$1,800 USD</td>
+										<td><span class="badge badge-dot"> <i class="bg-success"></i> completed
+										</span></td>
+										<td>
+											<div class="avatar-group">
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-1-800x800.jpg"/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-2-800x800.jpg"/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-3-800x800.jpg"/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>" class="rounded-circle">
+												</a>
+											</div>
+										</td>
+										<td>
+											<div class="d-flex align-items-center">
+												<span class="mr-2">100%</span>
+												<div>
+													<div class="progress">
+														<div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td class="text-right">
+											<div class="dropdown">
+												<a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+													<i class="fas fa-ellipsis-v"></i>
+												</a>
+												<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+													<a class="dropdown-item" href="#">Action</a>
+													<a class="dropdown-item" href="#">Another action</a>
+													<a class="dropdown-item" href="#">Something else here</a>
+												</div>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<th scope="row">
+											<div class="media align-items-center">
+												<a href="#" class="avatar rounded-circle mr-3">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/sketch.jpg"/>">
+												</a>
+												<div class="media-body">
+													<span class="mb-0 text-sm">Black Dashboard</span>
+												</div>
+											</div>
+										</th>
+										<td>$3,150 USD</td>
+										<td><span class="badge badge-dot mr-4"> <i class="bg-danger"></i> delayed
+										</span></td>
+										<td>
+											<div class="avatar-group">
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-1-800x800.jpg"/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-2-800x800.jpg"/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-3-800x800.jpg"/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>" class="rounded-circle">
+												</a>
+											</div>
+										</td>
+										<td>
+											<div class="d-flex align-items-center">
+												<span class="mr-2">72%</span>
+												<div>
+													<div class="progress">
+														<div class="progress-bar bg-danger" role="progressbar" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100" style="width: 72%;"></div>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td class="text-right">
+											<div class="dropdown">
+												<a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+													<i class="fas fa-ellipsis-v"></i>
+												</a>
+												<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+													<a class="dropdown-item" href="#">Action</a>
+													<a class="dropdown-item" href="#">Another action</a>
+													<a class="dropdown-item" href="#">Something else here</a>
+												</div>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<th scope="row">
+											<div class="media align-items-center">
+												<a href="#" class="avatar rounded-circle mr-3">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/react.jpg"/>">
+												</a>
+												<div class="media-body">
+													<span class="mb-0 text-sm">React Material Dashboard</span>
+												</div>
+											</div>
+										</th>
+										<td>$4,400 USD</td>
+										<td><span class="badge badge-dot"> <i class="bg-info"></i> on schedule
+										</span></td>
+										<td>
+											<div class="avatar-group">
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-1-800x800.jpg"/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-2-800x800.jpg"/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-3-800x800.jpg"/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>" class="rounded-circle">
+												</a>
+											</div>
+										</td>
+										<td>
+											<div class="d-flex align-items-center">
+												<span class="mr-2">90%</span>
+												<div>
+													<div class="progress">
+														<div class="progress-bar bg-info" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%;"></div>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td class="text-right">
+											<div class="dropdown">
+												<a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+													<i class="fas fa-ellipsis-v"></i>
+												</a>
+												<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+													<a class="dropdown-item" href="#">Action</a>
+													<a class="dropdown-item" href="#">Another action</a>
+													<a class="dropdown-item" href="#">Something else here</a>
+												</div>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<th scope="row">
+											<div class="media align-items-center">
+												<a href="#" class="avatar rounded-circle mr-3">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/vue.jpg"/>">
+												</a>
+												<div class="media-body">
+													<span class="mb-0 text-sm">Vue Paper UI Kit PRO</span>
+												</div>
+											</div>
+										</th>
+										<td>$2,200 USD</td>
+										<td><span class="badge badge-dot mr-4"> <i class="bg-success"></i> completed
+										</span></td>
+										<td>
+											<div class="avatar-group">
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-1-800x800.jpg"/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-2-800x800.jpg"/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-3-800x800.jpg"/>" class="rounded-circle">
+												</a>
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
+													<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>" class="rounded-circle">
+												</a>
+											</div>
+										</td>
+										<td>
+											<div class="d-flex align-items-center">
+												<span class="mr-2">100%</span>
+												<div>
+													<div class="progress">
+														<div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td class="text-right">
+											<div class="dropdown">
+												<a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+													<i class="fas fa-ellipsis-v"></i>
+												</a>
+												<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+													<a class="dropdown-item" href="#">Action</a>
+													<a class="dropdown-item" href="#">Another action</a>
+													<a class="dropdown-item" href="#">Something else here</a>
 												</div>
 											</div>
 										</td>
@@ -480,261 +986,31 @@
 						<div class="card-footer py-4">
 							<nav aria-label="...">
 								<ul class="pagination justify-content-end mb-0">
-									<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1"> <i class="fas fa-angle-left"></i> <span class="sr-only">Previous</span>
-									</a></li>
+									<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">
+											<i class="fas fa-angle-left"></i> <span class="sr-only">Previous</span>
+										</a></li>
 									<li class="page-item active"><a class="page-link" href="#">1</a></li>
-									<li class="page-item"><a class="page-link" href="#">2 <span class="sr-only">(current)</span></a></li>
+									<li class="page-item"><a class="page-link" href="#">
+											2 <span class="sr-only">(current)</span>
+										</a></li>
 									<li class="page-item"><a class="page-link" href="#">3</a></li>
-									<li class="page-item"><a class="page-link" href="#"> <i class="fas fa-angle-right"></i> <span class="sr-only">Next</span>
-									</a></li>
+									<li class="page-item"><a class="page-link" href="#">
+											<i class="fas fa-angle-right"></i> <span class="sr-only">Next</span>
+										</a></li>
 								</ul>
 							</nav>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!-- Dark table -->
-			<div class="row mt-5">
-				<div class="col">
-					<div class="card bg-default shadow">
-						<div class="card-header bg-transparent border-0">
-							<h3 class="text-white mb-0">Card tables</h3>
-						</div>
-						<div class="table-responsive">
-							<table class="table align-items-center table-dark table-flush">
-								<thead class="thead-dark">
-									<tr>
-										<th scope="col">Project</th>
-										<th scope="col">Budget</th>
-										<th scope="col">Status</th>
-										<th scope="col">Users</th>
-										<th scope="col">Completion</th>
-										<th scope="col"></th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<th scope="row">
-											<div class="media align-items-center">
-												<a href="#" class="avatar rounded-circle mr-3"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/bootstrap.jpg"/>">
-												</a>
-												<div class="media-body">
-													<span class="mb-0 text-sm">Argon Design System</span>
-												</div>
-											</div>
-										</th>
-										<td>$2,500 USD</td>
-										<td><span class="badge badge-dot mr-4"> <i class="bg-warning"></i> pending
-										</span></td>
-										<td>
-											<div class="avatar-group">
-												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-1-800x800.jpg"/>" class="rounded-circle">
-												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-2-800x800.jpg"/>" class="rounded-circle">
-												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-3-800x800.jpg"/>" class="rounded-circle">
-												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>" class="rounded-circle">
-												</a>
-											</div>
-										</td>
-										<td>
-											<div class="d-flex align-items-center">
-												<span class="mr-2">60%</span>
-												<div>
-													<div class="progress">
-														<div class="progress-bar bg-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-													</div>
-												</div>
-											</div>
-										</td>
-										<td class="text-right">
-											<div class="dropdown">
-												<a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-ellipsis-v"></i>
-												</a>
-												<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-													<a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a> <a class="dropdown-item" href="#">Something else here</a>
-												</div>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<th scope="row">
-											<div class="media align-items-center">
-												<a href="#" class="avatar rounded-circle mr-3"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/angular.jpg"/>">
-												</a>
-												<div class="media-body">
-													<span class="mb-0 text-sm">Angular Now UI Kit PRO</span>
-												</div>
-											</div>
-										</th>
-										<td>$1,800 USD</td>
-										<td><span class="badge badge-dot"> <i class="bg-success"></i> completed
-										</span></td>
-										<td>
-											<div class="avatar-group">
-												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-1-800x800.jpg"/>" class="rounded-circle">
-												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-2-800x800.jpg"/>" class="rounded-circle">
-												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-3-800x800.jpg"/>" class="rounded-circle">
-												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>" class="rounded-circle">
-												</a>
-											</div>
-										</td>
-										<td>
-											<div class="d-flex align-items-center">
-												<span class="mr-2">100%</span>
-												<div>
-													<div class="progress">
-														<div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-													</div>
-												</div>
-											</div>
-										</td>
-										<td class="text-right">
-											<div class="dropdown">
-												<a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-ellipsis-v"></i>
-												</a>
-												<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-													<a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a> <a class="dropdown-item" href="#">Something else here</a>
-												</div>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<th scope="row">
-											<div class="media align-items-center">
-												<a href="#" class="avatar rounded-circle mr-3"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/sketch.jpg"/>">
-												</a>
-												<div class="media-body">
-													<span class="mb-0 text-sm">Black Dashboard</span>
-												</div>
-											</div>
-										</th>
-										<td>$3,150 USD</td>
-										<td><span class="badge badge-dot mr-4"> <i class="bg-danger"></i> delayed
-										</span></td>
-										<td>
-											<div class="avatar-group">
-												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-1-800x800.jpg"/>" class="rounded-circle">
-												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-2-800x800.jpg"/>" class="rounded-circle">
-												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-3-800x800.jpg"/>" class="rounded-circle">
-												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>" class="rounded-circle">
-												</a>
-											</div>
-										</td>
-										<td>
-											<div class="d-flex align-items-center">
-												<span class="mr-2">72%</span>
-												<div>
-													<div class="progress">
-														<div class="progress-bar bg-danger" role="progressbar" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100" style="width: 72%;"></div>
-													</div>
-												</div>
-											</div>
-										</td>
-										<td class="text-right">
-											<div class="dropdown">
-												<a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-ellipsis-v"></i>
-												</a>
-												<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-													<a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a> <a class="dropdown-item" href="#">Something else here</a>
-												</div>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<th scope="row">
-											<div class="media align-items-center">
-												<a href="#" class="avatar rounded-circle mr-3"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/react.jpg"/>">
-												</a>
-												<div class="media-body">
-													<span class="mb-0 text-sm">React Material Dashboard</span>
-												</div>
-											</div>
-										</th>
-										<td>$4,400 USD</td>
-										<td><span class="badge badge-dot"> <i class="bg-info"></i> on schedule
-										</span></td>
-										<td>
-											<div class="avatar-group">
-												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-1-800x800.jpg"/>" class="rounded-circle">
-												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-2-800x800.jpg"/>" class="rounded-circle">
-												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-3-800x800.jpg"/>" class="rounded-circle">
-												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>" class="rounded-circle">
-												</a>
-											</div>
-										</td>
-										<td>
-											<div class="d-flex align-items-center">
-												<span class="mr-2">90%</span>
-												<div>
-													<div class="progress">
-														<div class="progress-bar bg-info" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%;"></div>
-													</div>
-												</div>
-											</div>
-										</td>
-										<td class="text-right">
-											<div class="dropdown">
-												<a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-ellipsis-v"></i>
-												</a>
-												<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-													<a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a> <a class="dropdown-item" href="#">Something else here</a>
-												</div>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<th scope="row">
-											<div class="media align-items-center">
-												<a href="#" class="avatar rounded-circle mr-3"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/vue.jpg"/>">
-												</a>
-												<div class="media-body">
-													<span class="mb-0 text-sm">Vue Paper UI Kit PRO</span>
-												</div>
-											</div>
-										</th>
-										<td>$2,200 USD</td>
-										<td><span class="badge badge-dot mr-4"> <i class="bg-success"></i> completed
-										</span></td>
-										<td>
-											<div class="avatar-group">
-												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-1-800x800.jpg"/>" class="rounded-circle">
-												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-2-800x800.jpg"/>" class="rounded-circle">
-												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-3-800x800.jpg"/>" class="rounded-circle">
-												</a> <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>" class="rounded-circle">
-												</a>
-											</div>
-										</td>
-										<td>
-											<div class="d-flex align-items-center">
-												<span class="mr-2">100%</span>
-												<div>
-													<div class="progress">
-														<div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-													</div>
-												</div>
-											</div>
-										</td>
-										<td class="text-right">
-											<div class="dropdown">
-												<a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-ellipsis-v"></i>
-												</a>
-												<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-													<a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a> <a class="dropdown-item" href="#">Something else here</a>
-												</div>
-											</div>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
+
 			<!-- Footer -->
 			<footer class="footer">
 				<div class="row align-items-center justify-content-xl-between">
 					<div class="col-xl-6">
 						<div class="copyright text-center text-xl-left text-muted">
-							&copy; 2018 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
+							&copy; 2018
+							<a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
 						</div>
 					</div>
 					<div class="col-xl-6">
@@ -757,11 +1033,11 @@
 	<script src="<c:url value="/resources/assets/js/argon-dashboard.min.js?v=1.1.2"/>"></script>
 	<script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
 	<script>
-		window.TrackJS && TrackJS.install({
-			token : "ee6fab19c5a04ac1a32a645abde4613a",
-			application : "argon-dashboard-free"
-		});
-	</script>
+        window.TrackJS && TrackJS.install({
+            token : "ee6fab19c5a04ac1a32a645abde4613a",
+            application : "argon-dashboard-free"
+        });
+    </script>
 </body>
 
 </html>
