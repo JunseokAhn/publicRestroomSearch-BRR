@@ -50,7 +50,7 @@ public class DayAverController {
 		
 		System.out.println("현재 일일 화장실 통계자 수 : " + result);
 		
-		httpsession.setAttribute("result", result);
+		httpsession.setAttribute("userDiffer", result);
 		
 		return "";
 	}
@@ -69,5 +69,16 @@ public class DayAverController {
 		}
 		return "true";
 	}
+	
+	@GetMapping("average")
+	@ResponseBody
+	public String average (Double lat, Double lng) {
+		logger.info("7일 평균 계산 컨트롤러 이동");
+		dao.getAver(lat, lng);
+		//userAvg => 이용자 평균
+		return"";
+	}
+	
+	
 	
 }

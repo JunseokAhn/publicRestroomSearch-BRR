@@ -940,18 +940,18 @@
 						<li class="nav-item"><a class="nav-link" href="<c:url value="/member/logout"/>">
 								<i class="ni ni-key-25 text-info"></i> Logout
 							</a></li>
-						<!-- 네이버 로그인 시 -->
-						<c:if test="${sessionScope.sessionNickname != null}">
-							<li class="nav-item"><a class="nav-link " href="<c:url value="/member/deleteNaver"/>">
-									<i class="ni ni-bullet-list-67 text-red"></i> Naver탈퇴
-								</a></li>
-						</c:if>
-						<!-- 구글 로그인 시 -->
-						<c:if test="${sessionScope.sessionNickname == null}">
-							<li class="nav-item"><a class="nav-link " href="<c:url value="/member/deleteGoogle"/>">
-									<i class="ni ni-bullet-list-67 text-red"></i> Google탈퇴
-								</a></li>
-						</c:if>
+<!-- 						네이버 로그인 시 -->
+<%-- 						<c:if test="${sessionScope.sessionNaver != null}"> --%>
+<%-- 							<li class="nav-item"><a class="nav-link " href="<c:url value="/member/deleteNaver"/>"> --%>
+<!-- 									<i class="ni ni-bullet-list-67 text-red"></i> Naver탈퇴 -->
+<!-- 								</a></li> -->
+<%-- 						</c:if> --%>
+<!-- 						구글 로그인 시 -->
+<%-- 						<c:if test="${sessionScope.sessionNaver == null}"> --%>
+<%-- 							<li class="nav-item"><a class="nav-link " href="<c:url value="/member/deleteGoogle"/>"> --%>
+<!-- 									<i class="ni ni-bullet-list-67 text-red"></i> Google탈퇴 -->
+<!-- 								</a></li> -->
+<%-- 						</c:if> --%>
 					</c:if>
 				</ul>
 				<!-- Divider -->
@@ -1026,7 +1026,7 @@
 								</c:if>
 
 								<c:if test="${sessionScope.sessionId != null}">
-									<c:if test="${sessionScope.sessionNickname != null}">
+									<c:if test="${sessionScope.sessionNaver != null}">
 										<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="${sessionScope.Profile}"/>">
 										</span>
 										<div class="media-body ml-2 d-none d-lg-block">
@@ -1037,7 +1037,7 @@
 										<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="${sessionScope.Profile}"/>">
 										</span>
 										<div class="media-body ml-2 d-none d-lg-block">
-											<span class="mb-0 text-sm  font-weight-bold">${sessionScope.sessionGooglename}</span>
+											<span class="mb-0 text-sm  font-weight-bold">${sessionScope.sessionNickname}</span>
 										</div>
 									</c:if>
 								</c:if>
