@@ -327,9 +327,9 @@
                
                 switch(reviewList.length){
                     case 0:
-                        reviews0.innerHTML = "Default Review";
-                        reviews1.innerHTML = "Default Review";
-                        reviews2.innerHTML = "Default Review";
+                        reviews0.innerHTML = "당신의 리뷰를 들려주세요";
+                        reviews1.innerHTML = "당신의 리뷰를 들려주세요";
+                        reviews2.innerHTML = "당신의 리뷰를 들려주세요";
                         starreview0.innerHTML = "";
                         starreview1.innerHTML = "";
                         starreview2.innerHTML = "";
@@ -345,8 +345,8 @@
                         break;
                     case 1:
                         reviews0.innerHTML = reviewList[0].review;
-                        reviews1.innerHTML = "Default Review";
-                        reviews2.innerHTML = "Default Review";
+                        reviews1.innerHTML = "당신의 리뷰를 들려주세요";
+                        reviews2.innerHTML = "당신의 리뷰를 들려주세요";
                         if(reviewList[0].star>2)
                             $("#star-review-0").attr("class", "text-success");
                         else
@@ -371,7 +371,7 @@
                     case 2:
                         reviews0.innerHTML = reviewList[0].review;
                         reviews1.innerHTML = reviewList[1].review;
-                        reviews2.innerHTML = "Default Review";
+                        reviews2.innerHTML = "당신의 리뷰를 들려주세요";
                         if(reviewList[0].star>2)
                             $("#star-review-0").attr("class", "text-success");
                         else
@@ -1330,7 +1330,7 @@
 									<div class="card-body3 replyButton2" id="div2">
 										<div class="row">
 											<div class="col-8 pr-0" style="float: left;">
-												<span class="card-title text-sm text-muted mb-0" id="reviews-0">Default Review</span>
+												<span class="card-title text-sm text-muted mb-0" id="reviews-0">당신의 리뷰를 들려주세요</span>
 											</div>
 											<div class="col-4" style="text-align: center; float: right;">
 												<p class="mt-0 mb-3 text-muted text-sm">
@@ -1350,7 +1350,7 @@
 									<div class="card-body3 replyButton2" id="div3">
 										<div class="row">
 											<div class="col-8 pr-0">
-												<span class="card-title  text-sm text-muted mb-0" id="reviews-1">Default Review</span>
+												<span class="card-title  text-sm text-muted mb-0" id="reviews-1">당신의 리뷰를 들려주세요</span>
 											</div>
 											<div class="col-4" style="text-align: center;">
 												<p class="mt-0 mb-3 text-muted text-sm">
@@ -1370,7 +1370,7 @@
 									<div class="card-body3 replyButton2" id="div4">
 										<div class="row">
 											<div class="col-8 pr-0">
-												<span class="card-title text-sm text-muted mb-0" id="reviews-2">Default Review</span>
+												<span class="card-title text-sm text-muted mb-0" id="reviews-2">당신의 리뷰를 들려주세요</span>
 											</div>
 											<div class="col-4" style="text-align: center;">
 												<p class="mt-0 mb-3 text-muted text-sm">
