@@ -62,11 +62,11 @@ public class DayAverDAO {
 		return result;
 	}
 	
-	public int getAver (Double lat, Double lng) {
+	public int average (Double lat, Double lng) {
 		int result = 0;
 		try {
 			DayAverMapper mapper = session.getMapper(DayAverMapper.class);
-			result = mapper.getAver(lat, lng);	
+			result = mapper.average(lat, lng);	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
