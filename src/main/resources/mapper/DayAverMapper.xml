@@ -21,10 +21,6 @@ where lat = #{lat} and lng = #{lng}
 delete from dayaver where id = #{id}
 </delete>
 
-<select id="getAver" parameterType = "String" resultType="aver">
-select * from dayaver
-where id = #{id}
-</select>
 
 <select id="average" resultType="int">
 SELECT
