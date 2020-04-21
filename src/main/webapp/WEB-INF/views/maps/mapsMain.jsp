@@ -297,8 +297,158 @@
             function(){
                 $("#clean1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
             }) 
-    })
+    })//window.onload[E]
     
+    function reviewRefresh(title){
+        $.ajax({
+            url: "<c:url value='/review/reviewList'/>",
+            data: {
+                toilet_title: title
+            },
+            type: "post",
+            success: function(e){
+                reviewList = e
+                
+                var reviews0 = document.getElementById("reviews-0");
+                var reviews1 = document.getElementById("reviews-1");
+                var reviews2 = document.getElementById("reviews-2");
+                var starreview0 = document.getElementById("star-review-0");
+                var starreview1 = document.getElementById("star-review-1");
+                var starreview2 = document.getElementById("star-review-2");
+                var cleanreview0 = document.getElementById("clean-review-0");
+                var cleanreview1 = document.getElementById("clean-review-1");
+                var cleanreview2 = document.getElementById("clean-review-2");
+                var nickreview0 = document.getElementById("nick-review-0");
+                var nickreview1 = document.getElementById("nick-review-1");
+                var nickreview2 = document.getElementById("nick-review-2");
+                var profilereview0 = document.getElementById("profile-review-0");
+                var profilereview1 = document.getElementById("profile-review-1");
+                var profilereview2 = document.getElementById("profile-review-2");
+               
+                switch(reviewList.length){
+                    case 0:
+                        reviews0.innerHTML = "Default Review";
+                        reviews1.innerHTML = "Default Review";
+                        reviews2.innerHTML = "Default Review";
+                        starreview0.innerHTML = "";
+                        starreview1.innerHTML = "";
+                        starreview2.innerHTML = "";
+                        cleanreview0.innerHTML = "";
+                        cleanreview1.innerHTML = "";
+                        cleanreview2.innerHTML = "";
+                        nickreview0.innerHTML = "NICKNAME";
+                        nickreview1.innerHTML = "NICKNAME";
+                        nickreview2.innerHTML = "NICKNAME"; 
+                        profilereview0.innerHTML = "<div class='icon icon-shape bg-warning text-white rounded-circle shadow' style='display: inline-block;'></div>"
+                        profilereview1.innerHTML = "<div class='icon icon-shape bg-warning text-white rounded-circle shadow' style='display: inline-block;'></div>"
+                        profilereview2.innerHTML = "<div class='icon icon-shape bg-warning text-white rounded-circle shadow' style='display: inline-block;'></div>"
+                        break;
+                    case 1:
+                        reviews0.innerHTML = reviewList[0].review;
+                        reviews1.innerHTML = "Default Review";
+                        reviews2.innerHTML = "Default Review";
+                        if(reviewList[0].star>2)
+                            $("#star-review-0").attr("class", "text-success");
+                        else
+                            $("#star-review-0").attr("class", "text-warning");
+                        starreview0.innerHTML = reviewList[0].star;
+                        starreview1.innerHTML = "";
+                        starreview2.innerHTML = "";
+                        if(reviewList[0].clean>2)
+                            $("#clean-review-0").attr("class", "text-success");
+                        else
+                            $("#clean-review-0").attr("class", "text-warning");
+                        cleanreview0.innerHTML = reviewList[0].clean;
+                        cleanreview1.innerHTML = "";
+                        cleanreview2.innerHTML = "";
+                        nickreview0.innerHTML = reviewList[0].sessionNickname;
+                        nickreview1.innerHTML = "NICKNAME";
+                        nickreview2.innerHTML = "NICKNAME"; 
+                        profilereview0.innerHTML = "<span class='avatar avatar-sm rounded-circle'> <img alt='Image placeholder' src='<c:url value='" + reviewList[0].profile + "'/>'></span>"
+                        profilereview1.innerHTML = "<div class='icon icon-shape bg-warning text-white rounded-circle shadow' style='display: inline-block;'></div>"
+                        profilereview2.innerHTML = "<div class='icon icon-shape bg-warning text-white rounded-circle shadow' style='display: inline-block;'></div>"
+                        break;
+                    case 2:
+                        reviews0.innerHTML = reviewList[0].review;
+                        reviews1.innerHTML = reviewList[1].review;
+                        reviews2.innerHTML = "Default Review";
+                        if(reviewList[0].star>2)
+                            $("#star-review-0").attr("class", "text-success");
+                        else
+                            $("#star-review-0").attr("class", "text-warning");
+                        if(reviewList[1].star>2)
+                            $("#star-review-1").attr("class", "text-success");
+                        else
+                            $("#star-review-1").attr("class", "text-warning");
+                        starreview0.innerHTML = reviewList[0].star;
+                        starreview1.innerHTML = reviewList[1].star;
+                        starreview2.innerHTML = "";
+                        if(reviewList[0].clean>2)
+                            $("#clean-review-0").attr("class", "text-success");
+                        else
+                            $("#clean-review-0").attr("class", "text-warning");
+                        if(reviewList[1].clean>2)
+                            $("#clean-review-1").attr("class", "text-success");
+                        else
+                            $("#clean-review-1").attr("class", "text-warning");
+                        cleanreview0.innerHTML = reviewList[0].clean;
+                        cleanreview1.innerHTML = reviewList[1].clean
+                        cleanreview2.innerHTML = "";
+                        nickreview0.innerHTML = reviewList[0].sessionNickname;
+                        nickreview1.innerHTML = reviewList[1].sessionNickname;
+                        nickreview2.innerHTML = "NICKNAME"; 
+                        profilereview0.innerHTML = "<span class='avatar avatar-sm rounded-circle'> <img alt='Image placeholder' src='<c:url value='" + reviewList[0].profile + "'/>'></span>"
+                        profilereview1.innerHTML = "<span class='avatar avatar-sm rounded-circle'> <img alt='Image placeholder' src='<c:url value='" + reviewList[1].profile + "'/>'></span>"
+                        profilereview2.innerHTML = "<div class='icon icon-shape bg-warning text-white rounded-circle shadow' style='display: inline-block;'></div>"                                                                          
+                        break;
+                    case 3:
+                        reviews0.innerHTML = reviewList[0].review;
+                        reviews1.innerHTML = reviewList[1].review;
+                        reviews2.innerHTML = reviewList[2].review;
+                        if(reviewList[0].star>2)
+                            $("#star-review-0").attr("class", "text-success");
+                        else
+                            $("#star-review-0").attr("class", "text-warning");
+                        if(reviewList[1].star>2)
+                            $("#star-review-1").attr("class", "text-success");
+                        else
+                            $("#star-review-1").attr("class", "text-warning");
+                        if(reviewList[2].star>2)
+                            $("#star-review-2").attr("class", "text-success");
+                        else
+                            $("#star-review-2").attr("class", "text-warning");
+                        starreview0.innerHTML = reviewList[0].star;
+                        starreview1.innerHTML = reviewList[1].star;
+                        starreview2.innerHTML = reviewList[2].star;
+                        if(reviewList[0].clean>2)
+                            $("#clean-review-0").attr("class", "text-success");
+                        else
+                            $("#clean-review-0").attr("class", "text-warning");
+                        if(reviewList[1].clean>2)
+                            $("#clean-review-1").attr("class", "text-success");
+                        else
+                            $("#clean-review-1").attr("class", "text-warning");
+                        if(reviewList[2].clean>2)
+                            $("#clean-review-2").attr("class", "text-success");
+                        else
+                            $("#clean-review-2").attr("class", "text-warning");
+                        cleanreview0.innerHTML = reviewList[0].clean;
+                        cleanreview1.innerHTML = reviewList[1].clean;
+                        cleanreview2.innerHTML = reviewList[2].clean;
+                        nickreview0.innerHTML = reviewList[0].sessionNickname;
+                        nickreview1.innerHTML = reviewList[1].sessionNickname;
+                        nickreview2.innerHTML = reviewList[2].sessionNickname;
+                        profilereview0.innerHTML = "<span class='avatar avatar-sm rounded-circle'> <img alt='Image placeholder' src='<c:url value='" + reviewList[0].profile + "'/>'></span>"
+                        profilereview1.innerHTML = "<span class='avatar avatar-sm rounded-circle'> <img alt='Image placeholder' src='<c:url value='" + reviewList[1].profile + "'/>'></span>"
+                        profilereview2.innerHTML = "<span class='avatar avatar-sm rounded-circle'> <img alt='Image placeholder' src='<c:url value='" + reviewList[2].profile + "'/>'></span>"                                          
+                        break;
+                } //switch[E]
+            	//이런 변화된내용을 즉시 적용하려면? 이 스위치를 비동기로??
+            }//success[E]
+        })//ajax[E]
+        
+    }//reviewRefresh[E]
+   
     //리뷰등록 검사
     function reviewCheck(){
         //청결도, 별점입력했는지
@@ -362,7 +512,8 @@
                 console.log("리뷰쓰기 실패");
                 console.log(e);
             }
-        })
+        })//리뷰등록[E]
+        reviewRefresh(toilet_title);
     }
     //화장실 추천기능
     function searchShortest () {
@@ -579,152 +730,7 @@
                             content2 += "</p>"
 
                             div1.innerHTML = content2;
-                            
-                            $.ajax({
-                                url: "<c:url value='/review/reviewList'/>",
-                                data: {
-                                    toilet_title: title
-                                },
-                                type: "post",
-                                success: function(e){
-                                    reviewList = e
-                                    var reviews0 = document.getElementById("reviews-0");
-                                    var reviews1 = document.getElementById("reviews-1");
-                                    var reviews2 = document.getElementById("reviews-2");
-                                    var starreview0 = document.getElementById("star-review-0");
-                                    var starreview1 = document.getElementById("star-review-1");
-                                    var starreview2 = document.getElementById("star-review-2");
-                                    var cleanreview0 = document.getElementById("clean-review-0");
-                                    var cleanreview1 = document.getElementById("clean-review-1");
-                                    var cleanreview2 = document.getElementById("clean-review-2");
-                                    var nickreview0 = document.getElementById("nick-review-0");
-                                    var nickreview1 = document.getElementById("nick-review-1");
-                                    var nickreview2 = document.getElementById("nick-review-2");
-                                    var profilereview0 = document.getElementById("profile-review-0");
-                                    var profilereview1 = document.getElementById("profile-review-1");
-                                    var profilereview2 = document.getElementById("profile-review-2");
-                                    //<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="${sessionScope.Profile}"/>"></span>
-                                    switch(reviewList.length){
-                                        case 0:
-                                            reviews0.innerHTML = "Default Review";
-                                            reviews1.innerHTML = "Default Review";
-                                            reviews2.innerHTML = "Default Review";
-                                            starreview0.innerHTML = "";
-                                            starreview1.innerHTML = "";
-                                            starreview2.innerHTML = "";
-                                            cleanreview0.innerHTML = "";
-                                            cleanreview1.innerHTML = "";
-                                            cleanreview2.innerHTML = "";
-                                            nickreview0.innerHTML = "NICKNAME";
-                                            nickreview1.innerHTML = "NICKNAME";
-                                            nickreview2.innerHTML = "NICKNAME"; 
-                                            profilereview0.innerHTML = "<div class='icon icon-shape bg-warning text-white rounded-circle shadow' style='display: inline-block;'></div>"
-                                            profilereview1.innerHTML = "<div class='icon icon-shape bg-warning text-white rounded-circle shadow' style='display: inline-block;'></div>"
-                                            profilereview2.innerHTML = "<div class='icon icon-shape bg-warning text-white rounded-circle shadow' style='display: inline-block;'></div>"
-                                            break;
-                                        case 1:
-                                            reviews0.innerHTML = reviewList[0].review;
-                                            reviews1.innerHTML = "Default Review";
-                                            reviews2.innerHTML = "Default Review";
-                                            if(reviewList[0].star>2)
-                                                $("#star-review-0").attr("class", "text-success");
-                                            else
-                                                $("#star-review-0").attr("class", "text-warning");
-                                            starreview0.innerHTML = reviewList[0].star;
-                                            starreview1.innerHTML = "";
-                                            starreview2.innerHTML = "";
-                                            if(reviewList[0].clean>2)
-                                                $("#clean-review-0").attr("class", "text-success");
-                                            else
-                                                $("#clean-review-0").attr("class", "text-warning");
-                                            cleanreview0.innerHTML = reviewList[0].clean;
-                                            cleanreview1.innerHTML = "";
-                                            cleanreview2.innerHTML = "";
-                                            nickreview0.innerHTML = reviewList[0].sessionNickname;
-                                            nickreview1.innerHTML = "NICKNAME";
-                                            nickreview2.innerHTML = "NICKNAME"; 
-                                            profilereview0.innerHTML = "<span class='avatar avatar-sm rounded-circle'> <img alt='Image placeholder' src='<c:url value='" + reviewList[0].profile + "'/>'></span>"
-                                            profilereview1.innerHTML = "<div class='icon icon-shape bg-warning text-white rounded-circle shadow' style='display: inline-block;'></div>"
-                                            profilereview2.innerHTML = "<div class='icon icon-shape bg-warning text-white rounded-circle shadow' style='display: inline-block;'></div>"
-                                            break;
-                                        case 2:
-                                            reviews0.innerHTML = reviewList[0].review;
-                                            reviews1.innerHTML = reviewList[1].review;
-                                            reviews2.innerHTML = "Default Review";
-                                            if(reviewList[0].star>2)
-                                                $("#star-review-0").attr("class", "text-success");
-                                            else
-                                                $("#star-review-0").attr("class", "text-warning");
-                                            if(reviewList[1].star>2)
-                                                $("#star-review-1").attr("class", "text-success");
-                                            else
-                                                $("#star-review-1").attr("class", "text-warning");
-                                            starreview0.innerHTML = reviewList[0].star;
-                                            starreview1.innerHTML = reviewList[1].star;
-                                            starreview2.innerHTML = "";
-                                            if(reviewList[0].clean>2)
-                                                $("#clean-review-0").attr("class", "text-success");
-                                            else
-                                                $("#clean-review-0").attr("class", "text-warning");
-                                            if(reviewList[1].clean>2)
-                                                $("#clean-review-1").attr("class", "text-success");
-                                            else
-                                                $("#clean-review-1").attr("class", "text-warning");
-                                            cleanreview0.innerHTML = reviewList[0].clean;
-                                            cleanreview1.innerHTML = reviewList[1].clean
-                                            cleanreview2.innerHTML = "";
-                                            nickreview0.innerHTML = reviewList[0].sessionNickname;
-                                            nickreview1.innerHTML = reviewList[1].sessionNickname;
-                                            nickreview2.innerHTML = "NICKNAME"; 
-                                            profilereview0.innerHTML = "<span class='avatar avatar-sm rounded-circle'> <img alt='Image placeholder' src='<c:url value='" + reviewList[0].profile + "'/>'></span>"
-                                            profilereview1.innerHTML = "<span class='avatar avatar-sm rounded-circle'> <img alt='Image placeholder' src='<c:url value='" + reviewList[1].profile + "'/>'></span>"
-                                            profilereview2.innerHTML = "<div class='icon icon-shape bg-warning text-white rounded-circle shadow' style='display: inline-block;'></div>"                                                                          
-                                            break;
-                                        case 3:
-                                            reviews0.innerHTML = reviewList[0].review;
-                                            reviews1.innerHTML = reviewList[1].review;
-                                            reviews2.innerHTML = reviewList[2].review;
-                                            if(reviewList[0].star>2)
-                                                $("#star-review-0").attr("class", "text-success");
-                                            else
-                                                $("#star-review-0").attr("class", "text-warning");
-                                            if(reviewList[1].star>2)
-                                                $("#star-review-1").attr("class", "text-success");
-                                            else
-                                                $("#star-review-1").attr("class", "text-warning");
-                                            if(reviewList[2].star>2)
-                                                $("#star-review-2").attr("class", "text-success");
-                                            else
-                                                $("#star-review-2").attr("class", "text-warning");
-                                            starreview0.innerHTML = reviewList[0].star;
-                                            starreview1.innerHTML = reviewList[1].star;
-                                            starreview2.innerHTML = reviewList[2].star;
-                                            if(reviewList[0].clean>2)
-                                                $("#clean-review-0").attr("class", "text-success");
-                                            else
-                                                $("#clean-review-0").attr("class", "text-warning");
-                                            if(reviewList[1].clean>2)
-                                                $("#clean-review-1").attr("class", "text-success");
-                                            else
-                                                $("#clean-review-1").attr("class", "text-warning");
-                                            if(reviewList[2].clean>2)
-                                                $("#clean-review-2").attr("class", "text-success");
-                                            else
-                                                $("#clean-review-2").attr("class", "text-warning");
-                                            cleanreview0.innerHTML = reviewList[0].clean;
-                                            cleanreview1.innerHTML = reviewList[1].clean;
-                                            cleanreview2.innerHTML = reviewList[2].clean;
-                                            nickreview0.innerHTML = reviewList[0].sessionNickname;
-                                            nickreview1.innerHTML = reviewList[1].sessionNickname;
-                                            nickreview2.innerHTML = reviewList[2].sessionNickname;
-                                            profilereview0.innerHTML = "<span class='avatar avatar-sm rounded-circle'> <img alt='Image placeholder' src='<c:url value='" + reviewList[0].profile + "'/>'></span>"
-                                            profilereview1.innerHTML = "<span class='avatar avatar-sm rounded-circle'> <img alt='Image placeholder' src='<c:url value='" + reviewList[1].profile + "'/>'></span>"
-                                            profilereview2.innerHTML = "<span class='avatar avatar-sm rounded-circle'> <img alt='Image placeholder' src='<c:url value='" + reviewList[2].profile + "'/>'></span>"                                          
-                                            break;
-                                    }
-                                 
-                                }
-                            })
+                            reviewRefresh(title);
                             
                         }
                     }(toiletMarker, i, title));
