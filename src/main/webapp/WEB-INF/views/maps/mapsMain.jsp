@@ -4,6 +4,7 @@
 <html>
 <head>
 <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx4afb1a7c147445528d8e83f3f1d4fea0"></script>
+
 <script src="<c:url value="/resources/js/jquery-3.4.1.js/"/>"></script>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -18,6 +19,10 @@
 <!-- CSS Files -->
 <link href="<c:url value="/resources/css/boardStyle.css"/>" rel="stylesheet" />
 <link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
+
+<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../resources/css/hover.css">
+
 <script type="text/javascript">
     var map, pos, marker, toiletMarker, marker_s, marker_e, marker_p1, marker_p2, title, id, label, endX, endY, polyline_, myWindow, targetWindow, destinyWindow, realTime;
     var tDistance, tTime;
@@ -35,8 +40,22 @@
 	var changeRate;
 	var averageRate; 
     //var shortFlag = 1;
+    //대변 체크 결과
+    var diaryresult="";
+    var diary-description=
+        [
+            "<p>영양소는 적당하지만,<Strong>변비</Strong> 증세가 있네요.<br>수분섭취와 스트레스를 줄여보세요.</p> ",
+            "<p> 장건강의 이상으로 색깔이 변이될 수 있어요.<br><strong>악취</strong>가 나는 경우에는 진단을 받아 볼 필요가 있습니다.</p>"
+
+        ];
     
     $(function () {
+    	// type모양별 체크시 각 함수를 다르게 지정해서 건강진단을 함    
+    	$("#type1").on
+    	(
+    	    	"click",
+    	    	clickFunc
+    	);	
         //별점
         $("#star5").on("click",
         function (){
@@ -1010,6 +1029,37 @@
         obj.style.height = "1px";
         obj.style.height = ( 12 + obj.scrollHeight ) + "px";
     }
+ 
+
+	//type1의 진단결과
+	function clickFunc()
+	{
+		diaryresult += $(this).attr("id");		
+
+		if($(this).attr("id")=="type1"||$(this).attr("id")=="type2"||$(this).attr("id")=="type3"||$(this).attr("id")=="type4")
+		{
+			$('#health-ment').text('STEP2.대변의 색깔을 선택해주세요');
+			 $('#type1').attr('src','../resources/img/brown.png');
+		 	 $('#type2').attr('src','../resources/img/gray.png');
+			 $('#type3').attr('src','../resources/img/red.png');
+			 $('#type4').attr('src','../resources/img/yellow.png');
+			 $("#type1").attr('id','brown'); 
+			 $("#type2").attr('id','gray'); 
+			 $("#type3").attr('id','red'); 
+			 $("#type4").attr('id','yellow'); 
+		} 		
+
+		
+	} 
+
+    function DiaryShow()
+    {
+    	$("#diary-container").show();
+        $("#diary").fadeIn();
+    }
+
+	
+    
 
 </script>
 </head>
@@ -1071,22 +1121,44 @@
 		</form>
 	</div>
 	
-	<div id="dairy-container"></div>
-	<div id="dairy" class="col-xl-4">
+<div id="diary-container" ></div>
+	<div id="diary" class="col-xl-4">
 		<form action="">
 			<div class="card shadow">
 				<div class="card-header bg-transparent">
 					<div class="row align-items-center">
 						<div class="col">
-							<h2 class="mb-0" style="display: inline-block">Feedback Send</h2>
-							<input id="x-button" name="feed-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#dairy").hide(), $("#dairy-container").fadeOut()'>														
+							<h2 class="mb-0" style="display: inline-block">Health Test</h2>
+							<input id="x-button" name="feed-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#diary").hide(), $("#diary-container").fadeOut()'>
+							<br>
+							<h4 id="health-ment" class="mb-0" style="display: inline-block"> STEP1.대변의 모양을 선택해주세요</h4>		
+																		
 						</div>
 					</div>
-				</div>
-				
+					<div class="card-body2">
+					<table id="sz">
+						<tr>
+							<td> 
+								<img id="type1" class="hvr-grow-shadow"  name="1" src="../resources/img/type1.png" style="width:90%"  />
+							</td>
+							<td>
+								<img id="type2" class="hvr-grow-shadow" name="2" src="../resources/img/type2.png" style="width:90%"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<img id="type3" class="hvr-grow-shadow" name="3" src="../resources/img/type3.png" style="width:90%"/>
+							</td>
+							<td>
+								<img id="type4" class="hvr-grow-shadow" name="4" src="../resources/img/type4.png" style="width:90%"/>
+							</td>
+						</tr>
+					</table>
+					</div>
+				</div>				
 			</div>
 		</form>
-	</div>
+</div>
 
 
 	<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
@@ -1184,9 +1256,17 @@
 					 <li class="nav-item"><a class="nav-link" href="<c:url value="/review/reviewMain"/>">
 							<i class="ni ni-chat-round"></i> Reviews
 						</a></li>
-					<li class="nav-item"><a class="nav-link " href="<c:url value="/diary/diaryMain"/>">
+					<li class="nav-item">
+						<a class="nav-link " href="<c:url value="/diary/diaryMain"/>">
 							<i class="ni ni-bullet-list-67 text-red"></i> Diary
-						</a></li>
+						</a>
+					</li>
+					<!-- 건강 테스트 -->
+					<li class="nav-item">
+						<a class="nav-link " href="javascript:DiaryShow();">
+							<i class="ni ni-bullet-list-67 text-red"></i> Diary
+						</a>
+					</li>
 
 					<!-- 로그인 영역 -->
 

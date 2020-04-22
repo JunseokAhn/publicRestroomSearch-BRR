@@ -100,7 +100,7 @@ h1 span:nth-child(2) {
 	font: 1rem/1.5 var(--font-family-sans-serif);
 }
 
-#review-container, #feedback-container {
+#review-container, #feedback-container, #diary-container {
 	background-color: black;
 	position: fixed;
 	width: 200rem;
@@ -110,7 +110,7 @@ h1 span:nth-child(2) {
 	display: none;
 }
 
-#review, #feedback {
+#review, #feedback,#diary {
 	position: fixed;
 	z-index: 999;
 	top: 25%;
@@ -121,7 +121,7 @@ h1 span:nth-child(2) {
 	margin-left: 1rem;	
 }
 @media(max-width: 1600px){
-	#review, #feedback {
+	#review, #feedback, #diary {
   		position: fixed;
 		z-index: 999;
 		top: 25%;
@@ -134,7 +134,7 @@ h1 span:nth-child(2) {
  	}
 }
 @media(max-width: 1400px){
-	#review, #feedback {
+	#review, #feedback, #diary {
   		position: fixed;
 		z-index: 999;
 		top: 25%;
@@ -150,7 +150,7 @@ h1 span:nth-child(2) {
  	}
 }
 @media(max-width: 768px){
-	#review, #feedback {
+	#review, #feedback, #diary {
   		position: fixed;
 		z-index: 999;
 		top: 25%;

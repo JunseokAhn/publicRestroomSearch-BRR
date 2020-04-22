@@ -92,7 +92,7 @@ var myChart = new Chart(ctx, {
 </td>
 <td>
 <p>영양소는 적당하지만,<Strong>변비</Strong> 증세가 있네요.
- 수분섭취와 스트레스를 줄여보세요.</p> 
+ <br>수분섭취와 스트레스를 줄여보세요.</p> 
 </td>
 </tr>
 

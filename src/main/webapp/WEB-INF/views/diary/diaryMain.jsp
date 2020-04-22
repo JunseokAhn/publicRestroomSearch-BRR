@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8" />
 <title>대변 건강 진단</title>
 <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../resources/css/hover.css">
-<script src="../resources/jquery/jquery-3.4.1.min.js"></script>
+<script src="<c:url value="/resources/js/jquery-3.4.1.js/"/>"></script>
 <script type="text/javascript">
 
 var result="";
@@ -16,8 +17,7 @@ $(document).ready(function() {
 	$('#type1').on('click', clickFunc);
 	$('#type2').on('click', clickFunc);
 	$('#type3').on('click', clickFunc);
-	$('#type4').on('click', clickFunc);
-	
+	$('#type4').on('click', clickFunc);	
 	
 });
 
