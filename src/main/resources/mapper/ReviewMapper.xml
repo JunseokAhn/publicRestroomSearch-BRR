@@ -30,12 +30,11 @@
 	
 	<select id="reviewMain" parameterType="String" resultType="review">
 		select toilet_title, sessionId, sessionNickname, Profile, review, star, clean, to_char(inputdate, 'YYYY/MM/DD') inputdate
-		from brr_review
+		from (select * from brr_review order by inputdate desc)
 	</select>
 	
 	<select id="reviewMain2" parameterType="String" resultType="review">
 		select toilet_title, sessionId, sessionNickname, Profile, review, star, clean, to_char(inputdate, 'YYYY/MM/DD') inputdate
-		from brr_review
-		where #{_parameter} like '%' || toilet_title || '%'
+		from (select * from brr_review where #{_parameter} like '%' || toilet_title || '%' order by inputdate desc)
 	</select>
 </mapper>
