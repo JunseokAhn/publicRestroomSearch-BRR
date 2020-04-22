@@ -15,8 +15,8 @@
 <!-- Icons -->
 <link href="<c:url value="/resources/assets/js/plugins/nucleo/css/nucleo.css"/>" rel="stylesheet" />
 <link href="<c:url value="/resources/assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css"/>" rel="stylesheet" />
-<link href="<c:url value="/resources/css/boardStyle.css"/>" rel="stylesheet" />
 <!-- CSS Files -->
+<link href="<c:url value="/resources/css/boardStyle.css"/>" rel="stylesheet" />
 <link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
 <script type="text/javascript">
     var map, pos, marker, toiletMarker, marker_s, marker_e, marker_p1, marker_p2, title, id, label, endX, endY, polyline_, myWindow, targetWindow, destinyWindow, realTime;
@@ -329,9 +329,9 @@
                
                 switch(reviewList.length){
                     case 0:
-                        reviews0.innerHTML = "Default Review";
-                        reviews1.innerHTML = "Default Review";
-                        reviews2.innerHTML = "Default Review";
+                        reviews0.innerHTML = "당신의 리뷰를 들려주세요";
+                        reviews1.innerHTML = "당신의 리뷰를 들려주세요";
+                        reviews2.innerHTML = "당신의 리뷰를 들려주세요";
                         starreview0.innerHTML = "";
                         starreview1.innerHTML = "";
                         starreview2.innerHTML = "";
@@ -347,8 +347,8 @@
                         break;
                     case 1:
                         reviews0.innerHTML = reviewList[0].review;
-                        reviews1.innerHTML = "Default Review";
-                        reviews2.innerHTML = "Default Review";
+                        reviews1.innerHTML = "당신의 리뷰를 들려주세요";
+                        reviews2.innerHTML = "당신의 리뷰를 들려주세요";
                         if(reviewList[0].star>2)
                             $("#star-review-0").attr("class", "text-success");
                         else
@@ -373,7 +373,7 @@
                     case 2:
                         reviews0.innerHTML = reviewList[0].review;
                         reviews1.innerHTML = reviewList[1].review;
-                        reviews2.innerHTML = "Default Review";
+                        reviews2.innerHTML = "당신의 리뷰를 들려주세요";
                         if(reviewList[0].star>2)
                             $("#star-review-0").attr("class", "text-success");
                         else
@@ -1046,6 +1046,7 @@
 		</div>
 	</div>
 
+	<!-- 네비게이션 start -->
 	<div id="feedback-container"></div>
 	<div id="feedback" class="col-xl-4">
 		<form action="">
@@ -1111,7 +1112,7 @@
 					</div></li>
 				<li class="nav-item dropdown"><a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						<div class="media align-items-center">
-							<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-1-800x800.jpg"/>">
+							<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="${sessionScope.Profile}">
 							</span>
 						</div>
 					</a>
@@ -1178,10 +1179,11 @@
 							<i class="ni ni-tv-2 text-primary"></i> Dashboard
 						</a></li> //nav-item  active는 무조건 검정색으로 표시됩니다. 
 					
-						<%-- <li class="nav-item"><a class="icon icon-shape bg-danger text-white rounded-circle shadow" href="<c:url value="/diary/diaryMain"/>">
-							<i class="fas fa-chart-bar"></i> Diary				
-						</li>	
+							ni ni-chat-round
 					 --%>
+					 <li class="nav-item"><a class="nav-link" href="<c:url value="/review/reviewMain"/>">
+							<i class="ni ni-chat-round"></i> Reviews
+						</a></li>
 					<li class="nav-item"><a class="nav-link " href="<c:url value="/diary/diaryMain"/>">
 							<i class="ni ni-bullet-list-67 text-red"></i> Diary
 						</a></li>
@@ -1239,12 +1241,12 @@
 					<br><br>
 						<div id="openweathermap-widget-18"></div>
 						<script>
-							window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = []; 
+							/* window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = []; 
 							window.myWidgetParam.push({id: 18,cityid: '1835848',appid: 'c08b376c4c1ca3b5e593c4991d91eb3c',
 							units: 'metric',containerid: 'openweathermap-widget-18',  });  
 							(function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";
 							script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
-							var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();
+							var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })(); */
 						</script>
 						
 					</li>
@@ -1258,6 +1260,7 @@
 			</div>
 		</div>
 	</nav>
+	<!-- 네비게이션[E] -->
 	<div class="main-content">
 		<!-- Navbar -->
 		<nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
@@ -1339,7 +1342,7 @@
 		<div class="header bg-gradient-primary pb-7 pt-5 pt-md-8">
 			<div class="container-fluid">
 				<div class="header-body">
-					<input class='replyButton1 ml-1' type='button' value='최단거리' onclick='searchShortest()'> <input class='replyButton1 ml-0' type='button' value='최고 평가' onclick='searchRating()'> <input class='replyButton1 ml-0' type='button' value='최고 청결도' onclick='searchClan()'><input class='replyButton1 ml-0' type='button' value='최대 원활도' onclick='searchSmooth()'>
+					<input class='replyButton1 ml-1' type='button' value='최단거리' onclick='searchShortest()'> <input class='replyButton1 ml-0' type='button' value='최고 평가' onclick='searchRating()'> <input class='replyButton1 ml-0' type='button' value='최고 청결도' onclick='searchClan()'> <input class='replyButton1 ml-0' type='button' value='최대 원활도' onclick='searchSmooth()'>
 				</div>
 			</div>
 		</div>
@@ -1384,7 +1387,7 @@
 									<div class="card-body3 replyButton2" id="div2">
 										<div class="row">
 											<div class="col-8 pr-0" style="float: left;">
-												<span class="card-title text-sm text-muted mb-0" id="reviews-0">Default Review</span>
+												<span class="card-title text-sm text-muted mb-0" id="reviews-0">당신의 리뷰를 들려주세요</span>
 											</div>
 											<div class="col-4" style="text-align: center; float: right;">
 												<p class="mt-0 mb-3 text-muted text-sm">
@@ -1404,7 +1407,7 @@
 									<div class="card-body3 replyButton2" id="div3">
 										<div class="row">
 											<div class="col-8 pr-0">
-												<span class="card-title  text-sm text-muted mb-0" id="reviews-1">Default Review</span>
+												<span class="card-title  text-sm text-muted mb-0" id="reviews-1">당신의 리뷰를 들려주세요</span>
 											</div>
 											<div class="col-4" style="text-align: center;">
 												<p class="mt-0 mb-3 text-muted text-sm">
@@ -1424,7 +1427,7 @@
 									<div class="card-body3 replyButton2" id="div4">
 										<div class="row">
 											<div class="col-8 pr-0">
-												<span class="card-title text-sm text-muted mb-0" id="reviews-2">Default Review</span>
+												<span class="card-title text-sm text-muted mb-0" id="reviews-2">당신의 리뷰를 들려주세요</span>
 											</div>
 											<div class="col-4" style="text-align: center;">
 												<p class="mt-0 mb-3 text-muted text-sm">
