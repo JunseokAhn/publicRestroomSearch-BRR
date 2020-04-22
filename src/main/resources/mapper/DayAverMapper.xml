@@ -12,7 +12,7 @@ insert into dayaver
 )
 </insert>
 
-<select id="listAll" parameterType="double" resultType="int">
+<select id="listAll" parameterType="double" resultType="Double">
 select count(*) from dayaver
 where lat = #{lat} and lng = #{lng}
 </select>
@@ -22,7 +22,7 @@ delete from dayaver where id = #{id}
 </delete>
 
 
-<select id="average" resultType="int">
+<select id="average" resultType="Double">
 SELECT
     avg(count(*))
 FROM dayaver
