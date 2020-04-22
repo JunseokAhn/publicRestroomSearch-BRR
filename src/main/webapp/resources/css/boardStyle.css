@@ -194,3 +194,51 @@ h1 span:nth-child(2) {
 	margin-bottom: 0.4rem;
 	/* content: url( "/brr/resources/img/starOn.png" ); */
 }
+td{
+	overflow-x :hidden; 
+}
+#dark-table{
+	table-layout: fixed;
+}
+#dark-table th:nth-child(1){
+	width: 15rem;
+}
+#dark-table th:nth-child(2){
+	width: 40rem;
+}
+#dark-table th:nth-child(3){
+	width: 12rem;
+}
+@media(max-width: 1600px){
+	
+	#dark-table th:nth-child(1){
+		display: none;
+	}
+	#dark-table th:nth-child(2){
+		width: 20rem;
+	}
+	#dark-table th:nth-child(3){
+		display: none;
+	}
+	#dark-table th:nth-child(4){
+		display: none;
+	}
+	#dark-table th:nth-child(5){
+		display: none;
+	}
+	#dark-table th:nth-child(6){
+		display: none;
+	}
+	#dark-table td:nth-child(3){
+		display: none;
+	}
+	#dark-table td:nth-child(4){
+		display: none;
+	}
+	#dark-table td:nth-child(5){
+		display: none;
+	}
+	#dark-table td:nth-child(6){
+		display: none;
+	}
+}
