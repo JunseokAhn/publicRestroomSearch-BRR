@@ -649,7 +649,7 @@
                 id : i,
                 position : new Tmapv2.LatLng(nearbyToilet[i].lat, nearbyToilet[i].lng), //Marker의 중심좌표 설정.
                 map : map, //Marker가 표시될 Map 설정.
-                icon : "<c:url value = '/resources/img/toilet36_gray5.png'/>",
+                icon : "<c:url value = '/resources/img/toilet36_color_gray.png'/>",
                 title : title, //Marker 타이틀.
             //label : label //Marker의 라벨.
             });
