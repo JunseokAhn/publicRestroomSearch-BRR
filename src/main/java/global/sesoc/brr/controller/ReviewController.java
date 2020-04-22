@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import global.sesoc.brr.dao.ReviewDAO;
+import global.sesoc.brr.util.PageNavigator;
 import global.sesoc.brr.vo.ReviewVO;
 
 @Controller
@@ -33,9 +34,15 @@ public class ReviewController {
 	public String reviewMain(@RequestParam(defaultValue = "") String toiletTitle, @RequestParam(defaultValue = "1") int currentPage, Model model) {
 		// title로 리뷰검색
 		System.out.println("검색어 : "+toiletTitle);
-		ArrayList<ReviewVO> list = dao.reviewMain(toiletTitle, currentPage);
+		int reviewCount = dao.reviewCount(toiletTitle);
+		PageNavigator PN = new PageNavigator(7, currentPage, reviewCount);
+		int startRecord = PN.getStartRecord();
+		ArrayList<ReviewVO> list = dao.reviewMain(toiletTitle, startRecord);
 		model.addAttribute("list", list);
 		model.addAttribute("search", toiletTitle);
+		model.addAttribute("pn", PN);
+		System.out.println(PN.getCurrentGroup());
+		System.out.println(PN.getEndPageGroup());
 		for(ReviewVO i : list)
 			System.out.println(i);
 		return "review/reviewMain";

@@ -35,10 +35,9 @@ public class ReviewDAO {
 		return list;
 	}
 
-	public ArrayList<ReviewVO> reviewMain(String toiletTitle, int currentPage) {
+	public int reviewCount(String toiletTitle) {
 		// TODO Auto-generated method stub
 		int reviewCount;
-		ArrayList<ReviewVO> list;
 		ReviewMapper mapper = session.getMapper(ReviewMapper.class);
 		if (toiletTitle.equals("")) {
 			reviewCount = mapper.reviewCount(toiletTitle);
@@ -46,8 +45,14 @@ public class ReviewDAO {
 			reviewCount = mapper.reviewCount2(toiletTitle);
 		}
 		System.out.println("검색된 리뷰의 수: " + reviewCount);
-		PageNavigator PN = new PageNavigator(7, currentPage, reviewCount);
-		RowBounds RB = new RowBounds(PN.getStartRecord(), 7);
+		return reviewCount;
+	}
+	
+	public ArrayList<ReviewVO> reviewMain(String toiletTitle, int startRecord) {
+		// TODO Auto-generated method stub
+		ReviewMapper mapper = session.getMapper(ReviewMapper.class);
+		RowBounds RB = new RowBounds(startRecord, 7);
+		ArrayList<ReviewVO> list;
 		if (toiletTitle.equals("")) {
 			list = mapper.reviewMain(RB, toiletTitle);
 		} else {
