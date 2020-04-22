@@ -1,6 +1,5 @@
 package global.sesoc.brr.dao;
 
-import java.util.ArrayList;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +33,9 @@ public class DayAverDAO {
 	/*
 	 * 모든 이용자 결과를 가지고 옴
 	 * */
-	public int listAll(Double lat, Double lng) {
+	public Double listAll(Double lat, Double lng) {
 		
-		int result = -1;
+		Double result = 0.0;
 		
 		try {
 			DayAverMapper mapper = session.getMapper(DayAverMapper.class);
@@ -62,8 +61,8 @@ public class DayAverDAO {
 		return result;
 	}
 	
-	public int average (Double lat, Double lng) {
-		int result = 0;
+	public Double average (Double lat, Double lng) {
+		Double result = 0.0;
 		try {
 			DayAverMapper mapper = session.getMapper(DayAverMapper.class);
 			result = mapper.average(lat, lng);	

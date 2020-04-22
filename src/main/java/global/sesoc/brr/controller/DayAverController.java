@@ -42,22 +42,22 @@ public class DayAverController {
 		return "";
 	}
 	//해당 화장실의 전체 이용자 수
-	@PostMapping("/allUser")
-	@ResponseBody
-	public String alluser(Double lat, Double lng, HttpSession httpsession) {
-		logger.info("화장실 사용자 통계 입니다.");
-		
-		int result = dao.listAll(lat, lng);
-		
-		System.out.println("하루 화장실 통계자 수 : " + result);
-		
-		int UserDiffer = result - (int)httpsession.getAttribute("userAvg");
-		
-		httpsession.setAttribute("userDiffer", UserDiffer);
-		
-		return "";
-	}
-	
+//	@PostMapping("/allUser")
+//	@ResponseBody
+//	public String alluser(Double lat, Double lng, HttpSession httpsession) {
+//		logger.info("화장실 사용자 통계 입니다.");
+//		
+//		Double result = dao.listAll(lat, lng);
+//		
+//		System.out.println("하루 화장실 통계자 수 : " + result);
+//		
+//		Double UserDiffer = result - (Double)httpsession.getAttribute("userAvg");
+//		
+//		httpsession.setAttribute("userDiffer", UserDiffer);
+//		
+//		return "";
+//	}
+//	
 	//해당 아이디의 기록 삭제 입니다.
 	@GetMapping("/deleteRecord")
 	@ResponseBody
@@ -75,10 +75,10 @@ public class DayAverController {
 	
 	@PostMapping("/average")
 	@ResponseBody
-	public int average (Double lat, Double lng, HttpSession httpsession) {
+	public Double average (Double lat, Double lng, HttpSession httpsession) {
 		logger.info("7일 평균 계산 컨트롤러 이동");
 		
-		int result = dao.average(lat, lng);
+		Double result = dao.average(lat, lng);
 		
 		//userAvg => 이용자 평균
 		

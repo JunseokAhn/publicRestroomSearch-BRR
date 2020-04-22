@@ -739,7 +739,6 @@
                     				lng : endX, lat : endY
                     			},
                     			success : function (res) {
-                    				alert(res);
                     				consloe.log(res);
                     			},
                     			error : function (e) {
