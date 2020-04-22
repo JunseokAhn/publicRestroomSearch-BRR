@@ -21,7 +21,6 @@
 		#{lng}+0.0246)
 		order by DISTANCE) TMP where rownum &lt; (select
 		count(*)from brr_toilet)
-
 	</select>
 
 
