@@ -722,13 +722,13 @@
                             content2 += "</p>"
                             content2 += "<p class='mt-1 mb-0 text-muted text-sm'>"
                             content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>이용자수</span>"
-                            content2 += "<input class='replyButton3 ml-1' type='button' value='리뷰 목록' onclick='location.href=\"/brr/review/reviewMain?toiletTitle=" + title + "\"'>"
+                            content2 += "<input class='replyButton3 ml-1 pointer' type='button' value='리뷰 목록' onclick='location.href=\"/brr/review/reviewMain?toiletTitle=" + title + "\"'>"
 
                             var id = $("#sessionId").val();
 <%-- <%=(String) session.getAttribute("sessionId")%>
     ; --%>
                             //리뷰쓰기
-                            content2 += "<input class='replyButton3 ml-1' type='button' value='리뷰 쓰기' onclick='reviewWrite(" + "\"" + title + "\"," + "\"" + id + "\")'>"
+                            content2 += "<input class='replyButton3 ml-1 pointer' type='button' value='리뷰 쓰기' onclick='reviewWrite(" + "\"" + title + "\"," + "\"" + id + "\")'>"
                             content2 += "</p>"
 
                             div1.innerHTML = content2;
@@ -1272,7 +1272,7 @@
 					<div class="form-group mb-0">
 						<div class="input-group input-group-alternative">
 							<div class="input-group-prepend">
-								<span class="input-group-text" onclick="document.forms['normal-search'].submit();" style="cursor: pointer;"><i class="fas fa-search"></i></span>
+								<span class="input-group-text pointer" onclick="document.forms['normal-search'].submit();""><i class="fas fa-search"></i></span>
 							</div>
 							<input class="form-control" placeholder="Search Review" name="toiletTitle" type="text">
 						</div>
@@ -1342,7 +1342,7 @@
 		<div class="header bg-gradient-primary pb-7 pt-5 pt-md-8">
 			<div class="container-fluid">
 				<div class="header-body">
-					<input class='replyButton1 ml-1' type='button' value='최단거리' onclick='searchShortest()' style="cursor: pointer;"> <input class='replyButton1 ml-0' type='button' value='최고 평가' onclick='searchRating()'> <input class='replyButton1 ml-0' type='button' value='최고 청결도' onclick='searchClan()'> <input class='replyButton1 ml-0' type='button' value='최대 원활도' onclick='searchSmooth()'>
+					<input class='replyButton1 ml-1 pointer' type='button' value='최단거리' onclick='searchShortest()'> <input class='replyButton1 ml-0 pointer' type='button' value='최고 평가' onclick='searchRating()'> <input class='replyButton1 ml-0 pointer' type='button' value='최고 청결도' onclick='searchClan()'> <input class='replyButton1 ml-0 pointer' type='button' value='최대 원활도' onclick='searchSmooth()'>
 				</div>
 			</div>
 		</div>
