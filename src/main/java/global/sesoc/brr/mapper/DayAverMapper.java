@@ -10,11 +10,11 @@ public interface DayAverMapper {
 	public int insertAver (DayAverVO aver);
 	
 	//하루 이용한 사람들의 정보들을 서버에서 가지고 옴
-	public int listAll (Double lat, Double lng);
+	public Double listAll (@Param("lat")Double lat, @Param("lng")Double lng);
 	
 	//해당 회원의 검색 기록 삭제
 	public int deleteRecord (String id);
 	
 	//통계를 내기 위한 객체 불러오기
-	public int average (@Param("lat")Double lat, @Param("lng")Double lng);
+	public Double average (@Param("lat")Double lat, @Param("lng")Double lng);
 }
