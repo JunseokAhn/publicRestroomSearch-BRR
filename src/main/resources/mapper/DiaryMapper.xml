@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="global.sesoc.brr.mapper.DiaryMapper">
+
+
+
+
+<insert id="insert" parameterType="resVO">
+	insert 
+	into 
+		diary_result
+	(
+	    resNum,
+		status,
+		inputdate,
+		resvalue
+		
+    )
+	
+	values 
+	(
+	   diary_result_seq.nextval,
+         #{status},
+         sysdate,
+         #{resvalue}
+	)
+</insert>
+
+<select id="list" resultType="resVO" parameterType="string">
+select *
+
+
+
+from DIARY_RESULT
+where to_char(sysdate,'fmmm') = #{db_startDate} 
+and to_char(sysdate,'yyyy') = #{db_endDate}
+ 
+  
+
+</select>
+
+
+</mapper>
