@@ -41,8 +41,6 @@ public class ReviewController {
 		model.addAttribute("list", list);
 		model.addAttribute("search", toiletTitle);
 		model.addAttribute("pn", PN);
-		System.out.println(PN.getCurrentGroup());
-		System.out.println(PN.getEndPageGroup());
 		for(ReviewVO i : list)
 			System.out.println(i);
 		return "review/reviewMain";

@@ -1157,11 +1157,11 @@
 					</div>
 				</div>
 				<!-- Form -->
-				<form class="mt-4 mb-3 d-md-none">
+				<form id="responsive-search" class="mt-4 mb-3 d-md-none" action="<c:url value="/review/reviewMain"/>" method="get">
 					<div class="input-group input-group-rounded input-group-merge">
-						<input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Search" aria-label="Search">
+						<input type="search" class="form-control form-control-rounded form-control-prepended" name="toiletTitle" placeholder="Search Review" aria-label="Search">
 						<div class="input-group-prepend">
-							<div class="input-group-text">
+							<div class="input-group-text" onclick="document.forms['responsive-search'].submit();">
 								<span class="fa fa-search"></span>
 							</div>
 						</div>
@@ -1268,13 +1268,13 @@
 				<!-- Brand -->
 				<a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="<c:url value="/maps/mapsMain"/>">Maps</a>
 				<!-- Form -->
-				<form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+				<form id="normal-search" class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto" action="<c:url value="/review/reviewMain"/>" method="get">
 					<div class="form-group mb-0">
 						<div class="input-group input-group-alternative">
 							<div class="input-group-prepend">
-								<span class="input-group-text"><i class="fas fa-search"></i></span>
+								<span class="input-group-text" onclick="document.forms['normal-search'].submit();" style="cursor: pointer;"><i class="fas fa-search"></i></span>
 							</div>
-							<input class="form-control" placeholder="Search Review" type="text">
+							<input class="form-control" placeholder="Search Review" name="toiletTitle" type="text">
 						</div>
 					</div>
 				</form>
@@ -1342,7 +1342,7 @@
 		<div class="header bg-gradient-primary pb-7 pt-5 pt-md-8">
 			<div class="container-fluid">
 				<div class="header-body">
-					<input class='replyButton1 ml-1' type='button' value='최단거리' onclick='searchShortest()'> <input class='replyButton1 ml-0' type='button' value='최고 평가' onclick='searchRating()'> <input class='replyButton1 ml-0' type='button' value='최고 청결도' onclick='searchClan()'> <input class='replyButton1 ml-0' type='button' value='최대 원활도' onclick='searchSmooth()'>
+					<input class='replyButton1 ml-1' type='button' value='최단거리' onclick='searchShortest()' style="cursor: pointer;"> <input class='replyButton1 ml-0' type='button' value='최고 평가' onclick='searchRating()'> <input class='replyButton1 ml-0' type='button' value='최고 청결도' onclick='searchClan()'> <input class='replyButton1 ml-0' type='button' value='최대 원활도' onclick='searchSmooth()'>
 				</div>
 			</div>
 		</div>

@@ -25,7 +25,7 @@
 	<select id="reviewCount2" parameterType="String" resultType="int">
 		select count(*)
 		from brr_review
-		where #{_parameter} like '%' || toilet_title || '%'
+		where toilet_title like '%' || #{_parameter} || '%'
 	</select>
 	
 	<select id="reviewMain" parameterType="String" resultType="review">
@@ -35,6 +35,6 @@
 	
 	<select id="reviewMain2" parameterType="String" resultType="review">
 		select toilet_title, sessionId, sessionNickname, Profile, review, star, clean, to_char(inputdate, 'YYYY/MM/DD') inputdate
-		from (select * from brr_review where #{_parameter} like '%' || toilet_title || '%' order by inputdate desc)
+		from (select * from brr_review where toilet_title like '%' || #{_parameter} || '%' order by inputdate desc)
 	</select>
 </mapper>
