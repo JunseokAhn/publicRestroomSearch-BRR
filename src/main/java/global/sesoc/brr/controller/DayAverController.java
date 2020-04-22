@@ -75,20 +75,30 @@ public class DayAverController {
 	
 	@PostMapping("/average")
 	@ResponseBody
-	public Double average (Double lat, Double lng, HttpSession httpsession) {
-		logger.info("7일 평균 계산 컨트롤러 이동");
+	public DayAverVO average (Double lat, Double lng, HttpSession httpsession) {
+		logger.info("7일 평균 계산, 변화량 컨트롤러 이동");
+		
+		DayAverVO aver = new DayAverVO();
 		
 		Double result = dao.average(lat, lng);
+		Double result2 = dao.listAll(lat, lng);
 		
 		//userAvg => 이용자 평균
 		
 		System.out.println("7일 평균 이용자 수 : " + result);
+		System.out.println("변화량 : " + result2);
 		
 		httpsession.setAttribute("userAvg", result);
 		
-		return result;
+		Double UserDiffer = result - (Double)httpsession.getAttribute("userAvg");
+		
+		httpsession.setAttribute("userDiffer", UserDiffer);
+		
+		aver.setAverage(result);
+		aver.setDiffer(UserDiffer);
+		
+		return aver;
+		
 	}
-	
-	
 	
 }

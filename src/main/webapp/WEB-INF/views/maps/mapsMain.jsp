@@ -32,6 +32,8 @@
     var polyFlag = 0;
     var locationFlag = 0;
     var starFlag = 0;
+	var changeRate;
+	var averageRate; 
     //var shortFlag = 1;
     
     $(function () {
@@ -740,6 +742,9 @@
                     			},
                     			success : function (res) {
                     				consloe.log(res);
+                    				var changeRate = res.differ;
+                    				var averageRate = res.average;
+                    				
                     			},
                     			error : function (e) {
                     				alert(JSON.stringify(e));
