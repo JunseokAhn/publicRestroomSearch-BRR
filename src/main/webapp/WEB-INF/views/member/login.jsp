@@ -37,7 +37,7 @@ function BackHome(){
 	window.location.replace("/brr/maps/mapsMain");	
 }
 </script>
-<title>Argon Dashboard - Free Dashboard for Bootstrap 4 by Creative Tim</title>
+<title>brr 로그인 페이지</title>
 <!-- Favicon -->
 <link href="<c:url value="/resources/assets/img/brand/favicon.png"/>" rel="icon" type="image/png">
 <!-- Fonts -->
@@ -128,9 +128,17 @@ function BackHome(){
 							<div class="text-muted text-center mt-2 mb-3">
 								<small>로그인을 선택 해 주세요.</small>
 							</div>
-							<div class="btn-wrapper text-center">
-								<a href="<%=apiURL%>"><img height="50" src="http://static.nid.naver.com/oauth/small_g_in.PNG"/></a>
-								<span class="g-signin2" data-onsuccess="onSignIn"></span>
+							<div align="center">
+								<table>
+									<tr>
+										<td>
+											<a href="<%=apiURL%>"><img width="120" height="40" src="http://static.nid.naver.com/oauth/small_g_in.PNG"/></a>
+										</td>
+										<td>
+											<span class="g-signin2" data-onsuccess="onSignIn"></span>
+										</td>
+									</tr>
+								</table>
 							</div>
 						</div>
 						<div class="card-body px-lg-5 py-lg-5">

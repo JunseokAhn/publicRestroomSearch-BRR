@@ -10,10 +10,13 @@ import lombok.NoArgsConstructor;
 public class DayAverVO {
 
 	
-	private double lat;
-	private double lng;
+	private Double lat;
+	private Double lng;
 	private String toiletnm;
 	private String id;
 	private String inputdate;
+	private Double average;
+	private Double differ;
+	
 	
 }
