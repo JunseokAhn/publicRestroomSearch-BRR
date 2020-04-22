@@ -75,7 +75,7 @@ var myChart = new Chart(ctx, {
 });
 </script>
 </div>
-
+<form action="insert" method="post">
 <table style="margin-top:50%">
 <tr>
 <td id='1' style="display:none">2</td> 
@@ -89,6 +89,9 @@ var myChart = new Chart(ctx, {
 </td>
 </tr>
 </table>
-
+<input type="hidden" name="status" value="2">
+<input type="hidden" name="resnum" value="2">
+<input id="bt" style=" margin-top:-33px; width:50pt; height:25pt; font-size:10px;" type="submit" value="저장">
+</form>
 </body>
 </html>

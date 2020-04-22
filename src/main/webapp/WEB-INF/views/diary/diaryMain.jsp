@@ -22,7 +22,7 @@ $(document).ready(function() {
 });
 
 
-function test(result){
+/* function test(result){
 
 if(confirm('진단결과를 저장하시겠습니까?'))
 {
@@ -45,7 +45,7 @@ if(confirm('진단결과를 저장하시겠습니까?'))
 }
 	
 
-}
+} */
 
 //type1의 진단결과
 function clickFunc(){

@@ -256,7 +256,10 @@
 							
 							 <c:if test="${scheduleList.status==1}">
 							 
+							<!-- <img id="type1brown" src="../resources/img/normal.png"  style="width:10%"  /> -->
+							<a style="text-decoration:none" href="read?boardnum=${scheduleList.status}">
 							<img id="type1brown" src="../resources/img/normal.png"  style="width:10%"  />
+						</a>
 							</c:if> 
 							<c:if test="${scheduleList.status==2}">
 							<img id="type1brown" src="../resources/img/dangerous.png"  style="width:10%"  />
