@@ -760,7 +760,7 @@
                     				lng : endX, lat : endY
                     			},
                     			success : function (res) {
-                    				consloe.log(res);
+                    				//consloe.log(res);
                     				var changeRate = res.differ;
                     				var averageRate = res.average;
                     				
