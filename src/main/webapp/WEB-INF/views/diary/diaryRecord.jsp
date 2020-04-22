@@ -257,7 +257,7 @@
 							 <c:if test="${scheduleList.status==1}">
 							 
 							<!-- <img id="type1brown" src="../resources/img/normal.png"  style="width:10%"  /> -->
-							<a style="text-decoration:none" href="read?boardnum=${scheduleList.status}">
+							<a style="text-decoration:none" action='d' href="type1brown">
 							<img id="type1brown" src="../resources/img/normal.png"  style="width:10%"  />
 						</a>
 							</c:if> 

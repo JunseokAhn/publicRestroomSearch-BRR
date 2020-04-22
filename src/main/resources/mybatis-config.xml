@@ -14,6 +14,8 @@
 		<typeAlias type="global.sesoc.brr.vo.GoogleLoginVO" alias="googlelogin"/>
 		<typeAlias type="global.sesoc.brr.vo.DayAverVO" alias="aver"/>
 		<typeAlias type="global.sesoc.brr.vo.ReviewVO" alias="review"/>
+		<typeAlias type="global.sesoc.brr.vo.DateData" alias="datedata"/>
+		<typeAlias type="global.sesoc.brr.vo.resVO" alias="resVO"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/SnsBoardMapper.xml" />
@@ -27,5 +29,6 @@
 		<mapper resource="mapper/ReplyMapper.xml" />
 		<mapper resource="mapper/ToiletMapper.xml" />
 		<mapper resource="mapper/ReviewMapper.xml"/>
+		<mapper resource="mapper/DiaryMapper.xml" /> 
 	</mappers>
 </configuration>
