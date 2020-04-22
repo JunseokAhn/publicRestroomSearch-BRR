@@ -1,60 +1,62 @@
 package global.sesoc.brr.util;
 
+import global.sesoc.brr.util.PageNavigator;
 import lombok.Data;
 
+
 /**
- * ê²Œì‹œ?Œ ?˜?´ì§? ì²˜ë¦¬ ?´?˜?Š¤
+ * ê²Œì‹œíŒ í˜ì´ì§• ì²˜ë¦¬ í´ë˜ìŠ¤
  */
 @Data
 public class PageNavigator {
-	// ?˜?´ì§? ê´?? ¨ ? •ë³?
-	private int countPerPage; // ?˜?´ì§??‹¹ ê¸?ëª©ë¡ ?ˆ˜
-	private int pagePerGroup; // ê·¸ë£¹?‹¹ ?˜?´ì§? ?ˆ˜
-	private int currentPage; // ?˜„?¬ ?˜?´ì§? (ìµœê·¼ ê¸??´ 1ë¶??„° ?‹œ?‘)
-	private int totalRecordsCount; // ? „ì²? ê¸? ?ˆ˜
-	private int totalPageCount; // ? „ì²? ?˜?´ì§? ?ˆ˜
-	private int currentGroup; // ?˜„?¬ ê·¸ë£¹ (ìµœê·¼ ê·¸ë£¹?´ 0ë¶??„° ?‹œ?‘)
-	private int startPageGroup; // ?˜„?¬ ê·¸ë£¹?˜ ì²? ?˜?´ì§?
-	private int endPageGroup; // ?˜„?¬ ê·¸ë£¹?˜ ë§ˆì?ë§? ?˜?´ì§?
-	private int startRecord; // ? „ì²? ? ˆì½”ë“œ ì¤? ?˜„?¬ ?˜?´ì§? ì²? ê¸??˜ ?œ„ì¹? (0ë¶??„° ?‹œ?‘)
-
+	// í˜ì´ì§€ ê´€ë ¨ ì •ë³´
+	private int countPerPage; // í˜ì´ì§€ë‹¹ ê¸€ëª©ë¡ ìˆ˜
+	private int pagePerGroup; // ê·¸ë£¹ë‹¹ í˜ì´ì§€ ìˆ˜
+	private int currentPage; // í˜„ì¬ í˜ì´ì§€ (ìµœê·¼ ê¸€ì´ 1ë¶€í„° ì‹œì‘)
+	private int totalRecordsCount; // ì „ì²´ ê¸€ ìˆ˜
+	private int totalPageCount; // ì „ì²´ í˜ì´ì§€ ìˆ˜
+	private int currentGroup; // í˜„ì¬ ê·¸ë£¹ (ìµœê·¼ ê·¸ë£¹ì´ 0ë¶€í„° ì‹œì‘)
+	private int startPageGroup; // í˜„ì¬ ê·¸ë£¹ì˜ ì²« í˜ì´ì§€
+	private int endPageGroup; // í˜„ì¬ ê·¸ë£¹ì˜ ë§ˆì§€ë§‰ í˜ì´ì§€
+	private int startRecord; // ì „ì²´ ë ˆì½”ë“œ ì¤‘ í˜„ì¬ í˜ì´ì§€ ì²« ê¸€ì˜ ìœ„ì¹˜ (0ë¶€í„° ì‹œì‘)
 
 	public PageNavigator() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public PageNavigator(int currentPage, int totalRecordsCount) {
-		// ?˜„?¬ ?˜?´ì§?, ? „ì²? ê¸? ?ˆ˜ë¥? ? „?‹¬ë°›ìŒ
-		this.countPerPage = 10; // ?˜?´ì§??‹¹ ê¸? ?ˆ˜
-		this.pagePerGroup = 5; // ê·¸ë£¹?‹¹ ?˜?´ì§? ?ˆ˜
+	public PageNavigator(int countPerPage, int currentPage, int totalRecordsCount) {
+		// í˜„ì¬ í˜ì´ì§€, ì „ì²´ ê¸€ ìˆ˜ë¥¼ ì „ë‹¬ë°›ìŒ
+		this.countPerPage = countPerPage; // í˜ì´ì§€ë‹¹ ê¸€ ìˆ˜
+		this.pagePerGroup = 3; // ê·¸ë£¹ë‹¹ í˜ì´ì§€ ìˆ˜
 		this.totalRecordsCount = totalRecordsCount;
 
-		// ? „ì²? ?˜?´ì§? ?ˆ˜
+		// ì „ì²´ í˜ì´ì§€ ìˆ˜
 		totalPageCount = (totalRecordsCount + countPerPage - 1) / countPerPage;
 
-		// ? „?‹¬?œ ?˜„?¬ ?˜?´ì§?ê°? 1ë³´ë‹¤ ?‘?œ¼ë©? ?˜„?¬?˜?´ì§?ë¥? 1?˜?´ì§?ë¡? ì§?? •
+		// ì „ë‹¬ëœ í˜„ì¬ í˜ì´ì§€ê°€ 1ë³´ë‹¤ ì‘ìœ¼ë©´ í˜„ì¬í˜ì´ì§€ë¥¼ 1í˜ì´ì§€ë¡œ ì§€ì •
 		if (currentPage < 1)
 			currentPage = 1;
-		// ? „?‹¬?œ ?˜„?¬ ?˜?´ì§?ê°? ë§ˆì?ë§? ?˜?´ì§?ë³´ë‹¤ ?¬ë©? ?˜„?¬?˜?´ì§?ë¥? ë§ˆì?ë§? ?˜?´ì§?ë¡? ì§?? •
+		// ì „ë‹¬ëœ í˜„ì¬ í˜ì´ì§€ê°€ ë§ˆì§€ë§‰ í˜ì´ì§€ë³´ë‹¤ í¬ë©´ í˜„ì¬í˜ì´ì§€ë¥¼ ë§ˆì§€ë§‰ í˜ì´ì§€ë¡œ ì§€ì •
 		if (currentPage > totalPageCount)
 			currentPage = totalPageCount;
 
 		this.currentPage = currentPage;
 
-		// ?˜„?¬ ê·¸ë£¹
+		// í˜„ì¬ ê·¸ë£¹
 		currentGroup = (currentPage - 1) / pagePerGroup;
 
-		// ?˜„?¬ ê·¸ë£¹?˜ ì²? ?˜?´ì§?
+		// í˜„ì¬ ê·¸ë£¹ì˜ ì²« í˜ì´ì§€
 		startPageGroup = currentGroup * pagePerGroup + 1;
-		// ?˜„?¬ ê·¸ë£¹?˜ ì²? ?˜?´ì§?ê°? 1ë³´ë‹¤ ?‘?œ¼ë©? 1ë¡? ì²˜ë¦¬
+		// í˜„ì¬ ê·¸ë£¹ì˜ ì²« í˜ì´ì§€ê°€ 1ë³´ë‹¤ ì‘ìœ¼ë©´ 1ë¡œ ì²˜ë¦¬
 		startPageGroup = startPageGroup < 1 ? 1 : startPageGroup;
-		// ?˜„?¬ ê·¸ë£¹?˜ ë§ˆì?ë§? ?˜?´ì§?
+		// í˜„ì¬ ê·¸ë£¹ì˜ ë§ˆì§€ë§‰ í˜ì´ì§€
 		endPageGroup = startPageGroup + pagePerGroup - 1;
-		// ?˜„?¬ ê·¸ë£¹?˜ ë§ˆì?ë§? ?˜?´ì§?ê°? ? „ì²? ?˜?´ì§? ?ˆ˜ë³´ë‹¤ ?‘?œ¼ë©? ? „ì²´í˜?´ì§? ?ˆ˜ë¥? ë§ˆì?ë§‰ìœ¼ë¡?.
+		// í˜„ì¬ ê·¸ë£¹ì˜ ë§ˆì§€ë§‰ í˜ì´ì§€ê°€ ì „ì²´ í˜ì´ì§€ ìˆ˜ë³´ë‹¤ ì‘ìœ¼ë©´ ì „ì²´í˜ì´ì§€ ìˆ˜ë¥¼ ë§ˆì§€ë§‰ìœ¼ë¡œ.
 		endPageGroup = endPageGroup < totalPageCount ? endPageGroup : totalPageCount;
 
-		// ? „ì²? ? ˆì½”ë“œ ì¤? ?˜„?¬ ?˜?´ì§? ì²? ê¸??˜ ?œ„ì¹?
+		// ì „ì²´ ë ˆì½”ë“œ ì¤‘ í˜„ì¬ í˜ì´ì§€ ì²« ê¸€ì˜ ìœ„ì¹˜
 		startRecord = (currentPage - 1) * countPerPage;
 	}
 
 }
+

@@ -291,7 +291,12 @@
 				<div class="col">
 					<div class="card bg-default shadow">
 						<div class="card-header bg-transparent border-0">
-							<h3 class="text-white mb-0">All reviews</h3>
+							<c:if test="${search==''}">
+								<h3 class="text-white mb-0">All reviews</h3>
+							</c:if>
+							<c:if test="${search!=''}">
+								<h3 class="text-white mb-0">검색어 : ${search}</h3>
+							</c:if>
 						</div>
 						<div class="table-responsive">
 							<table id="dark-table" class="table align-items-center table-dark table-flush">
@@ -315,59 +320,6 @@
 											</div>
 										</th>
 										<td>내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용여기까지보임</td>
-										<td><span class="avatar avatar-sm rounded-circle"> <img src="${sessionScope.Profile}">
-										</span>닉네임</td>
-										<td>
-											<div class="avatar-group">
-												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
-													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
-												</a>
-												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
-													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
-												</a>
-												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith">
-													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
-												</a>
-												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
-													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
-												</a>
-												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
-													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
-												</a>
-											</div>
-										</td>
-										<td>
-											<div class="avatar-group">
-												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
-													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
-												</a>
-												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
-													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
-												</a>
-												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith">
-													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
-												</a>
-												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
-													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
-												</a>
-												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
-													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
-												</a>
-											</div>
-										</td>
-										<td>
-											<div class="avatar-group">2020/04/22</div>
-										</td>
-									</tr>
-									<tr>
-										<th scope="row">
-											<div class="media align-items-center">
-												<div class="media-body">
-													<span class="mb-0 text-sm">화장실이름</span>
-												</div>
-											</div>
-										</th>
-										<td>내용내용내용내용내용내용내용내용내용내용내용내용내용내용</td>
 										<td><span class="avatar avatar-sm rounded-circle"> <img src="${sessionScope.Profile}">
 										</span>닉네임</td>
 										<td>
@@ -754,7 +706,7 @@
 				</div>
 			</div>
 			<!-- Table -->
-			<div class="row mt-5">
+			<%-- 	<div class="row mt-5">
 				<div class="col">
 					<div class="card shadow">
 						<div class="card-header border-0">
@@ -787,7 +739,7 @@
 										<td>
 											<div class="avatar-group">
 												<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="stars ml-0"> <img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="stars ml-0"> <img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="stars ml-0"> <img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="stars ml-0">
-												<%-- <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
+												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
 													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
 												</a>
 												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith">
@@ -798,7 +750,7 @@
 												</a>
 												<a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
 													<img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle">
-												</a> --%>
+												</a>
 											</div>
 										</td>
 										<td>
@@ -1055,7 +1007,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> --%>
 
 			<!-- Footer -->
 			<footer class="footer">

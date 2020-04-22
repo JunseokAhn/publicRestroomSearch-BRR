@@ -8,12 +8,34 @@
 		values
 		(#{toilet_title}, #{sessionId}, #{sessionNickname}, #{Profile}, #{review}, #{star}, #{clean})
 	</insert>
-	
+
 	<select id="reviewList" parameterType="String" resultType="review">
-		select * 
-		from (select * from brr_review 
-			 where toilet_title like #{toilet_title}
-			 order by inputdate desc) 
+		select *
+		from (select * from brr_review
+		where toilet_title like #{toilet_title}
+		order by inputdate desc)
 		where rownum &lt; 4
+	</select>
+
+	<select id="reviewCount" parameterType="String" resultType="int">
+		select count(*)
+		from brr_review
+	</select>
+	
+	<select id="reviewCount2" parameterType="String" resultType="int">
+		select count(*)
+		from brr_review
+		where #{_parameter} like '%' || toilet_title || '%'
+	</select>
+	
+	<select id="reviewMain" parameterType="String" resultType="review">
+		select *
+		from brr_review
+	</select>
+	
+	<select id="reviewMain2" parameterType="String" resultType="review">
+		select *
+		from brr_review
+		where #{_parameter} like '%' || toilet_title || '%'
 	</select>
 </mapper>
