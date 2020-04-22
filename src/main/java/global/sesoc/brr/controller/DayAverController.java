@@ -85,18 +85,35 @@ public class DayAverController {
 		
 		//userAvg => 이용자 평균
 		
-		System.out.println("7일 평균 이용자 수 : " + result);
-		System.out.println("변화량 : " + result2);
-		
-		httpsession.setAttribute("userAvg", result);
-		
-		Double UserDiffer = result - (Double)httpsession.getAttribute("userAvg");
-		
-		httpsession.setAttribute("userDiffer", UserDiffer);
-		
-		aver.setAverage(result);
-		aver.setDiffer(UserDiffer);
-		
+		if(result == null || result2 == null) {
+			result = 0.0;
+			
+			System.out.println("7일 평균 이용자 수 : " + result);
+			System.out.println("변화량 : " + result2);
+			
+			httpsession.setAttribute("userAvg", result);
+			
+			Double UserDiffer = result - (Double)httpsession.getAttribute("userAvg");
+			
+			httpsession.setAttribute("userDiffer", UserDiffer);
+			
+			aver.setAverage(result);
+			aver.setDiffer(UserDiffer);
+		} else {
+			
+			System.out.println("7일 평균 이용자 수 : " + result);
+			System.out.println("변화량 : " + result2);
+			
+			httpsession.setAttribute("userAvg", result);
+			
+			Double UserDiffer = result - (Double)httpsession.getAttribute("userAvg");
+			
+			httpsession.setAttribute("userDiffer", UserDiffer);
+			
+			aver.setAverage(result);
+			aver.setDiffer(UserDiffer);
+			
+		}
 		return aver;
 		
 	}
