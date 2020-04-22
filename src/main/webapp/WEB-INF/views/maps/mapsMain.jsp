@@ -649,7 +649,7 @@
                 id : i,
                 position : new Tmapv2.LatLng(nearbyToilet[i].lat, nearbyToilet[i].lng), //Marker의 중심좌표 설정.
                 map : map, //Marker가 표시될 Map 설정.
-                icon : "<c:url value = '/resources/img/toilet32.jpg'/>",
+                icon : "<c:url value = '/resources/img/toilet36_gray5.png'/>",
                 title : title, //Marker 타이틀.
             //label : label //Marker의 라벨.
             });
@@ -690,7 +690,7 @@
                             content += "<br'><span class='card-title text-uppercase text-muted mb-0'>대변기 : " + toiletBowlNumber + "</span>"
                             content += "<br><span class='card-title text-uppercase text-muted mb-0'>장애인 배려실 : " + handicap + "</span>"
 
-                            content += "<br><input class='replyButton3 mt-1' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='navigators(" + endX + ',' + endY + ',' + '"' + title + '"' + ',' + '"' + toiletType + '"' + ',' + '"' + toiletBowlNumber + '"' + ',' + '"' + handicap + '"' + ")'>";
+                            content += "<br><input class='replyButton3 mt-1 pointer' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='navigators(" + endX + ',' + endY + ',' + '"' + title + '"' + ',' + '"' + toiletType + '"' + ',' + '"' + toiletBowlNumber + '"' + ',' + '"' + handicap + '"' + ")'>";
                             content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";
                             content += "</div>"
 
@@ -870,7 +870,7 @@
         content += "<h5 class='card-title text-uppercase text-muted mb-0'>" + toiletType + "</h5>"
         content += "<br'><span class='card-title text-uppercase text-muted mb-0'>대변기 : " + toiletBowlNumber + "</span>"
         content += "<br><span class='card-title text-uppercase text-muted mb-0'>장애인 배려실 : " + handicap + "</span>"
-        content += "<br><input class='replyButton3 mt-1' type='button' id='direction[" + i + "]' value='길찾기 중단' onclick='terminators()'>";
+        content += "<br><input class='replyButton3 mt-1 pointer' type='button' id='direction[" + i + "]' value='길찾기 중단' onclick='terminators()'>";
         content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";
         content += "</div>"
 
