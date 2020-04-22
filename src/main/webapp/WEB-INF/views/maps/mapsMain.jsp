@@ -1059,7 +1059,6 @@
 						</div>
 					</div>
 				</div>
-
 				<div class="card-body2">
 					<div class="col-xl-12 col-lg-6">
 						<div class="card card-stats mb-4 mb-xl-0">
@@ -1067,6 +1066,23 @@
 						</div>
 					</div>
 				</div>
+			</div>
+		</form>
+	</div>
+	
+	<div id="dairy-container"></div>
+	<div id="dairy" class="col-xl-4">
+		<form action="">
+			<div class="card shadow">
+				<div class="card-header bg-transparent">
+					<div class="row align-items-center">
+						<div class="col">
+							<h2 class="mb-0" style="display: inline-block">Feedback Send</h2>
+							<input id="x-button" name="feed-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#dairy").hide(), $("#dairy-container").fadeOut()'>														
+						</div>
+					</div>
+				</div>
+				
 			</div>
 		</form>
 	</div>
