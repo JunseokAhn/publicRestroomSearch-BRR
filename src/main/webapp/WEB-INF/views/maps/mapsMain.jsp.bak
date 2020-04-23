@@ -43,12 +43,11 @@
     //var shortFlag = 1;
     //대변 체크 결과
     var diaryGraphInfo = 
-        function(stress, moisture, ingredient,status)
+        function(stress, moisture, ingredient)
         {
         	this.stress = stress;
         	this.moisture = moisture;
         	this.ingredient = ingredient;
-        	this.status = status
         	return this;
         }
 
@@ -77,29 +76,28 @@
 
     var diaryGraphInfoArray=
         [
-            new diaryGraphInfo(3, 1, 2, 3),
-            new diaryGraphInfo(5, 1, 3, 2),
-            new diaryGraphInfo(4, 2, 2, 2),
-            new diaryGraphInfo(4, 1.5, 0.5, 3),
+            new diaryGraphInfo(3, 1, 2),
+            new diaryGraphInfo(5, 1, 3),
+            new diaryGraphInfo(4, 2, 2),
+            new diaryGraphInfo(4, 1.5, 0.5),
             
-            new diaryGraphInfo(0, 5, 5, 2 ),
-            new diaryGraphInfo(2, 1, 1, 4),
-            new diaryGraphInfo(3, 2, 2, 2),
-            new diaryGraphInfo(2, 2, 3, 3),
+            new diaryGraphInfo(0, 5, 5 ),
+            new diaryGraphInfo(2, 1, 1),
+            new diaryGraphInfo(3, 2, 2),
+            new diaryGraphInfo(2, 2, 3),
 
-            new diaryGraphInfo(3, 1, 2, 3),            
-            new diaryGraphInfo(3, 2, 2, 2),
-            new diaryGraphInfo(3, 1, 1, 2),
-            new diaryGraphInfo(1, 1, 2, 3),
+            new diaryGraphInfo(3, 1, 2),            
+            new diaryGraphInfo(3, 2, 2),
+            new diaryGraphInfo(3, 1, 1),
+            new diaryGraphInfo(1, 1, 2),
 
-            new diaryGraphInfo(2, 4, 4, 3),
-            new diaryGraphInfo(4, 1, 2, 2),
-            new diaryGraphInfo(5, 0.5, 0.5, 1),
-            new diaryGraphInfo(1, 1, 2, 3)            
+            new diaryGraphInfo(2, 4, 4),
+            new diaryGraphInfo(4, 1, 2),
+            new diaryGraphInfo(5, 0.5, 0.5),
+            new diaryGraphInfo(1, 1, 2)            
         ];
     			
     var diaryresult="";
-    var result_show_flag=true;
     var diaryDescriptionArray=
         [
             "<p>영양소는 적당하지만,<Strong>변비</Strong> 증세가 있네요.<br>수분섭취와 스트레스를 줄여보세요.</p> ",
@@ -1169,7 +1167,7 @@
 			{
 				temp_info=diaryGraphInfoArray[0];
 				temp_str=diaryDescriptionArray[0];
-				temp_src=diaryPictureArray[0];								
+				temp_src=diaryPictureArray[0];				
 		     }
 			else if(diaryresult=="type1gray")
 			{
@@ -1262,71 +1260,60 @@
 				temp_src=diaryPictureArray[15];				
 		     }	    	    
 		     	    	    
-		     if(result_show_flag)
-			{
-		    	 var ctx = document.getElementById('myChart').getContext('2d');
-					var myChart = new Chart(ctx, {
-					    type: 'line',
-					    data: {
-					        labels: ['스트레스', '수분', '영양소'],
-					        datasets: [{
-					            label: '',
-					            data: [temp_info.stress,temp_info.moisture ,temp_info.ingredient],
-					            backgroundColor: [
-					                'rgba(255, 99, 132, 0.2)',
-					                'rgba(54, 162, 235, 0.2)',
-					                'rgba(0, 255, 0, 0.2)'			                
-					            ],
-					            borderColor: [
-					                'rgba(255, 99, 132, 1)',
-					                'rgba(54, 162, 235, 1)',
-					                'rgba(0, 255, 0, 1)'			               
-					            ],
-					            borderWidth: 1		           
-					        }]
-					    },
-					    options: {
-						    
-					    	 legend:
-						    {
-					    		 showLines: false,
-					             display:false
-					      	},  
-					        scales: 
-						    { 
-					            yAxes: [{
-					                ticks: {
-					                    beginAtZero: true,
-					                    display : false
-					                    
-					                },
-					                gridLines:
-						            {
-					                     lineWidth:0
-					                     
-					                 }
-					            }]
-					        }
-					    }
-					});  
-
-					result_show_flag=false;
-			}
-			
+		     
+			var ctx = document.getElementById('myChart').getContext('2d');
+			var myChart = new Chart(ctx, {
+			    type: 'line',
+			    data: {
+			        labels: ['스트레스', '수분', '영양소'],
+			        datasets: [{
+			            label: '',
+			            data: [temp_info.stress,temp_info.moisture ,temp_info.ingredient],
+			            backgroundColor: [
+			                'rgba(255, 99, 132, 0.2)',
+			                'rgba(54, 162, 235, 0.2)',
+			                'rgba(0, 255, 0, 0.2)'			                
+			            ],
+			            borderColor: [
+			                'rgba(255, 99, 132, 1)',
+			                'rgba(54, 162, 235, 1)',
+			                'rgba(0, 255, 0, 1)'			               
+			            ],
+			            borderWidth: 1		           
+			        }]
+			    },
+			    options: {
+			    	 legend:{
+			             display:false
+			      },  
+			        scales: { 
+			            yAxes: [{
+			                ticks: {
+			                    beginAtZero: true,
+			                    display : false
+			                    
+			                },
+			                gridLines:{
+			                     lineWidth:0
+			                     
+			                    }
+			            }]
+			        }
+			    }
+			});  
 
 			$("#result_picture").attr("src",temp_src);
 			$("#result_description").html(temp_str);			
-			$("input[name='save-data']").removeAttr("hidden","hidden");
+
 			$("#result_table").removeAttr("hidden","hidden");
 			$("#myChart").removeAttr("hidden","hidden");
 		}		
 	} //요기가 함수 끝
-	
+
     function DiaryShow()
     { 
     	diaryresult="";
-		result_show_flag=true;
-    	$("input[name='save-data']").attr("hidden","hidden");
+
     	$("#myChart").attr("hidden","hidden");
     	$("#result_table").attr("hidden","hidden");
     	
@@ -1349,36 +1336,7 @@
         $("#diary").fadeIn();
     }
 
-	function SaveTest()
-	{
-    	$.ajax
-		(
-			{
-				url:"<c:url value="/checkAvailSend"/>",
-				type:"get",				
-				dataType:"text",
-				success:
-					function(flag)
-					{
-						if(flag=="success")
-						{
-							
-						}
-						else if(flag=="error")
-						{
-							alert("로그인을 해야 사용할 수 있는 기능입니다.\n로그인 페이지로 이동합니다.");
-							location.href="<c:url value='/member/login'/>";
-						}						
-					}
-				,
-				error:
-					function(e)
-					{
-						alert(Json.Stringify(e));
-					}
-			}
-		);	    	
-	}
+	
     
 
 </script>
@@ -1439,20 +1397,22 @@
 				</div>
 			</div>
 		</form>
+<<<<<<< HEAD
 	</div>
 	
 <div id="diary-container"  style="display: none"></div>
 	<div id="diary" class="col-xl-4" style="display: none">
+=======
+	</div>	<div id="dairy-container"></div>
+	<div id="dairy" class="col-xl-4">
+>>>>>>> 52b7d3776f31f4dc3fb3cf2dd23871f715a7a33e
 		<form action="">
 			<div class="card shadow">
 				<div class="card-header bg-transparent">
 					<div class="row align-items-center">
 						<div class="col">
 							<h2 class="mb-0" style="display: inline-block">Health Test</h2>
-							
 							<input id="x-button" name="feed-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#diary").hide(), $("#diary-container").fadeOut()'>
-							<input id="register" hidden="hidden" name="save-data" class="btn btn-sm btn-primary" type="button" value="Save Data" onclick="SaveTest()">
-							
 							<br>
 							<h4 id="health-ment" class="mb-0" style="display: inline-block"> STEP1.대변의 모양을 선택해주세요</h4>		
 																		
@@ -1460,7 +1420,7 @@
 					</div>
 					<div class="card-body2">
 					<!-- 결과 그래프 출력 -->
-					<canvas id="myChart" hidden="hidden" width="5" height="2"></canvas>					
+					<canvas id="myChart" hidden="hidden"></canvas>					
 					<table id="result_table" hidden="hidden">
 						<tr>							
 							<td>
@@ -1565,7 +1525,6 @@
 						</div>
 					</div>
 				</div>
-				
 				<!-- Form -->
 				<form id="responsive-search" class="mt-4 mb-3 d-md-none" action="<c:url value="/review/reviewMain"/>" method="get">
 					<div class="input-group input-group-rounded input-group-merge">
@@ -1594,7 +1553,11 @@
 					<li class="nav-item"><a class="nav-link" href="<c:url value="/review/reviewMain"/>">
 							<i class="ni ni-chat-round"></i> Reviews
 						</a></li>
-					
+					<li class="nav-item">
+						<a class="nav-link " href="<c:url value="/diary/diaryMain"/>">
+							<i class="ni ni-bullet-list-67 text-red"></i> Diary
+						</a>
+					</li>
 					<!-- 건강 테스트 -->
 					<li class="nav-item">
 						<a class="nav-link " href="javascript:DiaryShow();">
