@@ -11,13 +11,11 @@
 	into 
 		diary_result
 	(
-	    resNum,
-		status,
-		inputdate,
-		resvalue
-		
-    )
-	
+		stress number,
+    	moisture,
+    	ingredient number,  	
+    	status 
+    )	
 	values 
 	(
 	   diary_result_seq.nextval,

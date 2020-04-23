@@ -43,13 +43,14 @@
     //var shortFlag = 1;
     //대변 체크 결과
     var diaryGraphInfo = 
-    function(stress, moisture, ingredient)
-    {
-    	this.stress = stress;
-    	this.moisture = moisture;
-    	this.ingredient = ingredient;
-    	return this;
-    }
+        function(stress, moisture, ingredient,status)
+        {
+        	this.stress = stress;
+        	this.moisture = moisture;
+        	this.ingredient = ingredient;
+        	this.status = status
+        	return this;
+        }
 
     var diaryPictureArray=
     [
@@ -75,29 +76,30 @@
     ];
 
     var diaryGraphInfoArray=
-    [
-    new diaryGraphInfo(3, 1, 2),
-    new diaryGraphInfo(5, 1, 3),
-    new diaryGraphInfo(4, 2, 2),
-    new diaryGraphInfo(4, 1.5, 0.5),
-    
-    new diaryGraphInfo(0, 5, 5 ),
-    new diaryGraphInfo(2, 1, 1),
-    new diaryGraphInfo(3, 2, 2),
-    new diaryGraphInfo(2, 2, 3),
+        [
+            new diaryGraphInfo(3, 1, 2, 3),
+            new diaryGraphInfo(5, 1, 3, 2),
+            new diaryGraphInfo(4, 2, 2, 2),
+            new diaryGraphInfo(4, 1.5, 0.5, 3),
+            
+            new diaryGraphInfo(0, 5, 5, 2 ),
+            new diaryGraphInfo(2, 1, 1, 4),
+            new diaryGraphInfo(3, 2, 2, 2),
+            new diaryGraphInfo(2, 2, 3, 3),
 
-    new diaryGraphInfo(3, 1, 2),            
-    new diaryGraphInfo(3, 2, 2),
-    new diaryGraphInfo(3, 1, 1),
-    new diaryGraphInfo(1, 1, 2),
+            new diaryGraphInfo(3, 1, 2, 3),            
+            new diaryGraphInfo(3, 2, 2, 2),
+            new diaryGraphInfo(3, 1, 1, 2),
+            new diaryGraphInfo(1, 1, 2, 3),
 
-    new diaryGraphInfo(2, 4, 4),
-    new diaryGraphInfo(4, 1, 2),
-    new diaryGraphInfo(5, 0.5, 0.5),
-    new diaryGraphInfo(1, 1, 2)            
-    ];
-    
+            new diaryGraphInfo(2, 4, 4, 3),
+            new diaryGraphInfo(4, 1, 2, 2),
+            new diaryGraphInfo(5, 0.5, 0.5, 1),
+            new diaryGraphInfo(1, 1, 2, 3)            
+        ];    			
+
     var diaryresult="";
+    var result_show_flag=true;
     var diaryDescriptionArray=
     [
     "<p>영양소는 적당하지만,<Strong>변비</Strong> 증세가 있네요.<br>수분섭취와 스트레스를 줄여보세요.</p> ",
@@ -1268,8 +1270,9 @@ return distime;
 			{
 				temp_info=diaryGraphInfoArray[0];
 				temp_str=diaryDescriptionArray[0];
-				temp_src=diaryPictureArray[0];				
-			}
+				temp_src=diaryPictureArray[0];								
+		     }
+
 			else if(diaryresult=="type1gray")
 			{
 				temp_info=diaryGraphInfoArray[1];
@@ -1358,68 +1361,80 @@ return distime;
 			{
 				temp_info=diaryGraphInfoArray[15];
 				temp_str=diaryDescriptionArray[15];
-				temp_src=diaryPictureArray[15];				
+				temp_src=diaryPictureArray[15];
 			}	    	    
+		     	    	    
+		     if(result_show_flag)
+			{
+				console.log("계속 돈다");
+		    	 var ctx = document.getElementById('myChart').getContext('2d');
+					var myChart = new Chart(ctx, {
+					    type: 'line',
+					    data: {
+					        labels: ['스트레스', '수분', '영양소'],
+					        datasets: [{
+					            label: '',
+					            data: [temp_info.stress,temp_info.moisture ,temp_info.ingredient],
+					            backgroundColor: [
+					                'rgba(255, 99, 132, 0.2)',
+					                'rgba(54, 162, 235, 0.2)',
+					                'rgba(0, 255, 0, 0.2)'			                
+					            ],
+					            borderColor: [
+					                'rgba(255, 99, 132, 1)',
+					                'rgba(54, 162, 235, 1)',
+					                'rgba(0, 255, 0, 1)'			               
+					            ],
+					            borderWidth: 1		           
+					        }]
+					    },
+					    options: {
+						    
+					    	 legend:
+						    {
+					    		 showLines: false,
+					             display:false
+					      	},  
+					        scales: 
+						    { 
+					            yAxes: [{
+					                ticks: {
+					                    beginAtZero: true,
+					                    display : false
+					                    
+					                },
+					                gridLines:
+						            {
+					                     lineWidth:0
+					                     
+					                 }
+					            }]
+					        }
+					    }
+					}); 
+					result_show_flag=false;
+			}
 			
-			
-			var ctx = document.getElementById('myChart').getContext('2d');
-			var myChart = new Chart(ctx, {
-				type: 'line',
-				data: {
-					labels: ['스트레스', '수분', '영양소'],
-					datasets: [{
-						label: '',
-						data: [temp_info.stress,temp_info.moisture ,temp_info.ingredient],
-						backgroundColor: [
-						'rgba(255, 99, 132, 0.2)',
-						'rgba(54, 162, 235, 0.2)',
-						'rgba(0, 255, 0, 0.2)'			                
-						],
-						borderColor: [
-						'rgba(255, 99, 132, 1)',
-						'rgba(54, 162, 235, 1)',
-						'rgba(0, 255, 0, 1)'			               
-						],
-						borderWidth: 1		           
-					}]
-				},
-				options: {
-					legend:{
-						display:false
-					},  
-					scales: { 
-						yAxes: [{
-							ticks: {
-								beginAtZero: true,
-								display : false
-								
-							},
-							gridLines:{
-								lineWidth:0
-								
-							}
-						}]
-					}
-				}
-			});  
-
 			$("#result_picture").attr("src",temp_src);
 			$("#result_description").html(temp_str);			
-
+			$("input[name='save-data']").removeAttr("hidden","hidden");
 			$("#result_table").removeAttr("hidden","hidden");
 			$("#myChart").removeAttr("hidden","hidden");
 		}		
 	} //요기가 함수 끝
 
-	function DiaryShow()
-	{ 
-		diaryresult="";
+	
+    function DiaryShow()
+    { 
+    	diaryresult="";
+		result_show_flag=true;
+    	$("input[name='save-data']").attr("hidden","hidden");
+    	$("#myChart").attr("hidden","hidden");
+    	$("#result_table").attr("hidden","hidden");
+    	
+    	$("#health_test_table").removeAttr("hidden","hidden");
+    	$("#health-ment").html("STEP1.대변의 모양을 선택해주세요");
 
-		$("#myChart").attr("hidden","hidden");
-		$("#result_table").attr("hidden","hidden");
-		
-		$("#health_test_table").removeAttr("hidden","hidden");
-		$("#health-ment").html("STEP1.대변의 모양을 선택해주세요");
 		$("#health-ment").removeAttr("hidden","hidden");
 		
 		$("#health-ment").removeAttr("hidden","hidden");
@@ -1437,8 +1452,39 @@ return distime;
 		$("#diary").fadeIn();
 	}
 
-	
-	
+
+	function SaveTest()
+	{
+    	$.ajax
+		(
+			{
+				url:"<c:url value="/checkAvailSend"/>",
+				type:"get",				
+				dataType:"text",
+				success:
+					function(flag)
+					{
+						if(flag=="success")
+						{
+							
+						}
+						else if(flag=="error")
+						{
+							alert("로그인을 해야 사용할 수 있는 기능입니다.\n로그인 페이지로 이동합니다.");
+							location.href="<c:url value='/member/login'/>";
+						}						
+					}
+				,
+				error:
+					function(e)
+					{
+						alert(Json.Stringify(e));
+					}
+			}
+		);	    	
+	}
+    
+
 
 </script>
 </head>
@@ -1508,52 +1554,54 @@ return distime;
 					<div class="row align-items-center">
 						<div class="col">
 							<h2 class="mb-0" style="display: inline-block">Health Test</h2>
-							<input id="x-button" name="feed-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#diary").hide(), $("#diary-container").fadeOut()'> <br>
-							<h4 id="health-ment" class="mb-0" style="display: inline-block">STEP1.대변의 모양을 선택해주세요</h4>
 
+							
+							<input id="x-button" name="feed-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#diary").hide(), $("#diary-container").fadeOut()'>
+							<input id="register" hidden="hidden" name="save-data" class="btn btn-sm btn-primary" type="button" value="Save Data" onclick="SaveTest()">
+							
+							<br>
+							<h4 id="health-ment" class="mb-0" style="display: inline-block"> STEP1.대변의 모양을 선택해주세요</h4>		
+																		
 						</div>
 					</div>
 					<div class="card-body2">
-						<<<<<<< HEAD
-						<!-- 결과 그래프 출력 -->
-						<canvas id="myChart" hidden="hidden"></canvas>					
-						<table id="result_table" hidden="hidden">
-							<tr>							
-								<td>
-									<img id="result_picture" src=""  style="width:50%" />
-								</td>
-								<td>
-									<p id="result_description"></p> 
-								</td>
-							</tr>
-						</table>
-						
-						<!-- 테스트 목록 출력 -->
-						<table id="health_test_table">
-							<tr>
-								<td style="width:230px;height:150px;"> 
-									<img id="type1" class="hvr-grow-shadow"  name="1" src="../resources/img/type1.png" style="width:90%"  />
-								</td>
-								<td style="width:230px;height:150px;">
-									<img id="type2" class="hvr-grow-shadow" name="2" src="../resources/img/type2.png" style="width:90%"/>
-								</td>
-							</tr>
-							<tr>
-								<td style="width:230px;height:150px;">
-									<img id="type3" class="hvr-grow-shadow" name="3" src="../resources/img/type3.png" style="width:90%"/>
-								</td>
-								<td style="width:230px;height:150px;">
-									<img id="type4" class="hvr-grow-shadow" name="4" src="../resources/img/type4.png" style="width:90%"/>
-								</td>
-							</tr>
-						</table>
+					<!-- 결과 그래프 출력 -->
+					<canvas id="myChart" hidden="hidden" width="5" height="2"></canvas>					
+					<table id="result_table" hidden="hidden">
+						<tr>							
+							<td>
+								<img id="result_picture" src=""  style="width:50%" />
+							</td>
+							<td>
+								<p id="result_description"></p> 
+							</td>
+						</tr>
+					</table>
+					
+					<!-- 테스트 목록 출력 -->
+					<table id="health_test_table">
+						<tr>
+							<td style="width:230px;height:150px;"> 
+								<img id="type1" class="hvr-grow-shadow"  name="1" src="../resources/img/type1.png" style="width:90%"  />
+							</td>
+							<td style="width:230px;height:150px;">
+								<img id="type2" class="hvr-grow-shadow" name="2" src="../resources/img/type2.png" style="width:90%"/>
+							</td>
+						</tr>
+						<tr>
+							<td style="width:230px;height:150px;">
+								<img id="type3" class="hvr-grow-shadow" name="3" src="../resources/img/type3.png" style="width:90%"/>
+							</td>
+							<td style="width:230px;height:150px;">
+								<img id="type4" class="hvr-grow-shadow" name="4" src="../resources/img/type4.png" style="width:90%"/>
+							</td>
+						</tr>
+					</table>
 					</div>
 				</div>
 			</div>
 		</form>
 	</div>
-
-
 	<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
 		<div class="container-fluid">
 			<!-- Toggler -->
@@ -1564,42 +1612,43 @@ return distime;
 			<a class="navbar-brand pt-0 pb-0" href="<c:url value="/maps/mapsMain"/>">
 			<img src="<c:url value="/resources/img/Logo.png"/>" class="navbar-brand-img" alt="...">
 		</a>
-		<!-- User -->
-		<ul class="nav align-items-center d-md-none">
-			<li class="nav-item dropdown"><a class="nav-link nav-link-icon" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<i class="ni ni-bell-55"></i>
-			</a>
-			<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right" aria-labelledby="navbar-default_dropdown_1">
-				<a class="dropdown-item" href="#">Action</a>
-				<a class="dropdown-item" href="#">Another action</a>
-				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" href="#">Something else here</a>
-			</div></li>
-			<li class="nav-item dropdown"> <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<div class="media align-items-center">
-					<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="${sessionScope.Profile}">
-					</span>
-				</div>
-			</a>
-			<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
-				<div class=" dropdown-header noti-title">
-					<h6 class="text-overflow m-0">Welcome!</h6>
-				</div>
-				<a href="<c:url value="/examples/profile"/>" class="dropdown-item">
-				<i class="ni ni-single-02"></i> <span>My profile</span>
-			</a>
-			<a href="<c:url value="/examples/profile"/>" class="dropdown-item">
-			<i class="ni ni-settings-gear-65"></i> <span>Settings</span>
-		</a>
-		<a href="<c:url value="/examples/profile"/>" class="dropdown-item">
-		<i class="ni ni-calendar-grid-58"></i> <span>Activity</span>
-	</a>
-	<a href="<c:url value="/examples/profile"/>" class="dropdown-item">
-	<i class="ni ni-support-16"></i> <span>Support</span>
+
+      <!-- User -->
+      <ul class="nav align-items-center d-md-none">
+         <li class="nav-item dropdown"><a class="nav-link nav-link-icon" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="ni ni-bell-55"></i>
+         </a>
+         <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right" aria-labelledby="navbar-default_dropdown_1">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Something else here</a>
+         </div></li>
+         <li class="nav-item dropdown"> <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="media align-items-center">
+               <span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="${sessionScope.Profile}">
+               </span>
+            </div>
+         </a>
+         <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+            <div class=" dropdown-header noti-title">
+               <h6 class="text-overflow m-0">Welcome!</h6>
+            </div>
+            <a href="<c:url value="/examples/profile"/>" class="dropdown-item">
+            <i class="ni ni-single-02"></i> <span>My profile</span>
+         </a>
+         <a href="<c:url value="/examples/profile"/>" class="dropdown-item">
+         <i class="ni ni-settings-gear-65"></i> <span>Settings</span>
+      </a>
+      <a href="<c:url value="/examples/profile"/>" class="dropdown-item">
+      <i class="ni ni-calendar-grid-58"></i> <span>Activity</span>
+   </a>
+   <a href="<c:url value="/examples/profile"/>" class="dropdown-item">
+   <i class="ni ni-support-16"></i> <span>Support</span>
 </a>
 <div class="dropdown-divider"></div>
 <a href="#!" class="dropdown-item">
-	<i class="ni ni-user-run"></i> <span>Logout</span>
+   <i class="ni ni-user-run"></i> <span>Logout</span>
 </a>
 </div></li>
 </ul>
@@ -1640,22 +1689,25 @@ return distime;
 	<li class="nav-item"><a class="nav-link " href="<c:url value="/sns/listSNS"/>">
 		<i class="ni ni-tv-2 text-primary"></i> SNS
 	</a></li>
+
 					<%-- <li class="nav-item  active "><a class="nav-link " href="<c:url value="/examples/index"/>">
 							<i class="ni ni-tv-2 text-primary"></i> Dashboard
 						</a></li> //nav-item  active는 무조건 검정색으로 표시됩니다. 
 					
 							ni ni-chat-round
-							--%>
-							<li class="nav-item"><a class="nav-link" href="<c:url value="/review/reviewMain"/>">
-								<i class="ni ni-chat-round"></i> Reviews
-							</a></li>
-							<li class="nav-item"><a class="nav-link " href="<c:url value="/diary/diaryMain"/>">
-								<i class="ni ni-bullet-list-67 text-red"></i> Diary
-							</a></li>
-							<!-- 건강 테스트 -->
-							<li class="nav-item"><a class="nav-link " href="javascript:DiaryShow();">
-								<i class="ni ni-bullet-list-67 text-red"></i> Diary
-							</a></li>
+
+					 --%>					 
+					<li class="nav-item"><a class="nav-link" href="<c:url value="/review/reviewMain"/>">
+							<i class="ni ni-chat-round"></i> Reviews
+						</a></li>
+					
+					<!-- 건강 테스트 -->
+					<li class="nav-item">
+						<a class="nav-link " href="javascript:DiaryShow();">
+							<i class="ni ni-bullet-list-67 text-red"></i> Diary
+						</a>
+					</li>
+
 
 							<!-- 로그인 영역 -->
 
@@ -1907,6 +1959,7 @@ return distime;
 							</div>
 						</div>
 					</div>
+					
 							<!-- <div class="col-xl-3 col-lg-6">
 								<div class="card card-stats mb-4 mb-xl-0">
 									<div class="card-body replyButton2">

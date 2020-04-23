@@ -71,8 +71,7 @@ public class HomeController {
 		catch(Exception e)
 		{
 			return "error";
-		}
-		
+		}		
 		return "success";
 	}
 	
