@@ -68,27 +68,27 @@ $(document).ready(function() {
 	$('.form2').on('click', function(e) {
 		console.log($(e.target).data("num"));
 		var num = $(e.target).data("num");
-// 		$(e.target).parent().parent().children(".form1").show();
 		$('.form1[data-num="'+num+'"]').toggle();
 	});
 	//$("#form").on('click', snsReplySave);
-	$("#form + ${sns.snsBoardnum}").on('click', snsReplySave);
-	var replyUpd = $("span.review" + snsReplynum).find('#replyUpd').val();
-	init();
+	//$("#form + ${sns.snsBoardnum}").on('click', snsReplySave);
+	//init();
 });
 
-function snsReplySave() {
-
-	//중복되지않게 받는 다른 방법 생각하기!!!
-	var snsBoardnum = $(this).closest('div').find('#snsBoardnum').val();
-	var email = $(this).closest('div').find('#email').val();
-	var comments = $(this).closest('div').find('#comments').val();
+function snsReplySave(snsBoardnum, email) {
 
 	//잘 값이 들어갔는지 확인
+	//var snsBoardnum = $(this).closest('div').find('#snsBoardnum').val();
+	//var email = $(this).closest('div').find('#email').val();
+
+	var snsBoardnum = snsBoardnum;
+	var email = email;
+	var comments = $('div').children("input[data-num='"+snsBoardnum+"']").val();
+    	
 	console.log(snsBoardnum);
 	console.log(email);
 	console.log(comments);
-
+	
 	if(comments.length == 0) {
 		alert('댓글을 입력해 주세요.');
 		return;
@@ -104,8 +104,8 @@ function snsReplySave() {
 		},
 		success: function() {
 			alert('댓글이 작성되었습니다.');
-			$('#comments').val('');
-			init();
+			$("input[data-num='"+snsBoardnum+"']").val('');
+			init(snsBoardnum);
 		},
 		error: function(e) {
 			alert(JSON.stringify(e));//에러객체를 전달해서 문자열화하는 클래스의 함수사용
@@ -113,8 +113,8 @@ function snsReplySave() {
 	});
 }
 
-function init() {
-	var snsBoardnum = $('#snsBoardnum').val();
+function init(snsBoardnum) {
+	var snsBoardnum = snsBoardnum;
 
 	$.ajax({
 		url: '../snsReply/listSnsReply',
@@ -149,22 +149,25 @@ function init() {
 
 // }
 
+//sns댓글목록
 function output(listSnsReply) {
-	var str = '<div class="list-group">';
-
+	console.log(listSnsReply);
+	$('#replies').html("");
 	$.each(listSnsReply, function(index, snsReply) {
+		var str = '<div class="list-group">';
 		str += '<a href="#" class="list-group-item list-group-item-action">';
 		str += '<div class="d-flex w-100 justify-content-between">';
 		str += '<h5 class="mb-1">'+ snsReply.email +'</h5>';
 		str += '<small>'+ snsReply.inputdate +'</small> </div>';
 		str += '<p class="mb-1" style="text-align: left;">'+ snsReply.comments +'</p>';
 		//사용자정의속성
-		str += '<small><input type="button" value="댓글수정" class="snsUpd btn btn-secondary btn-sm" freeid="'+ snsReply.id +'" freenum="'+ snsReply.snsReplynum +'" freecomments="'+ snsReply.comments +'">';
+		str += '<small><input type="button" value="댓글수정" class="snsUpd btn btn-secondary btn-sm" freeid="'+ snsReply.id +'" freenum="'+ snsReply.snsReplynum +'">';
 		str += '<input type="button" value="댓글삭제" class="snsDel btn btn-secondary btn-sm" freenum="'+ snsReply.snsReplynum +'"></small> </a>';
+		str +='</div>';
+		console.log($('#replies[data-num="'+snsReply.snsBoardnum+'"]'));
+		$('#replies[data-num="'+snsReply.snsBoardnum+'"]').append(str);
 	});
-	str +='</div>';
-	//sns댓글목록
-	$('#snsListDiv').html(str);
+
 	//sns댓글수정
 	$('input:button.snsUpd').on('click', updateSnsReply);
 	//sns댓글삭제
@@ -178,8 +181,8 @@ function updateSnsReply() {
 	var snsReplynum = $(this).attr('freenum');
 	//2번방법 / 텍스트-html() / value값-val()
 	var id = $(this).attr('freeid');
-	//var comments = $(this).closest('div').find('.comments1').html();
-	var comments = $(this).attr('freecomments');
+	var comments = $(this).find('.snsUpd').val();
+	//var comments = $(this).attr('freecomments');
 	
 	//잘 값이 들어갔는지 확인
 	console.log(snsReplynum);
@@ -566,14 +569,15 @@ function deleteSnsReply() {
 										<input type="hidden" id="snsBoardnum" value="${sns.snsBoardnum}">
 										<input type="hidden" id="email" value="${sns.email}">
 										<div>
-											<input style="margin-bottom: 5px;" class="form-control" type="text" id="comments" placeholder="댓글등록">
+											<input style="margin-bottom: 5px;" class="form-control" type="text" data-num="${sns.snsBoardnum}" placeholder="댓글등록">
+											<button type="button" class="btn btn-primary btn-sm" onclick="snsReplySave(${sns.snsBoardnum},'${sns.email}');">댓글등록</button>
 										</div>
-										<button type="button" class="btn btn-primary btn-sm" id="form + ${sns.snsBoardnum}">댓글등록</button>
+										
 									</div>										
 								</div>
 								
 								<!-- 댓글 table -->
-								<div id="snsListDiv" class="mx-auto form-group"></div>
+								<div id="replies" data-num="${sns.snsBoardnum}" class="mx-auto form-group"></div>
 						
 							</div>
 						</c:forEach>
