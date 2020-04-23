@@ -11,5 +11,7 @@ public interface GoogleMapsMapper {
 	ArrayList<NearbyToiletVO> getNearbyToilet(LocationVO lo);
 
 	ToiletVO searchRating(LocationVO lo);
-
+	
+	ToiletVO searchClean(LocationVO lo);
+	
 }

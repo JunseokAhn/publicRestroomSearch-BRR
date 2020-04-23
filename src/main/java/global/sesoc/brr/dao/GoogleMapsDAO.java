@@ -30,4 +30,11 @@ public class GoogleMapsDAO {
 		ToiletVO VO = mapper.searchRating(lo);
 		return VO;
 	}
+	
+	public ToiletVO searchClean(LocationVO lo) {
+		// TODO Auto-generated method stub
+		GoogleMapsMapper mapper = session.getMapper(GoogleMapsMapper.class);
+		ToiletVO VO = mapper.searchClean(lo);
+		return VO;
+	}
 }
