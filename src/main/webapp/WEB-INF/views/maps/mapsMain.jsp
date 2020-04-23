@@ -821,7 +821,7 @@
         }
     }//mylocation[E]
     
-    //화장실 추천기능  pos가 안들어오므로 밑으로 내려야할필요가 있을거같다
+    //화장실 추천기능
     function searchShortest () {
         directions(shortestDistance)
     }
@@ -833,7 +833,8 @@
                 lng : pos.lng.toFixed(6)
             },
             type: "post",
-            succeess: function(e){
+            success: function(e){
+                starToilet=e;
                 
             },
             error: function(e){

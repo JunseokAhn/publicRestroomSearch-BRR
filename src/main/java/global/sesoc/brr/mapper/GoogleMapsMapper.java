@@ -10,6 +10,6 @@ public interface GoogleMapsMapper {
 
 	ArrayList<NearbyToiletVO> getNearbyToilet(LocationVO lo);
 
-	NearbyToiletVO searchRating(LocationVO lo);
+	String searchRating(LocationVO lo);
 
 }
