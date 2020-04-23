@@ -503,11 +503,13 @@
             },
             type : "post",
             success: function(e){
+                reviewRefresh(toiletNm);
                 $("#review").hide();
                 $("#review-container").fadeOut();  
                 $("#review-area").val("");
             },
             error: function(e){
+                reviewRefresh(toiletNm);
                 $("#review").hide();
                 $("#review-container").fadeOut();  
                 $("#review-area").val("");
@@ -515,7 +517,7 @@
                 console.log(e);
             }
         })//리뷰등록[E]
-        reviewRefresh(toiletNm);
+        
     }
    
 
