@@ -305,7 +305,7 @@
         $.ajax({
             url: "<c:url value='/review/reviewList'/>",
             data: {
-                toilet_title: title
+                toiletNm: title
             },
             type: "post",
             success: function(e){
@@ -454,7 +454,7 @@
     //리뷰등록 검사
     function reviewCheck(){
         //청결도, 별점입력했는지
-        var toilet_title = document.getElementById("toilet_title").value
+        var toiletNm = document.getElementById("toiletNm").value
         var sessionId = document.getElementById("sessionId").value
         var sessionNickname = document.getElementById("sessionNickname").value
         var Profile = document.getElementById("Profile").value
@@ -493,7 +493,7 @@
         $.ajax({
             url : "<c:url value='/review/reviewWrite'/>",
             data : {
-                toilet_title: toilet_title,
+                toiletNm: toiletNm,
                 sessionId: sessionId,
                 sessionNickname: sessionNickname,
                 Profile: Profile,
@@ -515,7 +515,7 @@
                 console.log(e);
             }
         })//리뷰등록[E]
-        reviewRefresh(toilet_title);
+        reviewRefresh(toiletNm);
     }
    
 
@@ -748,7 +748,7 @@
     
     function reviewWrite (title, id) {
         document.getElementById("review-toilet").innerHTML=title;
-        $("#toilet_title").val(title)
+        $("#toiletNm").val(title)
         $("#review-container").fadeIn();
         $("#review").fadeIn();
     }
@@ -821,7 +821,7 @@
         }
     }//mylocation[E]
     
-    //화장실 추천기능
+    //화장실 추천기능  pos가 안들어오므로 밑으로 내려야할필요가 있을거같다
     function searchShortest () {
         directions(shortestDistance)
     }
@@ -863,7 +863,7 @@
             $.ajax({
                 url : "<c:url value='/dayaver/searchedToilet'/>",
                 data : {
-                    toiletnm : title,
+                    toiletNm : title,
                     id : id,
                     lng : endX,
                     lat : endY
@@ -1038,7 +1038,7 @@
 				<div class="row align-items-center">
 					<div class="col">
 						<h2 id="review-toilet" class="mb-0" style="display: inline-block"></h2>
-						<input type="hidden" id="toilet_title"> <input id="x-button" class="btn btn-sm btn-primary" type="button" value="X" onclick='$("#review").hide(), $("#review-container").fadeOut()'> <input id="register" class="btn btn-sm btn-primary" type="button" value="Register" onclick='reviewCheck()'>
+						<input type="hidden" id="toiletNm"> <input id="x-button" class="btn btn-sm btn-primary" type="button" value="X" onclick='$("#review").hide(), $("#review-container").fadeOut()'> <input id="register" class="btn btn-sm btn-primary" type="button" value="Register" onclick='reviewCheck()'>
 						<h6 id="review-ment" class="text-uppercase text-muted ls-1 mb-1">당신의 리뷰가 다른 사람들에게 도움이 될 거에요!</h6>
 					</div>
 				</div>
@@ -1173,7 +1173,7 @@
 				<!-- Form -->
 				<form id="responsive-search" class="mt-4 mb-3 d-md-none" action="<c:url value="/review/reviewMain"/>" method="get">
 					<div class="input-group input-group-rounded input-group-merge">
-						<input type="search" class="form-control form-control-rounded form-control-prepended" name="toiletTitle" placeholder="Search Review" aria-label="Search">
+						<input type="search" class="form-control form-control-rounded form-control-prepended" name="toiletNm" placeholder="Search Review" aria-label="Search">
 						<div class="input-group-prepend">
 							<div class="input-group-text" onclick="document.forms['responsive-search'].submit();">
 								<span class="fa fa-search"></span>
@@ -1285,7 +1285,7 @@
 							<div class="input-group-prepend">
 								<span class="input-group-text pointer" onclick="document.forms['normal-search'].submit();""><i class="fas fa-search"></i></span>
 							</div>
-							<input class="form-control" placeholder="Search Review" name="toiletTitle" type="text">
+							<input class="form-control" placeholder="Search Review" name="toiletNm" type="text">
 						</div>
 					</div>
 				</form>

@@ -29,34 +29,34 @@ public class ReviewDAO {
 		return intres > 0;
 	}
 
-	public ArrayList<ReviewVO> reviewList(String toilet_title) {
+	public ArrayList<ReviewVO> reviewList(String toiletNm) {
 		ReviewMapper mapper = session.getMapper(ReviewMapper.class);
-		ArrayList<ReviewVO> list = mapper.reviewList(toilet_title);
+		ArrayList<ReviewVO> list = mapper.reviewList(toiletNm);
 		return list;
 	}
 
-	public int reviewCount(String toiletTitle) {
+	public int reviewCount(String toiletNm) {
 		// TODO Auto-generated method stub
 		int reviewCount;
 		ReviewMapper mapper = session.getMapper(ReviewMapper.class);
-		if (toiletTitle.equals("")) {
-			reviewCount = mapper.reviewCount(toiletTitle);
+		if (toiletNm.equals("")) {
+			reviewCount = mapper.reviewCount(toiletNm);
 		} else {
-			reviewCount = mapper.reviewCount2(toiletTitle);
+			reviewCount = mapper.reviewCount2(toiletNm);
 		}
 		System.out.println("검색된 리뷰의 수: " + reviewCount);
 		return reviewCount;
 	}
 	
-	public ArrayList<ReviewVO> reviewMain(String toiletTitle, int startRecord) {
+	public ArrayList<ReviewVO> reviewMain(String toiletNm, int startRecord) {
 		// TODO Auto-generated method stub
 		ReviewMapper mapper = session.getMapper(ReviewMapper.class);
 		RowBounds RB = new RowBounds(startRecord, 7);
 		ArrayList<ReviewVO> list;
-		if (toiletTitle.equals("")) {
-			list = mapper.reviewMain(RB, toiletTitle);
+		if (toiletNm.equals("")) {
+			list = mapper.reviewMain(RB, toiletNm);
 		} else {
-			list = mapper.reviewMain2(RB, toiletTitle);
+			list = mapper.reviewMain2(RB, toiletNm);
 		}
 		return list;
 	}
