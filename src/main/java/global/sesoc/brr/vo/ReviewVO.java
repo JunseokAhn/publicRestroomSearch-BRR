@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReviewVO {
-	private String toilet_title;
+	private String toiletNm;
 	private String sessionId;
 	private String sessionNickname;
 	private String Profile;

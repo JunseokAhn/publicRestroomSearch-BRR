@@ -27,7 +27,7 @@ public class PageNavigator {
 	public PageNavigator(int countPerPage, int currentPage, int totalRecordsCount) {
 		// 현재 페이지, 전체 글 수를 전달받음
 		this.countPerPage = countPerPage; // 페이지당 글 수
-		this.pagePerGroup = 3; // 그룹당 페이지 수
+		this.pagePerGroup = 5; // 그룹당 페이지 수
 		this.totalRecordsCount = totalRecordsCount;
 
 		// 전체 페이지 수

@@ -1,22 +1,20 @@
 package global.sesoc.brr.controller;
 
-import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import global.sesoc.brr.dao.GoogleMapsDAO;
 import global.sesoc.brr.vo.LocationVO;
 import global.sesoc.brr.vo.NearbyToiletVO;
+import global.sesoc.brr.vo.ToiletVO;
 
 @Controller
 @RequestMapping(value = "maps")
@@ -51,6 +49,15 @@ public class TMapController {
 		ArrayList<NearbyToiletVO> list = dao.getNearbyToilet(lo);
 		
 		return list;
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "searchRating") //, produces = "application/text; charset=utf8"
+	public ToiletVO searchRating(String lat, String lng){
+		lo = new LocationVO(lat, lng);
+		ToiletVO VO = dao.searchRating(lo);
+		System.out.println(VO);
+		return VO;
 	}
 
 }

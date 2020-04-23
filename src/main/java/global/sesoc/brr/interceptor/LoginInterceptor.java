@@ -24,16 +24,18 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		//세션의 로그인 정보 읽기
 		HttpSession httpsession = request.getSession();
 		String sessinId = (String)httpsession.getAttribute("sessionId");
-
+		
+		
 		//로그인되지 않은 경우 로그인 페이지로 이동
 		if (sessinId == null) {
 			//request.getContextPath()로 루트 경로를 구하여 절대 경로로 처리
 			
-			response.sendRedirect(request.getContextPath() + "member/login");
+			response.sendRedirect(request.getContextPath() + "/member/login");
 			return false;
 		}
 		//로그인 된 경우 요청한 경로로 진행
-		return super.preHandle(request, response, handler);
+//		return super.preHandle(request, response, handler);
+		return true;
 	}
 
 }

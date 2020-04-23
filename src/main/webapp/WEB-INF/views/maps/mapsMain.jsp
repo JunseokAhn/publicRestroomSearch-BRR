@@ -412,7 +412,7 @@
         $.ajax({
             url: "<c:url value='/review/reviewList'/>",
             data: {
-                toilet_title: title
+                toiletNm: title
             },
             type: "post",
             success: function(e){
@@ -561,7 +561,7 @@
     //리뷰등록 검사
     function reviewCheck(){
         //청결도, 별점입력했는지
-        var toilet_title = document.getElementById("toilet_title").value
+        var toiletNm = document.getElementById("toiletNm").value
         var sessionId = document.getElementById("sessionId").value
         var sessionNickname = document.getElementById("sessionNickname").value
         var Profile = document.getElementById("Profile").value
@@ -600,7 +600,7 @@
         $.ajax({
             url : "<c:url value='/review/reviewWrite'/>",
             data : {
-                toilet_title: toilet_title,
+                toiletNm: toiletNm,
                 sessionId: sessionId,
                 sessionNickname: sessionNickname,
                 Profile: Profile,
@@ -610,11 +610,13 @@
             },
             type : "post",
             success: function(e){
+                reviewRefresh(toiletNm);
                 $("#review").hide();
                 $("#review-container").fadeOut();  
                 $("#review-area").val("");
             },
             error: function(e){
+                reviewRefresh(toiletNm);
                 $("#review").hide();
                 $("#review-container").fadeOut();  
                 $("#review-area").val("");
@@ -622,21 +624,9 @@
                 console.log(e);
             }
         })//리뷰등록[E]
-        reviewRefresh(toilet_title);
-    }
-    //화장실 추천기능
-    function searchShortest () {
-        directions(shortestDistance)
-    }
-    function searchRating () {
         
     }
-    function searchClan () {
-        
-    }
-    function searchSmooth () {
-        
-    }
+   
 
     //길찾기
     function directions (endX, endY) {
@@ -756,7 +746,7 @@
                 id : i,
                 position : new Tmapv2.LatLng(nearbyToilet[i].lat, nearbyToilet[i].lng), //Marker의 중심좌표 설정.
                 map : map, //Marker가 표시될 Map 설정.
-                icon : "<c:url value = '/resources/img/toilet28.png'/>",
+                icon : "<c:url value = '/resources/img/toilet36_color_gray.png'/>",
                 title : title, //Marker 타이틀.
             //label : label //Marker의 라벨.
             });
@@ -797,7 +787,7 @@
                             content += "<br'><span class='card-title text-uppercase text-muted mb-0'>대변기 : " + toiletBowlNumber + "</span>"
                             content += "<br><span class='card-title text-uppercase text-muted mb-0'>장애인 배려실 : " + handicap + "</span>"
 
-                            content += "<br><input class='replyButton3 mt-1' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='navigators(" + endX + ',' + endY + ',' + '"' + title + '"' + ',' + '"' + toiletType + '"' + ',' + '"' + toiletBowlNumber + '"' + ',' + '"' + handicap + '"' + ")'>";
+                            content += "<br><input class='replyButton3 mt-1 pointer' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='navigators(" + endX + ',' + endY + ',' + '"' + title + '"' + ',' + '"' + toiletType + '"' + ',' + '"' + toiletBowlNumber + '"' + ',' + '"' + handicap + '"' + ")'>";
                             content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";
                             content += "</div>"
 
@@ -829,13 +819,13 @@
                             content2 += "</p>"
                             content2 += "<p class='mt-1 mb-0 text-muted text-sm'>"
                             content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>이용자수</span>"
-                            content2 += "<input class='replyButton3 ml-1' type='button' value='리뷰 목록' onclick='location.href=\"/brr/review/reviewMain?toiletTitle=" + title + "\"'>"
+                            content2 += "<input class='replyButton3 ml-1 pointer' type='button' value='리뷰 목록' onclick='location.href=\"/brr/review/reviewMain?toiletTitle=" + title + "\"'>"
 
                             var id = $("#sessionId").val();
 <%-- <%=(String) session.getAttribute("sessionId")%>
     ; --%>
                             //리뷰쓰기
-                            content2 += "<input class='replyButton3 ml-1' type='button' value='리뷰 쓰기' onclick='reviewWrite(" + "\"" + title + "\"," + "\"" + id + "\")'>"
+                            content2 += "<input class='replyButton3 ml-1 pointer' type='button' value='리뷰 쓰기' onclick='reviewWrite(" + "\"" + title + "\"," + "\"" + id + "\")'>"
                             content2 += "</p>"
 
                             div1.innerHTML = content2;
@@ -857,7 +847,7 @@
                     				alert(JSON.stringify(e));
                     			}
                     			
-                    		});
+                    		}); //여기까지긁어서 함수화해야됨
                             
                         }
                     }(toiletMarker, i, title));
@@ -867,7 +857,7 @@
     
     function reviewWrite (title, id) {
         document.getElementById("review-toilet").innerHTML=title;
-        $("#toilet_title").val(title)
+        $("#toiletNm").val(title)
         $("#review-container").fadeIn();
         $("#review").fadeIn();
     }
@@ -940,6 +930,33 @@
         }
     }//mylocation[E]
     
+    //화장실 추천기능
+    function searchShortest () {
+        directions(shortestDistance)
+    }
+    function searchRating () {
+        $.ajax({
+            url: "<c:url value='/maps/searchRating'/>",
+            data: {
+                lat : pos.lat.toFixed(6),
+                lng : pos.lng.toFixed(6)
+            },
+            type: "post",
+            success: function(e){
+                starToilet=e;
+                
+            },
+            error: function(e){
+                
+            }
+        })
+    }
+    function searchClan () {
+        directions(shortestDistance)
+    }
+    function searchSmooth () {
+        directions(shortestDistance)
+    }
     function terminators () {
         clearInterval(realTime);
         polyline_.setMap(null)
@@ -956,7 +973,7 @@
             $.ajax({
                 url : "<c:url value='/dayaver/searchedToilet'/>",
                 data : {
-                    toiletnm : title,
+                    toiletNm : title,
                     id : id,
                     lng : endX,
                     lat : endY
@@ -977,7 +994,7 @@
         content += "<h5 class='card-title text-uppercase text-muted mb-0'>" + toiletType + "</h5>"
         content += "<br'><span class='card-title text-uppercase text-muted mb-0'>대변기 : " + toiletBowlNumber + "</span>"
         content += "<br><span class='card-title text-uppercase text-muted mb-0'>장애인 배려실 : " + handicap + "</span>"
-        content += "<br><input class='replyButton3 mt-1' type='button' id='direction[" + i + "]' value='길찾기 중단' onclick='terminators()'>";
+        content += "<br><input class='replyButton3 mt-1 pointer' type='button' id='direction[" + i + "]' value='길찾기 중단' onclick='terminators()'>";
         content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";
         content += "</div>"
 
@@ -1335,7 +1352,7 @@
 				<div class="row align-items-center">
 					<div class="col">
 						<h2 id="review-toilet" class="mb-0" style="display: inline-block"></h2>
-						<input type="hidden" id="toilet_title"> <input id="x-button" class="btn btn-sm btn-primary" type="button" value="X" onclick='$("#review").hide(), $("#review-container").fadeOut()'> <input id="register" class="btn btn-sm btn-primary" type="button" value="Register" onclick='reviewCheck()'>
+						<input type="hidden" id="toiletNm"> <input id="x-button" class="btn btn-sm btn-primary" type="button" value="X" onclick='$("#review").hide(), $("#review-container").fadeOut()'> <input id="register" class="btn btn-sm btn-primary" type="button" value="Register" onclick='reviewCheck()'>
 						<h6 id="review-ment" class="text-uppercase text-muted ls-1 mb-1">당신의 리뷰가 다른 사람들에게 도움이 될 거에요!</h6>
 					</div>
 				</div>
@@ -1504,11 +1521,11 @@
 					</div>
 				</div>
 				<!-- Form -->
-				<form class="mt-4 mb-3 d-md-none">
+				<form id="responsive-search" class="mt-4 mb-3 d-md-none" action="<c:url value="/review/reviewMain"/>" method="get">
 					<div class="input-group input-group-rounded input-group-merge">
-						<input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Search" aria-label="Search">
+						<input type="search" class="form-control form-control-rounded form-control-prepended" name="toiletNm" placeholder="Search Review" aria-label="Search">
 						<div class="input-group-prepend">
-							<div class="input-group-text">
+							<div class="input-group-text" onclick="document.forms['responsive-search'].submit();">
 								<span class="fa fa-search"></span>
 							</div>
 						</div>
@@ -1528,7 +1545,7 @@
 					
 							ni ni-chat-round
 					 --%>
-					 <li class="nav-item"><a class="nav-link" href="<c:url value="/review/reviewMain"/>">
+					<li class="nav-item"><a class="nav-link" href="<c:url value="/review/reviewMain"/>">
 							<i class="ni ni-chat-round"></i> Reviews
 						</a></li>
 					<li class="nav-item">
@@ -1561,18 +1578,18 @@
 						<li class="nav-item"><a class="nav-link" href="<c:url value="/member/logout"/>">
 								<i class="ni ni-key-25 text-info"></i> Logout
 							</a></li>
-<!-- 						네이버 로그인 시 -->
-<%-- 						<c:if test="${sessionScope.sessionNaver != null}"> --%>
-<%-- 							<li class="nav-item"><a class="nav-link " href="<c:url value="/member/deleteNaver"/>"> --%>
-<!-- 									<i class="ni ni-bullet-list-67 text-red"></i> Naver탈퇴 -->
-<!-- 								</a></li> -->
-<%-- 						</c:if> --%>
-<!-- 						구글 로그인 시 -->
-<%-- 						<c:if test="${sessionScope.sessionNaver == null}"> --%>
-<%-- 							<li class="nav-item"><a class="nav-link " href="<c:url value="/member/deleteGoogle"/>"> --%>
-<!-- 									<i class="ni ni-bullet-list-67 text-red"></i> Google탈퇴 -->
-<!-- 								</a></li> -->
-<%-- 						</c:if> --%>
+						<!-- 						네이버 로그인 시 -->
+						<%-- 						<c:if test="${sessionScope.sessionNaver != null}"> --%>
+						<%-- 							<li class="nav-item"><a class="nav-link " href="<c:url value="/member/deleteNaver"/>"> --%>
+						<!-- 									<i class="ni ni-bullet-list-67 text-red"></i> Naver탈퇴 -->
+						<!-- 								</a></li> -->
+						<%-- 						</c:if> --%>
+						<!-- 						구글 로그인 시 -->
+						<%-- 						<c:if test="${sessionScope.sessionNaver == null}"> --%>
+						<%-- 							<li class="nav-item"><a class="nav-link " href="<c:url value="/member/deleteGoogle"/>"> --%>
+						<!-- 									<i class="ni ni-bullet-list-67 text-red"></i> Google탈퇴 -->
+						<!-- 								</a></li> -->
+						<%-- 						</c:if> --%>
 					</c:if>
 				</ul>
 				<!-- Divider -->
@@ -1591,20 +1608,17 @@
 					<li class="nav-item"><a class="nav-link" href="javascript:FeedbackShow();">
 							<i class="ni ni-send text-blue"></i> <span>Send Feedback</span>
 						</a></li>
-						
-					<li class="nav-item">
-					<br><br>
-						<div id="openweathermap-widget-18"></div>
-						<script>
+
+					<li class="nav-item"><br>
+					<br>
+						<div id="openweathermap-widget-18"></div> <script>
 							/* window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = []; 
 							window.myWidgetParam.push({id: 18,cityid: '1835848',appid: 'c08b376c4c1ca3b5e593c4991d91eb3c',
 							units: 'metric',containerid: 'openweathermap-widget-18',  });  
 							(function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";
 							script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
 							var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })(); */
-						</script>
-						
-					</li>
+						</script></li>
 
 				</ul>
 				<ul class="navbar-nav">
@@ -1623,13 +1637,13 @@
 				<!-- Brand -->
 				<a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="<c:url value="/maps/mapsMain"/>">Maps</a>
 				<!-- Form -->
-				<form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+				<form id="normal-search" class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto" action="<c:url value="/review/reviewMain"/>" method="get">
 					<div class="form-group mb-0">
 						<div class="input-group input-group-alternative">
 							<div class="input-group-prepend">
-								<span class="input-group-text"><i class="fas fa-search"></i></span>
+								<span class="input-group-text pointer" onclick="document.forms['normal-search'].submit();""><i class="fas fa-search"></i></span>
 							</div>
-							<input class="form-control" placeholder="Search Review" type="text">
+							<input class="form-control" placeholder="Search Review" name="toiletNm" type="text">
 						</div>
 					</div>
 				</form>
@@ -1647,7 +1661,7 @@
 								</c:if>
 
 								<c:if test="${sessionScope.sessionId != null}">
-								
+
 									<c:if test="${sessionScope.sessionNaver != null}">
 										<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="${sessionScope.Profile}"/>">
 										</span>
@@ -1655,7 +1669,7 @@
 											<span class="mb-0 text-sm  font-weight-bold">${sessionScope.sessionNickname}</span>
 										</div>
 									</c:if>
-									
+
 									<c:if test="${sessionScope.sessionGooglename != null}">
 										<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="${sessionScope.Profile}"/>">
 										</span>
@@ -1663,7 +1677,7 @@
 											<span class="mb-0 text-sm  font-weight-bold">${sessionScope.sessionNickname}</span>
 										</div>
 									</c:if>
-									
+
 								</c:if>
 							</div>
 						</a>
@@ -1697,7 +1711,7 @@
 		<div class="header bg-gradient-primary pb-7 pt-5 pt-md-8">
 			<div class="container-fluid">
 				<div class="header-body">
-					<input class='replyButton1 ml-1' type='button' value='최단거리' onclick='searchShortest()'> <input class='replyButton1 ml-0' type='button' value='최고 평가' onclick='searchRating()'> <input class='replyButton1 ml-0' type='button' value='최고 청결도' onclick='searchClan()'> <input class='replyButton1 ml-0' type='button' value='최대 원활도' onclick='searchSmooth()'>
+					<input class='replyButton1 ml-1 pointer' type='button' value='최단거리' onclick='searchShortest()'> <input class='replyButton1 ml-0 pointer' type='button' value='최고 평가' onclick='searchRating()'> <input class='replyButton1 ml-0 pointer' type='button' value='최고 청결도' onclick='searchClan()'> <input class='replyButton1 ml-0 pointer' type='button' value='최대 원활도' onclick='searchSmooth()'>
 				</div>
 			</div>
 		</div>
