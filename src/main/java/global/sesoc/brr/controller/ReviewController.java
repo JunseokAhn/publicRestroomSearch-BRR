@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import global.sesoc.brr.dao.ReviewDAO;
+import global.sesoc.brr.util.PageNavigator;
 import global.sesoc.brr.vo.ReviewVO;
 
 @Controller
@@ -30,12 +31,16 @@ public class ReviewController {
 
 	// 리뷰리스트 > 전체목록
 	@GetMapping(value = "reviewMain")
-	public String reviewMain(@RequestParam(defaultValue = "") String toiletTitle, @RequestParam(defaultValue = "1") int currentPage, Model model) {
+	public String reviewMain(@RequestParam(defaultValue = "") String toiletNm, @RequestParam(defaultValue = "1") int currentPage, Model model) {
 		// title로 리뷰검색
-		System.out.println("검색어 : "+toiletTitle);
-		ArrayList<ReviewVO> list = dao.reviewMain(toiletTitle, currentPage);
+		System.out.println("검색어 : "+toiletNm);
+		int reviewCount = dao.reviewCount(toiletNm);
+		PageNavigator PN = new PageNavigator(7, currentPage, reviewCount);
+		int startRecord = PN.getStartRecord();
+		ArrayList<ReviewVO> list = dao.reviewMain(toiletNm, startRecord);
 		model.addAttribute("list", list);
-		model.addAttribute("search", toiletTitle);
+		model.addAttribute("search", toiletNm);
+		model.addAttribute("pn", PN);
 		for(ReviewVO i : list)
 			System.out.println(i);
 		return "review/reviewMain";
@@ -54,9 +59,9 @@ public class ReviewController {
 	// 최신리뷰 3개조회
 	@ResponseBody
 	@PostMapping(value = "reviewList")
-	public ArrayList<ReviewVO> write(String toilet_title) {
-		logger.debug("리뷰write : " + toilet_title);
-		ArrayList<ReviewVO> list = dao.reviewList(toilet_title);
+	public ArrayList<ReviewVO> write(String toiletNm) {
+		logger.debug("리뷰write : " + toiletNm);
+		ArrayList<ReviewVO> list = dao.reviewList(toiletNm);
 		return list;
 	}
 }

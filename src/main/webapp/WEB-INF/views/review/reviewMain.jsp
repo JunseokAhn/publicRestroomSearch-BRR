@@ -317,10 +317,10 @@
 											<div class="media align-items-center">
 												<div class="media-body">
 													<c:if test="${list[0]==null}">
-														<span class="mb-0 text-sm"></span>
+														<span class="mb-0 text-sm">.</span>
 													</c:if>
 													<c:if test="${list[0]!=null}">
-														<span class="mb-0 text-sm">${list[0].toilet_title }</span>
+														<span class="mb-0 text-sm">${list[0].toiletNm }</span>
 													</c:if>
 												</div>
 											</div>
@@ -339,11 +339,7 @@
 										</c:if>
 										<c:if test="${list[0]==null}">
 											<td>
-												<div class="avatar-group">
-													<c:forEach begin="1" end="5">
-														<span class="avatar avatar-sm"> <img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle"></span>
-													</c:forEach>
-												</div>
+												
 											</td>
 										</c:if>
 										<c:if test="${list[0]!=null}">
@@ -357,11 +353,7 @@
 										</c:if>
 										<c:if test="${list[0]==null}">
 											<td>
-												<div class="avatar-group">
-													<c:forEach begin="1" end="5">
-														<span class="avatar avatar-sm"> <img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle"></span>
-													</c:forEach>
-												</div>
+												.
 											</td>
 										</c:if>
 										<c:if test="${list[0]!=null}">
@@ -375,7 +367,7 @@
 										</c:if>
 										<c:if test="${list[0]==null}">
 											<td>
-												<div class="avatar-group">2020/04/29</div>
+												<div class="avatar-group">.</div>
 											</td>
 										</c:if>
 										<c:if test="${list[0]!=null}">
@@ -389,10 +381,10 @@
 											<div class="media align-items-center">
 												<div class="media-body">
 													<c:if test="${list[1]==null}">
-														<span class="mb-0 text-sm"></span>
+														<span class="mb-0 text-sm">.</span>
 													</c:if>
 													<c:if test="${list[1]!=null}">
-														<span class="mb-0 text-sm">${list[1].toilet_title }</span>
+														<span class="mb-0 text-sm">${list[1].toiletNm }</span>
 													</c:if>
 												</div>
 											</div>
@@ -411,11 +403,7 @@
 										</c:if>
 										<c:if test="${list[1]==null}">
 											<td>
-												<div class="avatar-group">
-													<c:forEach begin="1" end="5">
-														<span class="avatar avatar-sm"> <img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle"></span>
-													</c:forEach>
-												</div>
+												.
 											</td>
 										</c:if>
 										<c:if test="${list[1]!=null}">
@@ -429,11 +417,7 @@
 										</c:if>
 										<c:if test="${list[1]==null}">
 											<td>
-												<div class="avatar-group">
-													<c:forEach begin="1" end="5">
-														<span class="avatar avatar-sm"> <img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle"></span>
-													</c:forEach>
-												</div>
+												.
 											</td>
 										</c:if>
 										<c:if test="${list[1]!=null}">
@@ -447,7 +431,7 @@
 										</c:if>
 										<c:if test="${list[1]==null}">
 											<td>
-												<div class="avatar-group">2020/04/29</div>
+												<div class="avatar-group">.</div>
 											</td>
 										</c:if>
 										<c:if test="${list[1]!=null}">
@@ -461,10 +445,10 @@
 											<div class="media align-items-center">
 												<div class="media-body">
 													<c:if test="${list[2]==null}">
-														<span class="mb-0 text-sm"></span>
+														<span class="mb-0 text-sm">.</span>
 													</c:if>
 													<c:if test="${list[2]!=null}">
-														<span class="mb-0 text-sm">${list[2].toilet_title }</span>
+														<span class="mb-0 text-sm">${list[2].toiletNm }</span>
 													</c:if>
 												</div>
 											</div>
@@ -483,11 +467,7 @@
 										</c:if>
 										<c:if test="${list[2]==null}">
 											<td>
-												<div class="avatar-group">
-													<c:forEach begin="1" end="5">
-														<span class="avatar avatar-sm"> <img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle"></span>
-													</c:forEach>
-												</div>
+												.
 											</td>
 										</c:if>
 										<c:if test="${list[2]!=null}">
@@ -501,11 +481,7 @@
 										</c:if>
 										<c:if test="${list[2]==null}">
 											<td>
-												<div class="avatar-group">
-													<c:forEach begin="1" end="5">
-														<span class="avatar avatar-sm"> <img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle"></span>
-													</c:forEach>
-												</div>
+												.
 											</td>
 										</c:if>
 										<c:if test="${list[2]!=null}">
@@ -519,7 +495,7 @@
 										</c:if>
 										<c:if test="${list[2]==null}">
 											<td>
-												<div class="avatar-group">2020/04/29</div>
+												<div class="avatar-group">.</div>
 											</td>
 										</c:if>
 										<c:if test="${list[2]!=null}">
@@ -533,10 +509,10 @@
 											<div class="media align-items-center">
 												<div class="media-body">
 													<c:if test="${list[3]==null}">
-														<span class="mb-0 text-sm"></span>
+														<span class="mb-0 text-sm">.</span>
 													</c:if>
 													<c:if test="${list[3]!=null}">
-														<span class="mb-0 text-sm">${list[3].toilet_title }</span>
+														<span class="mb-0 text-sm">${list[3].toiletNm }</span>
 													</c:if>
 												</div>
 											</div>
@@ -555,11 +531,7 @@
 										</c:if>
 										<c:if test="${list[3]==null}">
 											<td>
-												<div class="avatar-group">
-													<c:forEach begin="1" end="5">
-														<span class="avatar avatar-sm"> <img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle"></span>
-													</c:forEach>
-												</div>
+												.
 											</td>
 										</c:if>
 										<c:if test="${list[3]!=null}">
@@ -573,11 +545,7 @@
 										</c:if>
 										<c:if test="${list[3]==null}">
 											<td>
-												<div class="avatar-group">
-													<c:forEach begin="1" end="5">
-														<span class="avatar avatar-sm"> <img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle"></span>
-													</c:forEach>
-												</div>
+												.
 											</td>
 										</c:if>
 										<c:if test="${list[3]!=null}">
@@ -591,7 +559,7 @@
 										</c:if>
 										<c:if test="${list[3]==null}">
 											<td>
-												<div class="avatar-group">2020/04/29</div>
+												<div class="avatar-group">.</div>
 											</td>
 										</c:if>
 										<c:if test="${list[3]!=null}">
@@ -605,10 +573,10 @@
 											<div class="media align-items-center">
 												<div class="media-body">
 													<c:if test="${list[4]==null}">
-														<span class="mb-0 text-sm"></span>
+														<span class="mb-0 text-sm">.</span>
 													</c:if>
 													<c:if test="${list[4]!=null}">
-														<span class="mb-0 text-sm">${list[4].toilet_title }</span>
+														<span class="mb-0 text-sm">${list[4].toiletNm }</span>
 													</c:if>
 												</div>
 											</div>
@@ -627,11 +595,7 @@
 										</c:if>
 										<c:if test="${list[4]==null}">
 											<td>
-												<div class="avatar-group">
-													<c:forEach begin="1" end="5">
-														<span class="avatar avatar-sm"> <img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle"></span>
-													</c:forEach>
-												</div>
+												.
 											</td>
 										</c:if>
 										<c:if test="${list[4]!=null}">
@@ -645,11 +609,7 @@
 										</c:if>
 										<c:if test="${list[4]==null}">
 											<td>
-												<div class="avatar-group">
-													<c:forEach begin="1" end="5">
-														<span class="avatar avatar-sm"> <img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle"></span>
-													</c:forEach>
-												</div>
+											.
 											</td>
 										</c:if>
 										<c:if test="${list[4]!=null}">
@@ -663,7 +623,7 @@
 										</c:if>
 										<c:if test="${list[4]==null}">
 											<td>
-												<div class="avatar-group">2020/04/29</div>
+												<div class="avatar-group">.</div>
 											</td>
 										</c:if>
 										<c:if test="${list[4]!=null}">
@@ -677,10 +637,10 @@
 											<div class="media align-items-center">
 												<div class="media-body">
 													<c:if test="${list[5]==null}">
-														<span class="mb-0 text-sm"></span>
+														<span class="mb-0 text-sm">.</span>
 													</c:if>
 													<c:if test="${list[5]!=null}">
-														<span class="mb-0 text-sm">${list[5].toilet_title }</span>
+														<span class="mb-0 text-sm">${list[5].toiletNm }</span>
 													</c:if>
 												</div>
 											</div>
@@ -699,11 +659,7 @@
 										</c:if>
 										<c:if test="${list[5]==null}">
 											<td>
-												<div class="avatar-group">
-													<c:forEach begin="1" end="5">
-														<span class="avatar avatar-sm"> <img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle"></span>
-													</c:forEach>
-												</div>
+												.
 											</td>
 										</c:if>
 										<c:if test="${list[5]!=null}">
@@ -717,11 +673,7 @@
 										</c:if>
 										<c:if test="${list[5]==null}">
 											<td>
-												<div class="avatar-group">
-													<c:forEach begin="1" end="5">
-														<span class="avatar avatar-sm"> <img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle"></span>
-													</c:forEach>
-												</div>
+											.
 											</td>
 										</c:if>
 										<c:if test="${list[5]!=null}">
@@ -735,7 +687,7 @@
 										</c:if>
 										<c:if test="${list[5]==null}">
 											<td>
-												<div class="avatar-group">2020/04/29</div>
+												<div class="avatar-group">.</div>
 											</td>
 										</c:if>
 										<c:if test="${list[5]!=null}">
@@ -749,10 +701,10 @@
 											<div class="media align-items-center">
 												<div class="media-body">
 													<c:if test="${list[6]==null}">
-														<span class="mb-0 text-sm"></span>
+														<span class="mb-0 text-sm">.</span>
 													</c:if>
 													<c:if test="${list[6]!=null}">
-														<span class="mb-0 text-sm">${list[6].toilet_title }</span>
+														<span class="mb-0 text-sm">${list[6].toiletNm }</span>
 													</c:if>
 												</div>
 											</div>
@@ -771,11 +723,7 @@
 										</c:if>
 										<c:if test="${list[6]==null}">
 											<td>
-												<div class="avatar-group">
-													<c:forEach begin="1" end="5">
-														<span class="avatar avatar-sm"> <img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle"></span>
-													</c:forEach>
-												</div>
+												.
 											</td>
 										</c:if>
 										<c:if test="${list[6]!=null}">
@@ -789,11 +737,7 @@
 										</c:if>
 										<c:if test="${list[6]==null}">
 											<td>
-												<div class="avatar-group">
-													<c:forEach begin="1" end="5">
-														<span class="avatar avatar-sm"> <img alt="Image placeholder" src="<c:url value='/resources/img/starOn.png'/>" class="rounded-circle"></span>
-													</c:forEach>
-												</div>
+												.
 											</td>
 										</c:if>
 										<c:if test="${list[6]!=null}">
@@ -807,7 +751,7 @@
 										</c:if>
 										<c:if test="${list[6]==null}">
 											<td>
-												<div class="avatar-group">2020/04/29</div>
+												<div class="avatar-group">.</div>
 											</td>
 										</c:if>
 										<c:if test="${list[6]!=null}">
@@ -821,18 +765,47 @@
 						</div>
 						<div class="card-footer py-4 card bg-default shadow">
 							<nav aria-label="...">
+								<%-- <ul class="pagination justify-content-end mb-0">
+									<li class="page-item"><a class="page-link" href="<c:url value="/review/reviewMain?currentPage=${pn.startPageGroup-1}"/>">
+											<i class="fas fa-angle-left"></i>
+										</a></li>
+									<li class="page-item active"><a id="" class="page-link" href="<c:url value="/review/reviewMain?currentPage=${pn.startPageGroup}"/>">${pn.startPageGroup}</a></li>
+									<li class="page-item"><a class="page-link" href="<c:url value="/review/reviewMain?currentPage=${pn.startPageGroup+1}"/>">${pn.startPageGroup+1}</a></li>
+									<li class="page-item"><a class="page-link" href="<c:url value="/review/reviewMain?currentPage=${pn.startPageGroup+2}"/>">${pn.startPageGroup+2}</a></li>
+									<li class="page-item"><a class="page-link" href="<c:url value="/review/reviewMain?currentPage=${pn.startPageGroup+4}"/>">
+											<i class="fas fa-angle-right"></i>
+										</a></li>
+								</ul>  --%>
 								<ul class="pagination justify-content-end mb-0">
-									<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">
-											<i class="fas fa-angle-left"></i> <span class="sr-only">Previous</span>
-										</a></li>
-									<li class="page-item active"><a class="page-link" href="#">1</a></li>
-									<li class="page-item"><a class="page-link" href="#">
-											2 <span class="sr-only">(current)</span>
-										</a></li>
-									<li class="page-item"><a class="page-link" href="#">3</a></li>
-									<li class="page-item"><a class="page-link" href="#">
-											<i class="fas fa-angle-right"></i> <span class="sr-only">Next</span>
-										</a></li>
+									<c:if test="${pn.currentGroup!=0}">
+										<li class="page-item"><a class="page-link" href="<c:url value="/review/reviewMain?currentPage=${pn.startPageGroup-1}"/>">
+												<i class="fas fa-angle-left"></i>
+											</a></li>
+									</c:if>
+									<%-- <c:if test="${pn.currentGroup==0}">
+										<li class="page-item disabled"><a class="page-link" href="<c:url value="/review/reviewMain?currentPage=${pn.startPageGroup-1}"/>">
+												<i class="fas fa-angle-left"></i>
+											</a></li>
+									</c:if> --%>
+									<c:forEach var="i" begin="${pn.startPageGroup}" end="${pn.endPageGroup}">
+										<c:if test="${pn.currentPage==i}">
+											<li class="page-item active"><a class="page-link" href="<c:url value="/review/reviewMain?currentPage=${i}"/>">${i}</a></li>
+										</c:if>
+										<c:if test="${pn.currentPage!=i}">
+											<li class="page-item"><a class="page-link" href="<c:url value="/review/reviewMain?currentPage=${i}"/>">${i}</a></li>
+										</c:if>
+									</c:forEach>
+									<c:if test="${pn.endPageGroup!=pn.totalPageCount}">
+										<li class="page-item"><a class="page-link" href="<c:url value="/review/reviewMain?currentPage=${pn.startPageGroup+5}"/>">
+												<i class="fas fa-angle-right"></i>
+											</a></li>
+									</c:if>
+									<%-- <c:if test="${pn.currentGroup==pn.endPageGroup}">
+										<li class="page-item disabled"><a class="page-link" href="<c:url value="/review/reviewMain?currentPage=${pn.startPageGroup+4}"/>">
+												<i class="fas fa-angle-right"></i>
+											</a></li>
+									</c:if> --%>
+
 								</ul>
 							</nav>
 						</div>
