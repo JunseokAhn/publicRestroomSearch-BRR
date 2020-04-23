@@ -910,7 +910,7 @@
 			url : "<c:url value='/dayaver/average'/>",
 			type : "POST",
 			data : {
-				lng : endX, lat : endY
+				lng : toiletVO.lng, lat : toiletVO.lat
 			},
 			success : function (res) {
 				//consloe.log(res);
