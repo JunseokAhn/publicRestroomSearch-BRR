@@ -14,7 +14,8 @@
 		order by DISTANCE)
 	</select>
 
-	<select id="searchRating" parameterType="location" resultType="String">
+	<select id="searchRating" parameterType="location" resultType="toilet">
+		select * from brr_toilet where toiletNm like (
 		select toiletNm from (
 		select toiletNm, avg(DISTANCE) DISTANCE, avg(star) star from (
 		select toiletNm, trunc(DISTANCE_WGS84(#{lat},#{lng}, lat, lng),3)*1000 as DISTANCE
@@ -23,7 +24,7 @@
 		order by DISTANCE) join brr_review using(toiletNm)
 		group by toiletNm
 		order by star desc, distance)
-		where rownum=1
+		where rownum=1)
 	</select>
 
 </mapper>

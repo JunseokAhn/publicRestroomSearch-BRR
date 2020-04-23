@@ -740,7 +740,7 @@
                     				alert(JSON.stringify(e));
                     			}
                     			
-                    		});
+                    		}); //여기까지긁어서 함수화해야됨
                             
                         }
                     }(toiletMarker, i, title));

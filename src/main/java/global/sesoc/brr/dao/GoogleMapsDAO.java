@@ -24,10 +24,10 @@ public class GoogleMapsDAO {
 		return list;
 	}
 
-	public String searchRating(LocationVO lo) {
+	public ToiletVO searchRating(LocationVO lo) {
 		// TODO Auto-generated method stub
 		GoogleMapsMapper mapper = session.getMapper(GoogleMapsMapper.class);
-		String toiletNm = mapper.searchRating(lo);
-		return toiletNm;
+		ToiletVO VO = mapper.searchRating(lo);
+		return VO;
 	}
 }

@@ -52,12 +52,12 @@ public class TMapController {
 	}
 	
 	@ResponseBody
-	@PostMapping(value = "searchRating", produces = "application/text; charset=utf8")
-	public String searchRating(String lat, String lng){
+	@PostMapping(value = "searchRating") //, produces = "application/text; charset=utf8"
+	public ToiletVO searchRating(String lat, String lng){
 		lo = new LocationVO(lat, lng);
-		String toiletNm = dao.searchRating(lo);
-		System.out.println(toiletNm);
-		return toiletNm;
+		ToiletVO VO = dao.searchRating(lo);
+		System.out.println(VO);
+		return VO;
 	}
 
 }
