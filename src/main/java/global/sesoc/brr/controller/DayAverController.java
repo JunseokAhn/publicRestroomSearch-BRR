@@ -1,5 +1,6 @@
 package global.sesoc.brr.controller;
 
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -80,20 +81,25 @@ public class DayAverController {
 		
 		DayAverVO aver = new DayAverVO();
 		
-		Double result = dao.average(lat, lng);
-		Double result2 = dao.listAll(lat, lng);
+		Double result = dao.average(lat, lng); // 7일 평균
+//		Double result2 = dao.listAll(lat, lng); // 해당 화장실 모든 데이터 출력
+		Double result3 = dao.average2(lat, lng);// 2일 평균
 		
-		//userAvg => 이용자 평균
 		
-		if(result == null || result2 == null) {
+		if(result == null || result3 == null) {
 			result = 0.0;
+			result3 = 0.0;
 			
 			System.out.println("7일 평균 이용자 수 : " + result);
-			System.out.println("변화량 : " + result2);
+//			System.out.println("변화량 : " + result2);
+			System.out.println("2일 평균 이용자 수 : " + result3);
 			
 			httpsession.setAttribute("userAvg", result);
+			httpsession.setAttribute("userAvg_2", result3);
 			
-			Double UserDiffer = result - (Double)httpsession.getAttribute("userAvg");
+			Double UserDiffer = result3 - (Double)httpsession.getAttribute("userAvg");
+			
+			System.out.println("변화량 : " + UserDiffer);
 			
 			httpsession.setAttribute("userDiffer", UserDiffer);
 			
@@ -102,11 +108,15 @@ public class DayAverController {
 		} else {
 			
 			System.out.println("7일 평균 이용자 수 : " + result);
-			System.out.println("변화량 : " + result2);
+//			System.out.println("변화량 : " + result2);
+			System.out.println("2일 평균 이용자 수 : " + result3);
 			
 			httpsession.setAttribute("userAvg", result);
+			httpsession.setAttribute("userAvg_2", result3);
 			
-			Double UserDiffer = result - (Double)httpsession.getAttribute("userAvg");
+			Double UserDiffer = result3 - (Double)httpsession.getAttribute("userAvg");
+			
+			System.out.println("변화량 : " + UserDiffer);
 			
 			httpsession.setAttribute("userDiffer", UserDiffer);
 			

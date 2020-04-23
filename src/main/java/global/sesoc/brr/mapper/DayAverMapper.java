@@ -15,6 +15,9 @@ public interface DayAverMapper {
 	//해당 회원의 검색 기록 삭제
 	public int deleteRecord (String id);
 	
-	//통계를 내기 위한 객체 불러오기
+	//7일 평균
 	public Double average (@Param("lat")Double lat, @Param("lng")Double lng);
+	
+	//2일 평균
+	public Double average2 (@Param("lat")Double lat, @Param("lng")Double lng);
 }
