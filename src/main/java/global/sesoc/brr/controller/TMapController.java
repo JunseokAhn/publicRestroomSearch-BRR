@@ -59,5 +59,13 @@ public class TMapController {
 		System.out.println(VO);
 		return VO;
 	}
-
+	
+	@ResponseBody
+	@PostMapping(value = "searchClean") //, produces = "application/text; charset=utf8"
+	public ToiletVO searchClean(String lat, String lng){
+		lo = new LocationVO(lat, lng);
+		ToiletVO VO = dao.searchClean(lo);
+		System.out.println(VO);
+		return VO;
+	}
 }

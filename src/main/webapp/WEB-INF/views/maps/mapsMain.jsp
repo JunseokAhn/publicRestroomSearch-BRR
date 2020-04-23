@@ -946,8 +946,22 @@
             }
         })
     }
-    function searchClan () {
-        directions(shortestDistance)
+    function searchClean () {
+        $.ajax({
+            url: "<c:url value='/maps/searchClean'/>",
+            data: {
+                lat : pos.lat.toFixed(6),
+                lng : pos.lng.toFixed(6)
+            },
+            type: "post",
+            success: function(e){
+                //e = toiletVO입니다.
+                recommending(e)
+            },
+            error: function(e){
+                
+            }
+        })
     }
     function searchSmooth () {
         directions(shortestDistance)
@@ -1504,7 +1518,7 @@
 		<div class="header bg-gradient-primary pb-7 pt-5 pt-md-8">
 			<div class="container-fluid">
 				<div class="header-body">
-					<input class='replyButton1 ml-1 pointer' type='button' value='최단거리' onclick='searchShortest()'> <input class='replyButton1 ml-0 pointer' type='button' value='최고 평가' onclick='searchRating()'> <input class='replyButton1 ml-0 pointer' type='button' value='최고 청결도' onclick='searchClan()'> <input class='replyButton1 ml-0 pointer' type='button' value='최대 원활도' onclick='searchSmooth()'>
+					<input class='replyButton1 ml-1 pointer' type='button' value='최단거리' onclick='searchShortest()'> <input class='replyButton1 ml-0 pointer' type='button' value='최고 평가' onclick='searchRating()'> <input class='replyButton1 ml-0 pointer' type='button' value='최고 청결도' onclick='searchClean()'> <input class='replyButton1 ml-0 pointer' type='button' value='최대 원활도' onclick='searchSmooth()'>
 				</div>
 			</div>
 		</div>
