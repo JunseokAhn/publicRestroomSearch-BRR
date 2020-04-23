@@ -1035,6 +1035,7 @@ return distime;
         })
     }
     function searchClean () {
+        console.log(1)
     	$.ajax({
     		url: "<c:url value='/maps/searchClean'/>",
     		data: {
@@ -1047,7 +1048,7 @@ return distime;
                 recommending(e)
             },
             error: function(e){
-            	
+            	console.log(e)
             }
         })
     }
@@ -1063,6 +1064,9 @@ return distime;
     //실시간길찾기
     function navigators (endX, endY, title, toiletType, toiletBowlNumber, handicap) {
     	var id =$("#sessionId").val();
+    	console.log("endX" + endX)
+    	console.log("endY" + endY)
+    	console.log("title" + title)
     	<%-- <%=(String) session.getAttribute("sessionId")%> --%>
     	;    	
         //DB에 정보저장, title값 필요
@@ -1571,7 +1575,7 @@ return distime;
 				<div class="dropdown-divider"></div>
 				<a class="dropdown-item" href="#">Something else here</a>
 			</div></li>
-			<li class="nav-item dropdown"><a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<li class="nav-item dropdown"> <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<div class="media align-items-center">
 					<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="${sessionScope.Profile}">
 					</span>
