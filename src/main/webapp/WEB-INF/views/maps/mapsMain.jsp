@@ -42,12 +42,12 @@
     //var shortFlag = 1;
     //대변 체크 결과
     var diaryresult="";
-    var diary-description=
+   /*  var diary-description=
         [
             "<p>영양소는 적당하지만,<Strong>변비</Strong> 증세가 있네요.<br>수분섭취와 스트레스를 줄여보세요.</p> ",
             "<p> 장건강의 이상으로 색깔이 변이될 수 있어요.<br><strong>악취</strong>가 나는 경우에는 진단을 받아 볼 필요가 있습니다.</p>"
 
-        ];
+        ]; */
     
     $(function () {
     	// type모양별 체크시 각 함수를 다르게 지정해서 건강진단을 함    
@@ -1053,7 +1053,7 @@
 	} 
 
     function DiaryShow()
-    {
+    {   	 
     	$("#diary-container").show();
         $("#diary").fadeIn();
     }
