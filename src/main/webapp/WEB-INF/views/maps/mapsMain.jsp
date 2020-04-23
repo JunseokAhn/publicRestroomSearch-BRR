@@ -1037,6 +1037,7 @@ return distime;
         })
     }
     function searchClean () {
+        console.log(1)
     	$.ajax({
     		url: "<c:url value='/maps/searchClean'/>",
     		data: {
@@ -1049,7 +1050,7 @@ return distime;
                 recommending(e)
             },
             error: function(e){
-            	
+            	console.log(e)
             }
         })
     }
@@ -1065,6 +1066,9 @@ return distime;
     //실시간길찾기
     function navigators (endX, endY, title, toiletType, toiletBowlNumber, handicap) {
     	var id =$("#sessionId").val();
+    	console.log("endX" + endX)
+    	console.log("endY" + endY)
+    	console.log("title" + title)
     	<%-- <%=(String) session.getAttribute("sessionId")%> --%>
     	;    	
         //DB에 정보저장, title값 필요
@@ -1599,8 +1603,6 @@ return distime;
 			</div>
 		</form>
 	</div>
-
-
 	<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
 		<div class="container-fluid">
 			<!-- Toggler -->
@@ -1611,7 +1613,7 @@ return distime;
 			<a class="navbar-brand pt-0 pb-0" href="<c:url value="/maps/mapsMain"/>">
 			<img src="<c:url value="/resources/img/Logo.png"/>" class="navbar-brand-img" alt="...">
 		</a>
-		
+
       <!-- User -->
       <ul class="nav align-items-center d-md-none">
          <li class="nav-item dropdown"><a class="nav-link nav-link-icon" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

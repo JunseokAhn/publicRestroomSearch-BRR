@@ -24,7 +24,7 @@
 		order by DISTANCE) join brr_review using(toiletNm)
 		group by toiletNm
 		order by star desc, distance)
-		where rownum=1)
+		where rownum=1) and rownum=1
 	</select>
 
 	<select id="searchClean" parameterType="location" resultType="toilet">
@@ -37,6 +37,6 @@
 		order by DISTANCE) join brr_review using(toiletNm)
 		group by toiletNm
 		order by clean desc, distance)
-		where rownum=1)
+		where rownum=1) and rownum=1
 	</select>
 </mapper>
