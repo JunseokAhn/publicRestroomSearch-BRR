@@ -1362,6 +1362,7 @@ return distime;
 		     	    	    
 		     if(result_show_flag)
 			{
+				console.log("계속 돈다");
 		    	 var ctx = document.getElementById('myChart').getContext('2d');
 					var myChart = new Chart(ctx, {
 					    type: 'line',
@@ -1406,8 +1407,7 @@ return distime;
 					            }]
 					        }
 					    }
-					});  
-
+					}); 
 					result_show_flag=false;
 			}
 			
@@ -1610,61 +1610,43 @@ return distime;
 			<a class="navbar-brand pt-0 pb-0" href="<c:url value="/maps/mapsMain"/>">
 			<img src="<c:url value="/resources/img/Logo.png"/>" class="navbar-brand-img" alt="...">
 		</a>
-		<!-- User -->
-		<ul class="nav align-items-center d-md-none">
-			<li class="nav-item dropdown"><a class="nav-link nav-link-icon" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<i class="ni ni-bell-55"></i>
-			</a>
-			<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right" aria-labelledby="navbar-default_dropdown_1">
-				<a class="dropdown-item" href="#">Action</a>
-				<a class="dropdown-item" href="#">Another action</a>
-				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" href="#">Something else here</a>
-			</div></li>
-			<li class="nav-item dropdown"><a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<div class="media align-items-center">
-					<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="${sessionScope.Profile}">
-					</span>
-				</div>
-	
-				<!-- Form -->
-				<form id="responsive-search" class="mt-4 mb-3 d-md-none" action="<c:url value="/review/reviewMain"/>" method="get">
-					<div class="input-group input-group-rounded input-group-merge">
-						<input type="search" class="form-control form-control-rounded form-control-prepended" name="toiletNm" placeholder="Search Review" aria-label="Search">
-						<div class="input-group-prepend">
-							<div class="input-group-text" onclick="document.forms['responsive-search'].submit();">
-								<span class="fa fa-search"></span>
-							</div>
-						</div>
-					</div>
-				</form>
-				<!-- Navigation -->
-				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link  active " href="<c:url value="/maps/mapsMain"/>">
-							<i class="ni ni-pin-3 text-orange"></i> Maps
-						</a></li>
-					<li class="nav-item"><a class="nav-link " href="<c:url value="/sns/listSNS"/>">
-							<i class="ni ni-tv-2 text-primary"></i> SNS
-						</a></li>
-			<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
-				<div class=" dropdown-header noti-title">
-					<h6 class="text-overflow m-0">Welcome!</h6>
-				</div>
-				<a href="<c:url value="/examples/profile"/>" class="dropdown-item">
-				<i class="ni ni-single-02"></i> <span>My profile</span>
-			</a>
-			<a href="<c:url value="/examples/profile"/>" class="dropdown-item">
-			<i class="ni ni-settings-gear-65"></i> <span>Settings</span>
-		</a>
-		<a href="<c:url value="/examples/profile"/>" class="dropdown-item">
-		<i class="ni ni-calendar-grid-58"></i> <span>Activity</span>
-	</a>
-	<a href="<c:url value="/examples/profile"/>" class="dropdown-item">
-	<i class="ni ni-support-16"></i> <span>Support</span>
+		
+      <!-- User -->
+      <ul class="nav align-items-center d-md-none">
+         <li class="nav-item dropdown"><a class="nav-link nav-link-icon" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="ni ni-bell-55"></i>
+         </a>
+         <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right" aria-labelledby="navbar-default_dropdown_1">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Something else here</a>
+         </div></li>
+         <li class="nav-item dropdown"> <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="media align-items-center">
+               <span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="${sessionScope.Profile}">
+               </span>
+            </div>
+         </a>
+         <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+            <div class=" dropdown-header noti-title">
+               <h6 class="text-overflow m-0">Welcome!</h6>
+            </div>
+            <a href="<c:url value="/examples/profile"/>" class="dropdown-item">
+            <i class="ni ni-single-02"></i> <span>My profile</span>
+         </a>
+         <a href="<c:url value="/examples/profile"/>" class="dropdown-item">
+         <i class="ni ni-settings-gear-65"></i> <span>Settings</span>
+      </a>
+      <a href="<c:url value="/examples/profile"/>" class="dropdown-item">
+      <i class="ni ni-calendar-grid-58"></i> <span>Activity</span>
+   </a>
+   <a href="<c:url value="/examples/profile"/>" class="dropdown-item">
+   <i class="ni ni-support-16"></i> <span>Support</span>
 </a>
 <div class="dropdown-divider"></div>
 <a href="#!" class="dropdown-item">
-	<i class="ni ni-user-run"></i> <span>Logout</span>
+   <i class="ni ni-user-run"></i> <span>Logout</span>
 </a>
 </div></li>
 </ul>
@@ -1712,7 +1694,7 @@ return distime;
 					
 							ni ni-chat-round
 
-					 --%>
+					 --%>					 
 					<li class="nav-item"><a class="nav-link" href="<c:url value="/review/reviewMain"/>">
 							<i class="ni ni-chat-round"></i> Reviews
 						</a></li>
@@ -1975,6 +1957,7 @@ return distime;
 							</div>
 						</div>
 					</div>
+					
 							<!-- <div class="col-xl-3 col-lg-6">
 								<div class="card card-stats mb-4 mb-xl-0">
 									<div class="card-body replyButton2">
