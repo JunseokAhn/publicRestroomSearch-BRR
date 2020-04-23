@@ -5,10 +5,10 @@
 <insert id="insertAver" parameterType="aver">
 insert into dayaver 
 (
-	lat, lng, toiletnm, id
+	lat, lng, toiletNm, id
 ) values
 (
-	#{lat}, #{lng}, #{toiletnm}, #{id}
+	#{lat}, #{lng}, #{toiletNm}, #{id}
 )
 </insert>
 
