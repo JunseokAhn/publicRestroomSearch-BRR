@@ -841,6 +841,89 @@
                     });
         }
     }//mylocation[E]
+    function recommending(toiletVO){
+        //누르자마자 경로탐색 > 나중에 경로안내누르면 실시간안내되도록 바꾸기
+        distime = directions(toiletVO.lng, toiletVO.lat);
+        if(toiletVO.unisexToiletYn == "Y")
+            toiletVO.unisexToiletYn = "남녀공용 ";
+        else
+            toiletVO.unisexToiletYn = "남녀별도 ";
+        var title = toiletVO.toiletNm;
+        var toiletType = toiletVO.unisexToiletYn + toiletVO.toiletType;
+        var toiletBowlNumber = toiletVO.menToiletBowlNumber + toiletVO.ladiesToiletBowlNumber;
+        var handicap = toiletVO.menHandicapToiletBowlNumber + toiletVO.ladiesHandicapToiletBowlNumber;
+        if(handicap > 0)
+            handicap = "Y";
+        else
+            handicap = "N";
+        
+        var content = "<div style='min-width:max-content;  z-index:999;'>"
+        content += "<h5 class='card-title text-uppercase text-muted mb-0'>" + toiletType + "</h5>"
+        content += "<br'><span class='card-title text-uppercase text-muted mb-0'>대변기 : " + toiletBowlNumber + "</span>"
+        content += "<br><span class='card-title text-uppercase text-muted mb-0'>장애인 배려실 : " + handicap + "</span>"
+
+        content += "<br><input class='replyButton3 mt-1 pointer' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='navigators(" + toiletVO.lng + ',' + toiletVO.lat + ',' + '"' + title + '"' + ',' + '"' + toiletType + '"' + ',' + '"' + toiletBowlNumber + '"' + ',' + '"' + handicap + '"' + ")'>";
+        content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";
+        content += "</div>"
+
+        console.log("target : 추천된 화장실")
+        setTimeout(function () {
+            targetWindow.setMap(null)
+        }, 0);
+        setTimeout(function () {
+            targetWindow = new Tmapv2.InfoWindow({
+                position : new Tmapv2.LatLng(toiletVO.lat, toiletVO.lng),
+                content : content,
+                type : 1,
+                map : map
+            });
+        }, 0);
+        
+        //div1 내용 변경
+        var div1 = document.getElementById('div1');
+        var content2
+        content2 = "<div class='row'>"
+        content2 += "<div class='col'>"
+        content2 += "<h5 class='card-title text-uppercase text-muted mb-0'>" + title + "</h5>"
+        content2 += "<span class='h2 font-weight-bold mb-0'>" + toiletType + "</span>"
+        content2 += "</div>"
+        content2 += "</div>"
+        content2 += "<p class='mt-3 mb-0 text-muted text-sm'>"
+        content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap mr-2'>별점평균</span>"
+        content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>청결도평균</span>"
+        content2 += "</p>"
+        content2 += "<p class='mt-1 mb-0 text-muted text-sm'>"
+        content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>이용자수</span>"
+        content2 += "<input class='replyButton3 ml-1 pointer' type='button' value='리뷰 목록' onclick='location.href=\"/brr/review/reviewMain?toiletTitle=" + title + "\"'>"
+
+        var id = $("#sessionId").val();
+<%-- <%=(String) session.getAttribute("sessionId")%>
+; --%>
+        //리뷰쓰기
+        content2 += "<input class='replyButton3 ml-1 pointer' type='button' value='리뷰 쓰기' onclick='reviewWrite(" + "\"" + title + "\"," + "\"" + id + "\")'>"
+        content2 += "</p>"
+
+        div1.innerHTML = content2;
+        reviewRefresh(title);
+		
+		$.ajax({
+			url : "<c:url value='/dayaver/average'/>",
+			type : "POST",
+			data : {
+				lng : endX, lat : endY
+			},
+			success : function (res) {
+				//consloe.log(res);
+				var changeRate = res.differ;
+				var averageRate = res.average;
+				
+			},
+			error : function (e) {
+				alert(JSON.stringify(e));
+			}
+			
+		}); 
+    }//recommending[E]
     
     //화장실 추천기능
     function searchShortest () {
@@ -855,8 +938,8 @@
             },
             type: "post",
             success: function(e){
-                starToilet=e;
-                
+                //e = toiletVO입니다.
+                recommending(e)
             },
             error: function(e){
                 
@@ -1136,7 +1219,8 @@
 				</div>
 			</div>
 		</form>
-	</div>	<div id="dairy-container"></div>
+	</div>
+	<div id="dairy-container"></div>
 	<div id="dairy" class="col-xl-4">
 		<form action="">
 			<div class="card shadow">
@@ -1144,36 +1228,27 @@
 					<div class="row align-items-center">
 						<div class="col">
 							<h2 class="mb-0" style="display: inline-block">Health Test</h2>
-							<input id="x-button" name="feed-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#diary").hide(), $("#diary-container").fadeOut()'>
-							<br>
-							<h4 id="health-ment" class="mb-0" style="display: inline-block"> STEP1.대변의 모양을 선택해주세요</h4>		
-																		
+							<input id="x-button" name="feed-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#diary").hide(), $("#diary-container").fadeOut()'> <br>
+							<h4 id="health-ment" class="mb-0" style="display: inline-block">STEP1.대변의 모양을 선택해주세요</h4>
+
 						</div>
 					</div>
 					<div class="card-body2">
-					<table id="sz">
-						<tr>
-							<td> 
-								<img id="type1" class="hvr-grow-shadow"  name="1" src="../resources/img/type1.png" style="width:90%"  />
-							</td>
-							<td>
-								<img id="type2" class="hvr-grow-shadow" name="2" src="../resources/img/type2.png" style="width:90%"/>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<img id="type3" class="hvr-grow-shadow" name="3" src="../resources/img/type3.png" style="width:90%"/>
-							</td>
-							<td>
-								<img id="type4" class="hvr-grow-shadow" name="4" src="../resources/img/type4.png" style="width:90%"/>
-							</td>
-						</tr>
-					</table>
+						<table id="sz">
+							<tr>
+								<td><img id="type1" class="hvr-grow-shadow" name="1" src="../resources/img/type1.png" style="width: 90%" /></td>
+								<td><img id="type2" class="hvr-grow-shadow" name="2" src="../resources/img/type2.png" style="width: 90%" /></td>
+							</tr>
+							<tr>
+								<td><img id="type3" class="hvr-grow-shadow" name="3" src="../resources/img/type3.png" style="width: 90%" /></td>
+								<td><img id="type4" class="hvr-grow-shadow" name="4" src="../resources/img/type4.png" style="width: 90%" /></td>
+							</tr>
+						</table>
 					</div>
-				</div>				
+				</div>
 			</div>
 		</form>
-</div>
+	</div>
 
 
 	<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
@@ -1271,17 +1346,13 @@
 					<li class="nav-item"><a class="nav-link" href="<c:url value="/review/reviewMain"/>">
 							<i class="ni ni-chat-round"></i> Reviews
 						</a></li>
-					<li class="nav-item">
-						<a class="nav-link " href="<c:url value="/diary/diaryMain"/>">
+					<li class="nav-item"><a class="nav-link " href="<c:url value="/diary/diaryMain"/>">
 							<i class="ni ni-bullet-list-67 text-red"></i> Diary
-						</a>
-					</li>
+						</a></li>
 					<!-- 건강 테스트 -->
-					<li class="nav-item">
-						<a class="nav-link " href="javascript:DiaryShow();">
+					<li class="nav-item"><a class="nav-link " href="javascript:DiaryShow();">
 							<i class="ni ni-bullet-list-67 text-red"></i> Diary
-						</a>
-					</li>
+						</a></li>
 
 					<!-- 로그인 영역 -->
 
@@ -1332,8 +1403,7 @@
 							<i class="ni ni-send text-blue"></i> <span>Send Feedback</span>
 						</a></li>
 
-					<li class="nav-item"><br>
-					<br>
+					<li class="nav-item"><br> <br>
 						<div id="openweathermap-widget-18"></div> <script>
 							/* window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = []; 
 							window.myWidgetParam.push({id: 18,cityid: '1835848',appid: 'c08b376c4c1ca3b5e593c4991d91eb3c',
