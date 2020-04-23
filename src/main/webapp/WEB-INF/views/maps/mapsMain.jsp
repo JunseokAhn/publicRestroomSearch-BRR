@@ -1032,7 +1032,8 @@ return distime;
                 recommending(e)
             },
             error: function(e){
-            	
+                console.log(e)
+                alert('근처 화장실의 평가가 없습니다. 첫번째 평가자가 되어주세요!')
             }
         })
     }
@@ -1051,6 +1052,7 @@ return distime;
             },
             error: function(e){
             	console.log(e)
+            	alert('근처 화장실의 평가가 없습니다. 첫번째 평가자가 되어주세요!')
             }
         })
     }
