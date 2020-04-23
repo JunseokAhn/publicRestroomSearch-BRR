@@ -12,7 +12,7 @@ public class DayAverVO {
 	
 	private Double lat;
 	private Double lng;
-	private String toiletnm;
+	private String toiletNm;
 	private String id;
 	private String inputdate;
 	private Double average;
