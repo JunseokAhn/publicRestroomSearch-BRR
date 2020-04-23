@@ -35,6 +35,9 @@ public class DayAverController {
 		
 		if(id.equals((String)httpsession.getAttribute("sessionId"))) {
 			System.out.println("성공하였습니다.");
+			
+			System.out.println(aver.toString());
+			
 			dao.insertAver(aver);
 		} else {
 			System.out.println("객체가 전달 되지 않았습니다.");
