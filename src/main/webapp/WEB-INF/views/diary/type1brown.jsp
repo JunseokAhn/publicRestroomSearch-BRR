@@ -95,8 +95,8 @@ var myChart = new Chart(ctx, {
  <br>수분섭취와 스트레스를 줄여보세요.</p> 
 </td>
 </tr>
-
 </table>
+
 <input type="hidden" name="status" value="1">
 <input type="hidden" name="resnum" value="1">
 <input id="bt" style=" margin-top:-33px; width:50pt; height:25pt; font-size:10px;" type="submit" value="저장">
