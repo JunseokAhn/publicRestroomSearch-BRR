@@ -1422,7 +1422,8 @@ return distime;
 	
     function DiaryShow()
     { 
-    	diaryresult="";
+        
+ /*    	diaryresult="";
 		result_show_flag=true;
     	$("input[name='save-data']").attr("hidden","hidden");
     	$("#myChart").attr("hidden","hidden");
@@ -1442,10 +1443,10 @@ return distime;
 		$('#brown').attr('id','type1');
 		$('#gray').attr('id','type2');
 		$('#red').attr('id','type3');
-		$('#yellow').attr('id','type4');
+		$('#yellow').attr('id','type4'); */
 		
 		$("#diary-container").show();
-		$("#diary").fadeIn();
+		$("#diary").fadeIn(); 
 	}
 
 
@@ -1542,8 +1543,8 @@ return distime;
 		</form>
 	</div>
 
-	<div id="dairy-container"></div>
-	<div id="dairy" class="col-xl-4">
+	<div id="dairy-container" style="display: none;" ></div>
+	<div id="dairy" class="col-xl-4" style="display: none">
 		<form action="">
 			<div class="card shadow">
 				<div class="card-header bg-transparent">
