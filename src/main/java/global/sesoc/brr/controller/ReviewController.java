@@ -41,6 +41,7 @@ public class ReviewController {
 		model.addAttribute("list", list);
 		model.addAttribute("search", toiletNm);
 		model.addAttribute("pn", PN);
+		System.out.println("리뷰게시판에 표시되는 내용");
 		for(ReviewVO i : list)
 			System.out.println(i);
 		return "review/reviewMain";

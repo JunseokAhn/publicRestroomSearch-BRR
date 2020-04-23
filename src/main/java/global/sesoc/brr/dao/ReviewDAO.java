@@ -53,6 +53,7 @@ public class ReviewDAO {
 		ReviewMapper mapper = session.getMapper(ReviewMapper.class);
 		RowBounds RB = new RowBounds(startRecord, 7);
 		ArrayList<ReviewVO> list;
+		System.out.println("이거 : " + toiletNm);
 		if (toiletNm.equals("")) {
 			list = mapper.reviewMain(RB, toiletNm);
 		} else {
