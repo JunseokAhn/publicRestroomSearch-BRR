@@ -517,19 +517,7 @@
         })//리뷰등록[E]
         reviewRefresh(toilet_title);
     }
-    //화장실 추천기능
-    function searchShortest () {
-        directions(shortestDistance)
-    }
-    function searchRating () {
-        
-    }
-    function searchClan () {
-        
-    }
-    function searchSmooth () {
-        
-    }
+   
 
     //길찾기
     function directions (endX, endY) {
@@ -833,6 +821,32 @@
         }
     }//mylocation[E]
     
+    //화장실 추천기능
+    function searchShortest () {
+        directions(shortestDistance)
+    }
+    function searchRating () {
+        $.ajax({
+            url: "<c:url value='/maps/searchRating'/>",
+            data: {
+                lat : pos.lat.toFixed(6),
+                lng : pos.lng.toFixed(6)
+            },
+            type: "post",
+            succeess: function(e){
+                
+            },
+            error: function(e){
+                
+            }
+        })
+    }
+    function searchClan () {
+        directions(shortestDistance)
+    }
+    function searchSmooth () {
+        directions(shortestDistance)
+    }
     function terminators () {
         clearInterval(realTime);
         polyline_.setMap(null)
@@ -1070,7 +1084,7 @@
 			</div>
 		</form>
 	</div>
-	
+
 	<div id="dairy-container"></div>
 	<div id="dairy" class="col-xl-4">
 		<form action="">
@@ -1079,11 +1093,11 @@
 					<div class="row align-items-center">
 						<div class="col">
 							<h2 class="mb-0" style="display: inline-block">Feedback Send</h2>
-							<input id="x-button" name="feed-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#dairy").hide(), $("#dairy-container").fadeOut()'>														
+							<input id="x-button" name="feed-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#dairy").hide(), $("#dairy-container").fadeOut()'>
 						</div>
 					</div>
 				</div>
-				
+
 			</div>
 		</form>
 	</div>
@@ -1181,7 +1195,7 @@
 					
 							ni ni-chat-round
 					 --%>
-					 <li class="nav-item"><a class="nav-link" href="<c:url value="/review/reviewMain"/>">
+					<li class="nav-item"><a class="nav-link" href="<c:url value="/review/reviewMain"/>">
 							<i class="ni ni-chat-round"></i> Reviews
 						</a></li>
 					<li class="nav-item"><a class="nav-link " href="<c:url value="/diary/diaryMain"/>">
@@ -1206,18 +1220,18 @@
 						<li class="nav-item"><a class="nav-link" href="<c:url value="/member/logout"/>">
 								<i class="ni ni-key-25 text-info"></i> Logout
 							</a></li>
-<!-- 						네이버 로그인 시 -->
-<%-- 						<c:if test="${sessionScope.sessionNaver != null}"> --%>
-<%-- 							<li class="nav-item"><a class="nav-link " href="<c:url value="/member/deleteNaver"/>"> --%>
-<!-- 									<i class="ni ni-bullet-list-67 text-red"></i> Naver탈퇴 -->
-<!-- 								</a></li> -->
-<%-- 						</c:if> --%>
-<!-- 						구글 로그인 시 -->
-<%-- 						<c:if test="${sessionScope.sessionNaver == null}"> --%>
-<%-- 							<li class="nav-item"><a class="nav-link " href="<c:url value="/member/deleteGoogle"/>"> --%>
-<!-- 									<i class="ni ni-bullet-list-67 text-red"></i> Google탈퇴 -->
-<!-- 								</a></li> -->
-<%-- 						</c:if> --%>
+						<!-- 						네이버 로그인 시 -->
+						<%-- 						<c:if test="${sessionScope.sessionNaver != null}"> --%>
+						<%-- 							<li class="nav-item"><a class="nav-link " href="<c:url value="/member/deleteNaver"/>"> --%>
+						<!-- 									<i class="ni ni-bullet-list-67 text-red"></i> Naver탈퇴 -->
+						<!-- 								</a></li> -->
+						<%-- 						</c:if> --%>
+						<!-- 						구글 로그인 시 -->
+						<%-- 						<c:if test="${sessionScope.sessionNaver == null}"> --%>
+						<%-- 							<li class="nav-item"><a class="nav-link " href="<c:url value="/member/deleteGoogle"/>"> --%>
+						<!-- 									<i class="ni ni-bullet-list-67 text-red"></i> Google탈퇴 -->
+						<!-- 								</a></li> -->
+						<%-- 						</c:if> --%>
 					</c:if>
 				</ul>
 				<!-- Divider -->
@@ -1236,20 +1250,17 @@
 					<li class="nav-item"><a class="nav-link" href="javascript:FeedbackShow();">
 							<i class="ni ni-send text-blue"></i> <span>Send Feedback</span>
 						</a></li>
-						
-					<li class="nav-item">
-					<br><br>
-						<div id="openweathermap-widget-18"></div>
-						<script>
+
+					<li class="nav-item"><br>
+					<br>
+						<div id="openweathermap-widget-18"></div> <script>
 							/* window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = []; 
 							window.myWidgetParam.push({id: 18,cityid: '1835848',appid: 'c08b376c4c1ca3b5e593c4991d91eb3c',
 							units: 'metric',containerid: 'openweathermap-widget-18',  });  
 							(function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";
 							script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
 							var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })(); */
-						</script>
-						
-					</li>
+						</script></li>
 
 				</ul>
 				<ul class="navbar-nav">
@@ -1292,7 +1303,7 @@
 								</c:if>
 
 								<c:if test="${sessionScope.sessionId != null}">
-								
+
 									<c:if test="${sessionScope.sessionNaver != null}">
 										<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="${sessionScope.Profile}"/>">
 										</span>
@@ -1300,7 +1311,7 @@
 											<span class="mb-0 text-sm  font-weight-bold">${sessionScope.sessionNickname}</span>
 										</div>
 									</c:if>
-									
+
 									<c:if test="${sessionScope.sessionGooglename != null}">
 										<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="${sessionScope.Profile}"/>">
 										</span>
@@ -1308,7 +1319,7 @@
 											<span class="mb-0 text-sm  font-weight-bold">${sessionScope.sessionNickname}</span>
 										</div>
 									</c:if>
-									
+
 								</c:if>
 							</div>
 						</a>

@@ -19,9 +19,12 @@
 		#{lat}+0.021)
 		and (lng between #{lng}-0.0246 and
 		#{lng}+0.0246)
-		order by DISTANCE) TMP where rownum &lt; (select
-		count(*)from brr_toilet)
+		order by DISTANCE)
 	</select>
 
+	<select id="searchRating" parameterType="location" resultType="nearbyToilet">
+	
+		
+	</select>
 
 </mapper>
