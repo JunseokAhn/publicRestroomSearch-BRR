@@ -15,8 +15,11 @@ public class DayAverVO {
 	private String toiletNm;
 	private String id;
 	private String inputdate;
-	private Double average;
+	private int average;
 	private Double differ;
+	
+	
+	
 	
 	
 }
