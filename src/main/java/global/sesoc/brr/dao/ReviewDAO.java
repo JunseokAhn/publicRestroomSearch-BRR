@@ -73,8 +73,8 @@ public class ReviewDAO {
 		HashMap<String, Double> map = new HashMap<>();
 		map.put("lat", lat);
 		map.put("lng", lng);
-		ReviewAverVO VO = mapper.reivewAver(map);
-		
+		ReviewAverVO VO = mapper.reviewAver(map);
+		System.out.println(VO);
 		return VO;
 	}
 }

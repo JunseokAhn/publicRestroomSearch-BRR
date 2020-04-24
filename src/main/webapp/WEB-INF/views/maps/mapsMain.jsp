@@ -38,12 +38,11 @@
 		var polyFlag = 0;
 		var locationFlag = 0;
 		var starFlag = 0;
-		var changeRate;
-		var averageRate; 
+		var changeRate, averageRate, starAver, cleanAver, starDiffer, cleanDiffer; 
     //var shortFlag = 1;
     //대변 체크 결과
     var diaryGraphInfo = 
-        function(stress, moisture, ingredient,status)
+        function(stress, moisture, ingredient,status)	
         {
         	this.stress = stress;
         	this.moisture = moisture;
@@ -735,8 +734,12 @@ function reviewRefresh(lng, lat){
                     }
                 });//ajax[E]
 
-return distime;
+	return distime;
     }//directions[E]
+    
+    function changeDiv1(starAver, cleanAver, starDiffer, cleanDiffer){
+        
+    }
     
     function setPositions (e, marker) {
     	nearbyToilet = e;
@@ -811,20 +814,20 @@ return distime;
                             }, 0);
                             
                             //별점과 청결도의 평균, 최근2일변화량체크
-                           /*  $.ajax({
+                             $.ajax({
                                 url: "<c:url value='/review/reviewAver'/>",
                                 data:{
-                                    lat: endY,
-                                    lng: endX
+                                    lat: target._lat, 
+                                    lng: target._lng
                                 },
                                 type:"post",
                                 success: function(e){
-                                    
+                                    //여기까지 들어오는데, 전역화가 안됨 즉, div1내용변경을 객체화 해서 전달해야된단 소리다.
+                                    //changeDiv1(e.starAver, e.cleanAver, e.starDiffer, e.cleanDiffer);
                                 },
                                 error: function(e){
-                                    
                                 }
-                            }); */
+                            });
                             //div1 내용 변경
                             var div1 = document.getElementById('div1');
                             var content2
@@ -835,8 +838,8 @@ return distime;
                             content2 += "</div>"
                             content2 += "</div>"
                             content2 += "<p class='mt-3 mb-0 text-muted text-sm'>"
-                            content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap mr-2'>별점평균</span>"
-                            content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>청결도평균</span>"
+                            content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap mr-2'>" + starAver + "</span>"
+                            content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>" + cleanAver + "</span>"
                             content2 += "</p>"
                             content2 += "<p class='mt-1 mb-0 text-muted text-sm'>"
                             content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>이용자수</span>"
@@ -989,7 +992,6 @@ return distime;
         		map : map
         	});
         }, 0);
-        
         //div1 내용 변경
         var div1 = document.getElementById('div1');
         var content2
@@ -1077,7 +1079,7 @@ return distime;
         })
     }
     function searchSmooth () {
-    	directions(shortestDistance);
+    	//directions(shortestDistance);
     }
     function terminators () {
     	clearInterval(realTime);
