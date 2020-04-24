@@ -54,7 +54,7 @@
 <%-- 						</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-support-16"></i> <span>Support</span> --%>
 <!-- 						</a> -->
 						<div class="dropdown-divider"></div>
-						<a href="../member/logout" class="dropdown-item"> <i class="ni ni-user-run"></i> <span>Logout</span>
+						<a href="/member/logout" class="dropdown-item"> <i class="ni ni-user-run"></i> <span>Logout</span>
 						</a>
 					</div></li>
 			</ul>
@@ -182,7 +182,7 @@
 <%-- 							</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-support-16"></i> <span>Support</span> --%>
 <!-- 							</a> -->
 							<div class="dropdown-divider"></div>
-							<a href="/member/logout" class="dropdown-item"> <i class="ni ni-user-run"></i> <span>Logout</span>
+							<a href="../member/logout" class="dropdown-item"> <i class="ni ni-user-run"></i> <span>Logout</span>
 							</a>
 						</div></li>
 				</ul>
