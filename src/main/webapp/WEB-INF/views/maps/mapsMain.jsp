@@ -737,8 +737,35 @@ function reviewRefresh(lng, lat){
 	return distime;
     }//directions[E]
     
-    function changeDiv1(starAver, cleanAver, starDiffer, cleanDiffer){
+    function changeDiv1(starAver, cleanAver, starDiffer, cleanDiffer, title, toiletType, lat, lng, changeRate, averageRate){
+        //div1 내용 변경
+        var div1 = document.getElementById('div1');
+        var content2
+        content2 = "<div class='row'>"
+        content2 += "<div class='col'>"
+        content2 += "<h5 class='card-title text-uppercase text-muted mb-0'>" + title + "</h5>"
+        content2 += "<span class='h2 font-weight-bold mb-0'>" + toiletType + "</span>"
+        content2 += "</div>"
+        content2 += "</div>"
+        content2 += "<p class='mt-3 mb-0 text-muted text-sm'>"
+        content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> " + starDiffer + "</span> <span class='text-nowrap mr-2'>" + starAver + "</span>"
+        content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> " + cleanDiffer +" </span> <span class='text-nowrap'>" + cleanAver + "</span>"
+        content2 += "</p>"
+        content2 += "<p class='mt-1 mb-0 text-muted text-sm'>"
+        content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> " + changeRate + "</span> <span class='text-nowrap'>" + averageRate +"</span>"
+        content2 += "<input class='replyButton3 ml-1 pointer' type='button' value='리뷰 목록' onclick='location.href=\"/brr/review/reviewMain?toiletNm=" + title + "\"'>"
+
+        var id = $("#sessionId").val();
+        <%-- <%=(String) session.getAttribute("sessionId")%>
+        ; --%>
+        //리뷰쓰기
+        content2 += "<input class='replyButton3 ml-1 pointer' type='button' value='리뷰 쓰기' onclick='reviewWrite(" + "\"" + title + "\"," + "\"" + id + "\"," + "\"" + lng + "\"," + "\"" + lat + "\")'>";
+        content2 += "</p>";
+
+        div1.innerHTML = content2;
+        reviewRefresh(lng, lat);
         
+       
     }
     
     function setPositions (e, marker) {
@@ -822,56 +849,28 @@ function reviewRefresh(lng, lat){
                                 },
                                 type:"post",
                                 success: function(e){
-                                    //여기까지 들어오는데, 전역화가 안됨 즉, div1내용변경을 객체화 해서 전달해야된단 소리다.
-                                    //changeDiv1(e.starAver, e.cleanAver, e.starDiffer, e.cleanDiffer);
+                                     $.ajax({
+        								url : "<c:url value='/dayaver/average'/>",
+        								type : "POST",
+        								data : {
+        									lng : target._lng, 
+        									lat : target._lat
+        								},
+        								success : function (res) {
+											var changeRate = res.differ;
+											var averageRate = res.average;
+											changeDiv1(e.starAver, e.cleanAver, e.starDiffer, e.cleanDiffer, title, toiletType, target._lat, target._lng, changeRate, averageRate);
+										},
+										error : function (e) {
+											console.log(JSON.stringify(e));
+										}
+									}); 
                                 },
                                 error: function(e){
+                                    console.log(e);
                                 }
                             });
-                            //div1 내용 변경
-                            var div1 = document.getElementById('div1');
-                            var content2
-                            content2 = "<div class='row'>"
-                            content2 += "<div class='col'>"
-                            content2 += "<h5 class='card-title text-uppercase text-muted mb-0'>" + title + "</h5>"
-                            content2 += "<span class='h2 font-weight-bold mb-0'>" + toiletType + "</span>"
-                            content2 += "</div>"
-                            content2 += "</div>"
-                            content2 += "<p class='mt-3 mb-0 text-muted text-sm'>"
-                            content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap mr-2'>" + starAver + "</span>"
-                            content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>" + cleanAver + "</span>"
-                            content2 += "</p>"
-                            content2 += "<p class='mt-1 mb-0 text-muted text-sm'>"
-                            content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>이용자수</span>"
-                            content2 += "<input class='replyButton3 ml-1 pointer' type='button' value='리뷰 목록' onclick='location.href=\"/brr/review/reviewMain?toiletNm=" + title + "\"'>"
-
-                            var id = $("#sessionId").val();
-                            <%-- <%=(String) session.getAttribute("sessionId")%>
-                            ; --%>
-                            //리뷰쓰기
-                            content2 += "<input class='replyButton3 ml-1 pointer' type='button' value='리뷰 쓰기' onclick='reviewWrite(" + "\"" + title + "\"," + "\"" + id + "\"," + "\"" + target._lng + "\"," + "\"" + target._lat + "\")'>";
-                            content2 += "</p>";
-
-                            div1.innerHTML = content2;
-                            reviewRefresh(target._lng, target._lat);
                             
-                            $.ajax({
-                            	url : "<c:url value='/dayaver/average'/>",
-                            	type : "POST",
-                            	data : {
-                            		lng : endX, lat : endY
-                            	},
-                            	success : function (res) {
-                    				//consloe.log(res);
-                    				var changeRate = res.differ;
-                    				var averageRate = res.average;
-                    				
-                    			},
-                    			error : function (e) {
-                    				alert(JSON.stringify(e));
-                    			}
-                    			
-                    		}); 
                             
                         }
                     }(toiletMarker, i, title));
@@ -992,51 +991,37 @@ function reviewRefresh(lng, lat){
         		map : map
         	});
         }, 0);
-        //div1 내용 변경
-        var div1 = document.getElementById('div1');
-        var content2
-        content2 = "<div class='row'>"
-        content2 += "<div class='col'>"
-        content2 += "<h5 class='card-title text-uppercase text-muted mb-0'>" + title + "</h5>"
-        content2 += "<span class='h2 font-weight-bold mb-0'>" + toiletType + "</span>"
-        content2 += "</div>"
-        content2 += "</div>"
-        content2 += "<p class='mt-3 mb-0 text-muted text-sm'>"
-        content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap mr-2'>별점평균</span>"
-        content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>청결도평균</span>"
-        content2 += "</p>"
-        content2 += "<p class='mt-1 mb-0 text-muted text-sm'>"
-        content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>이용자수</span>"
-        content2 += "<input class='replyButton3 ml-1 pointer' type='button' value='리뷰 목록' onclick='location.href=\"/brr/review/reviewMain?toiletNm=" + title + "\"'>"
-
-        var id = $("#sessionId").val();
-        <%-- <%=(String) session.getAttribute("sessionId")%>
-        ; --%>
-        //리뷰쓰기
-        //content2 += "<input class='replyButton3 ml-1 pointer' type='button' value='리뷰 쓰기' onclick='reviewWrite(" + "\"" + title + "\"," + "\"" + id + "\")'>";  //toiletVO.lng
-        content2 += "<input class='replyButton3 ml-1 pointer' type='button' value='리뷰 쓰기' onclick='reviewWrite(" + "\"" + title + "\"," + "\"" + id + "\"," + "\"" + toiletVO.lng + "\"," + "\"" + toiletVO.lat + "\")'>";
-        content2 += "</p>";
-
-        div1.innerHTML = content2;
-        reviewRefresh(toiletVO.lng, toiletVO.lat);
         
+      //별점과 청결도의 평균, 최근2일변화량체크
         $.ajax({
-        	url : "<c:url value='/dayaver/average'/>",
-        	type : "POST",
-        	data : {
-        		lng : toiletVO.lng, lat : toiletVO.lat
-        	},
-        	success : function (res) {
-				//consloe.log(res);
-				var changeRate = res.differ;
-				var averageRate = res.average;
-				
-			},
-			error : function (e) {
-				alert(JSON.stringify(e));
-			}
-			
-		}); 
+           url: "<c:url value='/review/reviewAver'/>",
+           data:{
+               lat: toiletVO.lat, 
+               lng: toiletVO.lng
+           },
+           type:"post",
+           success: function(e){
+                $.ajax({
+					url : "<c:url value='/dayaver/average'/>",
+					type : "POST",
+					data : {
+						lng : toiletVO.lng, 
+						lat : toiletVO.lat
+					},
+					success : function (res) {
+						var changeRate = res.differ;
+						var averageRate = res.average;
+						changeDiv1(e.starAver, e.cleanAver, e.starDiffer, e.cleanDiffer, title, toiletType, toiletVO.lat, toiletVO.lng, changeRate, averageRate);
+					},
+					error : function (e) {
+						console.log(JSON.stringify(e));
+					}
+				}); 
+           },
+           error: function(e){
+               console.log(e);
+           }
+       });
     }//recommending[E]
     
     //화장실 추천기능
