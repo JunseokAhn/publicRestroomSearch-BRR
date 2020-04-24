@@ -83,4 +83,15 @@ public class DayAverDAO {
 		return result;
 	}
 	
+	public DayAverVO Recent (String id) {
+		DayAverVO aver = null;
+		try {
+			DayAverMapper mapper = session.getMapper(DayAverMapper.class);
+			aver = mapper.Recent(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return aver;
+	}
+	
 }

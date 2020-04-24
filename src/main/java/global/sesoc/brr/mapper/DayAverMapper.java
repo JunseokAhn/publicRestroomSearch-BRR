@@ -20,4 +20,8 @@ public interface DayAverMapper {
 	
 	//2일 평균
 	public Double average2 (@Param("lat")Double lat, @Param("lng")Double lng);
+	
+	//최근 글 목록 3개
+	public DayAverVO Recent (String id);
+	
 }
