@@ -339,7 +339,7 @@
 										</c:if>
 										<c:if test="${list[0]==null}">
 											<td>
-												
+												.
 											</td>
 										</c:if>
 										<c:if test="${list[0]!=null}">

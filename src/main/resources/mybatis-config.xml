@@ -13,6 +13,7 @@
 		<typeAlias type="global.sesoc.brr.vo.NaverVO" alias="naver" />
 		<typeAlias type="global.sesoc.brr.vo.GoogleLoginVO" alias="googlelogin"/>
 		<typeAlias type="global.sesoc.brr.vo.DayAverVO" alias="aver"/>
+		<typeAlias type="global.sesoc.brr.vo.ReviewAverVO" alias="reviewAver"/>
 		<typeAlias type="global.sesoc.brr.vo.ReviewVO" alias="review"/>
 		<typeAlias type="global.sesoc.brr.vo.DateData" alias="datedata"/>
 		<typeAlias type="global.sesoc.brr.vo.resVO" alias="resVO"/>

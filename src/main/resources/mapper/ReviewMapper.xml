@@ -4,9 +4,9 @@
 <mapper namespace="global.sesoc.brr.mapper.ReviewMapper">
 	<insert id="reviewWrite" parameterType="review">
 		insert into brr_review
-		(toiletNm, sessionId, sessionNickname, Profile, review, star, clean)
+		(toiletNm, lng, lat, sessionId, sessionNickname, Profile, review, star, clean)
 		values
-		(#{toiletNm}, #{sessionId}, #{sessionNickname}, #{Profile}, #{review}, #{star}, #{clean})
+		(#{toiletNm}, #{lng}, #{lat}, #{sessionId}, #{sessionNickname}, #{Profile}, #{review}, #{star}, #{clean})
 	</insert>
 
 	<select id="reviewList" parameterType="String" resultType="review">
@@ -36,5 +36,9 @@
 	<select id="reviewMain2" parameterType="String" resultType="review">
 		select toiletNm, sessionId, sessionNickname, Profile, review, star, clean, to_char(inputdate, 'YYYY/MM/DD') inputdate
 		from (select * from brr_review where toiletNm like '%' || #{_parameter} || '%' order by inputdate desc)
+	</select>
+	
+	<select id="reviewAver" parameterType="map" resultType="reviewAver">
+		
 	</select>
 </mapper>

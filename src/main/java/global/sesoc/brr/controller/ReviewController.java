@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import global.sesoc.brr.dao.ReviewDAO;
 import global.sesoc.brr.util.PageNavigator;
+import global.sesoc.brr.vo.ReviewAverVO;
 import global.sesoc.brr.vo.ReviewVO;
 
 @Controller
@@ -64,5 +65,12 @@ public class ReviewController {
 		logger.debug("리뷰write : " + toiletNm);
 		ArrayList<ReviewVO> list = dao.reviewList(toiletNm);
 		return list;
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "reviewAver")
+	public ReviewAverVO reviewAver(Double lat, Double lng) {
+		ReviewAverVO VO = dao.reviewAver(lat, lng);
+		return VO;
 	}
 }

@@ -1,6 +1,7 @@
 package global.sesoc.brr.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import global.sesoc.brr.mapper.ReviewMapper;
 import global.sesoc.brr.util.PageNavigator;
+import global.sesoc.brr.vo.ReviewAverVO;
 import global.sesoc.brr.vo.ReviewVO;
 
 @Repository
@@ -60,5 +62,16 @@ public class ReviewDAO {
 			list = mapper.reviewMain2(RB, toiletNm);
 		}
 		return list;
+	}
+
+	public ReviewAverVO reviewAver(Double lat, Double lng) {
+		// TODO Auto-generated method stub
+		ReviewMapper mapper = session.getMapper(ReviewMapper.class);
+		HashMap<String, Double> map = new HashMap<>();
+		map.put("lat", lat);
+		map.put("lng", lng);
+		ReviewAverVO VO = mapper.reivewAver(map);
+		
+		return VO;
 	}
 }

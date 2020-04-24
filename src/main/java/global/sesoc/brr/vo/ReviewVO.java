@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ReviewVO {
 	private String toiletNm;
+	private Double lng;
+	private Double lat;
 	private String sessionId;
 	private String sessionNickname;
 	private String Profile;

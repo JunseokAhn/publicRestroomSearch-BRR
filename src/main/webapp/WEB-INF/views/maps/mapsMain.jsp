@@ -3,28 +3,28 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-	<script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx4afb1a7c147445528d8e83f3f1d4fea0"></script>
+<script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx4afb1a7c147445528d8e83f3f1d4fea0"></script>
 
-	<script src="<c:url value="/resources/js/jquery-3.4.1.js/"/>"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>화장실이 급할땐? - 부르르</title>
-	<!-- Favicon -->
-	<link href="<c:url value="/resources/assets/img/brand/favicon.png"/>" rel="icon" type="image/png">
-	<!-- Fonts -->
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-	<!-- Icons -->
-	<link href="<c:url value="/resources/assets/js/plugins/nucleo/css/nucleo.css"/>" rel="stylesheet" />
-	<link href="<c:url value="/resources/assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css"/>" rel="stylesheet" />
-	<!-- CSS Files -->
-	<link href="<c:url value="/resources/css/boardStyle.css"/>" rel="stylesheet" />
-	<link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
+<script src="<c:url value="/resources/js/jquery-3.4.1.js/"/>"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>화장실이 급할땐? - 부르르</title>
+<!-- Favicon -->
+<link href="<c:url value="/resources/assets/img/brand/favicon.png"/>" rel="icon" type="image/png">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+<!-- Icons -->
+<link href="<c:url value="/resources/assets/js/plugins/nucleo/css/nucleo.css"/>" rel="stylesheet" />
+<link href="<c:url value="/resources/assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css"/>" rel="stylesheet" />
+<!-- CSS Files -->
+<link href="<c:url value="/resources/css/boardStyle.css"/>" rel="stylesheet" />
+<link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
 
-	<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="../resources/css/hover.css">
+<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../resources/css/hover.css">
 
-	<script type="text/javascript">
+<script type="text/javascript">
 		var map, pos, marker, toiletMarker, marker_s, marker_e, marker_p1, marker_p2, title, id, label, endX, endY, polyline_, myWindow, targetWindow, destinyWindow, realTime;
 		var tDistance, tTime;
 		var shortestDistance, highestRating, highestClean, highestSmooth;
@@ -564,6 +564,8 @@ function reviewRefresh(title){
     function reviewCheck(){
         //청결도, 별점입력했는지
         var toiletNm = document.getElementById("toiletNm").value
+        var lng = document.getElementById("lng").value
+        var lat = document.getElementById("lat").value
         var sessionId = document.getElementById("sessionId").value
         var sessionNickname = document.getElementById("sessionNickname").value
         var Profile = document.getElementById("Profile").value
@@ -603,6 +605,8 @@ function reviewRefresh(title){
         	url : "<c:url value='/review/reviewWrite'/>",
         	data : {
         		toiletNm: toiletNm,
+        		lng: lng,
+        		lat: lat,
         		sessionId: sessionId,
         		sessionNickname: sessionNickname,
         		Profile: Profile,
@@ -781,7 +785,6 @@ return distime;
                             else
                             	handicap = "N";
                             
-                            //console.log("toiletMarker : " + toiletMarker)
                             console.log(marker)
                             //여기까지 마커(내위치) 들어오는것 확인
                             var content = "<div style='min-width:max-content;  z-index:999;'>"
@@ -806,6 +809,21 @@ return distime;
                             	});
                             }, 0);
                             
+                            //별점과 청결도의 평균, 최근2일변화량체크
+                           /*  $.ajax({
+                                url: "<c:url value='/review/reviewAver'/>",
+                                data:{
+                                    lat: endY,
+                                    lng: endX
+                                },
+                                type:"post",
+                                success: function(e){
+                                    
+                                },
+                                error: function(e){
+                                    
+                                }
+                            }); */
                             //div1 내용 변경
                             var div1 = document.getElementById('div1');
                             var content2
@@ -827,8 +845,8 @@ return distime;
                             <%-- <%=(String) session.getAttribute("sessionId")%>
                             ; --%>
                             //리뷰쓰기
-                            content2 += "<input class='replyButton3 ml-1 pointer' type='button' value='리뷰 쓰기' onclick='reviewWrite(" + "\"" + title + "\"," + "\"" + id + "\")'>"
-                            content2 += "</p>"
+                            content2 += "<input class='replyButton3 ml-1 pointer' type='button' value='리뷰 쓰기' onclick='reviewWrite(" + "\"" + title + "\"," + "\"" + id + "\"," + "\"" + target._lng + "\"," + "\"" + target._lat + "\")'>";
+                            content2 += "</p>";
 
                             div1.innerHTML = content2;
                             reviewRefresh(title);
@@ -849,7 +867,7 @@ return distime;
                     				alert(JSON.stringify(e));
                     			}
                     			
-                    		}); //여기까지긁어서 함수화해야됨
+                    		}); 
                             
                         }
                     }(toiletMarker, i, title));
@@ -857,9 +875,11 @@ return distime;
         
     }//setPositions[E]
     
-    function reviewWrite (title, id) {
+    function reviewWrite (title, id, lng, lat) {
     	document.getElementById("review-toilet").innerHTML=title;
-    	$("#toiletNm").val(title)
+    	$("#toiletNm").val(title);
+    	$("#lng").val(lng);
+    	$("#lat").val(lat);
     	$("#review-container").fadeIn();
     	$("#review").fadeIn();
     }
@@ -990,8 +1010,9 @@ return distime;
         <%-- <%=(String) session.getAttribute("sessionId")%>
         ; --%>
         //리뷰쓰기
-        content2 += "<input class='replyButton3 ml-1 pointer' type='button' value='리뷰 쓰기' onclick='reviewWrite(" + "\"" + title + "\"," + "\"" + id + "\")'>"
-        content2 += "</p>"
+        //content2 += "<input class='replyButton3 ml-1 pointer' type='button' value='리뷰 쓰기' onclick='reviewWrite(" + "\"" + title + "\"," + "\"" + id + "\")'>";  //toiletVO.lng
+        content2 += "<input class='replyButton3 ml-1 pointer' type='button' value='리뷰 쓰기' onclick='reviewWrite(" + "\"" + title + "\"," + "\"" + id + "\"," + "\"" + toiletVO.lng + "\"," + "\"" + toiletVO.lat + "\")'>";
+        content2 += "</p>";
 
         div1.innerHTML = content2;
         reviewRefresh(title);
@@ -1017,7 +1038,7 @@ return distime;
     
     //화장실 추천기능
     function searchShortest () {
-    	directions(shortestDistance)
+    	directions(shortestDistance);
     }
     function searchRating () {
     	$.ajax({
@@ -1029,11 +1050,11 @@ return distime;
     		type: "post",
     		success: function(e){
                 //e = toiletVO입니다.
-                recommending(e)
+                recommending(e);
             },
             error: function(e){
-                console.log(e)
-                alert('근처 화장실의 평가가 없습니다. 첫번째 평가자가 되어주세요!')
+                console.log(e);
+                alert('근처 화장실의 리뷰가 없습니다. 첫번째 평가자가 되어주세요!');
             }
         })
     }
@@ -1048,29 +1069,29 @@ return distime;
     		type: "post",
     		success: function(e){
                 //e = toiletVO입니다.
-                recommending(e)
+                recommending(e);
             },
             error: function(e){
-            	console.log(e)
-            	alert('근처 화장실의 평가가 없습니다. 첫번째 평가자가 되어주세요!')
+            	console.log(e);
+            	alert('근처 화장실의 리뷰가 없습니다. 첫번째 평가자가 되어주세요!');
             }
         })
     }
     function searchSmooth () {
-    	directions(shortestDistance)
+    	directions(shortestDistance);
     }
     function terminators () {
     	clearInterval(realTime);
-    	polyline_.setMap(null)
+    	polyline_.setMap(null);
     	destinyWindow.setMap(null);
     }
 
     //실시간길찾기
     function navigators (endX, endY, title, toiletType, toiletBowlNumber, handicap) {
     	var id =$("#sessionId").val();
-    	console.log("endX" + endX)
-    	console.log("endY" + endY)
-    	console.log("title" + title)
+    	console.log("endX" + endX);
+    	console.log("endY" + endY);
+    	console.log("title" + title);
     	<%-- <%=(String) session.getAttribute("sessionId")%> --%>
     	;    	
         //DB에 정보저장, title값 필요
@@ -1095,10 +1116,10 @@ return distime;
         }
         
         clearInterval(realTime);
-        var content = "<div style='min-width:max-content;'>"
-        content += "<h5 class='card-title text-uppercase text-muted mb-0'>" + toiletType + "</h5>"
-        content += "<br'><span class='card-title text-uppercase text-muted mb-0'>대변기 : " + toiletBowlNumber + "</span>"
-        content += "<br><span class='card-title text-uppercase text-muted mb-0'>장애인 배려실 : " + handicap + "</span>"
+        var content = "<div style='min-width:max-content;'>";
+        content += "<h5 class='card-title text-uppercase text-muted mb-0'>" + toiletType + "</h5>";
+        content += "<br'><span class='card-title text-uppercase text-muted mb-0'>대변기 : " + toiletBowlNumber + "</span>";
+        content += "<br><span class='card-title text-uppercase text-muted mb-0'>장애인 배려실 : " + handicap + "</span>";
         content += "<br><input class='replyButton3 mt-1 pointer' type='button' id='direction[" + i + "]' value='길찾기 중단' onclick='terminators()'>";
         content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";
         content += "</div>"
@@ -1133,7 +1154,7 @@ return distime;
         	
         	myLocation();
         	distime = directions(endX, endY);
-        	console.log("네비게이터 실행중")
+        	console.log("네비게이터 실행중");
         }, 5000);
         
     }
@@ -1516,7 +1537,7 @@ return distime;
 								<span class="h2 font-weight mb-0">별점<img id="star1" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star2" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star3" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star4" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star5" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>">
 								</span> <span id="clean-margin" class="h2 font-weight mb-0">청결도<img id="clean1" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean2" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean3" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean4" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean5" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"></span>
 							</div>
-							<input type="hidden" id="star" name="star"> <input type="hidden" id="clean" name="clean">
+							<input type="hidden" id="star" name="star"> <input type="hidden" id="clean" name="clean"> <input type="hidden" id="lng" name="lng"> <input type="hidden" id="lat" name="lat">
 						</div>
 					</div>
 				</div>
@@ -1549,7 +1570,7 @@ return distime;
 		</form>
 	</div>
 
-	<div id="dairy-container" style="display: none;" ></div>
+	<div id="dairy-container" style="display: none;"></div>
 	<div id="dairy" class="col-xl-4" style="display: none">
 		<form action="">
 			<div class="card shadow">
@@ -1558,48 +1579,35 @@ return distime;
 						<div class="col">
 							<h2 class="mb-0" style="display: inline-block">Health Test</h2>
 
-							
-							<input id="x-button" name="feed-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#diary").hide(), $("#diary-container").fadeOut()'>
-							<input id="register" hidden="hidden" name="save-data" class="btn btn-sm btn-primary" type="button" value="Save Data" onclick="SaveTest()">
-							
-							<br>
-							<h4 id="health-ment" class="mb-0" style="display: inline-block"> STEP1.대변의 모양을 선택해주세요</h4>		
-																		
+
+							<input id="x-button" name="feed-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#diary").hide(), $("#diary-container").fadeOut()'> <input id="register" hidden="hidden" name="save-data" class="btn btn-sm btn-primary" type="button" value="Save Data" onclick="SaveTest()"> <br>
+							<h4 id="health-ment" class="mb-0" style="display: inline-block">STEP1.대변의 모양을 선택해주세요</h4>
+
 						</div>
 					</div>
 					<div class="card-body2">
-					<!-- 결과 그래프 출력 -->
-					<canvas id="myChart" hidden="hidden" width="5" height="2"></canvas>					
-					<table id="result_table" hidden="hidden">
-						<tr>							
-							<td>
-								<img id="result_picture" src=""  style="width:50%" />
-							</td>
-							<td>
-								<p id="result_description"></p> 
-							</td>
-						</tr>
-					</table>
-					
-					<!-- 테스트 목록 출력 -->
-					<table id="health_test_table">
-						<tr>
-							<td style="width:230px;height:150px;"> 
-								<img id="type1" class="hvr-grow-shadow"  name="1" src="../resources/img/type1.png" style="width:90%"  />
-							</td>
-							<td style="width:230px;height:150px;">
-								<img id="type2" class="hvr-grow-shadow" name="2" src="../resources/img/type2.png" style="width:90%"/>
-							</td>
-						</tr>
-						<tr>
-							<td style="width:230px;height:150px;">
-								<img id="type3" class="hvr-grow-shadow" name="3" src="../resources/img/type3.png" style="width:90%"/>
-							</td>
-							<td style="width:230px;height:150px;">
-								<img id="type4" class="hvr-grow-shadow" name="4" src="../resources/img/type4.png" style="width:90%"/>
-							</td>
-						</tr>
-					</table>
+						<!-- 결과 그래프 출력 -->
+						<canvas id="myChart" hidden="hidden" width="5" height="2"></canvas>
+						<table id="result_table" hidden="hidden">
+							<tr>
+								<td><img id="result_picture" src="" style="width: 50%" /></td>
+								<td>
+									<p id="result_description"></p>
+								</td>
+							</tr>
+						</table>
+
+						<!-- 테스트 목록 출력 -->
+						<table id="health_test_table">
+							<tr>
+								<td style="width: 230px; height: 150px;"><img id="type1" class="hvr-grow-shadow" name="1" src="../resources/img/type1.png" style="width: 90%" /></td>
+								<td style="width: 230px; height: 150px;"><img id="type2" class="hvr-grow-shadow" name="2" src="../resources/img/type2.png" style="width: 90%" /></td>
+							</tr>
+							<tr>
+								<td style="width: 230px; height: 150px;"><img id="type3" class="hvr-grow-shadow" name="3" src="../resources/img/type3.png" style="width: 90%" /></td>
+								<td style="width: 230px; height: 150px;"><img id="type4" class="hvr-grow-shadow" name="4" src="../resources/img/type4.png" style="width: 90%" /></td>
+							</tr>
+						</table>
 					</div>
 				</div>
 			</div>
@@ -1613,85 +1621,85 @@ return distime;
 			</button>
 			<!-- Brand -->
 			<a class="navbar-brand pt-0 pb-0" href="<c:url value="/maps/mapsMain"/>">
-			<img src="<c:url value="/resources/img/Logo.png"/>" class="navbar-brand-img" alt="...">
-		</a>
-
-      <!-- User -->
-      <ul class="nav align-items-center d-md-none">
-         <li class="nav-item dropdown"><a class="nav-link nav-link-icon" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="ni ni-bell-55"></i>
-         </a>
-         <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right" aria-labelledby="navbar-default_dropdown_1">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-         </div></li>
-         <li class="nav-item dropdown"> <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <div class="media align-items-center">
-               <span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="${sessionScope.Profile}">
-               </span>
-            </div>
-         </a>
-         <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
-            <div class=" dropdown-header noti-title">
-               <h6 class="text-overflow m-0">Welcome!</h6>
-            </div>
-            <a href="<c:url value="/examples/profile"/>" class="dropdown-item">
-            <i class="ni ni-single-02"></i> <span>My profile</span>
-         </a>
-         <a href="<c:url value="/examples/profile"/>" class="dropdown-item">
-         <i class="ni ni-settings-gear-65"></i> <span>Settings</span>
-      </a>
-      <a href="<c:url value="/examples/profile"/>" class="dropdown-item">
-      <i class="ni ni-calendar-grid-58"></i> <span>Activity</span>
-   </a>
-   <a href="<c:url value="/examples/profile"/>" class="dropdown-item">
-   <i class="ni ni-support-16"></i> <span>Support</span>
-</a>
-<div class="dropdown-divider"></div>
-<a href="#!" class="dropdown-item">
-   <i class="ni ni-user-run"></i> <span>Logout</span>
-</a>
-</div></li>
-</ul>
-
-<!-- Collapse -->
-<div class="collapse navbar-collapse" id="sidenav-collapse-main">
-	<!-- Collapse header -->
-	<div class="navbar-collapse-header d-md-none">
-		<div class="row">
-			<div class="col-6 collapse-brand">
-				<a href="<c:url value="/maps/mapsMain"/>">
-				<img src="<c:url value="/resources/img/Logo.png"/>">
+				<img src="<c:url value="/resources/img/Logo.png"/>" class="navbar-brand-img" alt="...">
 			</a>
-		</div>
-		<div class="col-6 collapse-close">
-			<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle sidenav">
-				<span></span> <span></span>
-			</button>
-		</div>
-	</div>
-</div>
-<!-- Form -->
-<form id="responsive-search" class="mt-4 mb-3 d-md-none" action="<c:url value="/review/reviewMain"/>" method="get">
-<div class="input-group input-group-rounded input-group-merge">
-	<input type="search" class="form-control form-control-rounded form-control-prepended" name="toiletNm" placeholder="Search Review" aria-label="Search">
-	<div class="input-group-prepend">
-		<div class="input-group-text" onclick="document.forms['responsive-search'].submit();">
-			<span class="fa fa-search"></span>
-		</div>
-	</div>
-</div>
-</form>
-<!-- Navigation -->
-<ul class="navbar-nav">
-	<li class="nav-item"><a class="nav-link  active " href="<c:url value="/maps/mapsMain"/>">
-		<i class="ni ni-pin-3 text-orange"></i> Maps
-	</a></li>
-	<li class="nav-item"><a class="nav-link " href="<c:url value="/sns/listSNS"/>">
-		<i class="ni ni-tv-2 text-primary"></i> SNS
-	</a></li>
+
+			<!-- User -->
+			<ul class="nav align-items-center d-md-none">
+				<li class="nav-item dropdown"><a class="nav-link nav-link-icon" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="ni ni-bell-55"></i>
+					</a>
+					<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right" aria-labelledby="navbar-default_dropdown_1">
+						<a class="dropdown-item" href="#">Action</a>
+						<a class="dropdown-item" href="#">Another action</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="#">Something else here</a>
+					</div></li>
+				<li class="nav-item dropdown"><a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<div class="media align-items-center">
+							<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="${sessionScope.Profile}">
+							</span>
+						</div>
+					</a>
+					<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+						<div class=" dropdown-header noti-title">
+							<h6 class="text-overflow m-0">Welcome!</h6>
+						</div>
+						<a href="<c:url value="/examples/profile"/>" class="dropdown-item">
+							<i class="ni ni-single-02"></i> <span>My profile</span>
+						</a>
+						<a href="<c:url value="/examples/profile"/>" class="dropdown-item">
+							<i class="ni ni-settings-gear-65"></i> <span>Settings</span>
+						</a>
+						<a href="<c:url value="/examples/profile"/>" class="dropdown-item">
+							<i class="ni ni-calendar-grid-58"></i> <span>Activity</span>
+						</a>
+						<a href="<c:url value="/examples/profile"/>" class="dropdown-item">
+							<i class="ni ni-support-16"></i> <span>Support</span>
+						</a>
+						<div class="dropdown-divider"></div>
+						<a href="#!" class="dropdown-item">
+							<i class="ni ni-user-run"></i> <span>Logout</span>
+						</a>
+					</div></li>
+			</ul>
+
+			<!-- Collapse -->
+			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
+				<!-- Collapse header -->
+				<div class="navbar-collapse-header d-md-none">
+					<div class="row">
+						<div class="col-6 collapse-brand">
+							<a href="<c:url value="/maps/mapsMain"/>">
+								<img src="<c:url value="/resources/img/Logo.png"/>">
+							</a>
+						</div>
+						<div class="col-6 collapse-close">
+							<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle sidenav">
+								<span></span> <span></span>
+							</button>
+						</div>
+					</div>
+				</div>
+				<!-- Form -->
+				<form id="responsive-search" class="mt-4 mb-3 d-md-none" action="<c:url value="/review/reviewMain"/>" method="get">
+					<div class="input-group input-group-rounded input-group-merge">
+						<input type="search" class="form-control form-control-rounded form-control-prepended" name="toiletNm" placeholder="Search Review" aria-label="Search">
+						<div class="input-group-prepend">
+							<div class="input-group-text" onclick="document.forms['responsive-search'].submit();">
+								<span class="fa fa-search"></span>
+							</div>
+						</div>
+					</div>
+				</form>
+				<!-- Navigation -->
+				<ul class="navbar-nav">
+					<li class="nav-item"><a class="nav-link  active " href="<c:url value="/maps/mapsMain"/>">
+							<i class="ni ni-pin-3 text-orange"></i> Maps
+						</a></li>
+					<li class="nav-item"><a class="nav-link " href="<c:url value="/sns/listSNS"/>">
+							<i class="ni ni-tv-2 text-primary"></i> SNS
+						</a></li>
 
 					<%-- <li class="nav-item  active "><a class="nav-link " href="<c:url value="/examples/index"/>">
 							<i class="ni ni-tv-2 text-primary"></i> Dashboard
@@ -1699,70 +1707,68 @@ return distime;
 					
 							ni ni-chat-round
 
-					 --%>					 
+					 --%>
 					<li class="nav-item"><a class="nav-link" href="<c:url value="/review/reviewMain"/>">
 							<i class="ni ni-chat-round"></i> Reviews
 						</a></li>
-					
+
 					<!-- 건강 테스트 -->
-					<li class="nav-item">
-						<a class="nav-link " href="javascript:DiaryShow();">
+					<li class="nav-item"><a class="nav-link " href="javascript:DiaryShow();">
 							<i class="ni ni-bullet-list-67 text-red"></i> Diary
-						</a>
-					</li>
+						</a></li>
 
 
-							<!-- 로그인 영역 -->
+					<!-- 로그인 영역 -->
 
-							<c:if test="${sessionScope.sessionId == null }">
-							<li class="nav-item"><a class="nav-link" href="<c:url value="/member/login"/>">
+					<c:if test="${sessionScope.sessionId == null }">
+						<li class="nav-item"><a class="nav-link" href="<c:url value="/member/login"/>">
 								<i class="ni ni-key-25 text-info"></i> Login
 							</a></li>
-							<li class="nav-item"><a class="nav-link " href="<c:url value="/member/profile"/>">
+						<li class="nav-item"><a class="nav-link " href="<c:url value="/member/profile"/>">
 								<i class="ni ni-single-02 text-gray-dark"></i> User profile
 							</a></li>
-						</c:if>
+					</c:if>
 
-						<c:if test="${sessionScope.sessionId != null }">
+					<c:if test="${sessionScope.sessionId != null }">
 						<li class="nav-item"><a class="nav-link " href="<c:url value="/member/profile"/>">
-							<i class="ni ni-single-02 text-gray-dark"></i> User profile
-						</a></li>
+								<i class="ni ni-single-02 text-gray-dark"></i> User profile
+							</a></li>
 						<li class="nav-item"><a class="nav-link" href="<c:url value="/member/logout"/>">
-							<i class="ni ni-key-25 text-info"></i> Logout
-						</a></li>
+								<i class="ni ni-key-25 text-info"></i> Logout
+							</a></li>
 						<!-- 						네이버 로그인 시 -->
 						<%-- 						<c:if test="${sessionScope.sessionNaver != null}"> --%>
 						<%-- 							<li class="nav-item"><a class="nav-link " href="<c:url value="/member/deleteNaver"/>"> --%>
-							<!-- 									<i class="ni ni-bullet-list-67 text-red"></i> Naver탈퇴 -->
-							<!-- 								</a></li> -->
-							<%-- 						</c:if> --%>
-							<!-- 						구글 로그인 시 -->
-							<%-- 						<c:if test="${sessionScope.sessionNaver == null}"> --%>
-							<%-- 							<li class="nav-item"><a class="nav-link " href="<c:url value="/member/deleteGoogle"/>"> --%>
-								<!-- 									<i class="ni ni-bullet-list-67 text-red"></i> Google탈퇴 -->
-								<!-- 								</a></li> -->
-								<%-- 						</c:if> --%>
-							</c:if>
-						</ul>
-						<!-- Divider -->
-						<hr class="my-3">
-						<!-- Heading -->
-						<h6 class="navbar-heading text-muted">NEED LOGIN</h6>
-						<!-- Navigation -->
-						<ul class="navbar-nav mb-md-3">
-							<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/foundation/colors.html">
-								<i class="ni ni-watch-time text-indigo"></i> <span>Recent toilet</span>
-							</a></li>
-							<li class="nav-item"><a class="nav-link" href="https://www.op.gg/champion/maokai/statistics/top">
-								<i class="ni ni-favourite-28 text-pink"></i> <span>Preferred toilet</span>
-							</a></li>
+						<!-- 									<i class="ni ni-bullet-list-67 text-red"></i> Naver탈퇴 -->
+						<!-- 								</a></li> -->
+						<%-- 						</c:if> --%>
+						<!-- 						구글 로그인 시 -->
+						<%-- 						<c:if test="${sessionScope.sessionNaver == null}"> --%>
+						<%-- 							<li class="nav-item"><a class="nav-link " href="<c:url value="/member/deleteGoogle"/>"> --%>
+						<!-- 									<i class="ni ni-bullet-list-67 text-red"></i> Google탈퇴 -->
+						<!-- 								</a></li> -->
+						<%-- 						</c:if> --%>
+					</c:if>
+				</ul>
+				<!-- Divider -->
+				<hr class="my-3">
+				<!-- Heading -->
+				<h6 class="navbar-heading text-muted">NEED LOGIN</h6>
+				<!-- Navigation -->
+				<ul class="navbar-nav mb-md-3">
+					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/foundation/colors.html">
+							<i class="ni ni-watch-time text-indigo"></i> <span>Recent toilet</span>
+						</a></li>
+					<li class="nav-item"><a class="nav-link" href="https://www.op.gg/champion/maokai/statistics/top">
+							<i class="ni ni-favourite-28 text-pink"></i> <span>Preferred toilet</span>
+						</a></li>
 
-							<li class="nav-item"><a class="nav-link" href="javascript:FeedbackShow();">
-								<i class="ni ni-send text-blue"></i> <span>Send Feedback</span>
-							</a></li>
+					<li class="nav-item"><a class="nav-link" href="javascript:FeedbackShow();">
+							<i class="ni ni-send text-blue"></i> <span>Send Feedback</span>
+						</a></li>
 
-							<li class="nav-item"><br> <br>
-								<div id="openweathermap-widget-18"></div> <script>
+					<li class="nav-item"><br> <br>
+						<div id="openweathermap-widget-18"></div> <script>
 							/* window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = []; 
 							window.myWidgetParam.push({id: 18,cityid: '1835848',appid: 'c08b376c4c1ca3b5e593c4991d91eb3c',
 							units: 'metric',containerid: 'openweathermap-widget-18',  });  
@@ -1771,24 +1777,24 @@ return distime;
 							var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })(); */
 						</script></li>
 
-					</ul>
-					<ul class="navbar-nav">
-						<li class="nav-item active active-pro"><a class="nav-link" href="<c:url value="/maps/mapsMain2"/>">
+				</ul>
+				<ul class="navbar-nav">
+					<li class="nav-item active active-pro"><a class="nav-link" href="<c:url value="/maps/mapsMain2"/>">
 							<i class="ni ni-bus-front-12"></i> Google Maps (Beta)
 						</a></li>
-					</ul>
-				</div>
+				</ul>
 			</div>
-		</nav>
-		<!-- 네비게이션[E] -->
-		<div class="main-content">
-			<!-- Navbar -->
-			<nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
-				<div class="container-fluid">
-					<!-- Brand -->
-					<a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="<c:url value="/maps/mapsMain"/>">Maps</a>
-					<!-- Form -->
-					<form id="normal-search" class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto" action="<c:url value="/review/reviewMain"/>" method="get">
+		</div>
+	</nav>
+	<!-- 네비게이션[E] -->
+	<div class="main-content">
+		<!-- Navbar -->
+		<nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
+			<div class="container-fluid">
+				<!-- Brand -->
+				<a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="<c:url value="/maps/mapsMain"/>">Maps</a>
+				<!-- Form -->
+				<form id="normal-search" class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto" action="<c:url value="/review/reviewMain"/>" method="get">
 					<div class="form-group mb-0">
 						<div class="input-group input-group-alternative">
 							<div class="input-group-prepend">
@@ -1801,168 +1807,168 @@ return distime;
 				<!-- User -->
 				<ul class="navbar-nav align-items-center d-none d-md-flex">
 					<li class="nav-item dropdown"><a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<div class="media align-items-center">
-							<!-- 회원 네비게이터 영역 -->
-							<c:if test="${sessionScope.sessionId == null}">
-							<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>">
-							</span>
-							<div class="media-body ml-2 d-none d-lg-block">
-								<span class="mb-0 text-sm  font-weight-bold">로그인을 해 주세요.</span>
+							<div class="media align-items-center">
+								<!-- 회원 네비게이터 영역 -->
+								<c:if test="${sessionScope.sessionId == null}">
+									<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>">
+									</span>
+									<div class="media-body ml-2 d-none d-lg-block">
+										<span class="mb-0 text-sm  font-weight-bold">로그인을 해 주세요.</span>
+									</div>
+								</c:if>
+
+								<c:if test="${sessionScope.sessionId != null}">
+
+									<c:if test="${sessionScope.sessionNaver != null}">
+										<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="${sessionScope.Profile}"/>">
+										</span>
+										<div class="media-body ml-2 d-none d-lg-block">
+											<span class="mb-0 text-sm  font-weight-bold">${sessionScope.sessionNickname}</span>
+										</div>
+									</c:if>
+
+									<c:if test="${sessionScope.sessionGooglename != null}">
+										<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="${sessionScope.Profile}"/>">
+										</span>
+										<div class="media-body ml-2 d-none d-lg-block">
+											<span class="mb-0 text-sm  font-weight-bold">${sessionScope.sessionNickname}</span>
+										</div>
+									</c:if>
+
+								</c:if>
 							</div>
-						</c:if>
+						</a>
+						<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+							<div class=" dropdown-header noti-title">
+								<h6 class="text-overflow m-0">Welcome!</h6>
+							</div>
 
-						<c:if test="${sessionScope.sessionId != null}">
+							<c:if test="${sessionScope.sessionId == null}">
+								<div class="dropdown-divider"></div>
+								<a href="<c:url value="/member/login"/>" class="dropdown-item">
+									<i class="ni ni-user-run"></i> <span>Login</span>
+								</a>
+							</c:if>
 
-						<c:if test="${sessionScope.sessionNaver != null}">
-						<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="${sessionScope.Profile}"/>">
-						</span>
-						<div class="media-body ml-2 d-none d-lg-block">
-							<span class="mb-0 text-sm  font-weight-bold">${sessionScope.sessionNickname}</span>
-						</div>
-					</c:if>
-
-					<c:if test="${sessionScope.sessionGooglename != null}">
-					<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="${sessionScope.Profile}"/>">
-					</span>
-					<div class="media-body ml-2 d-none d-lg-block">
-						<span class="mb-0 text-sm  font-weight-bold">${sessionScope.sessionNickname}</span>
-					</div>
-				</c:if>
-
-			</c:if>
-		</div>
-	</a>
-	<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
-		<div class=" dropdown-header noti-title">
-			<h6 class="text-overflow m-0">Welcome!</h6>
-		</div>
-
-		<c:if test="${sessionScope.sessionId == null}">
-		<div class="dropdown-divider"></div>
-		<a href="<c:url value="/member/login"/>" class="dropdown-item">
-		<i class="ni ni-user-run"></i> <span>Login</span>
-	</a>
-</c:if>
-
-<c:if test="${sessionScope.sessionId != null}">
-<a href="<c:url value="/member/profile"/>" class="dropdown-item">
-<i class="ni ni-single-02"></i> <span>My profile</span>
-</a>
-<div class="dropdown-divider"></div>
-<a href="<c:url value="/member/logout"/>" class="dropdown-item">
-<i class="ni ni-user-run"></i> <span>Logout</span>
-</a>
-</c:if>
-</div></li>
-</ul>
-</div>
-</nav>
-<!-- End Navbar -->
-<!-- Header -->
-<div class="header bg-gradient-primary pb-7 pt-5 pt-md-8">
-	<div class="container-fluid">
-		<div class="header-body">
-			<input class='replyButton1 ml-1 pointer' type='button' value='최단거리' onclick='searchShortest()'> <input class='replyButton1 ml-0 pointer' type='button' value='최고 평가' onclick='searchRating()'> <input class='replyButton1 ml-0 pointer' type='button' value='최고 청결도' onclick='searchClean()'> <input class='replyButton1 ml-0 pointer' type='button' value='최대 원활도' onclick='searchSmooth()'>
-		</div>
-	</div>
-</div>
-<div class="container-fluid mt--7">
-	<div class="row">
-		<div class="col">
-			<div class="card shadow border-0">
-				<div id="map_wrap" class="map_wrap3">
-					<div id="map_div" class="map-canvas" style="height: 600px;"></div>
+							<c:if test="${sessionScope.sessionId != null}">
+								<a href="<c:url value="/member/profile"/>" class="dropdown-item">
+									<i class="ni ni-single-02"></i> <span>My profile</span>
+								</a>
+								<div class="dropdown-divider"></div>
+								<a href="<c:url value="/member/logout"/>" class="dropdown-item">
+									<i class="ni ni-user-run"></i> <span>Logout</span>
+								</a>
+							</c:if>
+						</div></li>
+				</ul>
+			</div>
+		</nav>
+		<!-- End Navbar -->
+		<!-- Header -->
+		<div class="header bg-gradient-primary pb-7 pt-5 pt-md-8">
+			<div class="container-fluid">
+				<div class="header-body">
+					<input class='replyButton1 ml-1 pointer' type='button' value='최단거리' onclick='searchShortest()'> <input class='replyButton1 ml-0 pointer' type='button' value='최고 평가' onclick='searchRating()'> <input class='replyButton1 ml-0 pointer' type='button' value='최고 청결도' onclick='searchClean()'> <input class='replyButton1 ml-0 pointer' type='button' value='최대 원활도' onclick='searchSmooth()'>
 				</div>
-				<div class="map_act_btn_wrap clear_box"></div>
 			</div>
 		</div>
-	</div>
+		<div class="container-fluid mt--7">
+			<div class="row">
+				<div class="col">
+					<div class="card shadow border-0">
+						<div id="map_wrap" class="map_wrap3">
+							<div id="map_div" class="map-canvas" style="height: 600px;"></div>
+						</div>
+						<div class="map_act_btn_wrap clear_box"></div>
+					</div>
+				</div>
+			</div>
 
-	<!-- Header -->
-	<div class="header pb-7 pt-5">
-		<div class="container-fluid">
-			<div class="header-body">
-				<!-- Card stats -->
-				<div class="row">
-					<div class="col-xl-3 col-lg-6">
-						<div class="card card-stats mb-4 mb-xl-0">
-							<div class="card-body3 replyButton2" id="div1">
-								<div class="row">
-									<div class="col">
-										<h5 class="card-title text-uppercase text-muted mb-0">화장실을 선택하세요...</h5>
-										<span class="h2 font-weight-bold mb-0">DEFAULT</span>
-									</div>
-								</div>
-								<p class="mt-3 mb-0 text-muted text-sm">
-									<span class="text-success"><i class="fa fa-arrow-up"></i> 변화량</span> <span class="text-nowrap mr-2">별점평균</span> <span class="text-success"><i class="fa fa-arrow-up"></i> 변화량</span> <span class="text-nowrap">청결도평균</span>
-								</p>
-								<p class="mt-2 mb-0 text-muted text-sm">
-									<span class="text-warning"><i class="fa fa-arrow-down"></i> 변화량</span> <span class="text-nowrap">이용자수</span>
-								</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-lg-6">
-						<div class="card card-stats mb-4 mb-xl-0">
-							<div class="card-body3 replyButton2" id="div2">
-								<div class="row">
-									<div class="col-8 pr-0" style="float: left;">
-										<span class="card-title text-sm text-muted mb-0" id="reviews-0">당신의 리뷰를 들려주세요</span>
-									</div>
-									<div class="col-4" style="text-align: center; float: right;">
-										<p class="mt-0 mb-3 text-muted text-sm">
-											<span class="text-success" id="star-review-0"></span><span class="text-nowrap mr-2 ml-2">별점</span> <br> <span class="text-danger" id="clean-review-0"></span><span class="text-nowrap mr-2 ml-2">청결도</span>
-										</p>
-										<div id="profile-review-0">
-											<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;"></div>
+			<!-- Header -->
+			<div class="header pb-7 pt-5">
+				<div class="container-fluid">
+					<div class="header-body">
+						<!-- Card stats -->
+						<div class="row">
+							<div class="col-xl-3 col-lg-6">
+								<div class="card card-stats mb-4 mb-xl-0">
+									<div class="card-body3 replyButton2" id="div1">
+										<div class="row">
+											<div class="col">
+												<h5 class="card-title text-uppercase text-muted mb-0">화장실을 선택하세요...</h5>
+												<span class="h2 font-weight-bold mb-0">DEFAULT</span>
+											</div>
 										</div>
-										<h5 class="card-title text-uppercase text-muted mb-0 mt-0" id="nick-review-0">Nickname</h5>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-lg-6">
-						<div class="card card-stats mb-4 mb-xl-0">
-							<div class="card-body3 replyButton2" id="div3">
-								<div class="row">
-									<div class="col-8 pr-0">
-										<span class="card-title  text-sm text-muted mb-0" id="reviews-1">당신의 리뷰를 들려주세요</span>
-									</div>
-									<div class="col-4" style="text-align: center;">
-										<p class="mt-0 mb-3 text-muted text-sm">
-											<span class="text-success" id="star-review-1"></span><span class="text-nowrap mr-2 ml-2">별점</span> <br> <span class="text-danger" id="clean-review-1"></span><span class="text-nowrap mr-2 ml-2">청결도</span>
+										<p class="mt-3 mb-0 text-muted text-sm">
+											<span class="text-success"><i class="fa fa-arrow-up"></i> 변화량</span> <span class="text-nowrap mr-2">별점평균</span> <span class="text-success"><i class="fa fa-arrow-up"></i> 변화량</span> <span class="text-nowrap">청결도평균</span>
 										</p>
-										<div id="profile-review-1">
-											<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;"></div>
-										</div>
-										<h5 class="card-title text-uppercase text-muted mb-0 mt-0" id="nick-review-1">Nickname</h5>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-lg-6">
-						<div class="card card-stats mb-4 mb-xl-0">
-							<div class="card-body3 replyButton2" id="div4">
-								<div class="row">
-									<div class="col-8 pr-0">
-										<span class="card-title text-sm text-muted mb-0" id="reviews-2">당신의 리뷰를 들려주세요</span>
-									</div>
-									<div class="col-4" style="text-align: center;">
-										<p class="mt-0 mb-3 text-muted text-sm">
-											<span class="text-success" id="star-review-2"></span><span class="text-nowrap mr-2 ml-2">별점</span> <br> <span class="text-danger" id="clean-review-2"></span><span class="text-nowrap mr-2 ml-2">청결도</span>
+										<p class="mt-2 mb-0 text-muted text-sm">
+											<span class="text-warning"><i class="fa fa-arrow-down"></i> 변화량</span> <span class="text-nowrap">이용자수</span>
 										</p>
-										<div id="profile-review-2">
-											<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;"></div>
-										</div>
-										<h5 class="card-title text-uppercase text-muted mb-0 mt-0" id="nick-review-2">Nickname</h5>
 									</div>
 								</div>
 							</div>
-						</div>
-					</div>
-					
+							<div class="col-xl-3 col-lg-6">
+								<div class="card card-stats mb-4 mb-xl-0">
+									<div class="card-body3 replyButton2" id="div2">
+										<div class="row">
+											<div class="col-8 pr-0" style="float: left;">
+												<span class="card-title text-sm text-muted mb-0" id="reviews-0">당신의 리뷰를 들려주세요</span>
+											</div>
+											<div class="col-4" style="text-align: center; float: right;">
+												<p class="mt-0 mb-3 text-muted text-sm">
+													<span class="text-success" id="star-review-0"></span><span class="text-nowrap mr-2 ml-2">별점</span> <br> <span class="text-danger" id="clean-review-0"></span><span class="text-nowrap mr-2 ml-2">청결도</span>
+												</p>
+												<div id="profile-review-0">
+													<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;"></div>
+												</div>
+												<h5 class="card-title text-uppercase text-muted mb-0 mt-0" id="nick-review-0">Nickname</h5>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-3 col-lg-6">
+								<div class="card card-stats mb-4 mb-xl-0">
+									<div class="card-body3 replyButton2" id="div3">
+										<div class="row">
+											<div class="col-8 pr-0">
+												<span class="card-title  text-sm text-muted mb-0" id="reviews-1">당신의 리뷰를 들려주세요</span>
+											</div>
+											<div class="col-4" style="text-align: center;">
+												<p class="mt-0 mb-3 text-muted text-sm">
+													<span class="text-success" id="star-review-1"></span><span class="text-nowrap mr-2 ml-2">별점</span> <br> <span class="text-danger" id="clean-review-1"></span><span class="text-nowrap mr-2 ml-2">청결도</span>
+												</p>
+												<div id="profile-review-1">
+													<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;"></div>
+												</div>
+												<h5 class="card-title text-uppercase text-muted mb-0 mt-0" id="nick-review-1">Nickname</h5>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-3 col-lg-6">
+								<div class="card card-stats mb-4 mb-xl-0">
+									<div class="card-body3 replyButton2" id="div4">
+										<div class="row">
+											<div class="col-8 pr-0">
+												<span class="card-title text-sm text-muted mb-0" id="reviews-2">당신의 리뷰를 들려주세요</span>
+											</div>
+											<div class="col-4" style="text-align: center;">
+												<p class="mt-0 mb-3 text-muted text-sm">
+													<span class="text-success" id="star-review-2"></span><span class="text-nowrap mr-2 ml-2">별점</span> <br> <span class="text-danger" id="clean-review-2"></span><span class="text-nowrap mr-2 ml-2">청결도</span>
+												</p>
+												<div id="profile-review-2">
+													<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;"></div>
+												</div>
+												<h5 class="card-title text-uppercase text-muted mb-0 mt-0" id="nick-review-2">Nickname</h5>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
 							<!-- <div class="col-xl-3 col-lg-6">
 								<div class="card card-stats mb-4 mb-xl-0">
 									<div class="card-body replyButton2">
