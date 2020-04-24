@@ -56,6 +56,7 @@ set
 where
 	snsReplynum = #{snsReplynum}
 	and id = #{id}
+	and email = #{email}
 </update>
 
 
