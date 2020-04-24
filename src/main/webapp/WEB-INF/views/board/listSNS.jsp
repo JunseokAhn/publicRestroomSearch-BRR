@@ -185,13 +185,19 @@ function init(snsBoardnum) {
 //}
 
 function output(listSnsReply) {
-	$('#replies').html("");
+	var snsBoardnum1 = '';
+	console.log(snsBoardnum);
+	var str = '<div class="mx-auto replyComments form-group"><table class="table">';
+	//var str = '<table class="table">';
+
+	//$('#replies').html("");
 	$.each(listSnsReply, function(index, snsReply) {
-		var str = '<div class="mx-auto replyComments form-group"><table class="table">';
+			
 		str += '<thead>';
 		str += '	<tr>';
 		str += '		<th scope="col" class="id1" style="text-align: left;">' + snsReply.email + '</th>';
 		str += '		<th scope="col"></th>';
+			
 		str += '		<th scope="col" class="inpudate1">' + snsReply.inputdate + '</th>';
 		str += '	</tr>';
 		str += '</thead>';
@@ -199,17 +205,25 @@ function output(listSnsReply) {
 		str += '<tbody>';
 		str += '	<tr>'
 		str += '		<td class="comments1" colspan="2" style="text-align: left;">' + snsReply.comments + '</td>';
-		str += '		<td class="upd_length">';
-		str += '			<input type="button" value="댓글수정" class="snsUpd btn btn-secondary btn-sm" freenum="'+ snsReply.snsReplynum +'">';
-		str += '			<input type="button" value="댓글삭제" class="snsDel btn btn-secondary btn-sm" freenum="'+ snsReply.snsReplynum +'">';
+		str += '		<td class="reply'+snsReply.snsReplynum+'">';
+		str += '			<input type="button" data-no="'+snsReply.snsBoardnum+'" data-text="' +snsReply.comments+ '"data-num="' +snsReply.snsReplynum+ '" value="댓글수정" class="snsUpd btn btn-secondary btn-sm">';
+		str += '			<input type="button" data-no="'+snsReply.snsBoardnum+'" data-text="' +snsReply.comments+ '"data-num="' +snsReply.snsReplynum+ '" value="댓글삭제" class="snsDel btn btn-secondary btn-sm">';
 		str += '		</td>';
 //		str += '	<td class="del_length"><input type="button" value="댓글삭제" class="snsDel btn btn-secondary btn-sm" freenum="'+ snsReply.snsReplynum +'"></td>';
 		str += '	</tr>';
 		str += '</tbody>';
-		str += '</table></div>';
-		$('#replies[data-num="'+snsReply.snsBoardnum+'"]').html(str);
+		//게시판에 맞게 댓글 넣기!
+		snsBoardnum1 = snsReply.snsBoardnum;
+		
 	});
 	
+	str += '</table></div>';
+	alert('snsBoardnum1는' + snsBoardnum1);
+	$('#replies[data-num="'+snsBoardnum1+'"]').html(str);
+		
+	//str += '</table></div>';
+	//$('#replies[data-num="'+snsReply.snsBoardnum+'"]').html(str);
+
 	//sns댓글목록
 	//$('#snsListDiv').html(str);
 	//sns댓글수정
@@ -222,36 +236,44 @@ function output(listSnsReply) {
 //sns댓글수정
 function updateSnsReply() {
 
-	var snsBoardnum = $(this).attr('freeboardnum');
+	var snsBoardnum = $(this).attr('data-no');
 	//1번방법 - .attr('freenum'속성의 값을 받아옴)
-	var snsReplynum = $(this).attr('freenum');
+	var snsReplynum = $(this).attr('data-num');
 	//2번방법 / 텍스트-html() / value값-val()
-	var id = $(this).attr('freeid');
 	//var comments = $(this).closest('div').find('p.commentsUpd').html();
 	//var comments = $(this).find('.snsUpd').val();
-	var comments = $(this).attr('freecomments');
+	var comments = $(this).attr('data-text');
 	
 	//잘 값이 들어갔는지 확인
 	console.log(snsBoardnum);
 	console.log(snsReplynum);
-	console.log(id);
 	console.log(comments);
+
+	var str1 = '';
+		str1 += '<input class="form-control form-control-sm" type="text" id="replyUpd" value="'+ comments +'">';
+		str1 += '<input type="button" id="confirmUpd" class="btn btn-secondary btn-sm" value="수정 확인">';
+//	str += '<input type="button" id="confirmUpd" class="btn btn-secondary btn-sm" value="수정 확인">';
+//	str += '			<input type="button" id="cancelUpd" class="btn btn-secondary btn-sm" value="취소">';
+
+	
+	$("td.reply" + snsReplynum).html(str1);
+	//$(this).closest('td').html('<input type="button" class="modify btn btn-secondary btn-sm" value="수정 확인">');
 
 	//댓글수정 click시 버튼 숨기기
 	$('.snsUpd').hide();
 
-	var str = '<div class="mx-auto replyComments form-group"><table class="table">';
-		str += '<thead>';
-		str += '	<tr>';
-		str += '		<td><input class="form-control form-control-sm" type="text" id="replyUpd" value="'+ comments +'"></td>';
-		str += '		<td class="upd_length"><input type="button" id="confirmUpd" class="btn btn-secondary btn-sm" value="수정 확인"></td>';
-		str += '		<td class="del_length"><input type="button" id="cancelUpd" class="btn btn-secondary btn-sm" value="취소"></td>';	
-		str += '	</tr>
-		str += '</thead>';	
-		str += '</table></div>';
-
-
-		
+	//var str = '<div class="mx-auto replyComments form-group" style="text-align: left;"><table class="table">';
+		//var str = '<td>';
+		//str += '<thead>';
+		//str += '	<tr>';
+	//var	str = '<input class="form-control form-control-sm" type="text" id="replyUpd" value="'+ comments +'">';
+		//str += '	<td class="upd_length">';
+	//	str += '<input type="button" id="confirmUpd" class="btn btn-secondary btn-sm" value="수정 확인">';
+	//	str += '			<input type="button" id="cancelUpd" class="btn btn-secondary btn-sm" value="취소">';
+	//	str += '	</td>';	
+		//str += '	</tr>';
+		//str += '</thead>';	
+		//str += '</table></div>';
 
 // 	var str = '<div class="mx-auto replyComments form-group">';
 // 		str += '<p>';
@@ -261,16 +283,21 @@ function updateSnsReply() {
 // 		str += '</p>';
 // 		str += '</div>';
 	
-	$(this).after(str);
+//	$(this).after(str);
 
 	$('#confirmUpd').on('click', function() {
-		var replyUpd = $("span.review" + snsReplynum).find('#replyUpd').val();
-		
-		console.log(replyUpd);
+		var replyUpd = $(this).closest('td').find('#replyUpd').val();
+// 			var sendData = {
+// 				"snsReplynum" : snsReplynum
+// 				,"comments" : $('#replyUpd').val()
+// 			}
+				
+//		console.log(sendData);
         
 		$.ajax({
 			url: '../snsReply/updateSnsReply',
 			type: 'POST',
+//			data: sendData,			
 			data: {
 				snsReplynum: snsReplynum,
 				comments: replyUpd
@@ -285,16 +312,17 @@ function updateSnsReply() {
 			}
 		});		
 	});
-	//위의 코드가 실행된 이후에 이벤트를 걸어야 제대로 작동됨
-	$('#cancelUpd').on('click', function() {
-		//this(취소버튼)가까운 부모의 tr태그 즉 추가되었던 tr태그 remove(삭제)
-		$(this).closest('p').remove();
-	});
+// 	//위의 코드가 실행된 이후에 이벤트를 걸어야 제대로 작동됨
+// 	$('#cancelUpd').on('click', function() {
+// 		//this(취소버튼)가까운 부모의 tr태그 즉 추가되었던 tr태그 remove(삭제)
+// 		$(this).closest('div').remove();
+// 	});
 }
 
 //sns댓글삭제
 function deleteSnsReply() {
-	var snsReplynum = $(this).attr('freenum');
+	var snsBoardnum = $(this).attr('data-no');
+	var snsReplynum = $(this).attr('data-num');
 
 	$.ajax({
 		url: '../snsReply/deleteSnsReply',
@@ -304,7 +332,7 @@ function deleteSnsReply() {
 		},
 		success: function(cnt) {
 			alert(cnt);
-			init();
+			init(snsBoardnum);
 		}
 	});
 }
@@ -629,8 +657,8 @@ function deleteSnsReply() {
 								</div>
 								
 								<!-- 댓글 table -->
-								<div id="replies" data-num="${sns.snsBoardnum}" class="mx-auto form-group"></div>
-						
+							<div id="replies" data-num="${sns.snsBoardnum}" class="mx-auto form-group"></div>
+								
 							</div>
 						</c:forEach>
 						<!-- 반복종료 -->
