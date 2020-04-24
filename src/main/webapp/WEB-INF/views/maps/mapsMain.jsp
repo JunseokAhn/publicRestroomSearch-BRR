@@ -1595,18 +1595,19 @@ return distime;
 					<div class="row align-items-center">
 						<div class="col">
 							<h2 class="mb-0" style="display: inline-block">Recent toliet</h2>
-							<input id="x-button" name="feed-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#Recent").hide(), $("#Recent-container").fadeOut()'> <input id="register" name="feedback-send" class="btn btn-sm btn-primary" type="button" value="Send Feedback" onclick="">
+							<input id="x-button" name="Recent-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#Recent").hide(), $("#Recent-container").fadeOut()'> 
+<!-- 							<input id="register" name="feedback-send" class="btn btn-sm btn-primary" type="button" value="Send Feedback" onclick=""> -->
 							<h6 id="review-ment" class="text-uppercase text-muted ls-1 mb-1">최근 이용하신 화장실의 내역입니다.</h6>
 						</div>
 					</div>
 				</div>
-				<div class="card-body2">
-					<div class="col-xl-12 col-lg-6">
-						<div class="card card-stats mb-4 mb-xl-0">
-							<textarea class="card-body4 replyButton2" id="Recent-contents" onkeydown="resize(this)" onkeyup="resize(this)" style="resize: none;"></textarea>
-						</div>
-					</div>
-				</div>
+<!-- 				<div class="card-body2"> -->
+<!-- 					<div class="col-xl-12 col-lg-6"> -->
+<!-- 						<div class="card card-stats mb-4 mb-xl-0"> -->
+<!-- 							<textarea class="card-body4 replyButton2" id="Recent-contents" onkeydown="resize(this)" onkeyup="resize(this)" style="resize: none;"></textarea> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
 			</div>
 		</form>
 	</div>
@@ -1797,30 +1798,7 @@ return distime;
 						<%-- 						</c:if> --%>
 					</c:if>
 				</ul>
-				<!-- Divider -->
-				<hr class="my-3">
-				<!-- Heading -->
-				<h6 class="navbar-heading text-muted">NEED LOGIN</h6>
-				<!-- Navigation -->
-				<ul class="navbar-nav mb-md-3">
-					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/foundation/colors.html">
-							<i class="ni ni-watch-time text-indigo"></i> <span>Recent toilet</span>
-						</a></li>
-					<li class="nav-item"><a class="nav-link" href="https://www.op.gg/champion/maokai/statistics/top">
-							<i class="ni ni-favourite-28 text-pink"></i> <span>Preferred toilet</span>
-						</a></li>
-
-							<!-- 									<i class="ni ni-bullet-list-67 text-red"></i> Naver탈퇴 -->
-							<!-- 								</a></li> -->
-							<%-- 						</c:if> --%>
-							<!-- 						구글 로그인 시 -->
-							<%-- 						<c:if test="${sessionScope.sessionNaver == null}"> --%>
-							<%-- 							<li class="nav-item"><a class="nav-link " href="<c:url value="/member/deleteGoogle"/>"> --%>
-								<!-- 									<i class="ni ni-bullet-list-67 text-red"></i> Google탈퇴 -->
-								<!-- 								</a></li> -->
-								<%-- 						</c:if> --%>
-							</c:if>
-						</ul>
+<!-- 				
 						<!-- Divider -->
 						<hr class="my-3">
 						<!-- Heading -->
