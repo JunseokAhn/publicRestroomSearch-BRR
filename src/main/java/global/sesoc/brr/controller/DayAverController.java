@@ -45,23 +45,7 @@ public class DayAverController {
 		}
 		return "";
 	}
-	//해당 화장실의 전체 이용자 수
-//	@PostMapping("/allUser")
-//	@ResponseBody
-//	public String alluser(Double lat, Double lng, HttpSession httpsession) {
-//		logger.info("화장실 사용자 통계 입니다.");
-//		
-//		Double result = dao.listAll(lat, lng);
-//		
-//		System.out.println("하루 화장실 통계자 수 : " + result);
-//		
-//		Double UserDiffer = result - (Double)httpsession.getAttribute("userAvg");
-//		
-//		httpsession.setAttribute("userDiffer", UserDiffer);
-//		
-//		return "";
-//	}
-//	
+	
 	//해당 아이디의 기록 삭제 입니다.
 	@GetMapping("/deleteRecord")
 	@ResponseBody
@@ -117,9 +101,9 @@ public class DayAverController {
 			httpsession.setAttribute("userAvg", result);
 			httpsession.setAttribute("userAvg_2", result3);
 			
-			Double UserDiffer = result3 - (Double)httpsession.getAttribute("userAvg");
+			Double UserDiffer = (result3 - (Double)httpsession.getAttribute("userAvg")) * 100;
 			
-			System.out.println("변화량 : " + UserDiffer);
+			System.out.println("변화량 : " + UserDiffer + "%");
 			
 			httpsession.setAttribute("userDiffer", UserDiffer);
 			
@@ -130,5 +114,7 @@ public class DayAverController {
 		return aver;
 		
 	}
+	
+	
 	
 }

@@ -32,7 +32,7 @@ function SendToken()
 		},
 		success : function()
 		{
-			alert("Success!");
+// 			alert("Success!");
 			init();
 		},
 		error : function(e)
