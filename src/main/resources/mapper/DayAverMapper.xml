@@ -17,29 +17,37 @@ select count(*) from dayaver
 where lat = #{lat} and lng = #{lng}
 </select>
 
+<!-- 모든 기록 지우기 -->
 <delete id="deleteRecord" parameterType="String">
 delete from dayaver where id = #{id}
 </delete>
 
-
-<select id="average" resultType="Double">
+<!-- 7일 동안 해당 화장실의 이용 횟수 -->
+<select id="average" resultType="int">
 SELECT
-    trunc(count(*)/7,1)
+    count(*)
 FROM dayaver
 where lat = #{lat} and lng = #{lng}
-and inputdate BETWEEN sysdate - '7' and sysdate
+and inputdate BETWEEN sysdate - '6' and sysdate
 </select>
 
+<!-- 변화량(최근 2일 데이터) -->
 <select id="average2" resultType="Double">
-SELECT
-    trunc(count(*)/2,1)
-FROM dayaver
-where lat = #{lat} and lng = #{lng}
-and inputdate BETWEEN sysdate - '2' and sysdate
+select count(*) from dayaver
+where lat = #{lat} and lng = #{lng} and
+ inputdate between sysdate - '1' and sysdate
 </select>
 
-<select id="Recent" parameterType="String" resultType="aver">
-select toiletNm, inputdate
+<!-- 변화량(전의 2일 데이터) -->
+<select id="average3" resultType="Double">
+select count(*) from dayaver
+where lat = #{lat} and lng = #{lng} and
+inputdate between sysdate - '3' and sysdate - '2'
+</select>
+
+<!-- 최근 이용한 화장실 3개 가져오기 -->
+<select id="Recent" parameterType="aver" resultType="aver">
+select toiletnm, inputdate
 from (select *  from dayaver
 order by inputdate desc)dayaver
 where <![CDATA[rownum < 4]]> and id = #{id}
