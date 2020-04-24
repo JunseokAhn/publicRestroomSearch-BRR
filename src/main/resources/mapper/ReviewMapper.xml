@@ -12,7 +12,7 @@
 	<select id="reviewList" parameterType="String" resultType="review">
 		select *
 		from (select * from brr_review
-		where toiletNm like #{toiletNm}
+		where lat = #{lat}, lng = #{lng}
 		order by inputdate desc)
 		where rownum &lt; 4
 	</select>

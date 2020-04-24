@@ -62,7 +62,7 @@ public class ReviewController {
 	@ResponseBody
 	@PostMapping(value = "reviewList")
 	public ArrayList<ReviewVO> write(String toiletNm) {
-		logger.debug("리뷰write : " + toiletNm);
+		logger.debug(toiletNm + " : 리뷰list : ");
 		ArrayList<ReviewVO> list = dao.reviewList(toiletNm);
 		return list;
 	}

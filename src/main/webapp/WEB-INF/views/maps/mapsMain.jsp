@@ -729,8 +729,8 @@ function reviewRefresh(title){
                         //}
                     },
                     error : function (request, status, error) {
-                    	console
-                    	.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                        alert('근처 화장실의 리뷰가 없습니다. 첫번째 평가자가 되어주세요!');
+                    	console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
                     }
                 });//ajax[E]
 
@@ -1054,7 +1054,6 @@ return distime;
             },
             error: function(e){
                 console.log(e);
-                alert('근처 화장실의 리뷰가 없습니다. 첫번째 평가자가 되어주세요!');
             }
         })
     }
@@ -1073,7 +1072,6 @@ return distime;
             },
             error: function(e){
             	console.log(e);
-            	alert('근처 화장실의 리뷰가 없습니다. 첫번째 평가자가 되어주세요!');
             }
         })
     }
