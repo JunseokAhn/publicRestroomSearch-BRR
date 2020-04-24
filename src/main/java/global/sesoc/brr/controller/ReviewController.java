@@ -32,9 +32,10 @@ public class ReviewController {
 
 	// 리뷰리스트 > 전체목록
 	@GetMapping(value = "reviewMain")
-	public String reviewMain(@RequestParam(defaultValue = "") String toiletNm, @RequestParam(defaultValue = "1") int currentPage, Model model) {
+	public String reviewMain(@RequestParam(defaultValue = "") String toiletNm,
+			@RequestParam(defaultValue = "1") int currentPage, Model model) {
 		// title로 리뷰검색
-		System.out.println("검색어 : "+toiletNm);
+		System.out.println("검색어 : " + toiletNm);
 		int reviewCount = dao.reviewCount(toiletNm);
 		PageNavigator PN = new PageNavigator(7, currentPage, reviewCount);
 		int startRecord = PN.getStartRecord();
@@ -43,7 +44,7 @@ public class ReviewController {
 		model.addAttribute("search", toiletNm);
 		model.addAttribute("pn", PN);
 		System.out.println("리뷰게시판에 표시되는 내용");
-		for(ReviewVO i : list)
+		for (ReviewVO i : list)
 			System.out.println(i);
 		return "review/reviewMain";
 	}
@@ -61,12 +62,13 @@ public class ReviewController {
 	// 최신리뷰 3개조회
 	@ResponseBody
 	@PostMapping(value = "reviewList")
-	public ArrayList<ReviewVO> write(String toiletNm) {
-		logger.debug(toiletNm + " : 리뷰list : ");
-		ArrayList<ReviewVO> list = dao.reviewList(toiletNm);
+	public ArrayList<ReviewVO> write(Double lng, Double lat) {
+		logger.debug("리뷰list : {},{}", lng, lat);
+
+		ArrayList<ReviewVO> list = dao.reviewList(lng, lat);
 		return list;
 	}
-	
+
 	@ResponseBody
 	@PostMapping(value = "reviewAver")
 	public ReviewAverVO reviewAver(Double lat, Double lng) {

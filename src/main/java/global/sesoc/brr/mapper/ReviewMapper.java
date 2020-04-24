@@ -16,7 +16,7 @@ public interface ReviewMapper {
 
 	int reviewWrite(ReviewVO vO);
 
-	ArrayList<ReviewVO> reviewList(String toilet_title);
+	ArrayList<ReviewVO> reviewList(HashMap<String, Double> map);
 
 	int reviewCount(String title);
 

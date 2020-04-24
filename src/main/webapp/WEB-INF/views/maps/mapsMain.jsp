@@ -410,11 +410,12 @@
         	}) 
     })//window.onload[E]
 
-function reviewRefresh(title){
+function reviewRefresh(lng, lat){
 	$.ajax({
 		url: "<c:url value='/review/reviewList'/>",
 		data: {
-			toiletNm: title
+			lng: lng,
+			lat: lat
 		},
 		type: "post",
 		success: function(e){
@@ -616,13 +617,13 @@ function reviewRefresh(title){
         	},
         	type : "post",
         	success: function(e){
-        		reviewRefresh(toiletNm);
+        		reviewRefresh(lng, lat);
         		$("#review").hide();
         		$("#review-container").fadeOut();  
         		$("#review-area").val("");
         	},
         	error: function(e){
-        		reviewRefresh(toiletNm);
+        		reviewRefresh(lng, lat);
         		$("#review").hide();
         		$("#review-container").fadeOut();  
         		$("#review-area").val("");
@@ -849,7 +850,7 @@ return distime;
                             content2 += "</p>";
 
                             div1.innerHTML = content2;
-                            reviewRefresh(title);
+                            reviewRefresh(target._lng, target._lat);
                             
                             $.ajax({
                             	url : "<c:url value='/dayaver/average'/>",
@@ -1015,7 +1016,7 @@ return distime;
         content2 += "</p>";
 
         div1.innerHTML = content2;
-        reviewRefresh(title);
+        reviewRefresh(toiletVO.lng, toiletVO.lat);
         
         $.ajax({
         	url : "<c:url value='/dayaver/average'/>",

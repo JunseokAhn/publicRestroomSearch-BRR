@@ -31,9 +31,12 @@ public class ReviewDAO {
 		return intres > 0;
 	}
 
-	public ArrayList<ReviewVO> reviewList(String toiletNm) {
+	public ArrayList<ReviewVO> reviewList(Double lng, Double lat) {
 		ReviewMapper mapper = session.getMapper(ReviewMapper.class);
-		ArrayList<ReviewVO> list = mapper.reviewList(toiletNm);
+		HashMap<String, Double> map = new HashMap<>();
+		map.put("lat", lat);
+		map.put("lng", lng);
+		ArrayList<ReviewVO> list = mapper.reviewList(map);
 		return list;
 	}
 

@@ -9,10 +9,10 @@
 		(#{toiletNm}, #{lng}, #{lat}, #{sessionId}, #{sessionNickname}, #{Profile}, #{review}, #{star}, #{clean})
 	</insert>
 
-	<select id="reviewList" parameterType="String" resultType="review">
+	<select id="reviewList" parameterType="map" resultType="review">
 		select *
 		from (select * from brr_review
-		where lat = #{lat}, lng = #{lng}
+		where lat = #{lat} and lng = #{lng}
 		order by inputdate desc)
 		where rownum &lt; 4
 	</select>
