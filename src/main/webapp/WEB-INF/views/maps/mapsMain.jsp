@@ -1255,8 +1255,26 @@ function reviewRefresh(lng, lat){
     	}
     	);     	
     }
-
-    
+	
+	// 최근 이용했던 화장실, 선호하는 화장실
+	function Recent() {
+	$.ajax({
+		url : "<c:url value='/dayaver/recent'/>",
+		type : "GET" ,
+		data : "JSON" ,
+		success : function(res) {
+			if(res) {
+			console.log(res);
+			
+			}else {
+			alert("객체전달이 안되었습니다.")
+			}
+		},
+		error : function(e) {
+			alert(JSON.stringify(e));
+		}
+	});
+}
     function resize (obj) {
     	obj.style.height = "1px";
     	obj.style.height = ( 12 + obj.scrollHeight ) + "px";
@@ -1508,7 +1526,6 @@ function reviewRefresh(lng, lat){
 			}
 		);	    	
 	}
-    
 
 
 </script>
@@ -1570,6 +1587,37 @@ function reviewRefresh(lng, lat){
 			</div>
 		</form>
 	</div>
+	
+	<!-- 최근 이용 화장실 nav-->
+	<div id="Recent-container"></div>
+	<div id="Recent" class="col-xl-4">
+		<form action="">
+			<div class="card shadow">
+				<div class="card-header bg-transparent">
+					<div class="row align-items-center">
+						<div class="col">
+							<h2 class="mb-0" style="display: inline-block">Recent toliet</h2>
+							<input id="x-button" name="Recent-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#Recent").hide(), $("#Recent-container").fadeOut()'> 
+<!-- 							<input id="register" name="feedback-send" class="btn btn-sm btn-primary" type="button" value="Send Feedback" onclick=""> -->
+							<h6 id="review-ment" class="text-uppercase text-muted ls-1 mb-1">최근 이용하신 화장실의 내역입니다.</h6>
+						</div>
+					</div>
+				</div>
+<!-- 				<div class="card-body2"> -->
+<!-- 					<div class="col-xl-12 col-lg-6"> -->
+<!-- 						<div class="card card-stats mb-4 mb-xl-0"> -->
+<!-- 							<textarea class="card-body4 replyButton2" id="Recent-contents" onkeydown="resize(this)" onkeyup="resize(this)" style="resize: none;"></textarea> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+			</div>
+		</form>
+	</div>
+	
+	
+	
+	
+	
 
 	<div id="dairy-container" style="display: none;"></div>
 	<div id="dairy" class="col-xl-4" style="display: none">
@@ -1740,6 +1788,7 @@ function reviewRefresh(lng, lat){
 						<!-- 						네이버 로그인 시 -->
 						<%-- 						<c:if test="${sessionScope.sessionNaver != null}"> --%>
 						<%-- 							<li class="nav-item"><a class="nav-link " href="<c:url value="/member/deleteNaver"/>"> --%>
+
 						<!-- 									<i class="ni ni-bullet-list-67 text-red"></i> Naver탈퇴 -->
 						<!-- 								</a></li> -->
 						<%-- 						</c:if> --%>
@@ -1751,18 +1800,19 @@ function reviewRefresh(lng, lat){
 						<%-- 						</c:if> --%>
 					</c:if>
 				</ul>
-				<!-- Divider -->
-				<hr class="my-3">
-				<!-- Heading -->
-				<h6 class="navbar-heading text-muted">NEED LOGIN</h6>
-				<!-- Navigation -->
-				<ul class="navbar-nav mb-md-3">
-					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/foundation/colors.html">
-							<i class="ni ni-watch-time text-indigo"></i> <span>Recent toilet</span>
-						</a></li>
-					<li class="nav-item"><a class="nav-link" href="https://www.op.gg/champion/maokai/statistics/top">
-							<i class="ni ni-favourite-28 text-pink"></i> <span>Preferred toilet</span>
-						</a></li>
+<!-- 				
+						<!-- Divider -->
+						<hr class="my-3">
+						<!-- Heading -->
+						<h6 class="navbar-heading text-muted">NEED LOGIN</h6>
+						<!-- Navigation -->
+						<ul class="navbar-nav mb-md-3">
+							<li class="nav-item"><a class="nav-link" href="javascript:Recent();">
+								<i class="ni ni-watch-time text-indigo"></i> <span>Recent toilet</span>
+							</a></li>
+							<li class="nav-item"><a class="nav-link" href="javascript:Prefer();">
+								<i class="ni ni-favourite-28 text-pink"></i> <span>Preferred toilet</span>
+							</a></li>
 
 					<li class="nav-item"><a class="nav-link" href="javascript:FeedbackShow();">
 							<i class="ni ni-send text-blue"></i> <span>Send Feedback</span>
