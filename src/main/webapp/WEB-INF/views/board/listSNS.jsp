@@ -61,6 +61,38 @@ function listSNS() {
 	}	
 }
 
+// <table class="table">
+// <thead>
+//   <tr>
+//      <th scope="col">#</th>
+//      <th scope="col">First</th>
+//      <th scope="col">Last</th>
+//      <th scope="col">Handle</th>
+//   </tr>
+// </thead>
+// <tbody>
+//   <tr>
+//      <th scope="row">1</th>
+//      <td>Mark</td>
+//      <td>Otto</td>
+//      <td>@mdo</td>
+//   </tr>
+//   <tr>
+//      <th scope="row">2</th>
+//      <td>Jacob</td>
+//      <td>Thornton</td>
+//      <td>@fat</td>
+//   </tr>
+//   <tr>
+//      <th scope="row">3</th>
+//      <td>Larry</td>
+//      <td>the Bird</td>
+//      <td>@twitter</td>
+//   </tr>
+// </tbody>
+// </table>
+
+
 //sns댓글부분(ajax사용)
 //readSNS페이지로 넘어오면 document에 넣은 함수가 한번 실행됨
 $(document).ready(function() {
@@ -126,6 +158,32 @@ function init(snsBoardnum) {
 	});
 }
 
+////sns댓글목록
+//function output(listSnsReply) {
+//	console.log(listSnsReply);
+//	$('#replies').html("");
+//	$.each(listSnsReply, function(index, snsReply) {
+//		var str = '<div class="list-group">';
+//		str += '	<a href="#" class="list-group-item list-group-item-action">';
+//		str += '		<div class="d-flex w-100 justify-content-between">';
+//		str += '			<h5 class="mb-1">'+ snsReply.email +'</h5>';
+//		str += '			<small>'+ snsReply.inputdate +'</small> </div>';
+//		str += '			<p class="mb-1" style="text-align: left;">'+ snsReply.comments +'</p>';
+//		//사용자정의속성
+//		str += '			<small><input type="button" value="댓글수정" class="snsUpd btn btn-secondary btn-sm" freeboardnum="'+ snsReply.snsBoardnum +'" freeid="'+ snsReply.id +'" freenum="'+ snsReply.snsReplynum +'" freecomments="'+ snsReply.comments +'">';
+//		str += '			<input type="button" value="댓글삭제" class="snsDel btn btn-secondary btn-sm" freenum="'+ snsReply.snsReplynum +'"></small> </a>';
+//		str +='			</div>';
+//		console.log($('#replies[data-num="'+snsReply.snsBoardnum+'"]'));
+//		$('#replies[data-num="'+snsReply.snsBoardnum+'"]').append(str);
+//	});
+
+//	//sns댓글수정
+//	$('input:button.snsUpd').on('click', updateSnsReply);
+//	//sns댓글삭제
+//	$('input:button.snsDel').on('click', deleteSnsReply);
+	
+//}
+
 function output(listSnsReply) {
 	$('#replies').html("");
 	$.each(listSnsReply, function(index, snsReply) {
@@ -161,64 +219,6 @@ function output(listSnsReply) {
 
 }
 
-// <table class="table">
-// <thead>
-//   <tr>
-//     <th scope="col">#</th>
-//     <th scope="col">First</th>
-//     <th scope="col">Last</th>
-//     <th scope="col">Handle</th>
-//   </tr>
-// </thead>
-// <tbody>
-//   <tr>
-//     <th scope="row">1</th>
-//     <td>Mark</td>
-//     <td>Otto</td>
-//     <td>@mdo</td>
-//   </tr>
-//   <tr>
-//     <th scope="row">2</th>
-//     <td>Jacob</td>
-//     <td>Thornton</td>
-//     <td>@fat</td>
-//   </tr>
-//   <tr>
-//     <th scope="row">3</th>
-//     <td>Larry</td>
-//     <td>the Bird</td>
-//     <td>@twitter</td>
-//   </tr>
-// </tbody>
-// </table>
-
-
-// //sns댓글목록
-// function output(listSnsReply) {
-// 	console.log(listSnsReply);
-// 	$('#replies').html("");
-// 	$.each(listSnsReply, function(index, snsReply) {
-// 		var str = '<div class="list-group">';
-// 		str += '	<a href="#" class="list-group-item list-group-item-action">';
-// 		str += '		<div class="d-flex w-100 justify-content-between">';
-// 		str += '			<h5 class="mb-1">'+ snsReply.email +'</h5>';
-// 		str += '			<small>'+ snsReply.inputdate +'</small> </div>';
-// 		str += '			<p class="mb-1" style="text-align: left;">'+ snsReply.comments +'</p>';
-// 		//사용자정의속성
-// 		str += '			<small><input type="button" value="댓글수정" class="snsUpd btn btn-secondary btn-sm" freeboardnum="'+ snsReply.snsBoardnum +'" freeid="'+ snsReply.id +'" freenum="'+ snsReply.snsReplynum +'" freecomments="'+ snsReply.comments +'">';
-// 		str += '			<input type="button" value="댓글삭제" class="snsDel btn btn-secondary btn-sm" freenum="'+ snsReply.snsReplynum +'"></small> </a>';
-// 		str +='			</div>';
-// 		console.log($('#replies[data-num="'+snsReply.snsBoardnum+'"]'));
-// 		$('#replies[data-num="'+snsReply.snsBoardnum+'"]').append(str);
-// 	});
-
-// 	//sns댓글수정
-// 	$('input:button.snsUpd').on('click', updateSnsReply);
-// 	//sns댓글삭제
-// 	$('input:button.snsDel').on('click', deleteSnsReply);
-	
-// }
-
 //sns댓글수정
 function updateSnsReply() {
 
@@ -240,23 +240,26 @@ function updateSnsReply() {
 	//댓글수정 click시 버튼 숨기기
 	$('.snsUpd').hide();
 
-// 	var str = '<div class="mx-auto replyComments form-group"><table>';
-// 		str += '<tr>';
-// 		//str += '	<td></td>';
-// 		str += '	<td><input class="form-control form-control-sm" type="text" id="replyUpd" value="'+ comments +'"></td>';
-// 		//str += '	<td></td>';
-// 		str += '	<td class="upd_length"><input type="button" id="confirmUpd" class="btn btn-secondary btn-sm" value="수정 확인"></td>';
-		
-// 		str += '	<td class="del_length"><input type="button" id="cancelUpd" class="btn btn-secondary btn-sm" value="취소"></td>';	
-// 		str += '</tr></table></div>';
+	var str = '<div class="mx-auto replyComments form-group"><table class="table">';
+		str += '<thead>';
+		str += '	<tr>';
+		str += '		<td><input class="form-control form-control-sm" type="text" id="replyUpd" value="'+ comments +'"></td>';
+		str += '		<td class="upd_length"><input type="button" id="confirmUpd" class="btn btn-secondary btn-sm" value="수정 확인"></td>';
+		str += '		<td class="del_length"><input type="button" id="cancelUpd" class="btn btn-secondary btn-sm" value="취소"></td>';	
+		str += '	</tr>
+		str += '</thead>';	
+		str += '</table></div>';
 
-	var str = '<div class="mx-auto replyComments form-group">';
-		str += '<p>';
-		str += '	<span class="review'+ snsReplynum +'"><input class="form-control form-control-sm" type="text" id="replyUpd"></span>';
-		str += '	<span style="float:left;"><input type="button" id="confirmUpd" class="btn btn-secondary btn-sm" value="수정 확인">';
-		str += '	<input type="button" id="cancelUpd" class="btn btn-secondary btn-sm" value="취소"></span>';
-		str += '</p>';
-		str += '</div>';
+
+		
+
+// 	var str = '<div class="mx-auto replyComments form-group">';
+// 		str += '<p>';
+// 		str += '	<span class="review'+ snsReplynum +'"><input class="form-control form-control-sm" type="text" id="replyUpd"></span>';
+// 		str += '	<span style="float:left;"><input type="button" id="confirmUpd" class="btn btn-secondary btn-sm" value="수정 확인">';
+// 		str += '	<input type="button" id="cancelUpd" class="btn btn-secondary btn-sm" value="취소"></span>';
+// 		str += '</p>';
+// 		str += '</div>';
 	
 	$(this).after(str);
 
