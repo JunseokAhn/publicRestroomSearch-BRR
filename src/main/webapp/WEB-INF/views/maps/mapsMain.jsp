@@ -121,6 +121,136 @@
     "<p>설사와 혈변은 염증성 질환일 수 도 있습니다.<br>가까운 병원에 빠르게 진찰을 받아보세요.</p>",
     "<p>수분이나 당분,지방을 지나치게 많이 먹어 장이 자극받은 상태입니다.<br>휴식이 필요해요.</p>"
     ];
+    function hover(){
+        //별 초기화
+        $("#star5").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+		$("#star4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+		$("#star3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+		$("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+		$("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+		$("#clean5").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+		$("#clean4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+		$("#clean3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+		$("#clean2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+		$("#clean1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        //별점 호버이벤트
+        $("#star5").hover(
+        	function(){
+        		$("#star5").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#star4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        	}, 
+        	function(){
+        		$("#star5").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#star4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#star3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        	}) 
+        
+        $("#star4").hover(
+        	function(){
+        		$("#star4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        	}, 
+        	function(){
+        		$("#star4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#star3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        	}) 
+        
+        $("#star3").hover(
+        	function(){
+        		$("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        	}, 
+        	function(){
+        		$("#star3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        	}) 
+        $("#star2").hover(
+        	function(){
+        		$("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        	}, 
+        	function(){
+        		$("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        	}) 
+        $("#star1").hover(
+        	function(){
+        		$("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        	}, 
+        	function(){
+        		$("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        	}) 
+        
+        //청결도 호버이벤트
+        $("#clean5").hover(
+        	function(){
+        		$("#clean5").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#clean4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#clean3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#clean2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        	}, 
+        	function(){
+        		$("#clean5").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#clean4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#clean3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#clean2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#clean1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        	}) 
+        
+        $("#clean4").hover(
+        	function(){
+        		$("#clean4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#clean3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#clean2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        	}, 
+        	function(){
+        		$("#clean4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#clean3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#clean2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#clean1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        	}) 
+        
+        $("#clean3").hover(
+        	function(){
+        		$("#clean3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#clean2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        	}, 
+        	function(){
+        		$("#clean3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#clean2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#clean1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        	}) 
+        $("#clean2").hover(
+        	function(){
+        		$("#clean2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        	}, 
+        	function(){
+        		$("#clean2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#clean1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        	}) 
+        $("#clean1").hover(
+        	function(){
+        		$("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        	}, 
+        	function(){
+        		$("#clean1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        	}) 
+    }
     
     $(function () {
     	// type모양별 체크시 각 함수를 다르게 지정해서 건강진단을 함    
@@ -289,124 +419,8 @@
         		$("#clean4").unbind('mouseenter mouseleave');
         		$("#clean5").unbind('mouseenter mouseleave');
         	})
-        
-        //별점 호버이벤트
-        $("#star5").hover(
-        	function(){
-        		$("#star5").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#star4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        	}, 
-        	function(){
-        		$("#star5").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#star4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#star3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        	}) 
-        
-        $("#star4").hover(
-        	function(){
-        		$("#star4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        	}, 
-        	function(){
-        		$("#star4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#star3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        	}) 
-        
-        $("#star3").hover(
-        	function(){
-        		$("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        	}, 
-        	function(){
-        		$("#star3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        	}) 
-        $("#star2").hover(
-        	function(){
-        		$("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        	}, 
-        	function(){
-        		$("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        	}) 
-        $("#star1").hover(
-        	function(){
-        		$("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        	}, 
-        	function(){
-        		$("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        	}) 
-        
-        //청결도 호버이벤트
-        $("#clean5").hover(
-        	function(){
-        		$("#clean5").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#clean4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#clean3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#clean2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        	}, 
-        	function(){
-        		$("#clean5").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#clean4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#clean3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#clean2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#clean1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        	}) 
-        
-        $("#clean4").hover(
-        	function(){
-        		$("#clean4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#clean3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#clean2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        	}, 
-        	function(){
-        		$("#clean4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#clean3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#clean2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#clean1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        	}) 
-        
-        $("#clean3").hover(
-        	function(){
-        		$("#clean3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#clean2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        	}, 
-        	function(){
-        		$("#clean3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#clean2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#clean1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        	}) 
-        $("#clean2").hover(
-        	function(){
-        		$("#clean2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        	}, 
-        	function(){
-        		$("#clean2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#clean1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        	}) 
-        $("#clean1").hover(
-        	function(){
-        		$("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        	}, 
-        	function(){
-        		$("#clean1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        	}) 
+        	
+       hover();
     })//window.onload[E]
 
 function reviewRefresh(lng, lat){
@@ -620,6 +634,7 @@ function reviewRefresh(lng, lat){
         		$("#review").hide();
         		$("#review-container").fadeOut();  
         		$("#review-area").val("");
+        		hover();
         	},
         	error: function(e){
         		reviewRefresh(lng, lat);
@@ -628,6 +643,7 @@ function reviewRefresh(lng, lat){
         		$("#review-area").val("");
         		console.log("리뷰쓰기 실패");
         		console.log(e);
+        		hover();
         	}
         })//리뷰등록[E]
         
@@ -907,11 +923,13 @@ function reviewRefresh(lng, lat){
     
     function reviewWrite (title, id, lng, lat) {
     	document.getElementById("review-toilet").innerHTML=title;
+    	$("#review-area").val("");
     	$("#toiletNm").val(title);
     	$("#lng").val(lng);
     	$("#lat").val(lat);
     	$("#review-container").fadeIn();
     	$("#review").fadeIn();
+    	hover();
     }
     function myLocation () {
         // HTML5의 geolocation으로 사용할 수 있는지 확인합니다      
