@@ -740,6 +740,18 @@ function reviewRefresh(lng, lat){
     function changeDiv1(starAver, cleanAver, starDiffer, cleanDiffer, title, toiletType, lat, lng, changeRate, averageRate){
         //div1 내용 변경
         var div1 = document.getElementById('div1');
+        //예외처리
+        if(starAver==undefined)
+            starAver = 0;
+        if(cleanAver==undefined)
+            cleanAver = 0;
+        if(starDiffer==undefined)
+            starDiffer = 0;
+        if(cleanDiffer==undefined)
+            cleanDiffer = 0;
+        if(averageRate==0){
+            changeRate=0;
+        }
         var content2
         content2 = "<div class='row'>"
         content2 += "<div class='col'>"
@@ -748,12 +760,27 @@ function reviewRefresh(lng, lat){
         content2 += "</div>"
         content2 += "</div>"
         content2 += "<p class='mt-3 mb-0 text-muted text-sm'>"
-        content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> " + starDiffer + "</span> <span class='text-nowrap mr-2'>" + starAver + "</span>"
-        content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> " + cleanDiffer +" </span> <span class='text-nowrap'>" + cleanAver + "</span>"
-        content2 += "</p>"
-        content2 += "<p class='mt-1 mb-0 text-muted text-sm'>"
-        content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> " + changeRate + "</span> <span class='text-nowrap'>" + averageRate +"</span>"
-        content2 += "<input class='replyButton3 ml-1 pointer' type='button' value='리뷰 목록' onclick='location.href=\"/brr/review/reviewMain?toiletNm=" + title + "\"'>"
+        if(starDiffer<0){
+            starDiffer = starDiffer*-1;
+            content2 += "<span class='text-nowrap mr-2'>별점: " + starAver + "</span><span class='text-warning'><i class='fa fa-arrow-down'></i> " + starDiffer + "</span>";
+        }
+        else
+        	content2 += "<span class='text-nowrap mr-2'>별점: " + starAver + "</span><span class='text-success'><i class='fa fa-arrow-up'></i> " + starDiffer + "</span>";
+        if(cleanDiffer<0){
+            cleanDiffer = cleanDiffer*-1;
+            content2 += "<span class='text-nowrap ml-4 mr-2'>청결도: " + cleanAver + "</span><span class='text-warning'><i class='fa fa-arrow-down'></i> " + cleanDiffer + "</span>";
+        }
+        else
+            content2 += "<span class='text-nowrap ml-4 mr-2'>청결도: " + cleanAver + "</span><span class='text-success'><i class='fa fa-arrow-up'></i> " + cleanDiffer + "</span>";
+        content2 += "</p>";
+        content2 += "<p class='mt-1 mb-0 text-muted text-sm'>";
+        if(changeRate<0){
+        	changeRate = changeRate*-1;
+            content2 += " <span class='text-nowrap mr-2'> 사용자: " + averageRate +"</span><span class='text-warning'><i class='fa fa-arrow-down'></i> " + changeRate + "%</span>";
+        }
+        else	
+        	content2 += " <span class='text-nowrap mr-2'> 사용자: " + averageRate +"</span><span class='text-success'><i class='fa fa-arrow-up'></i> " + changeRate + "%</span>";
+        content2 += "<input class='replyButton3 ml-1 pointer' type='button' value='리뷰 목록' onclick='location.href=\"/brr/review/reviewMain?toiletNm=" + title + "\"'>";
 
         var id = $("#sessionId").val();
         <%-- <%=(String) session.getAttribute("sessionId")%>
@@ -1671,7 +1698,13 @@ function reviewRefresh(lng, lat){
 					</div></li>
 				<li class="nav-item dropdown"><a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						<div class="media align-items-center">
-							<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="${sessionScope.Profile}">
+							<span class="avatar avatar-sm rounded-circle"> 
+							<c:if test="${sessionScope.sessionId != null}">
+								<img alt="Image placeholder" src="${sessionScope.Profile}">
+							</c:if>
+							<c:if test="${sessionScope.sessionId == null}">
+								<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>">
+							</c:if>
 							</span>
 						</div>
 					</a>
