@@ -26,7 +26,7 @@ public interface ReviewMapper {
 
 	ArrayList<ReviewVO> reviewMain2(RowBounds rB, String title);
 	
-	ReviewAverVO reivewAver(HashMap<String, Double> map);
+	ReviewAverVO reviewAver(HashMap<String, Double> map);
 
 
 }

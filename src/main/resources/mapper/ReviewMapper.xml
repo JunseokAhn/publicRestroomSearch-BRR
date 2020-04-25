@@ -39,6 +39,18 @@
 	</select>
 	
 	<select id="reviewAver" parameterType="map" resultType="reviewAver">
-		
+		select a.star starAver, a.clean cleanAver, (b.star-a.star) starDiffer, (b.clean-a.clean) cleanDiffer 
+		from (	select round(avg(star),1) star, round(avg(clean),1) clean 
+				from brr_review 
+				where lng=#{lng} and lat=#{lat}
+				and inputdate between sysdate -6 and sysdate
+				group by lat, lng
+			) a,
+			(	select round(avg(star),1) star, round(avg(clean),1) clean 
+				from brr_review 
+				where lng=#{lng} and lat=#{lat}
+				and inputdate between sysdate -1 and sysdate
+				group by lat, lng
+			) b
 	</select>
 </mapper>

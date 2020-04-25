@@ -38,12 +38,11 @@
 		var polyFlag = 0;
 		var locationFlag = 0;
 		var starFlag = 0;
-		var changeRate;
-		var averageRate; 
+		var changeRate, averageRate, starAver, cleanAver, starDiffer, cleanDiffer; 
     //var shortFlag = 1;
     //대변 체크 결과
     var diaryGraphInfo = 
-        function(stress, moisture, ingredient,status)
+        function(stress, moisture, ingredient,status)	
         {
         	this.stress = stress;
         	this.moisture = moisture;
@@ -122,6 +121,136 @@
     "<p>설사와 혈변은 염증성 질환일 수 도 있습니다.<br>가까운 병원에 빠르게 진찰을 받아보세요.</p>",
     "<p>수분이나 당분,지방을 지나치게 많이 먹어 장이 자극받은 상태입니다.<br>휴식이 필요해요.</p>"
     ];
+    function hover(){
+        //별 초기화
+        $("#star5").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+		$("#star4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+		$("#star3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+		$("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+		$("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+		$("#clean5").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+		$("#clean4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+		$("#clean3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+		$("#clean2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+		$("#clean1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        //별점 호버이벤트
+        $("#star5").hover(
+        	function(){
+        		$("#star5").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#star4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        	}, 
+        	function(){
+        		$("#star5").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#star4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#star3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        	}) 
+        
+        $("#star4").hover(
+        	function(){
+        		$("#star4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        	}, 
+        	function(){
+        		$("#star4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#star3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        	}) 
+        
+        $("#star3").hover(
+        	function(){
+        		$("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        	}, 
+        	function(){
+        		$("#star3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        	}) 
+        $("#star2").hover(
+        	function(){
+        		$("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        	}, 
+        	function(){
+        		$("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        	}) 
+        $("#star1").hover(
+        	function(){
+        		$("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        	}, 
+        	function(){
+        		$("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        	}) 
+        
+        //청결도 호버이벤트
+        $("#clean5").hover(
+        	function(){
+        		$("#clean5").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#clean4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#clean3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#clean2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        	}, 
+        	function(){
+        		$("#clean5").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#clean4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#clean3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#clean2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#clean1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        	}) 
+        
+        $("#clean4").hover(
+        	function(){
+        		$("#clean4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#clean3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#clean2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        	}, 
+        	function(){
+        		$("#clean4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#clean3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#clean2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#clean1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        	}) 
+        
+        $("#clean3").hover(
+        	function(){
+        		$("#clean3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#clean2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        	}, 
+        	function(){
+        		$("#clean3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#clean2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#clean1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        	}) 
+        $("#clean2").hover(
+        	function(){
+        		$("#clean2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        		$("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        	}, 
+        	function(){
+        		$("#clean2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        		$("#clean1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        	}) 
+        $("#clean1").hover(
+        	function(){
+        		$("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
+        	}, 
+        	function(){
+        		$("#clean1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
+        	}) 
+    }
     
     $(function () {
     	// type모양별 체크시 각 함수를 다르게 지정해서 건강진단을 함    
@@ -290,124 +419,8 @@
         		$("#clean4").unbind('mouseenter mouseleave');
         		$("#clean5").unbind('mouseenter mouseleave');
         	})
-        
-        //별점 호버이벤트
-        $("#star5").hover(
-        	function(){
-        		$("#star5").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#star4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        	}, 
-        	function(){
-        		$("#star5").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#star4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#star3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        	}) 
-        
-        $("#star4").hover(
-        	function(){
-        		$("#star4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        	}, 
-        	function(){
-        		$("#star4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#star3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        	}) 
-        
-        $("#star3").hover(
-        	function(){
-        		$("#star3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        	}, 
-        	function(){
-        		$("#star3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        	}) 
-        $("#star2").hover(
-        	function(){
-        		$("#star2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        	}, 
-        	function(){
-        		$("#star2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        	}) 
-        $("#star1").hover(
-        	function(){
-        		$("#star1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        	}, 
-        	function(){
-        		$("#star1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        	}) 
-        
-        //청결도 호버이벤트
-        $("#clean5").hover(
-        	function(){
-        		$("#clean5").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#clean4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#clean3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#clean2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        	}, 
-        	function(){
-        		$("#clean5").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#clean4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#clean3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#clean2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#clean1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        	}) 
-        
-        $("#clean4").hover(
-        	function(){
-        		$("#clean4").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#clean3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#clean2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        	}, 
-        	function(){
-        		$("#clean4").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#clean3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#clean2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#clean1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        	}) 
-        
-        $("#clean3").hover(
-        	function(){
-        		$("#clean3").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#clean2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        	}, 
-        	function(){
-        		$("#clean3").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#clean2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#clean1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        	}) 
-        $("#clean2").hover(
-        	function(){
-        		$("#clean2").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        		$("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        	}, 
-        	function(){
-        		$("#clean2").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        		$("#clean1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        	}) 
-        $("#clean1").hover(
-        	function(){
-        		$("#clean1").attr("src", "<c:url value='/resources/img/starOn.png'/>");
-        	}, 
-        	function(){
-        		$("#clean1").attr("src", "<c:url value='/resources/img/starOff.png'/>");
-        	}) 
+        	
+       hover();
     })//window.onload[E]
 
 function reviewRefresh(lng, lat){
@@ -621,6 +634,7 @@ function reviewRefresh(lng, lat){
         		$("#review").hide();
         		$("#review-container").fadeOut();  
         		$("#review-area").val("");
+        		hover();
         	},
         	error: function(e){
         		reviewRefresh(lng, lat);
@@ -629,6 +643,7 @@ function reviewRefresh(lng, lat){
         		$("#review-area").val("");
         		console.log("리뷰쓰기 실패");
         		console.log(e);
+        		hover();
         	}
         })//리뷰등록[E]
         
@@ -735,8 +750,66 @@ function reviewRefresh(lng, lat){
                     }
                 });//ajax[E]
 
-return distime;
+	return distime;
     }//directions[E]
+    
+    function changeDiv1(starAver, cleanAver, starDiffer, cleanDiffer, title, toiletType, lat, lng, changeRate, averageRate){
+        //div1 내용 변경
+        var div1 = document.getElementById('div1');
+        //예외처리
+        if(starAver==undefined)
+            starAver = 0;
+        if(cleanAver==undefined)
+            cleanAver = 0;
+        if(starDiffer==undefined)
+            starDiffer = 0;
+        if(cleanDiffer==undefined)
+            cleanDiffer = 0;
+        if(averageRate==0){
+            changeRate=0;
+        }
+        var content2
+        content2 = "<div class='row'>"
+        content2 += "<div class='col'>"
+        content2 += "<h5 class='card-title text-uppercase text-muted mb-0'>" + title + "</h5>"
+        content2 += "<span class='h2 font-weight-bold mb-0'>" + toiletType + "</span>"
+        content2 += "</div>"
+        content2 += "</div>"
+        content2 += "<p class='mt-3 mb-0 text-muted text-sm'>"
+        if(starDiffer<0){
+            starDiffer = starDiffer*-1;
+            content2 += "<span class='text-nowrap mr-2'>별점: " + starAver + "</span><span class='text-warning'> " + starDiffer + " <i class='fa fa-arrow-down'></i></span>";
+        }
+        else
+        	content2 += "<span class='text-nowrap mr-2'>별점: " + starAver + "</span><span class='text-success'>" + starDiffer + " <i class='fa fa-arrow-up'></i></span>";
+        if(cleanDiffer<0){
+            cleanDiffer = cleanDiffer*-1;
+            content2 += "<span class='text-nowrap ml-4 mr-2'>청결도: " + cleanAver + "</span><span class='text-warning'>" + cleanDiffer + " <i class='fa fa-arrow-down'></i></span>";
+        }
+        else
+            content2 += "<span class='text-nowrap ml-4 mr-2'>청결도: " + cleanAver + "</span><span class='text-success'>" + cleanDiffer + " <i class='fa fa-arrow-up'></i></span>";
+        content2 += "</p>";
+        content2 += "<p class='mt-1 mb-0 text-muted text-sm'>";
+        if(changeRate<0){
+        	changeRate = changeRate*-1;
+            content2 += " <span class='text-nowrap mr-2'> 사용자: " + averageRate +"</span><span class='text-warning'>" + changeRate + " <i class='fa fa-arrow-down'></i></span>";
+        }
+        else	
+        	content2 += " <span class='text-nowrap mr-2'> 사용자: " + averageRate +"</span><span class='text-success'>" + changeRate + " <i class='fa fa-arrow-up'></i></span>";
+        content2 += "<input class='replyButton3 ml-1 pointer' type='button' value='리뷰 목록' onclick='location.href=\"/brr/review/reviewMain?toiletNm=" + title + "\"'>";
+
+        var id = $("#sessionId").val();
+        <%-- <%=(String) session.getAttribute("sessionId")%>
+        ; --%>
+        //리뷰쓰기
+        content2 += "<input class='replyButton3 ml-1 pointer' type='button' value='리뷰 쓰기' onclick='reviewWrite(" + "\"" + title + "\"," + "\"" + id + "\"," + "\"" + lng + "\"," + "\"" + lat + "\")'>";
+        content2 += "</p>";
+
+        div1.innerHTML = content2;
+        reviewRefresh(lng, lat);
+        
+       
+    }
     
     function setPositions (e, marker) {
     	nearbyToilet = e;
@@ -811,64 +884,36 @@ return distime;
                             }, 0);
                             
                             //별점과 청결도의 평균, 최근2일변화량체크
-                           /*  $.ajax({
+                             $.ajax({
                                 url: "<c:url value='/review/reviewAver'/>",
                                 data:{
-                                    lat: endY,
-                                    lng: endX
+                                    lat: target._lat, 
+                                    lng: target._lng
                                 },
                                 type:"post",
                                 success: function(e){
-                                    
+                                     $.ajax({
+        								url : "<c:url value='/dayaver/average'/>",
+        								type : "POST",
+        								data : {
+        									lng : target._lng, 
+        									lat : target._lat
+        								},
+        								success : function (res) {
+											var changeRate = res.differ;
+											var averageRate = res.average;
+											changeDiv1(e.starAver, e.cleanAver, e.starDiffer, e.cleanDiffer, title, toiletType, target._lat, target._lng, changeRate, averageRate);
+										},
+										error : function (e) {
+											console.log(JSON.stringify(e));
+										}
+									}); 
                                 },
                                 error: function(e){
-                                    
+                                    console.log(e);
                                 }
-                            }); */
-                            //div1 내용 변경
-                            var div1 = document.getElementById('div1');
-                            var content2
-                            content2 = "<div class='row'>"
-                            content2 += "<div class='col'>"
-                            content2 += "<h5 class='card-title text-uppercase text-muted mb-0'>" + title + "</h5>"
-                            content2 += "<span class='h2 font-weight-bold mb-0'>" + toiletType + "</span>"
-                            content2 += "</div>"
-                            content2 += "</div>"
-                            content2 += "<p class='mt-3 mb-0 text-muted text-sm'>"
-                            content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap mr-2'>별점평균</span>"
-                            content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>청결도평균</span>"
-                            content2 += "</p>"
-                            content2 += "<p class='mt-1 mb-0 text-muted text-sm'>"
-                            content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>이용자수</span>"
-                            content2 += "<input class='replyButton3 ml-1 pointer' type='button' value='리뷰 목록' onclick='location.href=\"/brr/review/reviewMain?toiletNm=" + title + "\"'>"
-
-                            var id = $("#sessionId").val();
-                            <%-- <%=(String) session.getAttribute("sessionId")%>
-                            ; --%>
-                            //리뷰쓰기
-                            content2 += "<input class='replyButton3 ml-1 pointer' type='button' value='리뷰 쓰기' onclick='reviewWrite(" + "\"" + title + "\"," + "\"" + id + "\"," + "\"" + target._lng + "\"," + "\"" + target._lat + "\")'>";
-                            content2 += "</p>";
-
-                            div1.innerHTML = content2;
-                            reviewRefresh(target._lng, target._lat);
+                            });
                             
-                            $.ajax({
-                            	url : "<c:url value='/dayaver/average'/>",
-                            	type : "POST",
-                            	data : {
-                            		lng : endX, lat : endY
-                            	},
-                            	success : function (res) {
-                    				//consloe.log(res);
-                    				var changeRate = res.differ;
-                    				var averageRate = res.average;
-                    				
-                    			},
-                    			error : function (e) {
-                    				alert(JSON.stringify(e));
-                    			}
-                    			
-                    		}); 
                             
                         }
                     }(toiletMarker, i, title));
@@ -878,11 +923,13 @@ return distime;
     
     function reviewWrite (title, id, lng, lat) {
     	document.getElementById("review-toilet").innerHTML=title;
+    	$("#review-area").val("");
     	$("#toiletNm").val(title);
     	$("#lng").val(lng);
     	$("#lat").val(lat);
     	$("#review-container").fadeIn();
     	$("#review").fadeIn();
+    	hover();
     }
     function myLocation () {
         // HTML5의 geolocation으로 사용할 수 있는지 확인합니다      
@@ -990,51 +1037,36 @@ return distime;
         	});
         }, 0);
         
-        //div1 내용 변경
-        var div1 = document.getElementById('div1');
-        var content2
-        content2 = "<div class='row'>"
-        content2 += "<div class='col'>"
-        content2 += "<h5 class='card-title text-uppercase text-muted mb-0'>" + title + "</h5>"
-        content2 += "<span class='h2 font-weight-bold mb-0'>" + toiletType + "</span>"
-        content2 += "</div>"
-        content2 += "</div>"
-        content2 += "<p class='mt-3 mb-0 text-muted text-sm'>"
-        content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap mr-2'>별점평균</span>"
-        content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>청결도평균</span>"
-        content2 += "</p>"
-        content2 += "<p class='mt-1 mb-0 text-muted text-sm'>"
-        content2 += "<span class='text-success'><i class='fa fa-arrow-up'></i> 변화량</span> <span class='text-nowrap'>이용자수</span>"
-        content2 += "<input class='replyButton3 ml-1 pointer' type='button' value='리뷰 목록' onclick='location.href=\"/brr/review/reviewMain?toiletNm=" + title + "\"'>"
-
-        var id = $("#sessionId").val();
-        <%-- <%=(String) session.getAttribute("sessionId")%>
-        ; --%>
-        //리뷰쓰기
-        //content2 += "<input class='replyButton3 ml-1 pointer' type='button' value='리뷰 쓰기' onclick='reviewWrite(" + "\"" + title + "\"," + "\"" + id + "\")'>";  //toiletVO.lng
-        content2 += "<input class='replyButton3 ml-1 pointer' type='button' value='리뷰 쓰기' onclick='reviewWrite(" + "\"" + title + "\"," + "\"" + id + "\"," + "\"" + toiletVO.lng + "\"," + "\"" + toiletVO.lat + "\")'>";
-        content2 += "</p>";
-
-        div1.innerHTML = content2;
-        reviewRefresh(toiletVO.lng, toiletVO.lat);
-        
+      //별점과 청결도의 평균, 최근2일변화량체크
         $.ajax({
-        	url : "<c:url value='/dayaver/average'/>",
-        	type : "POST",
-        	data : {
-        		lng : toiletVO.lng, lat : toiletVO.lat
-        	},
-        	success : function (res) {
-				//consloe.log(res);
-				var changeRate = res.differ;
-				var averageRate = res.average;
-				
-			},
-			error : function (e) {
-				alert(JSON.stringify(e));
-			}
-			
-		}); 
+           url: "<c:url value='/review/reviewAver'/>",
+           data:{
+               lat: toiletVO.lat, 
+               lng: toiletVO.lng
+           },
+           type:"post",
+           success: function(e){
+                $.ajax({
+					url : "<c:url value='/dayaver/average'/>",
+					type : "POST",
+					data : {
+						lng : toiletVO.lng, 
+						lat : toiletVO.lat
+					},
+					success : function (res) {
+						var changeRate = res.differ;
+						var averageRate = res.average;
+						changeDiv1(e.starAver, e.cleanAver, e.starDiffer, e.cleanDiffer, title, toiletType, toiletVO.lat, toiletVO.lng, changeRate, averageRate);
+					},
+					error : function (e) {
+						console.log(JSON.stringify(e));
+					}
+				}); 
+           },
+           error: function(e){
+               console.log(e);
+           }
+       });
     }//recommending[E]
     
     //화장실 추천기능
@@ -1059,7 +1091,6 @@ return distime;
         })
     }
     function searchClean () {
-        console.log(1)
     	$.ajax({
     		url: "<c:url value='/maps/searchClean'/>",
     		data: {
@@ -1077,7 +1108,19 @@ return distime;
         })
     }
     function searchSmooth () {
-    	directions(shortestDistance);
+        $.ajax({
+            url:"<c:url value='/maps/searchSmmoth'/>",
+            data:{
+                
+            },
+            type:"post",
+            success:function(){
+                
+            },
+            error:function(){
+                
+            }
+        })
     }
     function terminators () {
     	clearInterval(realTime);
@@ -1812,7 +1855,13 @@ function InsertResult()
 					</div></li>
 				<li class="nav-item dropdown"><a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						<div class="media align-items-center">
-							<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="${sessionScope.Profile}">
+							<span class="avatar avatar-sm rounded-circle"> 
+							<c:if test="${sessionScope.sessionId != null}">
+								<img alt="Image placeholder" src="${sessionScope.Profile}">
+							</c:if>
+							<c:if test="${sessionScope.sessionId == null}">
+								<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>">
+							</c:if>
 							</span>
 						</div>
 					</a>
@@ -2077,10 +2126,10 @@ function InsertResult()
 											</div>
 										</div>
 										<p class="mt-3 mb-0 text-muted text-sm">
-											<span class="text-success"><i class="fa fa-arrow-up"></i> 변화량</span> <span class="text-nowrap mr-2">별점평균</span> <span class="text-success"><i class="fa fa-arrow-up"></i> 변화량</span> <span class="text-nowrap">청결도평균</span>
+											<span class='text-nowrap mr-0'>별점: </span><span class='text-success'>별점평균</span><span class='text-nowrap mr-0 ml-2'> 청결도:</span><span class='text-success'>청결도평균</span>
 										</p>
 										<p class="mt-2 mb-0 text-muted text-sm">
-											<span class="text-warning"><i class="fa fa-arrow-down"></i> 변화량</span> <span class="text-nowrap">이용자수</span>
+											<span class='text-nowrap mr-0'>이용자수: </span><span class='text-success'>주간집계</span>
 										</p>
 									</div>
 								</div>
