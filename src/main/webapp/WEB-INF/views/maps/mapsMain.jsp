@@ -1540,8 +1540,6 @@ function ShowHospitalList()
 			success:
 				function(list)
 				{
-					//var childrens = $('div').children();
-					$("#diary>*").css("background-color","navy"); 
 					$("#result_table").attr("hidden","hidden");
 					$("#myChart").attr("hidden","hidden");	
 					$("input[name='save-data']").attr("hidden","hidden");	

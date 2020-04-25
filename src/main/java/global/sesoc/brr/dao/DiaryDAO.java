@@ -32,7 +32,8 @@ public class DiaryDAO {
 		return false;
 	}
 
-	public ArrayList<resVO> list(DateData dateData){
+	public ArrayList<resVO> list(DateData dateData)
+	{
 		DiaryMapper mapper = session.getMapper(DiaryMapper.class);
 		ArrayList<resVO> list=mapper.list(dateData);
 		return list;
