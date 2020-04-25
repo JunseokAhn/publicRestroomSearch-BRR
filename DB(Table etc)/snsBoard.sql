@@ -29,6 +29,8 @@ create table snsReply(
 create sequence snsReply_seq;
 commit;
 
+select * from snsReply;
+
 insert into 
     snsBoard(
         snsBoardnum
