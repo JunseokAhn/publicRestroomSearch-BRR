@@ -11,9 +11,10 @@
 
 	<select id="reviewList" parameterType="map" resultType="review">
 		select *
-		from (select * from brr_review
-		where lat = #{lat} and lng = #{lng}
-		order by inputdate desc)
+		from ( select * from brr_review
+			   where lat = #{lat} and lng = #{lng}
+			   order by inputdate desc
+			)
 		where rownum &lt; 4
 	</select>
 
@@ -30,12 +31,19 @@
 	
 	<select id="reviewMain" parameterType="String" resultType="review">
 		select toiletNm, sessionId, sessionNickname, Profile, review, star, clean, to_char(inputdate, 'YYYY/MM/DD') inputdate
-		from (select * from brr_review order by inputdate desc)
+		from ( select * 
+			   from brr_review 
+			   order by inputdate desc
+			 )
 	</select>
 	
 	<select id="reviewMain2" parameterType="String" resultType="review">
 		select toiletNm, sessionId, sessionNickname, Profile, review, star, clean, to_char(inputdate, 'YYYY/MM/DD') inputdate
-		from (select * from brr_review where toiletNm like '%' || #{_parameter} || '%' order by inputdate desc)
+		from ( select * 
+		       from brr_review 
+		       where toiletNm like '%' || #{_parameter} || '%' 
+		       order by inputdate desc
+		     )
 	</select>
 	
 	<select id="reviewAver" parameterType="map" resultType="reviewAver">

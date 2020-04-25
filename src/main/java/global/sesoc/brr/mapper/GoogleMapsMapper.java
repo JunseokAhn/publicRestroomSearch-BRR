@@ -13,5 +13,8 @@ public interface GoogleMapsMapper {
 	ToiletVO searchRating(LocationVO lo);
 	
 	ToiletVO searchClean(LocationVO lo);
+
+	ToiletVO searchSmooth(LocationVO lo);
 	
+	ToiletVO searchSmooth2(LocationVO lo);
 }

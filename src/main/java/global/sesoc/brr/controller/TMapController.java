@@ -68,4 +68,13 @@ public class TMapController {
 		System.out.println(VO);
 		return VO;
 	}
+	
+	@ResponseBody
+	@PostMapping(value = "searchSmooth") //, produces = "application/text; charset=utf8"
+	public ToiletVO searchSmooth(String lat, String lng){
+		lo = new LocationVO(lat, lng);
+		ToiletVO VO = dao.searchSmooth(lo);
+		System.out.println(VO);
+		return VO;
+	}
 }

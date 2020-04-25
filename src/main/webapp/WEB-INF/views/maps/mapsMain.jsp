@@ -1109,16 +1109,17 @@ function reviewRefresh(lng, lat){
     }
     function searchSmooth () {
         $.ajax({
-            url:"<c:url value='/maps/searchSmmoth'/>",
+            url:"<c:url value='/maps/searchSmooth'/>",
             data:{
-                
+                lat : pos.lat.toFixed(6),
+    			lng : pos.lng.toFixed(6)
             },
             type:"post",
-            success:function(){
-                
+            success:function(e){
+            	recommending(e);
             },
-            error:function(){
-                
+            error:function(e){
+                console.log(e);    
             }
         })
     }
@@ -1998,7 +1999,7 @@ function reviewRefresh(lng, lat){
 											</div>
 										</div>
 										<p class="mt-3 mb-0 text-muted text-sm">
-											<span class='text-nowrap mr-0'>별점: </span><span class='text-success'>별점평균</span><span class='text-nowrap mr-0 ml-2'> 청결도:</span><span class='text-success'>청결도평균</span>
+											<span class='text-nowrap mr-0'>별점: </span><span class='text-success'>주간평균</span><span class='text-nowrap mr-0 ml-2'> 청결도:</span><span class='text-success'>주간평균</span>
 										</p>
 										<p class="mt-2 mb-0 text-muted text-sm">
 											<span class='text-nowrap mr-0'>이용자수: </span><span class='text-success'>주간집계</span>

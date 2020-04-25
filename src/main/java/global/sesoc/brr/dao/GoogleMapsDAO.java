@@ -37,4 +37,13 @@ public class GoogleMapsDAO {
 		ToiletVO VO = mapper.searchClean(lo);
 		return VO;
 	}
+
+	public ToiletVO searchSmooth(LocationVO lo) {
+		// TODO Auto-generated method stub
+		GoogleMapsMapper mapper = session.getMapper(GoogleMapsMapper.class);
+		ToiletVO VO = mapper.searchSmooth(lo);
+		if(VO==null)
+			VO = mapper.searchSmooth2(lo);
+		return VO;
+	}
 }
