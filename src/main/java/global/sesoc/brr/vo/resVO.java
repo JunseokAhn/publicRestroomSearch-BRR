@@ -2,12 +2,18 @@ package global.sesoc.brr.vo;
 
 import java.sql.Date;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class resVO {
-	private int resnum; //
-	private int status;  // 결과상태
-	private Date inputdate; //sysdate
-	private int resvalue; // 결과조회를 위한 벨류값추가 
+	private String id;
+	private double stress;
+	private double moisture;
+	private double ingredient;
+	private int status;
+	private String inputdate;
 }

@@ -1,5 +1,7 @@
 package global.sesoc.brr.dao;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -64,5 +66,24 @@ public class HospitalDAO {
 		if(result>0) return true;
 		
 		return false;
+	}
+	
+	public ArrayList<HospitalVO> GetNearHospitalList(double lat, double lng)
+	{
+		ArrayList<HospitalVO> temp=null;
+		HospitalVO vo_temp=new HospitalVO();
+		vo_temp.setLat(lat);
+		vo_temp.setLng(lng);
+		try
+		{
+			HospitalMapper mapper = session.getMapper(HospitalMapper.class);
+			temp=mapper.GetNearHospitalList(vo_temp);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return temp;
 	}
 }

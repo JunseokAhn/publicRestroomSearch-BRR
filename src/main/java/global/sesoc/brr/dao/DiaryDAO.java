@@ -16,7 +16,7 @@ public class DiaryDAO {
 	@Autowired
 	private SqlSession session;
 
-	public int insert(resVO resVO) {
+	public boolean insert(resVO resVO) {
 		DiaryMapper mapper = session.getMapper(DiaryMapper.class);
         
 		int result = 0;
@@ -27,7 +27,9 @@ public class DiaryDAO {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		return result;
+		
+		if(result>0) return true;
+		return false;
 	}
 
 	public ArrayList<resVO> list(DateData dateData){

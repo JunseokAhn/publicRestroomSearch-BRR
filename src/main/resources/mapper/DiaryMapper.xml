@@ -11,31 +11,27 @@
 	into 
 		diary_result
 	(
-		stress number,
+		id,
+		stress,
     	moisture,
-    	ingredient number,  	
+    	ingredient,  	
     	status 
     )	
 	values 
-	(
-	   diary_result_seq.nextval,
-         #{status},
-         sysdate,
-         #{resvalue}
+	(	 
+		 #{id},  
+         #{stress},        
+         #{moisture},
+         #{ingredient},
+         #{status}
 	)
 </insert>
 
 <select id="list" resultType="resVO" parameterType="string">
 select *
-
-
-
 from DIARY_RESULT
 where to_char(sysdate,'fmmm') = #{db_startDate} 
 and to_char(sysdate,'yyyy') = #{db_endDate}
- 
-  
-
 </select>
 
 

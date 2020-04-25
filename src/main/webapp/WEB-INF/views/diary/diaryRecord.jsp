@@ -269,15 +269,9 @@
 							</c:if> 
 							<c:if test="${scheduleList.status==4}">
 							<img id="type1brown" src="../resources/img/sobad.png"  style="width:10%"  />
-							</c:if> 
+					</c:if>			
 							
-							
-							
-							</p>
-						
-						
-						
-						
+							</p>					
 						
 						</c:forEach>
 						</div> 
