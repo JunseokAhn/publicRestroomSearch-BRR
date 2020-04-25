@@ -23,23 +23,25 @@
 <script>
 //글쓰기폼 확인
 function formCheck() {
-	var title = document.getElementById('title');
-	var contents = document.getElementById('contents');
+	var title = document.getElementsByName('title');
 	
-	if (title.value == '') {
+	var contents = document.getElementsByName('contents');
+	
+	if (title[0].value == '') {
 		alert("제목을 입력하세요.");
-		title.focus();
-		title.select();
+		title[0].focus();
+		title[0].select();
 		return false;
 	}
-	if (contents.value == '') {
-		alert("메모를 입력하세요.");
-		contents.focus();
-		contents.select();
+	if (contents[0].value == '') {
+		alert("내용을 입력하세요.");
+		contents[0].focus();
+		contents[0].select();
 		return false;
 	}
 	return true;
 }
+
 </script>
 
 </head>
@@ -308,13 +310,13 @@ function formCheck() {
 								<input type="hidden" value="${sessionScope.sessionEmail}" name="email">
 								<label for="exampleFormControlInput1">제목</label> <input
 									type="text" class="form-control" id="exampleFormControlInput1"
-									placeholder="제목을 입력해주세요." id="title" name="title">
+									placeholder="제목을 입력해주세요." name="title">
 							</div>
 
 							<div class="mx-auto boardContents form-group">
 								<label for="exampleFormControlTextarea1">내용</label>
 								<textarea class="form-control" id="exampleFormControlTextarea1"
-									rows="15" id="contents" name="contents"></textarea>
+									rows="15" name="contents" placeholder="내용을 입력해주세요."></textarea>
 							</div>
 
 							<div class="mx-auto boardButton form-group">
