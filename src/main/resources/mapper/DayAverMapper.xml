@@ -31,18 +31,20 @@ where lat = #{lat} and lng = #{lng}
 and inputdate BETWEEN sysdate - '6' and sysdate
 </select>
 
-<!-- 변화량(최근 2일 데이터) -->
+<!-- 변화량(최근 2일 데이터 평균) -->
 <select id="average2" resultType="Double">
-select count(*) from dayaver
+select trunc(count(*)/2) 
+from dayaver
 where lat = #{lat} and lng = #{lng} and
  inputdate between sysdate - '1' and sysdate
 </select>
 
-<!-- 변화량(전의 2일 데이터) -->
+<!-- 변화량(5일 데이터 평균) -->
 <select id="average3" resultType="Double">
-select count(*) from dayaver
+select trunc(count(*)/3.5) 
+from dayaver
 where lat = #{lat} and lng = #{lng} and
-inputdate between sysdate - '3' and sysdate - '2'
+inputdate between sysdate - '6' and sysdate
 </select>
 
 <!-- 최근 이용한 화장실 3개 가져오기 -->

@@ -43,4 +43,16 @@ from brr_hospital
 delete from brr_Hospital
 </delete>
 
+<select id="GetNearHospitalList" parameterType="hospital" resultType="hospital">
+select dutyName,
+    dutyTel1,
+    dutyAddr,
+    dutyTimeS,
+    dutyTimeC,
+    trunc(DISTANCE_WGS84(37.510297,127.071679, lat, lng),3)*1000 as DISTANCE
+from brr_hospital
+where (lat between #{lat}-0.005 and #{lat}+0.005) and (lng between #{lng}-0.01 and #{lng}+0.01)
+order by DISTANCE
+</select>
+
 </mapper>

@@ -20,4 +20,5 @@ public class HospitalVO
 	private String dutyTimeSunC;
     private double lat;
     private double lng;    
+    private double distance;
 }

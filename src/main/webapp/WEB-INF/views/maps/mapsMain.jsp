@@ -1322,7 +1322,7 @@ function reviewRefresh(lng, lat){
     	obj.style.height = ( 12 + obj.scrollHeight ) + "px";
     }
     
-
+    var temp_info;
 	//type1의 진단결과
 	function clickFunc()
 	{
@@ -1342,8 +1342,7 @@ function reviewRefresh(lng, lat){
 			$("#type4").attr('id','yellow'); 
 		}
 		else
-		{
-			var temp_info;
+		{			
 			var temp_str;
 			var temp_src;
 			
@@ -1510,9 +1509,10 @@ function reviewRefresh(lng, lat){
 	
     function DiaryShow()
     { 
-        
- /*    	diaryresult="";
+        console.log("눌렀다");        
+ 	  	diaryresult="";
 		result_show_flag=true;
+		$("#hopital_table").attr("hidden","hidden");
     	$("input[name='save-data']").attr("hidden","hidden");
     	$("#myChart").attr("hidden","hidden");
     	$("#result_table").attr("hidden","hidden");
@@ -1523,15 +1523,15 @@ function reviewRefresh(lng, lat){
 		$("#health-ment").removeAttr("hidden","hidden");
 		
 		$("#health-ment").removeAttr("hidden","hidden");
-		$('#brown').attr('src','../resources/img/type1.png');
-		$('#gray').attr('src','../resources/img/type2.png');
-		$('#red').attr('src','../resources/img/type3.png');
-		$('#yellow').attr('src','../resources/img/type4.png');
+		$('#brown').attr('src','../resources/img/type1_1.png');
+		$('#gray').attr('src','../resources/img/type2_1.png');
+		$('#red').attr('src','../resources/img/type3_1.png');
+		$('#yellow').attr('src','../resources/img/type4_1.png');
 
 		$('#brown').attr('id','type1');
 		$('#gray').attr('id','type2');
 		$('#red').attr('id','type3');
-		$('#yellow').attr('id','type4'); */
+		$('#yellow').attr('id','type4');		
 		
 		$("#diary-container").show();
 		$("#diary").fadeIn(); 
@@ -1551,7 +1551,7 @@ function reviewRefresh(lng, lat){
 					{
 						if(flag=="success")
 						{
-							
+							InsertResult();
 						}
 						else if(flag=="error")
 						{
@@ -1568,6 +1568,117 @@ function reviewRefresh(lng, lat){
 			}
 		);	    	
 	}
+
+
+function ShowHospitalList()
+{
+	$.ajax
+	(
+		{
+			url:"<c:url value="/toilet/receive_near_hospital"/>",
+			type:"post",				
+			data:{
+				lat : pos.lat.toFixed(6),
+    			lng : pos.lng.toFixed(6)
+    		},
+			success:
+				function(list)
+				{
+					$("#result_table").attr("hidden","hidden");
+					$("#myChart").attr("hidden","hidden");	
+					$("input[name='save-data']").attr("hidden","hidden");	
+					var contents = "";
+					var list_temp = list;
+					for(var i=0;i<5;i++)
+					{
+						console.log(list_temp[i].dutyName);
+						
+
+						for(var i =0;i<5;i++)
+						{						
+							contents+='<tr>';
+							contents+='<td style="float:left">' + (i+1) +'</td>';	
+							contents+='</tr>';
+							
+							contents+='<tr style="float: left;">';							
+							contents+='<td>병원 이름 : ' + list_temp[i].dutyName + ' 전화번호 : ' + list_temp[i].dutyTel1 + '</td>';							
+							contents+='</tr>';
+							
+
+							contents+='<tr style="float: left;">';
+							contents+='<td style="width:100%">평일 개시시간 : ' + list_temp[i].dutyTimeS + ' 평일 종료시간 : ' + list_temp[i].dutyTimeC + '</td>';
+							contents+='</tr>';
+
+							contents+='<tr style="float:left;">';
+							contents+='<td style="font-size:15px;">' + list_temp[i].dutyAddr + '</td>';
+							contents+='</tr>';													
+						}
+
+						$("#hopital_table").html(contents);
+						$("#hopital_table").removeAttr("hidden","hidden");
+						
+						
+/* 						<tr style="float: left;">
+							<td>병원 이름 : 최평락한의원  전화번호 : 02-501-1488</td>															
+						</tr>
+						<tr style="float: left;">							
+							<td>평일 개시시간 : 0930,  평일 종료시간 : 1830</td>														
+						</tr>	
+						<tr style="float: left;border-bottom: 1px solid;">													
+							<td>서울특별시 강남구 영동대로 309, 2층 (대치동, 준오빌딩 2층)</td>		
+							<td><br></td>													
+						</tr>								 */
+									
+					}
+				}
+			,
+			error:
+				function(e)
+				{				
+					
+				}
+		}
+	);	    	
+}
+	    
+function InsertResult()
+{
+	$.ajax
+	(
+		{
+			url:"<c:url value="/diary/insert"/>",
+			type:"post",				
+			dataType:"text",
+			data:{stress:temp_info.stress, moisture:temp_info.moisture, ingredient:temp_info.ingredient, status:temp_info.status},
+			success:
+				function(flag)
+				{
+					if(flag=="warning")
+					{
+						alert("데이터를 저장했지만 건강이 위험한 상태입니다.\n 반경 1km 병원의 위치를 알려드리겠습니다.");
+						ShowHospitalList();												
+					}
+					else if(flag=="success")
+					{
+						alert("저장에 성공했습니다. 프로필의 달력에서 기록을 확인 할 수 있습니다.");
+						$("#diary").hide();
+						$("#diary-container").fadeOut();
+						
+					}
+					else if(flag=="error")
+					{
+						alert("저장이 실패하였습니다. 다시 시도해주세요.");
+					}						
+				}
+			,
+			error:
+				function()
+				{
+					alert("에러");
+				}
+		}
+	);	    	
+}
 
 
 </script>
@@ -1661,8 +1772,10 @@ function reviewRefresh(lng, lat){
 	
 	
 
-	<div id="dairy-container" style="display: none;"></div>
-	<div id="dairy" class="col-xl-4" style="display: none">
+
+	<div id="diary-container" style="display:none;"></div>
+	
+	<div id="diary" class="col-xl-4" style="display:none;">
 		<form action="">
 			<div class="card shadow">
 				<div class="card-header bg-transparent">
@@ -1677,33 +1790,48 @@ function reviewRefresh(lng, lat){
 						</div>
 					</div>
 					<div class="card-body2">
-						<!-- 결과 그래프 출력 -->
-						<canvas id="myChart" hidden="hidden" width="5" height="2"></canvas>
-						<table id="result_table" hidden="hidden">
-							<tr>
-								<td><img id="result_picture" src="" style="width: 50%" /></td>
-								<td>
-									<p id="result_description"></p>
-								</td>
-							</tr>
-						</table>
-
-						<!-- 테스트 목록 출력 -->
-						<table id="health_test_table">
-							<tr>
-								<td style="width: 230px; height: 150px;"><img id="type1" class="hvr-grow-shadow" name="1" src="../resources/img/type1.png" style="width: 90%" /></td>
-								<td style="width: 230px; height: 150px;"><img id="type2" class="hvr-grow-shadow" name="2" src="../resources/img/type2.png" style="width: 90%" /></td>
-							</tr>
-							<tr>
-								<td style="width: 230px; height: 150px;"><img id="type3" class="hvr-grow-shadow" name="3" src="../resources/img/type3.png" style="width: 90%" /></td>
-								<td style="width: 230px; height: 150px;"><img id="type4" class="hvr-grow-shadow" name="4" src="../resources/img/type4.png" style="width: 90%" /></td>
-							</tr>
-						</table>
+					<!-- 결과 그래프 출력 -->
+					<canvas id="myChart" hidden="hidden" width="5" height="2"></canvas>					
+					<table id="result_table" hidden="hidden">
+						<tr>							
+							<td>
+								<img id="result_picture" src=""  style="width:50%" />
+							</td>
+							<td>
+								<p id="result_description"></p> 
+							</td>
+						</tr>
+					</table>
+					
+					<table id="hopital_table" hidden="hidden" >
+														
+					</table>
+					
+					<!-- 테스트 목록 출력 -->
+					<table id="health_test_table">
+						<tr>
+							<td style="width:230px;height:150px;"> 
+								<img id="type1" class="hvr-grow-shadow"  name="1" src="../resources/img/type1_1.png" style="width:90%;"  />
+							</td>
+							<td style="width:230px;height:150px;">
+								<img id="type2" class="hvr-grow-shadow" name="2" src="../resources/img/type2_1.png" style="width:90%; " />
+							</td>
+						</tr>
+						<tr>
+							<td style="width:230px;height:150px;">
+								<img id="type3" class="hvr-grow-shadow" name="3" src="../resources/img/type3_1.png" style="width:90%"/>
+							</td>
+							<td style="width:230px;height:150px;">
+								<img id="type4" class="hvr-grow-shadow" name="4" src="../resources/img/type4_1.png" style="width:90%"/>
+							</td>
+						</tr>
+					</table>
 					</div>
 				</div>
 			</div>
 		</form>
 	</div>
+	
 	<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
 		<div class="container-fluid">
 			<!-- Toggler -->

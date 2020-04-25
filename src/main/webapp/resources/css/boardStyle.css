@@ -38,6 +38,12 @@ h1 {
 	font-size: 85px;
 }
 
+
+.hospital_tr
+{
+	float:left;
+}
+
 h1 span:nth-child(1) {
 	color: #5c6fdf;
 }
