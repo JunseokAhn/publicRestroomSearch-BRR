@@ -1300,16 +1300,54 @@ function reviewRefresh(lng, lat){
 	
 	// 최근 이용했던 화장실, 선호하는 화장실
 	function Recent() {
-	$.ajax({
+		var id = $("#sessionId").val();
+		$.ajax({
 		url : "<c:url value='/dayaver/recent'/>",
 		type : "GET" ,
-		data : "JSON" ,
-		success : function(res) {
-			if(res) {
-			console.log(res);
-			
+		data : {
+				id : id
+			},
+		success : function(list) {
+			console.log(list);
+			if(list != null) {
+				var content = "<table>";
+				$("#Recent-contents").val("");
+				$("input[name='Recent-x-button']").html();
+				$("input[name='Recent-send']").html();
+				$("#Recent-contents").html();
+				$("#Recent-container").show();
+				$("#Recent").fadeIn();
+				for(var i = 0; i < 3; i++) {
+// 				console.log(list.list1[i] + "최근 이용했던 화장실");
+// 				console.log(list.list1[i].toiletNm);
+// 				console.log(list.list1[i].inputdate);
+				
+// 				console.log(list.list2[i] + "많이 이용했던 화장실");
+// 				console.log(list.list2[i].toiletNm);
+// 				console.log(list.list2[i].conut);
+// 				var Recent_toilet_1 = list.list1[0].toiletNm;
+// 				console.log(Recent_toilet_1 + "맵으로 받은값");
+				content += "<tr>";
+				content += "<td>" + list.list1[i].toiletNm + "</td>";
+				content += "<td>" + list.list1[i].inputdate + "</td>";
+				content += "</tr>";
+				for(var j = 0; j<3; i++) {
+				content += "<tr>";
+				content += "<td>" + list.list2[j].toiletNm + "</td>";
+// 				content += "</tr>";
+				}
+			}	
+// 				$.each(list, function(key, list){
+// 				content += "<tr>";
+// 				content += "<td>" + list.list1.toiletNm + "</td>" ;
+// 				content += "<td>" + list.list1.inputdate + "</td>";
+// 			});
+				content += "</table>";
+				console.log(content);
+				$("#Recent-contents").html(content);
 			}else {
-			alert("객체전달이 안되었습니다.")
+			alert("로그인 후 사용가능 한 기능입니다 로그인 후 사용해주세요");
+				location.href = "/member/login";
 			}
 		},
 		error : function(e) {
@@ -1751,18 +1789,21 @@ function InsertResult()
 						<div class="col">
 							<h2 class="mb-0" style="display: inline-block">Recent toliet</h2>
 							<input id="x-button" name="Recent-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#Recent").hide(), $("#Recent-container").fadeOut()'> 
-<!-- 							<input id="register" name="feedback-send" class="btn btn-sm btn-primary" type="button" value="Send Feedback" onclick=""> -->
 							<h6 id="review-ment" class="text-uppercase text-muted ls-1 mb-1">최근 이용하신 화장실의 내역입니다.</h6>
 						</div>
 					</div>
 				</div>
-<!-- 				<div class="card-body2"> -->
-<!-- 					<div class="col-xl-12 col-lg-6"> -->
-<!-- 						<div class="card card-stats mb-4 mb-xl-0"> -->
-<!-- 							<textarea class="card-body4 replyButton2" id="Recent-contents" onkeydown="resize(this)" onkeyup="resize(this)" style="resize: none;"></textarea> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
+				<div class="card-body2">
+					<div class="col-xl-12 col-lg-6">
+						<div class="card card-stats mb-4 mb-xl-0" id="Recent-contents">
+<%-- 							<c:forEach items=""> --%>
+<!-- 							<table> -->
+								
+<!-- 							</table> -->
+<%-- 							</c:forEach> --%>
+						</div>
+					</div>
+				</div>
 			</div>
 		</form>
 	</div>
@@ -2054,7 +2095,7 @@ function InsertResult()
 										</div>
 									</c:if>
 
-									<c:if test="${sessionScope.sessionGooglename != null}">
+									<c:if test="${sessionScope.sessionNaver == null}">
 										<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="${sessionScope.Profile}"/>">
 										</span>
 										<div class="media-body ml-2 d-none d-lg-block">

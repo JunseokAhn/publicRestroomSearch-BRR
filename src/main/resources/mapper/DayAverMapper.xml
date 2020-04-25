@@ -48,7 +48,7 @@ inputdate between sysdate - '6' and sysdate
 </select>
 
 <!-- 최근 이용한 화장실 3개 가져오기 -->
-<select id="Recent" parameterType="aver" resultType="aver">
+<select id="Recent" parameterType="String" resultType="aver">
 select toiletnm, inputdate
 from (select *  from dayaver
 order by inputdate desc)dayaver
@@ -56,8 +56,12 @@ where <![CDATA[rownum < 4]]> and id = #{id}
 </select>
 
 <select id="Prefer" parameterType="String" resultType="aver">
-
-
+SELECT
+     toiletNm, count(toiletNm)
+FROM dayaver
+where id = #{id}
+GROUP by toiletNm
+ORDER BY COUNT(toiletNm) DESC
 </select>
 
 

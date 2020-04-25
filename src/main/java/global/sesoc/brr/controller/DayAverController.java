@@ -1,6 +1,10 @@
 package global.sesoc.brr.controller;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -109,16 +113,31 @@ public class DayAverController {
 	
 	@GetMapping("recent")
 	@ResponseBody
-	public DayAverVO Recent (String id, HttpSession httpsession) {
+	public HashMap<String, Object> Recent (String id, HttpSession httpsession) {
 		DayAverVO aver = new DayAverVO();
 		aver.setId((String)httpsession.getAttribute("sessionId"));
-		System.out.println(aver.getId());
-		if(aver.getId().equals((String)httpsession.getAttribute("sessionId"))) {
-		dao.Recent(id);
-		}else {
-			System.out.println("아이디가 일치하지 않습니다.");
-		}
-		return aver;
+		ArrayList<DayAverVO> list1 = dao.Recent(id);
+		
+		ArrayList<DayAverVO> list2 = dao.Prefer(id);
+		
+		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("list1", list1);
+		map.put("list2", list2);
+		
+		System.out.println(list2);
+		
+		return map;
 	}
 	
+	@GetMapping("prefer")
+	@ResponseBody
+	public ArrayList<DayAverVO> Prefer (String id, HttpSession httpsession) {
+		DayAverVO aver = new DayAverVO();
+		aver.setId((String)httpsession.getAttribute("sessionId"));
+		ArrayList<DayAverVO> list = dao.Prefer(id);
+		System.out.println(aver.getId());
+		return list;
+	}
+		
 }
