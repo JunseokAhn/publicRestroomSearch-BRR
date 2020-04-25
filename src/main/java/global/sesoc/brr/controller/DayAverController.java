@@ -33,16 +33,20 @@ public class DayAverController {
 		System.out.println(id);
 		System.out.println((String)httpsession.getAttribute("sessionId"));
 		
-		if(id.equals((String)httpsession.getAttribute("sessionId"))) {
-			System.out.println("성공하였습니다.");
+		if(id == null || id == "") {
+			System.out.println("비회원이 경로 조회");
 			
 			System.out.println(aver.toString());
 			
 			dao.insertAver(aver);
+			
 		} else {
-			System.out.println("객체가 전달 되지 않았습니다.");
-			return "";
+			System.out.println("회원이 경로 조회");
+			System.out.println(aver.toString());
+			
+			dao.insertAver(aver);
 		}
+		
 		return "";
 	}
 	
@@ -74,17 +78,17 @@ public class DayAverController {
 		
 //		if(result == 0 || recent3 == 0) {
 			System.out.println("7일 총 이용자수 : " + result);
-			System.out.println("최근 2일 이용자 수 : " + recent2);
-			System.out.println("전의 2일 이용자 수 : " + recent3);
+			System.out.println("최근 2일 이용자 수 평균 : " + recent2);
+			System.out.println("5일 이용자 수 평균: " + recent3);
 			
 			httpsession.setAttribute("user7Days", result);
 			httpsession.setAttribute("user2Days", recent2);
 			httpsession.setAttribute("user4Days", recent3);
 			
 			
-			//recent2 => 최근 2일
-			//recent3 => 전의 2일
-			Double UserDiffer = (recent2 / recent3 - 1) * 100;
+			//recent2 => 2일 평균 이용자 수
+			//recent3 => 5일 평균 이용자 수
+			Double UserDiffer = (recent2 - recent3) * 2;
 			
 			if(Double.isInfinite(UserDiffer) || Double.isNaN(UserDiffer)) {
 				System.out.println("UserDiffer를 999로 처리.");
