@@ -95,12 +95,48 @@ function listSNS() {
 
 //sns댓글부분(ajax사용)
 //readSNS페이지로 넘어오면 document에 넣은 함수가 한번 실행됨
+var num;
 $(document).ready(function() {
 	$('.form1').hide();
 	$('.form2').on('click', function(e) {
 		console.log($(e.target).data("num"));
-		var num = $(e.target).data("num");
-		$('.form1[data-num="'+num+'"]').toggle();
+		num = $(e.target).data("num");
+
+		if($(this).html()=="댓글쓰기")
+		{
+			$('.form1[data-num="'+num+'"]').show();
+			$(this).html("댓글취소");
+		}
+		else
+		{
+			$(this).html("댓글쓰기");
+			$('.form1[data-num="'+num+'"]').hide();
+		}
+
+		//$('.form1[data-num="'+num+'"]').toggle();
+	});
+	$('.form3').on('click', function(e) {
+		num = $(e.target).data("num");
+		
+		if($(this).html()=="댓글목록")
+		{			
+			console.log("댓글목록 확인");			
+			init(num);
+			$('#replies[data-num="'+num+'"]').removeAttr("hidden","hidden");
+			$(this).html("댓글 숨기기");
+		}
+		else
+		{		
+			console.log("예외로 빠짐");	
+			$(this).html("댓글목록");
+			$('#replies[data-num="'+num+'"]').attr("hidden","hidden");
+		}
+
+		
+		/* var num = $(e.target).data("num");
+		init(num);
+		$('.listTable[data-num="'+num+'"]').toggle(); */
+		
 	});
 	//$("#form").on('click', snsReplySave);
 	//$("#form + ${sns.snsBoardnum}").on('click', snsReplySave);
@@ -136,8 +172,11 @@ function snsReplySave(snsBoardnum, email) {
 		},
 		success: function() {
 			alert('댓글이 작성되었습니다.');
-			$("input[data-num='"+snsBoardnum+"']").val('');
-			init(snsBoardnum);
+			$("input[data-num='"+snsBoardnum+"']").val('');						
+			init(snsBoardnum);			
+			$('.form3[data-num="'+num+'"]').html("댓글 숨기기");
+			$('#replies[data-num="'+num+'"]').removeAttr("hidden","hidden");
+			
 		},
 		error: function(e) {
 			alert(JSON.stringify(e));//에러객체를 전달해서 문자열화하는 클래스의 함수사용
@@ -187,7 +226,7 @@ function init(snsBoardnum) {
 function output(listSnsReply) {
 	var snsBoardnum1 = '';
 	console.log(snsBoardnum);
-	var str = '<div class="mx-auto replyComments form-group"><table class="table">';
+	var str = '<div class="listTable mx-auto replyComments form-group" data-num="${sns.snsBoardnum}"><table class="table">';
 	//var str = '<table class="table">';
 
 	//$('#replies').html("");
@@ -218,7 +257,7 @@ function output(listSnsReply) {
 	});
 	
 	str += '</table></div>';
-	alert('snsBoardnum1는' + snsBoardnum1);
+	//alert('snsBoardnum1는' + snsBoardnum1);
 	$('#replies[data-num="'+snsBoardnum1+'"]').html(str);
 		
 	//str += '</table></div>';
@@ -634,7 +673,7 @@ function deleteSnsReply() {
 										onclick="updateSNS('${sns.snsBoardnum}')">수정</button>
 								</c:if>		
 									<button type="button" class="form2 btn btn-primary btn-sm" data-num="${sns.snsBoardnum}">댓글쓰기</button>
-										
+									<button type="button" class="form3 btn btn-primary btn-sm" data-num="${sns.snsBoardnum}">댓글목록</button>	
 								</div>
 							</div>
 								

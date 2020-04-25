@@ -306,13 +306,13 @@ function formCheck() {
 							<div class="mx-auto boardTitle form-group">
 								<label for="exampleFormControlInput1">제목</label> <input
 									type="text" class="form-control" id="exampleFormControlInput1"
-									placeholder="제목을 입력해주세요." id="title" name="title">
+									placeholder="제목을 입력해주세요." name="title">
 							</div>
 
 							<div class="mx-auto boardContents form-group">
 								<label for="exampleFormControlTextarea1">내용</label>
 								<textarea class="form-control" id="exampleFormControlTextarea1"
-									rows="15" id="contents" name="contents"></textarea>
+									rows="15" name="contents"></textarea>
 							</div>
 
 							<div class="mx-auto boardButton form-group">
