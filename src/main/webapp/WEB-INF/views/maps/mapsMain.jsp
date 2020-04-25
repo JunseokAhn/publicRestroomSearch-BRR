@@ -1540,6 +1540,8 @@ function ShowHospitalList()
 			success:
 				function(list)
 				{
+					//var childrens = $('div').children();
+					$("#diary>*").css("background-color","navy"); 
 					$("#result_table").attr("hidden","hidden");
 					$("#myChart").attr("hidden","hidden");	
 					$("input[name='save-data']").attr("hidden","hidden");	
@@ -1551,40 +1553,17 @@ function ShowHospitalList()
 						
 
 						for(var i =0;i<5;i++)
-						{						
-							contents+='<tr>';
-							contents+='<td style="float:left">' + (i+1) +'</td>';	
-							contents+='</tr>';
-							
-							contents+='<tr style="float: left;">';							
-							contents+='<td>병원 이름 : ' + list_temp[i].dutyName + ' 전화번호 : ' + list_temp[i].dutyTel1 + '</td>';							
-							contents+='</tr>';
-							
-
-							contents+='<tr style="float: left;">';
-							contents+='<td style="width:100%">평일 개시시간 : ' + list_temp[i].dutyTimeS + ' 평일 종료시간 : ' + list_temp[i].dutyTimeC + '</td>';
-							contents+='</tr>';
-
-							contents+='<tr style="float:left;">';
-							contents+='<td style="font-size:15px;">' + list_temp[i].dutyAddr + '</td>';
-							contents+='</tr>';													
+						{
+							contents+='<tr">';
+							contents+='<th scope="col" style="text-align: left; font-size:15px;">'+(i+1) +'. 병원 이름 : ' + list_temp[i].dutyName + ' 전화번호 : ' + list_temp[i].dutyTel1+'<br>';
+							contents+='평일 개시시간 : '+ list_temp[i].dutyTimeS + ' 평일 종료시간 : ' + list_temp[i].dutyTimeC +'<br>';
+							contents+= '주소: '+ list_temp[i].dutyAddr;
+							contents+='</th>';							
+							contents+='</tr>';							
 						}
-
+						
 						$("#hopital_table").html(contents);
-						$("#hopital_table").removeAttr("hidden","hidden");
-						
-						
-/* 						<tr style="float: left;">
-							<td>병원 이름 : 최평락한의원  전화번호 : 02-501-1488</td>															
-						</tr>
-						<tr style="float: left;">							
-							<td>평일 개시시간 : 0930,  평일 종료시간 : 1830</td>														
-						</tr>	
-						<tr style="float: left;border-bottom: 1px solid;">													
-							<td>서울특별시 강남구 영동대로 309, 2층 (대치동, 준오빌딩 2층)</td>		
-							<td><br></td>													
-						</tr>								 */
-									
+						$("#hopital_table").removeAttr("hidden","hidden");									
 					}
 				}
 			,
@@ -1659,7 +1638,7 @@ function InsertResult()
 				<div class="col-xl-12 col-lg-6">
 					<div class="card card-stats mb-4 mb-xl-0">
 						<textarea class="card-body4 replyButton2" id="review-area" name="review" onkeydown="resize(this)" onkeyup="resize(this)" style="resize: none;"></textarea>
-						<div class="row">
+						<div class="row" >
 							<div class="col mt-2">
 								<span class="h2 font-weight mb-0">별점<img id="star1" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star2" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star3" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star4" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star5" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>">
 								</span> <span id="clean-margin" class="h2 font-weight mb-0">청결도<img id="clean1" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean2" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean3" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean4" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean5" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"></span>
@@ -1698,8 +1677,8 @@ function InsertResult()
 	</div>
 	
 	<!-- 최근 이용 화장실 nav-->
-	<div id="Recent-container"></div>
-	<div id="Recent" class="col-xl-4">
+	<div id="Recent-container" style="display:none;"></div>
+	<div id="Recent" class="col-xl-4" style="display:none;">
 		<form action="">
 			<div class="card shadow">
 				<div class="card-header bg-transparent">
@@ -1748,7 +1727,7 @@ function InsertResult()
 					<div class="card-body2">
 					<!-- 결과 그래프 출력 -->
 					<canvas id="myChart" hidden="hidden" width="5" height="2"></canvas>					
-					<table id="result_table" hidden="hidden">
+					<table id="result_table"  hidden="hidden">
 						<tr>							
 							<td>
 								<img id="result_picture" src=""  style="width:50%" />
@@ -1759,7 +1738,7 @@ function InsertResult()
 						</tr>
 					</table>
 					
-					<table id="hopital_table" hidden="hidden" >
+					<table id="hopital_table"  class="table align-items-center table-flush"  hidden="hidden">
 														
 					</table>
 					
