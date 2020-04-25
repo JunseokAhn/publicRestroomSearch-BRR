@@ -1,5 +1,7 @@
 package global.sesoc.brr.mapper;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.annotations.Param;
 
 import global.sesoc.brr.vo.DayAverVO;
@@ -24,7 +26,9 @@ public interface DayAverMapper {
 	//변화량(예전 2일 데이터)
 	public Double average3 (@Param("lat")Double lat, @Param("lng")Double lng);
 	
-	//최근 글 목록 3개
-	public DayAverVO Recent (String id);
+	//최근 화장실 목록 3개
+	public ArrayList<DayAverVO> Recent (String id);
 	
+	//선호하는 화장실 목록 
+	public ArrayList<DayAverVO> Prefer (String id);
 }

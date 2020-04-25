@@ -101,15 +101,28 @@ public class DayAverDAO {
 		return result;
 	}
 	
-	public DayAverVO Recent (String id) {
-		DayAverVO aver = null;
+	//최근 이용했던 화장실 
+	public ArrayList<DayAverVO> Recent (String id) {
+		ArrayList<DayAverVO> list = null;
 		try {
 			DayAverMapper mapper = session.getMapper(DayAverMapper.class);
-			aver = mapper.Recent(id);
+			list = mapper.Recent(id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return aver;
+		return list;
+	}
+	
+	//가장 선호하는 화장실
+	public ArrayList<DayAverVO> Prefer (String id) {
+		ArrayList<DayAverVO> list = null;
+		try {
+			DayAverMapper mapper = session.getMapper(DayAverMapper.class);
+			list = mapper.Prefer(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 	
 }
