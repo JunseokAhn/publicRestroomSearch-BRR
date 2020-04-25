@@ -778,24 +778,24 @@ function reviewRefresh(lng, lat){
         content2 += "<p class='mt-3 mb-0 text-muted text-sm'>"
         if(starDiffer<0){
             starDiffer = starDiffer*-1;
-            content2 += "<span class='text-nowrap mr-2'>별점: " + starAver + "</span><span class='text-warning'><i class='fa fa-arrow-down'></i> " + starDiffer + "</span>";
+            content2 += "<span class='text-nowrap mr-2'>별점: " + starAver + "</span><span class='text-warning'> " + starDiffer + " <i class='fa fa-arrow-down'></i></span>";
         }
         else
-        	content2 += "<span class='text-nowrap mr-2'>별점: " + starAver + "</span><span class='text-success'><i class='fa fa-arrow-up'></i> " + starDiffer + "</span>";
+        	content2 += "<span class='text-nowrap mr-2'>별점: " + starAver + "</span><span class='text-success'>" + starDiffer + " <i class='fa fa-arrow-up'></i></span>";
         if(cleanDiffer<0){
             cleanDiffer = cleanDiffer*-1;
-            content2 += "<span class='text-nowrap ml-4 mr-2'>청결도: " + cleanAver + "</span><span class='text-warning'><i class='fa fa-arrow-down'></i> " + cleanDiffer + "</span>";
+            content2 += "<span class='text-nowrap ml-4 mr-2'>청결도: " + cleanAver + "</span><span class='text-warning'>" + cleanDiffer + " <i class='fa fa-arrow-down'></i></span>";
         }
         else
-            content2 += "<span class='text-nowrap ml-4 mr-2'>청결도: " + cleanAver + "</span><span class='text-success'><i class='fa fa-arrow-up'></i> " + cleanDiffer + "</span>";
+            content2 += "<span class='text-nowrap ml-4 mr-2'>청결도: " + cleanAver + "</span><span class='text-success'>" + cleanDiffer + " <i class='fa fa-arrow-up'></i></span>";
         content2 += "</p>";
         content2 += "<p class='mt-1 mb-0 text-muted text-sm'>";
         if(changeRate<0){
         	changeRate = changeRate*-1;
-            content2 += " <span class='text-nowrap mr-2'> 사용자: " + averageRate +"</span><span class='text-warning'><i class='fa fa-arrow-down'></i> " + changeRate + "%</span>";
+            content2 += " <span class='text-nowrap mr-2'> 사용자: " + averageRate +"</span><span class='text-warning'>" + changeRate + "% <i class='fa fa-arrow-down'></i></span>";
         }
         else	
-        	content2 += " <span class='text-nowrap mr-2'> 사용자: " + averageRate +"</span><span class='text-success'><i class='fa fa-arrow-up'></i> " + changeRate + "%</span>";
+        	content2 += " <span class='text-nowrap mr-2'> 사용자: " + averageRate +"</span><span class='text-success'>" + changeRate + "% <i class='fa fa-arrow-up'></i></span>";
         content2 += "<input class='replyButton3 ml-1 pointer' type='button' value='리뷰 목록' onclick='location.href=\"/brr/review/reviewMain?toiletNm=" + title + "\"'>";
 
         var id = $("#sessionId").val();
@@ -1987,10 +1987,10 @@ function reviewRefresh(lng, lat){
 											</div>
 										</div>
 										<p class="mt-3 mb-0 text-muted text-sm">
-											<span class="text-success"><i class="fa fa-arrow-up"></i> 변화량</span> <span class="text-nowrap mr-2">별점평균</span> <span class="text-success"><i class="fa fa-arrow-up"></i> 변화량</span> <span class="text-nowrap">청결도평균</span>
+											<span class='text-nowrap mr-0'>별점: </span><span class='text-success'>별점평균</span><span class='text-nowrap mr-0 ml-2'> 청결도:</span><span class='text-success'>청결도평균</span>
 										</p>
 										<p class="mt-2 mb-0 text-muted text-sm">
-											<span class="text-warning"><i class="fa fa-arrow-down"></i> 변화량</span> <span class="text-nowrap">이용자수</span>
+											<span class='text-nowrap mr-0'>이용자수: </span><span class='text-success'>7일집계</span>
 										</p>
 									</div>
 								</div>
