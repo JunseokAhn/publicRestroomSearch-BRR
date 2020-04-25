@@ -1,6 +1,9 @@
 package global.sesoc.brr.dao;
 
 
+import java.util.ArrayList;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -61,8 +64,10 @@ public class DayAverDAO {
 		return result;
 	}
 	
-	public Double average (Double lat, Double lng) {
-		Double result = 0.0;
+	//7일동안의 해당 화장실의 총 이용횟수
+	public int average (Double lat, Double lng) {
+		int result = -1;
+		
 		try {
 			DayAverMapper mapper = session.getMapper(DayAverMapper.class);
 			result = mapper.average(lat, lng);	
@@ -72,6 +77,7 @@ public class DayAverDAO {
 		return result;
 	}
 	
+	//최근 2일 동안의 해당 화장실의 총 이용횟수
 	public Double average2 (Double lat, Double lng) {
 		Double result = 0.0;
 		try {
@@ -81,6 +87,29 @@ public class DayAverDAO {
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	//예전 2일 동안의 해당 화장실의 총 이용횟수
+	public Double average3 (Double lat, Double lng) {
+		Double result = 0.0;
+		try {
+			DayAverMapper mapper = session.getMapper(DayAverMapper.class);
+			result = mapper.average3(lat, lng);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public DayAverVO Recent (String id) {
+		DayAverVO aver = null;
+		try {
+			DayAverMapper mapper = session.getMapper(DayAverMapper.class);
+			aver = mapper.Recent(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return aver;
 	}
 	
 }

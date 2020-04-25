@@ -45,23 +45,7 @@ public class DayAverController {
 		}
 		return "";
 	}
-	//해당 화장실의 전체 이용자 수
-//	@PostMapping("/allUser")
-//	@ResponseBody
-//	public String alluser(Double lat, Double lng, HttpSession httpsession) {
-//		logger.info("화장실 사용자 통계 입니다.");
-//		
-//		Double result = dao.listAll(lat, lng);
-//		
-//		System.out.println("하루 화장실 통계자 수 : " + result);
-//		
-//		Double UserDiffer = result - (Double)httpsession.getAttribute("userAvg");
-//		
-//		httpsession.setAttribute("userDiffer", UserDiffer);
-//		
-//		return "";
-//	}
-//	
+	
 	//해당 아이디의 기록 삭제 입니다.
 	@GetMapping("/deleteRecord")
 	@ResponseBody
@@ -80,55 +64,57 @@ public class DayAverController {
 	@PostMapping("/average")
 	@ResponseBody
 	public DayAverVO average (Double lat, Double lng, HttpSession httpsession) {
-		logger.info("7일 평균 계산, 변화량 컨트롤러 이동");
+		logger.info("7일 동안 총 이용횟수, 변화량 계산");
 		
 		DayAverVO aver = new DayAverVO();
 		
-		Double result = dao.average(lat, lng); // 7일 평균
-//		Double result2 = dao.listAll(lat, lng); // 해당 화장실 모든 데이터 출력
-		Double result3 = dao.average2(lat, lng);// 2일 평균
+		int result = dao.average(lat, lng); // 7일 총 횟수
+		Double recent2 = dao.average2(lat, lng); // 최근 2일 이용 횟수
+		Double recent3 = dao.average3(lat, lng); //전의 2일 이용 횟수
 		
-		
-		if(result == null || result3 == null) {
-			result = 0.0;
-			result3 = 0.0;
+//		if(result == 0 || recent3 == 0) {
+			System.out.println("7일 총 이용자수 : " + result);
+			System.out.println("최근 2일 이용자 수 : " + recent2);
+			System.out.println("전의 2일 이용자 수 : " + recent3);
 			
-			System.out.println("7일 평균 이용자 수 : " + result);
-//			System.out.println("변화량 : " + result2);
-			System.out.println("2일 평균 이용자 수 : " + result3);
+			httpsession.setAttribute("user7Days", result);
+			httpsession.setAttribute("user2Days", recent2);
+			httpsession.setAttribute("user4Days", recent3);
 			
-			httpsession.setAttribute("userAvg", result);
-			httpsession.setAttribute("userAvg_2", result3);
 			
-			Double UserDiffer = result3 - (Double)httpsession.getAttribute("userAvg");
+			//recent2 => 최근 2일
+			//recent3 => 전의 2일
+			Double UserDiffer = (recent2 / recent3 - 1) * 100;
+			
+			if(Double.isInfinite(UserDiffer) || Double.isNaN(UserDiffer)) {
+				System.out.println("UserDiffer를 999로 처리.");
+				UserDiffer = 999.0;
+			}
 			
 			System.out.println("변화량 : " + UserDiffer);
 			
 			httpsession.setAttribute("userDiffer", UserDiffer);
 			
-			aver.setAverage(result);
-			aver.setDiffer(UserDiffer);
-		} else {
-			
-			System.out.println("7일 평균 이용자 수 : " + result);
-//			System.out.println("변화량 : " + result2);
-			System.out.println("2일 평균 이용자 수 : " + result3);
-			
-			httpsession.setAttribute("userAvg", result);
-			httpsession.setAttribute("userAvg_2", result3);
-			
-			Double UserDiffer = result3 - (Double)httpsession.getAttribute("userAvg");
-			
-			System.out.println("변화량 : " + UserDiffer);
-			
-			httpsession.setAttribute("userDiffer", UserDiffer);
-			
-			aver.setAverage(result);
-			aver.setDiffer(UserDiffer);
-			
-		}
+			aver.setAverage(result); // 7일간 총 이용횟수
+			aver.setDiffer(UserDiffer); // 변화량
+//		} else {
+//		}
 		return aver;
 		
+	}
+	
+	@GetMapping("recent")
+	@ResponseBody
+	public DayAverVO Recent (String id, HttpSession httpsession) {
+		DayAverVO aver = new DayAverVO();
+		aver.setId((String)httpsession.getAttribute("sessionId"));
+		System.out.println(aver.getId());
+		if(aver.getId().equals((String)httpsession.getAttribute("sessionId"))) {
+		dao.Recent(id);
+		}else {
+			System.out.println("아이디가 일치하지 않습니다.");
+		}
+		return aver;
 	}
 	
 }

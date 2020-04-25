@@ -15,9 +15,16 @@ public interface DayAverMapper {
 	//해당 회원의 검색 기록 삭제
 	public int deleteRecord (String id);
 	
-	//7일 평균
-	public Double average (@Param("lat")Double lat, @Param("lng")Double lng);
+	//7일 모든 이용자 수 데이터
+	public int average (@Param("lat")Double lat, @Param("lng")Double lng);
 	
-	//2일 평균
+	//변화량(최근 2일 데이터)
 	public Double average2 (@Param("lat")Double lat, @Param("lng")Double lng);
+	
+	//변화량(예전 2일 데이터)
+	public Double average3 (@Param("lat")Double lat, @Param("lng")Double lng);
+	
+	//최근 글 목록 3개
+	public DayAverVO Recent (String id);
+	
 }

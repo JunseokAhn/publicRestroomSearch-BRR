@@ -15,28 +15,57 @@
 	</select>
 
 	<select id="searchRating" parameterType="location" resultType="toilet">
-		select * from brr_toilet where toiletNm like (
-		select toiletNm from (
-		select toiletNm, avg(DISTANCE) DISTANCE, avg(star) star from (
-		select toiletNm, trunc(DISTANCE_WGS84(#{lat},#{lng}, lat, lng),3)*1000 as DISTANCE
-		from brr_toilet
-		where (lat between #{lat}-0.021 and #{lat}+0.021) and (lng between #{lng}-0.0246 and #{lng}+0.0246)
-		order by DISTANCE) join brr_review using(toiletNm)
-		group by toiletNm
-		order by star desc, distance)
-		where rownum=1) and rownum=1
+		select * 
+		from (
+			select TOILETNM, TOILETTYPE, LNMADR, UNISEXTOILETYN, MENTOILETBOWLNUMBER, MENURINENUMBER, MENHANDICAPTOILETBOWLNUMBER, MENHANDICAPURINALNUMBER, MENCHILDRENTOILETBOWLNUMBER, MENCHILDRENURINALNUMBER,LADIESTOILETBOWLNUMBER, LADIESHANDICAPTOILETBOWLNUMBER, LADIESCHILDRENTOILETBOWLNUMBER, INSTITUTIONNM, PHONENUMBER, OPENTIME, c.lat LAT, c.lng LNG, star, distance
+			from brr_toilet c, 
+			( select lat, lng, avg(star) star, distance 
+			from(
+				select a.lat LAT, a.lng LNG, star, DISTANCE
+				from brr_toilet a,
+				( select lat, lng, star, distance
+				from (
+						select trunc(DISTANCE_WGS84(#{lat},#{lng}, lat, lng),3)*1000 as DISTANCE, lat, lng
+						from brr_toilet
+						where (lat between #{lat}-0.021 and #{lat}+0.021) and (lng between #{lng}-0.0246 and #{lng}+0.0246)
+						order by DISTANCE
+					)
+				join brr_review using(lat, lng)
+				) b
+			where a.lng = b.lng and a.lat = b.lat
+			)
+			group by lat, lng, distance
+			)d
+			where c.lat=d.lat and c.lng=d.lng
+			order by star desc, distance
+		) where rownum=1
+
 	</select>
 
 	<select id="searchClean" parameterType="location" resultType="toilet">
-		select * from brr_toilet where toiletNm like (
-		select toiletNm from (
-		select toiletNm, avg(DISTANCE) DISTANCE, avg(clean) clean from (
-		select toiletNm, trunc(DISTANCE_WGS84(#{lat},#{lng}, lat, lng),3)*1000 as DISTANCE
-		from brr_toilet
-		where (lat between #{lat}-0.021 and #{lat}+0.021) and (lng between #{lng}-0.0246 and #{lng}+0.0246)
-		order by DISTANCE) join brr_review using(toiletNm)
-		group by toiletNm
-		order by clean desc, distance)
-		where rownum=1) and rownum=1
+		select * 
+		from (
+			select TOILETNM, TOILETTYPE, LNMADR, UNISEXTOILETYN, MENTOILETBOWLNUMBER, MENURINENUMBER, MENHANDICAPTOILETBOWLNUMBER, MENHANDICAPURINALNUMBER, MENCHILDRENTOILETBOWLNUMBER, MENCHILDRENURINALNUMBER,LADIESTOILETBOWLNUMBER, LADIESHANDICAPTOILETBOWLNUMBER, LADIESCHILDRENTOILETBOWLNUMBER, INSTITUTIONNM, PHONENUMBER, OPENTIME, c.lat LAT, c.lng LNG, clean, distance
+			from brr_toilet c, 
+			( select lat, lng, avg(clean) clean, distance 
+			from(
+				select a.lat LAT, a.lng LNG, clean, DISTANCE
+				from brr_toilet a,
+				( select lat, lng, clean, distance
+				from (
+						select trunc(DISTANCE_WGS84(#{lat},#{lng}, lat, lng),3)*1000 as DISTANCE, lat, lng
+						from brr_toilet
+						where (lat between #{lat}-0.021 and #{lat}+0.021) and (lng between #{lng}-0.0246 and #{lng}+0.0246)
+						order by DISTANCE
+					)
+				join brr_review using(lat, lng)
+				) b
+			where a.lng = b.lng and a.lat = b.lat
+			)
+			group by lat, lng, distance
+			)d
+			where c.lat=d.lat and c.lng=d.lng
+			order by clean desc, distance
+		) where rownum=1
 	</select>
 </mapper>
