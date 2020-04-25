@@ -23,20 +23,19 @@
 <script>
 //글쓰기폼 확인
 function formCheck() {
-	var title = document.getElementsByName('title');
+	var title = document.getElementById('title');
+	var contents = document.getElementById('contents');
 	
-	var contents = document.getElementsByName('contents');
-	
-	if (title[0].value == '') {
+	if (title.value == '') {
 		alert("제목을 입력하세요.");
-		title[0].focus();
-		title[0].select();
+		title.focus();
+		title.select();
 		return false;
 	}
-	if (contents[0].value == '') {
-		alert("내용을 입력하세요.");
-		contents[0].focus();
-		contents[0].select();
+	if (contents.value == '') {
+		alert("메모를 입력하세요.");
+		contents.focus();
+		contents.select();
 		return false;
 	}
 	return true;
