@@ -16,7 +16,7 @@
 	<link href="/resources/css/main.css" rel="stylesheet" type="text/css">
 	<script src="/resources/js/board.js" ></script>
 	<script type="text/javaScript" language="javascript">
-
+		
 
 	
 	</script>
