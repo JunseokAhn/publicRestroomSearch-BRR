@@ -125,4 +125,16 @@ public class DayAverDAO {
 		return list;
 	}
 	
+	//선호하는 화장실 방문 횟수
+	public ArrayList<DayAverVO> Prefer2 (String id) {
+		ArrayList<DayAverVO> list = null;
+		try {
+			DayAverMapper mapper = session.getMapper(DayAverMapper.class);
+			list = mapper.Prefer2(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
 }

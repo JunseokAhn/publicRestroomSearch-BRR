@@ -110,7 +110,7 @@ h1 span:nth-child(2) {
 	font: 1rem/1.5 var(--font-family-sans-serif);
 }
 
-#review-container, #feedback-container, #diary-container, #Recent-container {
+#review-container, #feedback-container, #diary-container, #Recent-container, #Prefer-container {
 	background-color: black;
 	position: fixed;
 	width: 200rem;
@@ -120,7 +120,7 @@ h1 span:nth-child(2) {
 	display: none;
 }
 
-#review, #feedback,#diary, #Recent {
+#review, #feedback,#diary, #Recent, #Prefer {
 	position: fixed;
 	z-index: 999;
 	top: 25%;
@@ -131,7 +131,7 @@ h1 span:nth-child(2) {
 	margin-left: 1rem;	
 }
 @media(max-width: 1600px){
-	#review, #feedback, #diary, #Recent {
+	#review, #feedback, #diary, #Recent, #Prefer {
   		position: fixed;
 		z-index: 999;
 		top: 25%;
@@ -144,7 +144,7 @@ h1 span:nth-child(2) {
  	}
 }
 @media(max-width: 1400px){
-	#review, #feedback, #diary, #Recent {
+	#review, #feedback, #diary, #Recent, #Prefer {
   		position: fixed;
 		z-index: 999;
 		top: 25%;
@@ -160,7 +160,7 @@ h1 span:nth-child(2) {
  	}
 }
 @media(max-width: 768px){
-	#review, #feedback, #diary, #Recent {
+	#review, #feedback, #diary, #Recent, #Prefer {
   		position: fixed;
 		z-index: 999;
 		top: 25%;
@@ -175,7 +175,7 @@ h1 span:nth-child(2) {
  		margin-left: 0rem;	
  	}
 }
-#x-button, feed-x-button, Recent-x-button {
+#x-button, feed-x-button, Recent-x-button, Prefer-x-button {
 	width: 2rem;
 	margin-bottom: 0.4rem;
 	margin-left: 0.6rem;

@@ -29,6 +29,9 @@ public interface DayAverMapper {
 	//최근 화장실 목록 3개
 	public ArrayList<DayAverVO> Recent (String id);
 	
-	//선호하는 화장실 목록 
+	//선호하는 화장실 목록 String
 	public ArrayList<DayAverVO> Prefer (String id);
+	
+	//선호하는 화장실 목록 횟수
+	public ArrayList<DayAverVO> Prefer2 (String id);
 }

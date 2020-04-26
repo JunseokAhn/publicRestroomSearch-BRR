@@ -83,19 +83,19 @@ public class DayAverController {
 //		if(result == 0 || recent3 == 0) {
 			System.out.println("7일 총 이용자수 : " + result);
 			System.out.println("최근 2일 이용자 수 평균 : " + recent2);
-			System.out.println("5일 이용자 수 평균: " + recent3);
+			System.out.println("전의 2일 이용자 수 평균: " + recent3);
 			
 			httpsession.setAttribute("user7Days", result);
 			httpsession.setAttribute("user2Days", recent2);
 			httpsession.setAttribute("user4Days", recent3);
 			
 			
-			//recent2 => 2일 평균 이용자 수
-			//recent3 => 5일 평균 이용자 수
-			Double UserDiffer = (recent2 - recent3) * 2;
+			//recent2 => 최근 2일 평균 이용자 수
+			//recent3 => 전의 2일 평균 이용자 수
+			Double UserDiffer = (recent2 - recent3);
 			
 			if(Double.isInfinite(UserDiffer) || Double.isNaN(UserDiffer)) {
-				System.out.println("UserDiffer를 999로 처리.");
+				System.out.println("데이터를 처리하기 위한 정보가 부족합니다.");
 				UserDiffer = 999.0;
 			}
 			
@@ -117,15 +117,16 @@ public class DayAverController {
 		DayAverVO aver = new DayAverVO();
 		aver.setId((String)httpsession.getAttribute("sessionId"));
 		ArrayList<DayAverVO> list1 = dao.Recent(id);
-		
 		ArrayList<DayAverVO> list2 = dao.Prefer(id);
-		
+		ArrayList<DayAverVO> list3 = dao.Prefer2(id);
 		
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("list1", list1);
 		map.put("list2", list2);
+		map.put("list3", list3);
 		
 		System.out.println(list2);
+		System.out.println(list3);
 		
 		return map;
 	}
