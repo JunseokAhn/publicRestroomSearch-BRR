@@ -49,8 +49,25 @@ public class GoogleMapsController {
 	public ArrayList<NearbyToiletVO> getLocation(String lat, String lng) {
 		lo = new LocationVO(lat, lng);
 		ArrayList<NearbyToiletVO> list = dao.getNearbyToilet(lo);
-		
+
 		return list;
 	}
 
+	@GetMapping(value = "mapsMain5")
+	public String MapsMain5(Model model) {
+
+		/*
+		 * 데이터파싱연습 RestTemplate restTemplate = new RestTemplate(); URI uri =
+		 * UriComponentsBuilder.fromHttpUrl(//길찾기경로 origin=출발지
+		 * destination=도착지인것같다.
+		 * "https://maps.googleapis.com/maps/api/directions/json?origin=41.43206,-81.38992&destination=41.43206,-81.38992&key=AIzaSyDkQ00U2AUBQSS1CJF5YveL-1YWsTjaRGA")
+		 * .queryParam("key", "value").build().toUri(); // String response =
+		 * restTemplate.getForObject(uri, String.class); 또는
+		 * ResponseEntity<String> responseEntity =
+		 * restTemplate.getForEntity(uri, String.class);
+		 * System.out.println(responseEntity); model.addAttribute("directions",
+		 * responseEntity);
+		 */
+		return "maps/mapsMain5";
+	}
 }
