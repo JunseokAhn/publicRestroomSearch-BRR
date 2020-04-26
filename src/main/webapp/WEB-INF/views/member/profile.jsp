@@ -3,39 +3,32 @@
 <!-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!-- 달력 임포트 -->
 
 <html>
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>화장실이 급할땐? - 부르르</title>
-<!-- Favicon -->
+
+
+	
 <link href="<c:url value="/resources/assets/img/brand/favicon.png"/>" rel="icon" type="image/png">
-<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
-<!-- Icons -->
-<link href="<c:url value="/resources/assets/js/plugins/nucleo/css/nucleo.css"/>" rel="stylesheet" />
-<link href="<c:url value="/resources/assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css"/>" rel="stylesheet" />
-<!-- CSS Files -->
-<link href="<c:url value="/resources/css/boardStyle.css"/>" rel="stylesheet" />
-<link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
-<script src="<c:url value="/resources/js/jquery-3.4.1.js/"/>"></script>
-
-<!--달력 -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-	<!-- jquery datepicker -->
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  	
-	<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
-	
-	
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  	
+<link rel="stylesheet" href="../resources/css/hover.css">	
 <link href="/resources/css/main.css" rel="stylesheet" type="text/css">
+<link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
+<link href="<c:url value="/resources/css/boardStyle.css"/>" rel="stylesheet" />
+<link href="<c:url value="/resources/assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css"/>" rel="stylesheet" />
+<link href="<c:url value="/resources/assets/js/plugins/nucleo/css/nucleo.css"/>" rel="stylesheet" />
+
+
+
+<!-- <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script> -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="<c:url value="/resources/js/jquery-3.4.1.js/"/>"></script>
 <script src="/resources/js/board.js" ></script>
-
-
-<!-- 차트 -->
-<link rel="stylesheet" href="../resources/css/hover.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 
 <!--달력 -->
@@ -595,9 +588,9 @@ function GoNextYear()
 </head>
 
 <body class="">
+
 	<!-- 차트 폼 -->
-	<div id="diary-container" style="display:none;"></div>
-	
+	<div id="diary-container" style="display:none;"></div>	
 	<div id="diary" class="col-xl-4" style="display:none;">
 		<form action="">
 			<div class="card shadow">
