@@ -2061,7 +2061,7 @@ function InsertResult()
 						<!-- Navigation -->
 						<ul class="navbar-nav mb-md-3">
 							<li class="nav-item"><a class="nav-link" href="javascript:Recent();">
-								<i class="ni ni-favourite-28 text-pink"></i> <span>Recent toilet</span>
+								<i class="ni ni-watch-time text-indigo"></i> <span>Recent toilet</span>
 							</a></li>
 							<li class="nav-item"><a class="nav-link" href="javascript:Prefer();">
 								<i class="ni ni-favourite-28 text-pink"></i> <span>Preferred toilet</span>
