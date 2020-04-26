@@ -124,7 +124,6 @@ public class DayAverController {
 		map.put("list1", list1);
 		map.put("list2", list2);
 		map.put("list3", list3);
-		
 		System.out.println(list2);
 		System.out.println(list3);
 		
