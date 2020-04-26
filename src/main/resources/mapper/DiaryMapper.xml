@@ -3,7 +3,12 @@
 
 <mapper namespace="global.sesoc.brr.mapper.DiaryMapper">
 
-
+<select id="count" resultType="integer">
+	select count(*)
+	from diary_result
+	group by inputdate
+	having inputdate = to_date(to_char(sysdate,'yyyy/mm/dd'));
+</select>
 
 
 <insert id="insert" parameterType="resVO">
@@ -27,11 +32,12 @@
 	)
 </insert>
 
-<select id="list" resultType="resVO" parameterType="string">
-select *
-from DIARY_RESULT
-where to_char(inputdate,'fmmm') = #{db_startDate} 
-and to_char(inputdate,'yyyy') = #{db_endDate}
+<select id="GetTestResult" resultType="TestDataVO" parameterType="hashmap">
+select status, ingredient, stress, moisture, to_char(inputdate,'dd') as day
+from diary_result
+where to_char(inputdate,'fmmm') = #{month} 
+	and to_char(inputdate,'yyyy') = #{year}
+		and id = #{id}
 </select>
 
 

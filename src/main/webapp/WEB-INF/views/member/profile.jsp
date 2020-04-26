@@ -32,39 +32,239 @@
 	<script type="text/javaScript" language="javascript"></script>
 
 <!--달력 -->
-<script type="text/javaScript" language="javascript">
-	$(
-			function()
-			{
-				getDate();
-			}
-	);
-	
-	function getDate()
+<script type="text/javaScript">
+
+var today_info;
+var date_list;
+var test_result_list;
+var user_id;
+
+//그 달의 기록을 가져오는 함수
+function getData(input_year, input_month,input1,input2)
+{	
+	//그에 따른 일 수
+	$.ajax
+	({
+		url: "<c:url value='/calendar/diaryGetResultData'/>",
+		type : "post",
+		data:{year:input_year, month:input_month,id:user_id},
+		success: 
+        	function(value)
+        	{        		
+        		console.log("데이터 들고 오기 성공");
+				test_result_list = value;			
+				console.log("사이즈 : "+test_result_list[0].day);	
+				if(input1!=-9999&&input2!=-9999)
+					getDays(input1,input2);	
+    		}
+		,
+    	error: 
+        	function()
+        	{
+    			console.log("일 수 받아오기 실패");
+    		}			
+	});	
+}
+
+
+//해당 년도와 달의 일수를 받아오는 함수
+function getDays(input1, input2)
+{
+	if(input1!=-9999&&input2!=-9999)
 	{
-		alert("눌렀다");
+		//그에 따른 일 수
+		$.ajax
+		({
+			url: "<c:url value='/calendar/diaryGetDate'/>",
+			type : "post",
+			data:{year:input1, month:input2},
+			success: 
+	        	function(value)
+	        	{        		
+					console.log("일 수 받아오기 성공");
+					date_list=value;
+					printDate();
+	    		}
+			,
+	    	error: 
+	        	function()
+	        	{
+	    			console.log("일 수 받아오기 실패");
+	    		}			
+		});
+	}
+	else
+	{
+		//그에 따른 일 수
+		$.ajax
+		({
+			url: "<c:url value='/calendar/diaryGetDate'/>",
+			type : "post",
+			success: 
+	        	function(value)
+	        	{        	
+					console.log("일 수 받아오기 성공");	
+					date_list=value;
+					printDate();
+	    		}
+			,
+	    	error: 
+	        	function()
+	        	{
+	    			console.log("일 수 받아오기 실패");
+	    		}			
+		});	
+	}	
+}
+
+
+//초기화 함수
+function Init(input1, input2)
+{
+	if(input1!=-9999&&input2!=-9999)
+	{
+		//년도랑 달
 		$.ajax
 		({
 			url: "<c:url value='/calendar/diaryRecord'/>",
-			data : 
-			{
-        		year:${today_info.before_year},
-				month=${today_info.search_month-1}
-        	},
-        	type : "post",
-        	success: 
-            	function()
-            	{        		
-            		console.log("성공");	
-        		}
-    		,
-        	error: 
-            	function()
-            	{
-        			console.log("실패");
-        		}			
-		});
+			type : "post",
+			data:{year:input1, month:input2}
+			,
+	    	success: 
+	        	function(value)
+	        	{        	
+	    			console.log("년도랑 월 수 받아오기 성공");			    						
+	    			today_info=value;	    			
+	    			getData(today_info.search_year, today_info.search_month); 
+	    			//getDays(input1, input2); 			
+	    		}
+			,
+	    	error: 
+	        	function()
+	        	{
+	    			console.log("년도랑 월 수 받아오기 실패");
+	    		}			
+		});		
 	}
+	else
+	{
+		console.log("여기에서 시작");
+		//년도랑 달
+		$.ajax
+		({
+			url: "<c:url value='/calendar/diaryRecord'/>",
+			type : "post",
+			success: 
+	        	function(value)
+	        	{        	
+					console.log("년도랑 월 수 받아오기 성공");					    	
+					today_info=value;								
+					getData(today_info.search_year, today_info.search_month);		
+					//getDays();						
+	    		}
+			,
+	    	error: 
+	        	function()
+	        	{
+	    			console.log("년도랑 월 수 받아오기 실패");
+	    		}			
+		});		
+	}	
+	
+}
+
+//달력 출력하는 함수
+function printDate()
+{		
+	 //달 년도 표기
+	var str_this_month ="";
+	str_this_month+=today_info.search_year + ".";
+		
+	if(today_info.search_month<10)
+	{
+		str_this_month+=0;
+	}
+					
+	str_this_month += today_info.search_month;        	
+	$(".this_month").html(str_this_month);
+	//여기까지 (달,년도)
+	
+	 var days_this_month="";
+	//일 수 출력
+	var test_date_index=0;
+	for(var i=0;i<date_list.length;i++)
+	{		
+		 if(date_list[i].value=='today')
+		{
+			console.log("오늘이네?");
+			if(i%7==0)
+			{
+				days_this_month+="<tr>";
+			}
+			days_this_month+="<td class='today'>";
+			days_this_month+="<div class='date'>";		
+		}
+		 else if(i%7==6)
+		{
+			days_this_month+="<td class='sat_day'>";
+			days_this_month+="<div class='sat'>";
+		}
+		 else if(i%7==0)
+		{
+			days_this_month+="</tr>";
+			days_this_month+="<tr>";
+			days_this_month+="<td class='sun_day'>";
+			days_this_month+="<div class='sun'>";			 
+		}
+		 else
+		{
+			days_this_month+="<td class='normal_day'>";
+			days_this_month+="<div class='date'>";		 
+		}	
+
+		 days_this_month+= date_list[i].date +"</div></td>";
+		 
+		//days_this_month+= date_list[i].date +"</div></td>";
+		
+		if(date_list[i].date==test_result_list[test_date_index].day)
+		{
+			console.log("겹쳤다");
+			test_date_index++;
+		}
+	} 
+	
+	$("#days").html(days_this_month); 	
+	
+}
+
+
+function GoPrevMonth()
+{
+	Init((today_info.before_year),(today_info.before_month));	
+}
+
+function GoPrevYear()
+{
+	Init((today_info.search_year-1),(today_info.search_month-1));	
+}
+
+function GoNextMonth()
+{
+	Init((today_info.after_year),(today_info.after_month));	
+}
+
+function GoNextYear()
+{
+	Init((today_info.search_year+1),(today_info.search_month-1));	
+}
+
+	$(
+			function()
+			{
+				user_id =$("#UseForCalenderById").val();
+				Init(-9999,-9999);
+			}
+	);	
 </script>
 
 		
@@ -490,27 +690,42 @@
 			<!-- 여기까지  -->
 			
 <!-- 달력 -->
+	<input type="hidden" id="UseForCalenderById" value="${sessionScope.sessionId}">
+	<form name="calendarFrm" id="calendarFrm" action="" method="GET">
+	</form>
+	
 	<div class="calendar" >
 		<div class="navigation">
-			<a class="before_after_year" href="javascript:getDate();">	&lt;&lt;	<!-- 이전해 --></a> 
-			<%-- <a class="before_after_month" href="./diaryRecord?year=${today_info.before_year}&month=${today_info.before_month}">
-				&lt;
-				<!-- 이전달 -->
-			</a> 
+			<!-- 이전해 -->
+			<a class="before_after_year" href="javascript:GoPrevYear();">&lt;&lt;</a>
+			<!-- 이전달 --> 
+			<a class="before_after_month" href="javascript:GoPrevMonth();">	&lt;</a> 
 			<span class="this_month">
-					&nbsp;${today_info.search_year}. 
-				<c:if test="${today_info.search_month<10}">0</c:if>${today_info.search_month}
+				&nbsp;				
 			</span>
-			<a class="before_after_month" href="./diaryRecord?year=${today_info.after_year}&month=${today_info.after_month}">
 			<!-- 다음달 -->
-				&gt;
-			</a> 
-			<a class="before_after_year" href="./diaryRecord?year=${today_info.search_year+1}&month=${today_info.search_month-1}">
-				<!-- 다음해 -->
-				&gt;&gt;
-			</a> --%>
+			<a class="before_after_month" href="javascript:GoNextMonth()">&gt;</a> 
+			<!-- 다음해 -->
+			<a class="before_after_year" href="javascript:GoNextYear()">&gt;&gt;</a> 			
 		</div>
 	</div>
+	
+	<table class="calendar_body">
+		<thead>
+			<tr bgcolor="#CECECE">
+				<td class="day sun" >일	</td>
+				<td class="day" >	월</td>
+				<td class="day" >	화</td>
+				<td class="day" >	수</td>
+				<td class="day" >	목</td>
+				<td class="day" >	금</td>
+				<td class="day sat" >토</td>
+			</tr>
+		</thead>
+		<tbody id="days">
+				
+		</tbody>
+	</table>
 
 
 
@@ -554,4 +769,4 @@
 </body>
 
 </html>
-tml>
+

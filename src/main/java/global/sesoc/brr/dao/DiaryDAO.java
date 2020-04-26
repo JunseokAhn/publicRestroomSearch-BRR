@@ -1,6 +1,7 @@
 package global.sesoc.brr.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import global.sesoc.brr.mapper.DiaryMapper;
 import global.sesoc.brr.vo.DateData;
+import global.sesoc.brr.vo.TestDataVO;
 import global.sesoc.brr.vo.resVO;
 
 @Repository
@@ -32,11 +34,20 @@ public class DiaryDAO {
 		return false;
 	}
 
-	public ArrayList<resVO> list(DateData dateData)
+	public ArrayList<TestDataVO> GetTestResult(HashMap<String,Object> input)
 	{
-		DiaryMapper mapper = session.getMapper(DiaryMapper.class);
-		ArrayList<resVO> list=mapper.list(dateData);
-		return list;
+		ArrayList<TestDataVO> temp = null;
+		try
+		{
+			DiaryMapper mapper = session.getMapper(DiaryMapper.class);
+			temp = mapper.GetTestResult(input);			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}	
+		
+		return temp;
 	}
 
 	

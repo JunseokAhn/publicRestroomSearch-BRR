@@ -1545,24 +1545,20 @@ function ShowHospitalList()
 					$("input[name='save-data']").attr("hidden","hidden");	
 					var contents = "";
 					var list_temp = list;
-					for(var i=0;i<5;i++)
+					
+					for(var i =0;i<5;i++)
 					{
-						console.log(list_temp[i].dutyName);
-						
-
-						for(var i =0;i<5;i++)
-						{
-							contents+='<tr">';
-							contents+='<th scope="col" style="text-align: left; font-size:15px;">'+(i+1) +'. 병원 이름 : ' + list_temp[i].dutyName + ' 전화번호 : ' + list_temp[i].dutyTel1+'<br>';
-							contents+='평일 개시시간 : '+ list_temp[i].dutyTimeS + ' 평일 종료시간 : ' + list_temp[i].dutyTimeC +'<br>';
-							contents+= '주소: '+ list_temp[i].dutyAddr;
-							contents+='</th>';							
-							contents+='</tr>';							
-						}
-						
-						$("#hopital_table").html(contents);
-						$("#hopital_table").removeAttr("hidden","hidden");									
+						contents+='<tr">';
+						contents+='<th scope="col" style="text-align: left; font-size:14px;">'+(i+1) +'. 병원 이름 : ' + list_temp[i].dutyName + ' 전화번호 : ' + list_temp[i].dutyTel1+'<br>';
+						contents+='평일 개시시간 : '+ list_temp[i].dutyTimeS + ' 평일 종료시간 : ' + list_temp[i].dutyTimeC +'<br>';
+						contents+= '주소: '+ list_temp[i].dutyAddr;
+						contents+='</th>';							
+						contents+='</tr>';							
 					}
+					
+					$("#hopital_table").html(contents);
+					$("#hopital_table").removeAttr("hidden","hidden");			
+					
 				}
 			,
 			error:

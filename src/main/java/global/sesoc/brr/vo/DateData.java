@@ -7,9 +7,10 @@ import java.util.Map;
 
 import lombok.Data;
 @Data
-public class DateData {
+public class DateData 
+{
 
-
+	String id;
 	String year = "";
 	String month = "";
 	String date = "";
@@ -22,6 +23,14 @@ public class DateData {
 //	resVO[] schedule_data_arr = new resVO[4];
 //	String db_startDate = "";
 //	String db_endDate = "";	
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id; 
+	}
 	
 	public String getYear() {
 		return year;
