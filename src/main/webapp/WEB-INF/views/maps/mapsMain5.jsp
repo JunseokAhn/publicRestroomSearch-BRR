@@ -393,10 +393,10 @@
         function initMap () {
             map = new google.maps.Map(document.getElementById('map'), {
                 center : {
-                    lat : 38.903301, 
-                    lng : -77.035532
+                    lat : 37.511683,
+                    lng : 127.061255
                 },
-                zoom : 14,
+                zoom : 16,
                 mapTypeId : google.maps.MapTypeId.ROADMAP
             });
             infoWindow = new google.maps.InfoWindow();
@@ -406,8 +406,8 @@
                 navigator.geolocation
                         .getCurrentPosition(function (position) {
                             pos = {
-                                lat : 38.903301,
-                                lng : -77.035532
+                                lat : position.coords.latitude,
+                                lng : position.coords.longitude
                             };
                             $.ajax({
                                 url : "<c:url value='/maps/getLocation2'/>",
@@ -440,38 +440,16 @@
             
             //마커설정
             function setMarkers (e) {
-                //nearbyToilet = e
-                //console.log(nearbyToilet[0])
-                /* for(var i = 0; i < nearbyToilet.length; i++){
+                nearbyToilet = e
+                console.log(nearbyToilet[0])
+                for(var i = 0; i < nearbyToilet.length; i++){
                     //locations[i].lat = nearbyToilet[i].lat;
                     //locations[i].lng = nearbyToilet[i].lng;
-                     locations[i] = {
+                    locations[i] = {
                         lat : nearbyToilet[i].lat,
                         lng : nearbyToilet[i].lng
-                    } 
-                   
-                } */
-                locations[0] =  {
-                	lat : 38.905802, 
-                	lng : -77.029213
-                } 
-                locations[1] = {
-                	lat : 38.904146, 
-                	lng : -77.042485
+                    }
                 }
-                locations[2] = {
-                	lat : 38.914466, 
-                	lng : -77.033995
-                }
-                locations[3] = {
-                    lat: 38.889109,
-                    lng: -77.005504
-                }
-                locations[4] = {
-                    lat: 38.908440, 
-                    lng: -76.992326
-                }
-                
                 var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
                 for(var i = 0; i < locations.length; i++){
                     marker = new google.maps.Marker({
@@ -492,7 +470,7 @@
                             } )(marker, i));
                     if(marker){
                         marker.addListener('click', function () {
-                            map.setZoom(14);
+                            map.setZoom(15);
                             map.setCenter(this.getPosition());
                             target = this.getPosition()
                             target = String(target)
