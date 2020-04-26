@@ -2226,7 +2226,7 @@ function InsertResult()
 												<div id="profile-review-0">
 													<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;"></div>
 												</div>
-												<h5 class="card-title text-uppercase text-muted mb-0 mt-0" id="nick-review-0">Nickname</h5>
+												<h5 class="card-title text-uppercase text-muted mb-0 mt-0 text-sm" id="nick-review-0">Nickname</h5>
 											</div>
 										</div>
 									</div>
@@ -2246,7 +2246,7 @@ function InsertResult()
 												<div id="profile-review-1">
 													<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;"></div>
 												</div>
-												<h5 class="card-title text-uppercase text-muted mb-0 mt-0" id="nick-review-1">Nickname</h5>
+												<h5 class="card-title text-uppercase text-muted mb-0 mt-0 text-sm" id="nick-review-1">Nickname</h5>
 											</div>
 										</div>
 									</div>
@@ -2266,7 +2266,7 @@ function InsertResult()
 												<div id="profile-review-2">
 													<div class="icon icon-shape bg-warning text-white rounded-circle shadow" style="display: inline-block;"></div>
 												</div>
-												<h5 class="card-title text-uppercase text-muted mb-0 mt-0" id="nick-review-2">Nickname</h5>
+												<h5 class="card-title text-uppercase text-muted mb-0 mt-0 text-sm" id="nick-review-2">Nickname</h5>
 											</div>
 										</div>
 									</div>

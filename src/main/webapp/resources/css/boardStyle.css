@@ -219,7 +219,38 @@ td{
 #dark-table th:nth-child(3){
 	width: 12rem;
 }
+@media(max-width: 1800px){
+	
+	#dark-table th:nth-child(2){
+		width: 40rem;
+	}
+	#dark-table th:nth-child(6){
+		display: none;
+	}
+	#dark-table td:nth-child(6){
+		display: none;
+	}
+}
+
 @media(max-width: 1600px){
+	
+	#dark-table th:nth-child(2){
+		width: 40rem;
+	}
+	#dark-table th:nth-child(3){
+		display: none;
+	}
+	#dark-table th:nth-child(6){
+		display: none;
+	}
+	#dark-table td:nth-child(3){
+		display: none;
+	}
+	#dark-table td:nth-child(6){
+		display: none;
+	}
+}
+@media(max-width: 1400px){
 	
 	#dark-table th:nth-child(1){
 		display: none;

@@ -33,7 +33,7 @@ and inputdate BETWEEN sysdate - '6' and sysdate
 
 <!-- 변화량(최근 2일 데이터 평균) -->
 <select id="average2" resultType="Double">
-select trunc(count(*)/2,1) 
+select trunc(count(*),1) 
 from dayaver
 where lat = #{lat} and lng = #{lng} and
  inputdate between sysdate - '1' and sysdate
@@ -41,7 +41,7 @@ where lat = #{lat} and lng = #{lng} and
 
 <!-- 변화량(전의 2일 데이터 평균) -->
 <select id="average3" resultType="Double">
-select trunc(count(*)/2,1) 
+select trunc(count(*),1) 
 from dayaver
 where lat = #{lat} and lng = #{lng} and
 inputdate between sysdate - '3' and sysdate - '2'
