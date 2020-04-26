@@ -87,10 +87,10 @@
             new diaryGraphInfo(3, 2, 2, 2),
             new diaryGraphInfo(2, 2, 3, 3),
 
-            new diaryGraphInfo(3, 1, 2, 3),            
-            new diaryGraphInfo(3, 2, 2, 2),
+            new diaryGraphInfo(3, 0.9, 2, 3),            
+            new diaryGraphInfo(3, 1.9, 2, 2),
             new diaryGraphInfo(3, 1, 1, 2),
-            new diaryGraphInfo(1, 1, 2, 3),
+            new diaryGraphInfo(0.9, 1, 2, 3),
 
             new diaryGraphInfo(2, 4, 4, 3),
             new diaryGraphInfo(4, 1, 2, 2),
@@ -1717,7 +1717,6 @@ function InsertResult()
 					<div class="row align-items-center">
 						<div class="col">
 							<h2 class="mb-0" style="display: inline-block">Health Test</h2>
-
 
 							<input id="x-button" name="feed-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#diary").hide(), $("#diary-container").fadeOut()'> <input id="register" hidden="hidden" name="save-data" class="btn btn-sm btn-primary" type="button" value="Save Data" onclick="SaveTest()"> <br>
 							<h4 id="health-ment" class="mb-0" style="display: inline-block">STEP1.대변의 모양을 선택해주세요</h4>
