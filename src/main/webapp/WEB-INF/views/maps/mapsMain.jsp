@@ -1312,37 +1312,24 @@ function reviewRefresh(lng, lat){
 				var content = "<table>";
 				$("#Recent-contents").val("");
 				$("input[name='Recent-x-button']").html();
-				$("input[name='Recent-send']").html();
 				$("#Recent-contents").html();
 				$("#Recent-container").show();
 				$("#Recent").fadeIn();
-				for(var i = 0; i < 3; i++) {
-// 				console.log(list.list1[i] + "최근 이용했던 화장실");
-// 				console.log(list.list1[i].toiletNm);
-// 				console.log(list.list1[i].inputdate);
 				
-// 				console.log(list.list2[i] + "많이 이용했던 화장실");
-// 				console.log(list.list2[i].toiletNm);
-// 				console.log(list.list2[i].conut);
-// 				var Recent_toilet_1 = list.list1[0].toiletNm;
-// 				console.log(Recent_toilet_1 + "맵으로 받은값");
-				content += "<tr>";
-				content += "<td>" + list.list1[i].toiletNm + "</td>";
-				content += "<td>" + list.list1[i].inputdate + "</td>";
+				content += '<h3 class="text-uppercase text-muted ls-1 mb-1">' + "최근이용 화장실" + "</h3>";
+				for(var i = 0; i < 3; i++) {
+				content += '<tr>';
+				content +='<th scope="col" style="text-align:left; font-size:16px;">';
+				content += (i+1) + " ." ;
+				content += list.list1[i].toiletNm + "<br>";
+				content += list.list1[i].inputdate + "<br>" + "<hr>";
+				content += '</th>';
 				content += "</tr>";
-				for(var j = 0; j<3; i++) {
-				content += "<tr>";
-				content += "<td>" + list.list2[j].toiletNm + "</td>";
-// 				content += "</tr>";
 				}
-			}	
-// 				$.each(list, function(key, list){
-// 				content += "<tr>";
-// 				content += "<td>" + list.list1.toiletNm + "</td>" ;
-// 				content += "<td>" + list.list1.inputdate + "</td>";
-// 			});
+				
 				content += "</table>";
 				console.log(content);
+				
 				$("#Recent-contents").html(content);
 			}else {
 			alert("로그인 후 사용가능 한 기능입니다 로그인 후 사용해주세요");
@@ -1354,6 +1341,51 @@ function reviewRefresh(lng, lat){
 		}
 	});
 }
+	//선호하는 화장실
+	function Prefer() {
+		var id = $("#sessionId").val();
+		$.ajax({
+		url : "<c:url value='/dayaver/recent'/>",
+		type : "GET" ,
+		data : {
+				id : id
+			},
+		success : function(list) {
+			console.log(list);
+			if(list != null) {
+				var content = "<table>";
+				$("#Prefer-contents").val("");
+				$("input[name='Prefer-x-button']").html();
+				$("#Prefer-contents").html();
+				$("#Prefer-container").show();
+				$("#Prefer").fadeIn();
+				
+				content += '<h3 class="text-uppercase text-muted ls-1 mb-1">' + "선호하는 화장실" + "</h3>";
+				for(var i = 0; i < 3; i++) {
+					content += '<tr>';
+					content +='<th scope="col" style="text-align:left; font-size:16px;">';
+					content += (i+1) + " ." ;
+					content += list.list2[i].toiletNm + "<br>";
+					content += list.list3[i]  + "번 이용 했습니다." + "<br>" + "<hr>";
+					content += '</th>';
+					content += "</tr>";
+					}
+				
+				content += "</table>";
+				console.log(content);
+				
+				$("#Prefer-contents").html(content);
+			}else {
+			alert("로그인 후 사용가능 한 기능입니다 로그인 후 사용해주세요");
+				location.href = "/member/login";
+			}
+		},
+		error : function(e) {
+			alert(JSON.stringify(e));
+		}
+	});
+}
+	
     function resize (obj) {
     	obj.style.height = "1px";
     	obj.style.height = ( 12 + obj.scrollHeight ) + "px";
@@ -1788,18 +1820,13 @@ function InsertResult()
 						<div class="col">
 							<h2 class="mb-0" style="display: inline-block">Recent toliet</h2>
 							<input id="x-button" name="Recent-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#Recent").hide(), $("#Recent-container").fadeOut()'> 
-							<h6 id="review-ment" class="text-uppercase text-muted ls-1 mb-1">최근 이용하신 화장실의 내역입니다.</h6>
+							<h6 id="Recent-ment" class="text-uppercase text-muted ls-1 mb-1">최근 이용 화장실 목록 입니다.</h6>
 						</div>
 					</div>
 				</div>
 				<div class="card-body2">
 					<div class="col-xl-12 col-lg-6">
 						<div class="card card-stats mb-4 mb-xl-0" id="Recent-contents">
-<%-- 							<c:forEach items=""> --%>
-<!-- 							<table> -->
-								
-<!-- 							</table> -->
-<%-- 							</c:forEach> --%>
 						</div>
 					</div>
 				</div>
@@ -1807,7 +1834,29 @@ function InsertResult()
 		</form>
 	</div>
 	
-	
+	<!-- 선호 화장실 nav-->
+	<div id="Prefer-container"></div>
+	<div id="Prefer" class="col-xl-4">
+		<form action="">
+			<div class="card shadow">
+				<div class="card-header bg-transparent">
+					<div class="row align-items-center">
+						<div class="col">
+							<h2 class="mb-0" style="display: inline-block">Preferred toliet</h2>
+							<input id="x-button" name="Recent-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#Prefer").hide(), $("#Prefer-container").fadeOut()'> 
+							<h6 id="Prefer-ment" class="text-uppercase text-muted ls-1 mb-1">가장 많이 이용 한 화장실 목록 입니다.</h6>
+						</div>
+					</div>
+				</div>
+				<div class="card-body2">
+					<div class="col-xl-12 col-lg-6">
+						<div class="card card-stats mb-4 mb-xl-0" id="Prefer-contents">
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
 	
 	
 	
@@ -2001,19 +2050,6 @@ function InsertResult()
 						<li class="nav-item"><a class="nav-link" href="<c:url value="/member/logout"/>">
 								<i class="ni ni-key-25 text-info"></i> Logout
 							</a></li>
-						<!-- 						네이버 로그인 시 -->
-						<%-- 						<c:if test="${sessionScope.sessionNaver != null}"> --%>
-						<%-- 							<li class="nav-item"><a class="nav-link " href="<c:url value="/member/deleteNaver"/>"> --%>
-
-						<!-- 									<i class="ni ni-bullet-list-67 text-red"></i> Naver탈퇴 -->
-						<!-- 								</a></li> -->
-						<%-- 						</c:if> --%>
-						<!-- 						구글 로그인 시 -->
-						<%-- 						<c:if test="${sessionScope.sessionNaver == null}"> --%>
-						<%-- 							<li class="nav-item"><a class="nav-link " href="<c:url value="/member/deleteGoogle"/>"> --%>
-						<!-- 									<i class="ni ni-bullet-list-67 text-red"></i> Google탈퇴 -->
-						<!-- 								</a></li> -->
-						<%-- 						</c:if> --%>
 					</c:if>
 				</ul>
 <!-- 				
@@ -2024,7 +2060,7 @@ function InsertResult()
 						<!-- Navigation -->
 						<ul class="navbar-nav mb-md-3">
 							<li class="nav-item"><a class="nav-link" href="javascript:Recent();">
-								<i class="ni ni-watch-time text-indigo"></i> <span>Recent toilet</span>
+								<i class="ni ni-favourite-28 text-pink"></i> <span>Recent toilet</span>
 							</a></li>
 							<li class="nav-item"><a class="nav-link" href="javascript:Prefer();">
 								<i class="ni ni-favourite-28 text-pink"></i> <span>Preferred toilet</span>
