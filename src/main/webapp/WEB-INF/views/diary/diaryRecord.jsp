@@ -227,17 +227,17 @@
 					<c:if test="${date_status.index%7==0}">
 						<tr>
 					</c:if>
-					<td class="today">
-						<div class="date">
+							<td class="today">
+								<div class="date">
 				</c:when>
 				<c:when test="${date_status.index%7==6}">
-					<td class="sat_day">
-						<div class="sat">
+							<td class="sat_day">
+								<div class="sat">
 				</c:when>	
 				<c:when test="${date_status.index%7==0}">
-					</tr>
-					<tr>	
-					<td class="sun_day">
+						</tr>
+						<tr>	
+							<td class="sun_day">
 							<div class="sun">
 				</c:when>
 				<c:otherwise>

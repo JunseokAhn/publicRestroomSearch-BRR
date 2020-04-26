@@ -49,6 +49,23 @@ public class DiaryDAO {
 		
 		return temp;
 	}
+	
+	public int countTest()
+	{
+		int result = 0;
+		
+		try
+		{
+			DiaryMapper mapper = session.getMapper(DiaryMapper.class);
+			result = mapper.countTest();			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}	
+		
+		return result;
+	}
 
 	
 

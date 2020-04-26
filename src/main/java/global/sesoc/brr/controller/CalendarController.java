@@ -176,10 +176,9 @@ public class CalendarController
 		temp.put("month",input.getMonth());
 		temp.put("id", id);
 		ArrayList<TestDataVO> result = dao.GetTestResult(temp);
-		for(int i=0;i<result.size();i++)
-		{
-			System.out.println(result.get(i).toString());
-		}
+		
+		System.out.println(result.size());
+		
 		return result;
 	}
 	

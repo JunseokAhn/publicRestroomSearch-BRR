@@ -17,6 +17,7 @@
 <link href="<c:url value="/resources/assets/js/plugins/nucleo/css/nucleo.css"/>" rel="stylesheet" />
 <link href="<c:url value="/resources/assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css"/>" rel="stylesheet" />
 <!-- CSS Files -->
+<link href="<c:url value="/resources/css/boardStyle.css"/>" rel="stylesheet" />
 <link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
 <script src="<c:url value="/resources/js/jquery-3.4.1.js/"/>"></script>
 
@@ -27,16 +28,23 @@
 	<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 	
 	
-	<link href="/resources/css/main.css" rel="stylesheet" type="text/css">
-	<script src="/resources/js/board.js" ></script>
-	<script type="text/javaScript" language="javascript"></script>
+<link href="/resources/css/main.css" rel="stylesheet" type="text/css">
+<script src="/resources/js/board.js" ></script>
+<script type="text/javaScript" language="javascript"></script>
+
+<!-- 차트 -->
+<link rel="stylesheet" href="../resources/css/hover.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 
 <!--달력 -->
 <script type="text/javaScript">
 
 var today_info;
 var date_list;
+
 var test_result_list;
+var test_result_index=0;
+
 var user_id;
 
 //그 달의 기록을 가져오는 함수
@@ -53,9 +61,10 @@ function getData(input_year, input_month,input1,input2)
         	{        		
         		console.log("데이터 들고 오기 성공");
 				test_result_list = value;			
-				console.log("사이즈 : "+test_result_list[0].day);	
+				test_result_index=0;
 				if(input1!=-9999&&input2!=-9999)
 					getDays(input1,input2);	
+				
     		}
 		,
     	error: 
@@ -135,7 +144,7 @@ function Init(input1, input2)
 	        	{        	
 	    			console.log("년도랑 월 수 받아오기 성공");			    						
 	    			today_info=value;	    			
-	    			getData(today_info.search_year, today_info.search_month); 
+	    			getData(today_info.search_year, today_info.search_month,input1,input2); 
 	    			//getDays(input1, input2); 			
 	    		}
 			,
@@ -173,6 +182,58 @@ function Init(input1, input2)
 	
 }
 
+function ShowResult(stress,moisture,ingredient,status)
+{	
+	var ctx = document.getElementById('myChart').getContext('2d');
+	var myChart = new Chart(ctx, {
+	    type: 'line',
+	    data: {
+	        labels: ['스트레스', '수분', '영양소'],
+	        datasets: [{
+	            label: '',
+	            data: [stress, moisture, ingredient],
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(0, 255, 0, 0.2)'			                
+	            ],
+	            borderColor: [
+	                'rgba(255, 99, 132, 1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(0, 255, 0, 1)'			               
+	            ],
+	            borderWidth: 1		           
+	        }]
+	    },
+	    options: {
+		    
+	    	 legend:
+		    {
+	    		 showLines: false,
+	             display:false
+	      	},  
+	        scales: 
+		    { 
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero: true,
+	                    display : false
+	                    
+	                },
+	                gridLines:
+		            {
+	                     lineWidth:0
+	                     
+	                 }
+	            }]
+	        }
+	    }
+	}); 
+	$("#result_table").removeAttr("hidden","hidden");
+	$("#myChart").removeAttr("hidden","hidden");
+	$("#diary-container").show();
+	$("#diary").fadeIn();
+}
 //달력 출력하는 함수
 function printDate()
 {		
@@ -195,47 +256,75 @@ function printDate()
 	for(var i=0;i<date_list.length;i++)
 	{		
 		 if(date_list[i].value=='today')
-		{
-			console.log("오늘이네?");
+		{			
 			if(i%7==0)
 			{
 				days_this_month+="<tr>";
 			}
 			days_this_month+="<td class='today'>";
-			days_this_month+="<div class='date'>";		
+			days_this_month+="<div class='date' style='width:100px;'>";		
 		}
 		 else if(i%7==6)
 		{
 			days_this_month+="<td class='sat_day'>";
-			days_this_month+="<div class='sat'>";
+			days_this_month+="<div class='sat' style='width:100px;'>";
 		}
 		 else if(i%7==0)
 		{
 			days_this_month+="</tr>";
 			days_this_month+="<tr>";
 			days_this_month+="<td class='sun_day'>";
-			days_this_month+="<div class='sun'>";			 
+			days_this_month+="<div class='sun' style='width:100px;'>";			 
 		}
 		 else
 		{
 			days_this_month+="<td class='normal_day'>";
-			days_this_month+="<div class='date'>";		 
+			days_this_month+="<div class='date' style='width:100px;'>";		 
 		}	
 
-		 days_this_month+= date_list[i].date +"</div></td>";
-		 
-		//days_this_month+= date_list[i].date +"</div></td>";
-		
-		if(date_list[i].date==test_result_list[test_date_index].day)
-		{
-			console.log("겹쳤다");
-			test_date_index++;
+		 days_this_month+= date_list[i].date;
+
+		if(test_result_list.length!=0&&test_result_index<test_result_list.length)
+		{			
+			if(date_list[i].date==test_result_list[test_result_index].day)
+			{				
+				for(test_result_index;test_result_index<test_result_list.length;test_result_index++)
+				{	
+					if(date_list[i].date!=test_result_list[test_result_index].day)
+						break;
+					
+					//위험
+					if(test_result_list[test_result_index].status==1)
+					{
+						days_this_month+="<br><img class='hvr-grow-shadow'  src='../resources/img/warning.png' style='width:30%;height:30%' />";						
+					}	
+					//경고	
+					else if(test_result_list[test_result_index].status==2)
+					{
+						days_this_month+="<br><img class='hvr-grow-shadow' src='../resources/img/danger.png' style='width:30%;height:30%' onclick='javascript:ShowResult("+test_result_list[test_result_index].stress+","+test_result_list[test_result_index].moisture+","+test_result_list[test_result_index].ingredient+","+test_result_list[test_result_index].status+");'/>";						
+					}	
+					//보통	
+					else if(test_result_list[test_result_index].status==3)
+					{
+						days_this_month+="<br><img class='hvr-grow-shadow'  src='../resources/img/normal.png' style='width:30%;height:30%' />";		
+					}
+					//건강
+					else if(test_result_list[test_result_index].status==4)
+					{
+						days_this_month+="<br><img class='hvr-grow-shadow'  src='../resources/img/good.png' style='width:30%;height:30%' onclick='javascript:ShowResult();'/>";	
+					}					
+				}					
+			}
 		}
+		 days_this_month+="</div></td>";
+		//days_this_month+= date_list[i].date +"</div></td>";		
+		
 	} 
 	
 	$("#days").html(days_this_month); 	
 	
 }
+
 
 
 function GoPrevMonth()
@@ -451,6 +540,38 @@ function GoNextYear()
 </head>
 
 <body class="">
+	<!-- 차트 폼 -->
+	<div id="diary-container" style="display: none"></div>	
+	<div id="diary" class="col-xl-4" style="display:none" >
+		<form action="">
+			<div class="card shadow">
+				<div class="card-header bg-transparent">
+					<div class="row align-items-center">
+						<div class="col">
+							<h2 class="mb-0" style="display: inline-block">Health Chart</h2>
+							<input id="x-button" name="feed-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#diary").hide(), $("#diary-container").fadeOut()'> <input id="register" hidden="hidden" name="save-data" class="btn btn-sm btn-primary" type="button" value="Save Data" onclick="SaveTest()"> <br>
+						</div>
+					</div>
+					<div class="card-body2">
+					<!-- 결과 그래프 출력 -->
+					<canvas id="myChart" hidden="hidden" width="5" height="2"></canvas>					
+					<table id="result_table"  hidden="hidden">
+						<tr>							
+							<td>
+								<img id="result_picture" src=""  style="width:50%" />
+							</td>
+							<td>
+								<p id="result_description"></p> 
+							</td>
+						</tr>
+					</table>					
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<!-- 차트 폼 끝 -->
+	
 	<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
 		<div class="container-fluid">
 			<!-- Toggler -->
@@ -615,6 +736,7 @@ function GoNextYear()
 <!-- 							</a> -->
 							<div class="dropdown-divider"></div>
 							<a href="../member/logout" class="dropdown-item"> <i class="ni ni-user-run"></i> <span>Logout</span>
+							
 							</a>
 						</div></li>
 				</ul>

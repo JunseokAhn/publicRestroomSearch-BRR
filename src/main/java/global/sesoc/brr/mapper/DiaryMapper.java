@@ -12,5 +12,7 @@ public interface DiaryMapper {
 	int insert(resVO resVO);
 
 	ArrayList<TestDataVO> GetTestResult(HashMap<String,Object> input);
+	
+	int countTest();
 
 }

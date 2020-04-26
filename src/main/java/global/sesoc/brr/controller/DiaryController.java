@@ -37,6 +37,12 @@ public class DiaryController {
 		resVO.setId((String)session.getAttribute("sessionId"));
 		System.out.println(resVO.toString());
 		
+		if(dao.countTest()>=3)
+		{
+			System.out.println("장난은 봐드릴 수가 없습니다.");	
+			return "ignore";
+		}
+		
 		if(dao.insert(resVO))
 		{			
 			if(resVO.getStatus()==1)

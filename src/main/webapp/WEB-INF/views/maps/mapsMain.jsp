@@ -1582,7 +1582,13 @@ function InsertResult()
 			success:
 				function(flag)
 				{
-					if(flag=="warning")
+					if(flag=="ignore")
+					{
+						alert("하루 3번 초과의 테스트값을 저장 할 수는 없습니다. 진지하게 테스트에 임해주세요.");
+						$("#diary").hide();
+						$("#diary-container").fadeOut();
+					}					
+					else if(flag=="warning")
 					{
 						alert("데이터를 저장했지만 건강이 위험한 상태입니다.\n 반경 1km 병원의 위치를 알려드리겠습니다.");
 						ShowHospitalList();												
@@ -1751,7 +1757,7 @@ function InsertResult()
 								<img id="type3" class="hvr-grow-shadow" name="3" src="../resources/img/type3_1.png" style="width:90%"/>
 							</td>
 							<td style="width:230px;height:150px;">
-								<img id="type4" class="hvr-grow-shadow" name="4" src="../resources/img/type4_1.png" style="width:90%"/>
+								<img id="type4" class="hvr-grow-shadow" name="4" src="../resources/img/type4_1.png" style="width:90%" />
 							</td>
 						</tr>
 					</table>
