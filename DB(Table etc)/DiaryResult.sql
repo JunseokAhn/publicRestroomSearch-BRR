@@ -1,10 +1,9 @@
 
 create table diary_result(
-resNum number PRIMARY key,
-status VARCHAR2(10),
-inputdate date default sysdate,
-resvalue varchar2(10)
-
-)
-
-create sequence diary_result_seq;
+    id varchar2(200),
+    status number, -- 상태(스마일) 들고 오기  
+    stress number, -- 스트레스도
+    moisture number, -- 수분
+    ingredient number, -- 영양분
+    inputdate date default sysdate -- 날짜       
+);

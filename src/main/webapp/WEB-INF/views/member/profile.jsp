@@ -1,24 +1,626 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script src="<c:url value="/resources/js/jquery-3.4.1.js/"/>"></script>
+
+
 <html>
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>화장실이 급할땐? - 부르르</title>
-<!-- Favicon -->
+
+
+	
 <link href="<c:url value="/resources/assets/img/brand/favicon.png"/>" rel="icon" type="image/png">
-<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-<!-- Icons -->
-<link href="<c:url value="/resources/assets/js/plugins/nucleo/css/nucleo.css"/>" rel="stylesheet" />
-<link href="<c:url value="/resources/assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css"/>" rel="stylesheet" />
-<!-- CSS Files -->
+<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  	
+<link rel="stylesheet" href="../resources/css/hover.css">	
+<link href="/resources/css/main.css" rel="stylesheet" type="text/css">
 <link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
+<link href="<c:url value="/resources/css/boardStyle.css"/>" rel="stylesheet" />
+<link href="<c:url value="/resources/assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css"/>" rel="stylesheet" />
+<link href="<c:url value="/resources/assets/js/plugins/nucleo/css/nucleo.css"/>" rel="stylesheet" />
+
+
+
+<!-- <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script> -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="<c:url value="/resources/js/jquery-3.4.1.js/"/>"></script>
+<script src="/resources/js/board.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+
+<!--달력 -->
+<script type="text/javaScript">
+
+var today_info;
+var date_list;
+
+var test_result_list;
+var test_result_index=0;
+
+var user_id;
+
+//그 달의 기록을 가져오는 함수
+function getData(input_year, input_month,input1,input2)
+{	
+	//그에 따른 일 수
+	$.ajax
+	({
+		url: "<c:url value='/calendar/diaryGetResultData'/>",
+		type : "post",
+		data:{year:input_year, month:input_month,id:user_id},
+		success: 
+        	function(value)
+        	{        		
+        		console.log("데이터 들고 오기 성공");
+				test_result_list = value;			
+				test_result_index=0;
+				if(input1!=-9999&&input2!=-9999)
+					getDays(input1,input2);					
+    		}
+		,
+    	error: 
+        	function()
+        	{
+    			console.log("일 수 받아오기 실패");
+    		}			
+	});	
+}
+
+
+//해당 년도와 달의 일수를 받아오는 함수
+function getDays(input1, input2)
+{
+	if(input1!=-9999&&input2!=-9999)
+	{
+		//그에 따른 일 수
+		$.ajax
+		({
+			url: "<c:url value='/calendar/diaryGetDate'/>",
+			type : "post",
+			data:{year:input1, month:input2},
+			success: 
+	        	function(value)
+	        	{        		
+					console.log("일 수 받아오기 성공");
+					date_list=value;
+					printDate();
+	    		}
+			,
+	    	error: 
+	        	function()
+	        	{
+	    			console.log("일 수 받아오기 실패");
+	    		}			
+		});
+	}
+	else
+	{
+		//그에 따른 일 수
+		$.ajax
+		({
+			url: "<c:url value='/calendar/diaryGetDate'/>",
+			type : "post",
+			success: 
+	        	function(value)
+	        	{        	
+					console.log("일 수 받아오기 성공");	
+					date_list=value;
+					printDate();
+	    		}
+			,
+	    	error: 
+	        	function()
+	        	{
+	    			console.log("일 수 받아오기 실패");
+	    		}			
+		});	
+	}	
+}
+
+
+//초기화 함수
+function Init(input1, input2)
+{
+	if(input1!=-9999&&input2!=-9999)
+	{
+		//년도랑 달
+		$.ajax
+		({
+			url: "<c:url value='/calendar/diaryRecord'/>",
+			type : "post",
+			data:{year:input1, month:input2}
+			,
+	    	success: 
+	        	function(value)
+	        	{        	
+	    			console.log("년도랑 월 수 받아오기 성공");			    						
+	    			today_info=value;	    			
+	    			getData(today_info.search_year, today_info.search_month,input1,input2); 
+	    			//getDays(input1, input2); 			
+	    		}
+			,
+	    	error: 
+	        	function()
+	        	{
+	    			console.log("년도랑 월 수 받아오기 실패");
+	    		}			
+		});		
+	}
+	else
+	{
+		console.log("여기에서 시작");
+		//년도랑 달
+		$.ajax
+		({
+			url: "<c:url value='/calendar/diaryRecord'/>",
+			type : "post",
+			success: 
+	        	function(value)
+	        	{        	
+					console.log("년도랑 월 수 받아오기 성공");					    	
+					today_info=value;								
+					getData(today_info.search_year, today_info.search_month);		
+					//getDays();						
+	    		}
+			,
+	    	error: 
+	        	function()
+	        	{
+	    			console.log("년도랑 월 수 받아오기 실패");
+	    		}			
+		});		
+	}	
+	
+}
+
+//대변 체크 결과
+var diaryGraphInfo = 
+    function(stress, moisture, ingredient,status)
+    {
+    	this.stress = stress;
+    	this.moisture = moisture;
+    	this.ingredient = ingredient;
+    	this.status = status
+    	return this;
+    }
+
+var diaryPictureArray=
+[
+"../resources/img/normal.png",
+"../resources/img/dangerous.png",
+"../resources/img/dangerous.png",
+"../resources/img/normal.png",
+
+"../resources/img/good.png",
+"../resources/img/dangerous.png",
+"../resources/img/dangerous.png",
+"../resources/img/normal.png",
+
+"../resources/img/normal.png",
+"../resources/img/dangerous.png",
+"../resources/img/dangerous.png",
+"../resources/img/normal.png",
+
+"../resources/img/normal.png",
+"../resources/img/dangerous.png",
+"../resources/img/sobad.png",
+"../resources/img/normal.png"
+];
+
+var diaryGraphInfoArray=
+    [
+        new diaryGraphInfo(3, 1, 2, 3),
+        new diaryGraphInfo(5, 1, 3, 2),
+        new diaryGraphInfo(4, 2, 2, 2),
+        new diaryGraphInfo(4, 1.5, 0.5, 3),
+        
+        new diaryGraphInfo(0, 5, 5, 2 ),
+        new diaryGraphInfo(2, 1, 1, 4),
+        new diaryGraphInfo(3, 2, 2, 2),
+        new diaryGraphInfo(2, 2, 3, 3),
+
+        new diaryGraphInfo(3, 0.9, 2, 3),            
+        new diaryGraphInfo(3, 1.9, 2, 2),
+        new diaryGraphInfo(3, 1, 1, 2),
+        new diaryGraphInfo(0.9, 1, 2, 3),
+
+        new diaryGraphInfo(2, 4, 4, 3),
+        new diaryGraphInfo(4, 1, 2, 2),
+        new diaryGraphInfo(5, 0.5, 0.5, 1),
+        new diaryGraphInfo(1, 1, 2, 3)            
+    ];    			
+
+var diaryresult="";
+var result_show_flag=true;
+var diaryDescriptionArray=
+[
+"<p>영양소는 적당하지만,<Strong>변비</Strong> 증세가 있네요.<br>수분섭취와 스트레스를 줄여보세요.</p> ",
+"<p> 장건강의 이상으로 색깔이 변이될 수 있어요.<br><strong>악취</strong>가 나는 경우에는 진단을 받아 볼 필요가 있습니다.</p> ",
+"<p>치질처럼 항문 부근의<strong> 출혈</strong>이 있을수도 있습니다.<br>가까운 병원에서 진단을 받아보세요.</p> ",
+"<p><strong>영양부족</strong>으로 인한 색깔의 변이 혹은 변비의 전조증상입니다<br>충분한 영양과 수분을 섭취해주세요.</p> ",
+
+"<p> 색깔도 모양도 완벽해요.<br>당신의 대변 건강은 <strong>최고</strong>입니다.</p>",
+"<p>모양은 완벽!<strong>담즙</strong>의 흡수도에 따라 색이 흐려보일 수 있습니다.<br>색이 지속된다면 병원의 진찰을 받아보세요..</p>",
+"<p>모양은 완벽! 그러나 출혈 증상이 있습니다.<br><strong>항문</strong>질환을 의심해봐야 합니다.</p>",
+"<p>불규칙한 영양분의 흡수나, 먹은 음식에 따라 색깔이 노란빛을 띌 수 있습니다.</p>",
+
+"<p><strong>변비</strong> 증상이 있습니다.<br>채소나 과일의 섭취를 늘려주세요 !</p>",
+"<p>변비 증상과 장 속의 흡수문제는 <strong>큰 질환</strong>으로 이어질 수 있습니다.<br>가까운 병원에 진찰을 받아보세요.</p>",
+"<p>수분이 부족하여, 딱딱한 덩어리로 인한 <strong>출혈</strong> 등이 있을 수 있습니다<br>수시로 물과 섬유질을 섭취해 주세요</p>",
+"<p>규칙적인 영양분 섭취로 변비와 색을 개선해보세요.</p>",
+
+"<p>과식하셨나요? 휴식을 취하는 것이 필요해요.</p>",
+"<p>과한 알코올,지방 섭취의 원인일 수도 있습니다.<br>지속적인 증상이 나타난다면 병원에 진찰을 받아보세요.</p>",
+"<p>설사와 혈변은 염증성 질환일 수 도 있습니다.<br>가까운 병원에 빠르게 진찰을 받아보세요.</p>",
+"<p>수분이나 당분,지방을 지나치게 많이 먹어 장이 자극받은 상태입니다.<br>휴식이 필요해요.</p>"
+];
+
+
+function ShowResult(stress,moisture,ingredient,status)
+{		
+	var temp_str;
+	var temp_pic;
+	
+	for(var i =0;i<diaryGraphInfoArray.length;i++)
+	{
+		if(diaryGraphInfoArray[i].stress==stress&&diaryGraphInfoArray[i].moisture==moisture&&diaryGraphInfoArray[i].ingredient==ingredient)
+		{			
+			temp_pic = diaryPictureArray[i];
+			temp_str = diaryDescriptionArray[i];
+			break;
+		}		
+	}
+	
+	$("#result_picture").attr("src",temp_pic);
+	$("#result_description").html(temp_str);
+
+	$("#result_table").removeAttr("hidden","hidden");				
+	
+	$("#diary-container").show();
+	$("#diary").fadeIn();
+}
+//달력 출력하는 함수
+function printDate()
+{		
+	 //달 년도 표기
+	var str_this_month ="";
+	str_this_month+=today_info.search_year + ".";
+		
+	if(today_info.search_month<10)
+	{
+		str_this_month+=0;
+	}
+					
+	str_this_month += today_info.search_month;        	
+	$(".this_month").html(str_this_month);
+	//여기까지 (달,년도)
+	
+	 var days_this_month="";
+	//일 수 출력
+	var test_date_index=0;
+	for(var i=0;i<date_list.length;i++)
+	{		
+		 if(date_list[i].value=='today')
+		{			
+			if(i%7==0)
+			{
+				days_this_month+="<tr>";
+			}
+			days_this_month+="<td class='today'>";
+			days_this_month+="<div class='date' style='width:100px;'>";		
+		}
+		 else if(i%7==6)
+		{
+			days_this_month+="<td class='sat_day'>";
+			days_this_month+="<div class='sat' style='width:100px;'>";
+		}
+		 else if(i%7==0)
+		{
+			days_this_month+="</tr>";
+			days_this_month+="<tr>";
+			days_this_month+="<td class='sun_day'>";
+			days_this_month+="<div class='sun' style='width:100px;'>";			 
+		}
+		 else
+		{
+			days_this_month+="<td class='normal_day'>";
+			days_this_month+="<div class='date' style='width:100px;'>";		 
+		}	
+
+		 days_this_month+= date_list[i].date;
+
+		if(test_result_list.length!=0&&test_result_index<test_result_list.length)
+		{			
+			if(date_list[i].date==test_result_list[test_result_index].day)
+			{				
+				for(test_result_index;test_result_index<test_result_list.length;test_result_index++)
+				{	
+					if(date_list[i].date!=test_result_list[test_result_index].day)
+						break;
+					
+					//위험
+					if(test_result_list[test_result_index].status==1)
+					{
+						days_this_month+="<br><img class='hvr-grow-shadow'  src='../resources/img/warning.png' style='width:30%;height:30%' onclick='javascript:ShowResult("+test_result_list[test_result_index].stress+","+test_result_list[test_result_index].moisture+","+test_result_list[test_result_index].ingredient+","+test_result_list[test_result_index].status+");'/>";					
+					}	
+					//경고	
+					else if(test_result_list[test_result_index].status==2)
+					{
+						days_this_month+="<br><img class='hvr-grow-shadow' src='../resources/img/danger.png' style='width:30%;height:30%' onclick='javascript:ShowResult("+test_result_list[test_result_index].stress+","+test_result_list[test_result_index].moisture+","+test_result_list[test_result_index].ingredient+","+test_result_list[test_result_index].status+");'/>";						
+					}	
+					//보통	
+					else if(test_result_list[test_result_index].status==3)
+					{
+						days_this_month+="<br><img class='hvr-grow-shadow'  src='../resources/img/normal.png' style='width:30%;height:30%' onclick='javascript:ShowResult("+test_result_list[test_result_index].stress+","+test_result_list[test_result_index].moisture+","+test_result_list[test_result_index].ingredient+","+test_result_list[test_result_index].status+");'/>";		
+					}
+					//건강
+					else if(test_result_list[test_result_index].status==4)
+					{
+						days_this_month+="<br><img class='hvr-grow-shadow'  src='../resources/img/good.png' style='width:30%;height:30%' onclick='javascript:ShowResult("+test_result_list[test_result_index].stress+","+test_result_list[test_result_index].moisture+","+test_result_list[test_result_index].ingredient+","+test_result_list[test_result_index].status+");'/>";
+					}					
+				}					
+			}
+		}
+		 days_this_month+="</div></td>";		
+		
+	} 
+	
+	$("#days").html(days_this_month); 	
+	
+}
+
+
+
+function GoPrevMonth()
+{
+	Init((today_info.before_year),(today_info.before_month));	
+}
+
+function GoPrevYear()
+{
+	Init((today_info.search_year-1),(today_info.search_month-1));	
+}
+
+function GoNextMonth()
+{
+	Init((today_info.after_year),(today_info.after_month));	
+}
+
+function GoNextYear()
+{
+	Init((today_info.search_year+1),(today_info.search_month-1));	
+}
+
+	$(
+			function()
+			{
+				user_id =$("#UseForCalenderById").val();
+				Init(-9999,-9999);
+			}
+	);	
+</script>
+
+		
+<style TYPE="text/css">	
+
+			body 
+			{
+				scrollbar-face-color: #F6F6F6;
+				scrollbar-highlight-color: #bbbbbb;
+				scrollbar-3dlight-color: #FFFFFF;
+				scrollbar-shadow-color: #bbbbbb;
+				scrollbar-darkshadow-color: #FFFFFF;
+				scrollbar-track-color: #FFFFFF;
+				scrollbar-arrow-color: #bbbbbb;
+				margin-left:"0px"; margin-right:"0px"; margin-top:"0px"; margin-bottom:"0px";
+			}
+
+			td {font-family: "돋움"; font-size: 9pt; color:#595959;}
+			th {font-family: "돋움"; font-size: 9pt; color:#000000;}
+			select {font-family: "돋움"; font-size: 9pt; color:#595959;}
+
+			.divDotText 
+			{
+				overflow:hidden;
+				text-overflow:ellipsis;
+			}
+
+			a:link { font-size:9pt; font-family:"돋움";color:#000000; text-decoration:none; }
+			a:visited { font-size:9pt; font-family:"돋움";color:#000000; text-decoration:none; }
+			a:active { font-size:9pt; font-family:"돋움";color:red; text-decoration:none; }
+			a:hover { font-size:9pt; font-family:"돋움";color:red;text-decoration:none;}
+			
+			.day
+			{
+				width:100px; 
+				height:30px;
+				font-weight: bold;
+				font-size:15px;
+				font-weight:bold;
+				text-align: center;
+			}
+			
+			.sat
+			{
+				color:#529dbc;
+			}
+			
+			.sun
+			{
+				color:red;
+			}
+			
+			.today_button_div
+			{
+				float: right;
+			}
+			
+			.today_button
+			{
+				width: 100px; 
+				height:30px;
+			}
+			
+			.calendar
+			{
+				width:70%;
+				margin:auto;
+			}
+			
+			.navigation
+			{
+				margin-top:100px;
+				margin-bottom:30px;
+				text-align: center;
+				font-size: 25px;
+				vertical-align: middle;
+			}
+			
+			.calendar_body
+			{
+				width:100%;
+				background-color: #FFFFFF;
+				border:1px solid white;
+				margin-bottom: 50px;
+				border-collapse: collapse;
+			}
+			
+			.calendar_body .today
+			{
+				border:1px solid white;
+				height:120px;
+				background-color:#c9c9c9;
+				text-align: left;
+				vertical-align: top;
+			}
+			
+			.calendar_body .date
+			{
+				font-weight: bold;
+				font-size: 15px;
+				padding-left: 3px;
+				padding-top: 3px;
+			}
+			
+			.date
+			{
+				margin-bottom:10px;
+			}
+			
+			.sat
+			{
+				margin-bottom:10px;
+			}
+			
+			.sun
+			{
+				margin-bottom:10px;
+			}
+			
+			.calendar_body .sat_day
+			{
+				border:1px solid white;
+				height:120px;
+				background-color:#EFEFEF;
+				text-align:left;
+				vertical-align: top;
+			}
+			
+			.calendar_body .sat_day .sat
+			{
+				color: #529dbc; 
+				font-weight: bold;
+				font-size: 15px;
+				padding-left: 3px;
+				padding-top: 3px;
+			}
+				
+			.calendar_body .sun_day
+			{
+				border:1px solid white;
+				height:120px;
+				background-color:#EFEFEF;
+				text-align: left;
+				vertical-align: top;
+			}
+				
+			.calendar_body .sun_day .sun
+			{
+				color: red; 
+				font-weight: bold;
+				font-size: 15px;
+				padding-left: 3px;
+				padding-top: 3px;
+			}
+			.calendar_body .normal_day
+			{
+				border:1px solid white;
+				height:120px;
+				background-color:#EFEFEF;
+				vertical-align: top;
+				text-align: left;
+			}
+			
+			.before_after_month
+			{
+				margin: 10px;
+				font-weight: bold;
+			}
+				
+			.before_after_year
+			{
+				font-weight: bold;
+			}
+			
+			.this_month
+			{
+				margin: 10px;
+			}
+			
+			.schdule_add_button
+			{
+				float:right;
+			}		
+</style>
 </head>
 
 <body class="">
+
+	<!-- 차트 폼 -->
+	<div id="diary-container" style="display:none;"></div>	
+	<div id="diary" class="col-xl-4" style="display:none;">
+		<form action="">
+			<div class="card shadow">
+				<div class="card-header bg-transparent">
+					<div class="row align-items-center">
+						<div class="col">
+							<h2 class="mb-0" style="display: inline-block">Health Test Result</h2>
+							<input id="x-button" name="feed-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#diary").hide(), $("#diary-container").fadeOut()'> <input id="register" hidden="hidden" name="save-data" class="btn btn-sm btn-primary" type="button" value="Save Data" onclick="SaveTest()"> <br>
+						</div>
+					</div>
+					<div class="card-body2">
+						<!-- 결과 그래프 출력 -->
+						<canvas id="myChart" hidden="hidden" width="10" height="10"></canvas>					
+						<table id="result_table"  hidden="hidden">
+							<tr>							
+								<td>									
+									<img id="result_picture" src=""  style="width:100%" />
+								</td>
+								<td style=" text-align: left;">
+									<p id="result_description"></p> 
+								</td>
+							</tr>
+						</table>	
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<!-- 차트 폼 끝 -->
+	
 	<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
 		<div class="container-fluid">
 			<!-- Toggler -->
@@ -183,6 +785,7 @@
 <!-- 							</a> -->
 							<div class="dropdown-divider"></div>
 							<a href="../member/logout" class="dropdown-item"> <i class="ni ni-user-run"></i> <span>Logout</span>
+							
 							</a>
 						</div></li>
 				</ul>
@@ -257,6 +860,50 @@
 			</div>
 			<!-- 여기까지  -->
 			
+<!-- 달력 -->
+	<input type="hidden" id="UseForCalenderById" value="${sessionScope.sessionId}">
+	<form name="calendarFrm" id="calendarFrm" action="" method="GET">
+	</form>
+	
+	<div class="calendar" >
+		<div class="navigation">
+			<!-- 이전해 -->
+			<a class="before_after_year" href="javascript:GoPrevYear();">&lt;&lt;</a>
+			<!-- 이전달 --> 
+			<a class="before_after_month" href="javascript:GoPrevMonth();">	&lt;</a> 
+			<span class="this_month">
+				&nbsp;				
+			</span>
+			<!-- 다음달 -->
+			<a class="before_after_month" href="javascript:GoNextMonth()">&gt;</a> 
+			<!-- 다음해 -->
+			<a class="before_after_year" href="javascript:GoNextYear()">&gt;&gt;</a> 			
+		</div>
+	</div>
+	
+	<table class="calendar_body">
+		<thead>
+			<tr bgcolor="#CECECE">
+				<td class="day sun" >일	</td>
+				<td class="day" >	월</td>
+				<td class="day" >	화</td>
+				<td class="day" >	수</td>
+				<td class="day" >	목</td>
+				<td class="day" >	금</td>
+				<td class="day sat" >토</td>
+			</tr>
+		</thead>
+		<tbody id="days">
+				
+		</tbody>
+	</table>
+
+
+
+<!-- 달력 여기까지 -->
+			
+			
+			
 			<!-- Footer -->
 			<footer class="footer">
 				<div class="row align-items-center justify-content-xl-between">
@@ -293,4 +940,4 @@
 </body>
 
 </html>
-tml>
+

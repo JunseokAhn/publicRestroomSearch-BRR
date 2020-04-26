@@ -17,6 +17,7 @@
 		<typeAlias type="global.sesoc.brr.vo.ReviewVO" alias="review"/>
 		<typeAlias type="global.sesoc.brr.vo.DateData" alias="datedata"/>
 		<typeAlias type="global.sesoc.brr.vo.resVO" alias="resVO"/>
+		<typeAlias type="global.sesoc.brr.vo.TestDataVO" alias="TestDataVO"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/SnsBoardMapper.xml" />

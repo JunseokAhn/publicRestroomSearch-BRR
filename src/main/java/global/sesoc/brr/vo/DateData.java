@@ -7,9 +7,10 @@ import java.util.Map;
 
 import lombok.Data;
 @Data
-public class DateData {
+public class DateData 
+{
 
-
+	String id;
 	String year = "";
 	String month = "";
 	String date = "";
@@ -19,9 +20,17 @@ public class DateData {
 	//		2. getter/setter 추가
 	//		3. 생성자 추가
 	//				하여 사용하면 보다 편리하고 깨끗하게 코드를 만들 수 있다.
-	resVO[] schedule_data_arr = new resVO[4];
-	String db_startDate = "";
-	String db_endDate = "";	
+//	resVO[] schedule_data_arr = new resVO[4];
+//	String db_startDate = "";
+//	String db_endDate = "";	
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id; 
+	}
 	
 	public String getYear() {
 		return year;
@@ -55,25 +64,25 @@ public class DateData {
 		this.value = value;
 	}
 
-	public String getDb_startDate() {
-		return db_startDate;
-	}
-	public void setDb_startDate(String db_startDate) {
-		this.db_startDate = db_startDate;
-	}
-	public String getDb_endDate() {
-		return db_endDate;
-	}
-	public void setDb_endDate(String db_endDate) {
-		this.db_endDate = db_endDate;
-	}
-
-	public resVO[] getSchedule_data_arr() {
-		return schedule_data_arr;
-	}
-	public void setSchedule_data_arr(resVO[] schedule_data_arr) {
-		this.schedule_data_arr = schedule_data_arr;
-	}
+//	public String getDb_startDate() {
+//		return db_startDate;
+//	}
+//	public void setDb_startDate(String db_startDate) {
+//		this.db_startDate = db_startDate;
+//	}
+//	public String getDb_endDate() {
+//		return db_endDate;
+//	}
+//	public void setDb_endDate(String db_endDate) {
+//		this.db_endDate = db_endDate;
+//	}
+//
+//	public resVO[] getSchedule_data_arr() {
+//		return schedule_data_arr;
+//	}
+//	public void setSchedule_data_arr(resVO[] schedule_data_arr) {
+//		this.schedule_data_arr = schedule_data_arr;
+//	}
 
 	// 날짜에 관련된 달력정보를 가지는 메서드
 	public Map<String, Integer> today_info(DateData dateData) {
@@ -120,9 +129,9 @@ public class DateData {
 		today_Data.put("after_year", before_after_calendar.get("after_year"));
 		today_Data.put("after_month", before_after_calendar.get("after_month"));
 		
-		this.db_startDate = String.valueOf(search_month+1);
-		this.db_endDate = String.valueOf(search_year);
-		System.out.println("db_startDate:"+db_startDate);
+//		this.db_startDate = String.valueOf(search_month+1);
+//		this.db_endDate = String.valueOf(search_year);
+//		System.out.println("db_startDate:"+db_startDate);
 		return today_Data;
 	}
 	
@@ -159,7 +168,7 @@ public class DateData {
 		this.month = month;
 		this.date = date;
 		this.value = value;
-		this.schedule_data_arr = schedule_data_arr;
+		//this.schedule_data_arr = schedule_data_arr;
 
 	}
 

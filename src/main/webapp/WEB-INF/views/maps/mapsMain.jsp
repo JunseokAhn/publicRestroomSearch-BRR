@@ -86,10 +86,10 @@
             new diaryGraphInfo(3, 2, 2, 2),
             new diaryGraphInfo(2, 2, 3, 3),
 
-            new diaryGraphInfo(3, 1, 2, 3),            
-            new diaryGraphInfo(3, 2, 2, 2),
+            new diaryGraphInfo(3, 0.9, 2, 3),            
+            new diaryGraphInfo(3, 1.9, 2, 2),
             new diaryGraphInfo(3, 1, 1, 2),
-            new diaryGraphInfo(1, 1, 2, 3),
+            new diaryGraphInfo(0.9, 1, 2, 3),
 
             new diaryGraphInfo(2, 4, 4, 3),
             new diaryGraphInfo(4, 1, 2, 2),
@@ -1657,47 +1657,20 @@ function ShowHospitalList()
 					$("input[name='save-data']").attr("hidden","hidden");	
 					var contents = "";
 					var list_temp = list;
-					for(var i=0;i<5;i++)
+					
+					for(var i =0;i<5;i++)
 					{
-						console.log(list_temp[i].dutyName);
-						
-
-						for(var i =0;i<5;i++)
-						{						
-							contents+='<tr>';
-							contents+='<td style="float:left">' + (i+1) +'</td>';	
-							contents+='</tr>';
-							
-							contents+='<tr style="float: left;">';							
-							contents+='<td>병원 이름 : ' + list_temp[i].dutyName + ' 전화번호 : ' + list_temp[i].dutyTel1 + '</td>';							
-							contents+='</tr>';
-							
-
-							contents+='<tr style="float: left;">';
-							contents+='<td style="width:100%">평일 개시시간 : ' + list_temp[i].dutyTimeS + ' 평일 종료시간 : ' + list_temp[i].dutyTimeC + '</td>';
-							contents+='</tr>';
-
-							contents+='<tr style="float:left;">';
-							contents+='<td style="font-size:15px;">' + list_temp[i].dutyAddr + '</td>';
-							contents+='</tr>';													
-						}
-
-						$("#hopital_table").html(contents);
-						$("#hopital_table").removeAttr("hidden","hidden");
-						
-						
-/* 						<tr style="float: left;">
-							<td>병원 이름 : 최평락한의원  전화번호 : 02-501-1488</td>															
-						</tr>
-						<tr style="float: left;">							
-							<td>평일 개시시간 : 0930,  평일 종료시간 : 1830</td>														
-						</tr>	
-						<tr style="float: left;border-bottom: 1px solid;">													
-							<td>서울특별시 강남구 영동대로 309, 2층 (대치동, 준오빌딩 2층)</td>		
-							<td><br></td>													
-						</tr>								 */
-									
+						contents+='<tr">';
+						contents+='<th scope="col" style="text-align: left; font-size:14px;">'+(i+1) +'. 병원 이름 : ' + list_temp[i].dutyName + ' 전화번호 : ' + list_temp[i].dutyTel1+'<br>';
+						contents+='평일 개시시간 : '+ list_temp[i].dutyTimeS + ' 평일 종료시간 : ' + list_temp[i].dutyTimeC +'<br>';
+						contents+= '주소: '+ list_temp[i].dutyAddr;
+						contents+='</th>';							
+						contents+='</tr>';							
 					}
+					
+					$("#hopital_table").html(contents);
+					$("#hopital_table").removeAttr("hidden","hidden");			
+					
 				}
 			,
 			error:
@@ -1721,7 +1694,13 @@ function InsertResult()
 			success:
 				function(flag)
 				{
-					if(flag=="warning")
+					if(flag=="ignore")
+					{
+						alert("하루 3번 초과의 테스트값을 저장 할 수는 없습니다. 진지하게 테스트에 임해주세요.");
+						$("#diary").hide();
+						$("#diary-container").fadeOut();
+					}					
+					else if(flag=="warning")
 					{
 						alert("데이터를 저장했지만 건강이 위험한 상태입니다.\n 반경 1km 병원의 위치를 알려드리겠습니다.");
 						ShowHospitalList();												
@@ -1771,7 +1750,7 @@ function InsertResult()
 				<div class="col-xl-12 col-lg-6">
 					<div class="card card-stats mb-4 mb-xl-0">
 						<textarea class="card-body4 replyButton2" id="review-area" name="review" onkeydown="resize(this)" onkeyup="resize(this)" style="resize: none;"></textarea>
-						<div class="row">
+						<div class="row" >
 							<div class="col mt-2">
 								<span class="h2 font-weight mb-0">별점<img id="star1" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star2" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star3" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star4" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star5" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>">
 								</span> <span id="clean-margin" class="h2 font-weight mb-0">청결도<img id="clean1" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean2" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean3" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean4" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean5" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"></span>
@@ -1810,8 +1789,8 @@ function InsertResult()
 	</div>
 	
 	<!-- 최근 이용 화장실 nav-->
-	<div id="Recent-container"></div>
-	<div id="Recent" class="col-xl-4">
+	<div id="Recent-container" style="display:none;"></div>
+	<div id="Recent" class="col-xl-4" style="display:none;">
 		<form action="">
 			<div class="card shadow">
 				<div class="card-header bg-transparent">
@@ -1871,7 +1850,6 @@ function InsertResult()
 						<div class="col">
 							<h2 class="mb-0" style="display: inline-block">Health Test</h2>
 
-
 							<input id="x-button" name="feed-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#diary").hide(), $("#diary-container").fadeOut()'> <input id="register" hidden="hidden" name="save-data" class="btn btn-sm btn-primary" type="button" value="Save Data" onclick="SaveTest()"> <br>
 							<h4 id="health-ment" class="mb-0" style="display: inline-block">STEP1.대변의 모양을 선택해주세요</h4>
 
@@ -1880,7 +1858,7 @@ function InsertResult()
 					<div class="card-body2">
 					<!-- 결과 그래프 출력 -->
 					<canvas id="myChart" hidden="hidden" width="5" height="2"></canvas>					
-					<table id="result_table" hidden="hidden">
+					<table id="result_table"  hidden="hidden">
 						<tr>							
 							<td>
 								<img id="result_picture" src=""  style="width:50%" />
@@ -1891,7 +1869,7 @@ function InsertResult()
 						</tr>
 					</table>
 					
-					<table id="hopital_table" hidden="hidden" >
+					<table id="hopital_table"  class="table align-items-center table-flush"  hidden="hidden">
 														
 					</table>
 					
@@ -1910,7 +1888,7 @@ function InsertResult()
 								<img id="type3" class="hvr-grow-shadow" name="3" src="../resources/img/type3_1.png" style="width:90%"/>
 							</td>
 							<td style="width:230px;height:150px;">
-								<img id="type4" class="hvr-grow-shadow" name="4" src="../resources/img/type4_1.png" style="width:90%"/>
+								<img id="type4" class="hvr-grow-shadow" name="4" src="../resources/img/type4_1.png" style="width:90%" />
 							</td>
 						</tr>
 					</table>
