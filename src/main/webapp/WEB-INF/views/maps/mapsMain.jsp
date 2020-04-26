@@ -1297,7 +1297,7 @@ function reviewRefresh(lng, lat){
     	);     	
     }
 	
-	// 최근 이용했던 화장실, 선호하는 화장실
+	// 최근 이용했던 화장실
 	function Recent() {
 		var id = $("#sessionId").val();
 		$.ajax({
@@ -1307,15 +1307,15 @@ function reviewRefresh(lng, lat){
 				id : id
 			},
 		success : function(list) {
+			var id = $("#sessionId").val();
 			console.log(list);
-			if(list != null) {
+			if(id != null && id != "") {
 				var content = "<table>";
 				$("#Recent-contents").val("");
 				$("input[name='Recent-x-button']").html();
 				$("#Recent-contents").html();
 				$("#Recent-container").show();
-				$("#Recent").fadeIn();
-				
+				$("#Recent").slideDown();
 				content += '<h3 class="text-uppercase text-muted ls-1 mb-1">' + "최근이용 화장실" + "</h3>";
 				for(var i = 0; i < 3; i++) {
 				content += '<tr>';
@@ -1326,14 +1326,12 @@ function reviewRefresh(lng, lat){
 				content += '</th>';
 				content += "</tr>";
 				}
-				
 				content += "</table>";
 				console.log(content);
-				
 				$("#Recent-contents").html(content);
-			}else {
-			alert("로그인 후 사용가능 한 기능입니다 로그인 후 사용해주세요");
-				location.href = "/member/login";
+			} else {
+				alert("로그인이 필요한 서비스 입니다. 로그인을 해 주세요.");
+				location.href = "../member/login";
 			}
 		},
 		error : function(e) {
@@ -1352,13 +1350,13 @@ function reviewRefresh(lng, lat){
 			},
 		success : function(list) {
 			console.log(list);
-			if(list != null) {
+			if(id != null && id != "") {
 				var content = "<table>";
 				$("#Prefer-contents").val("");
 				$("input[name='Prefer-x-button']").html();
 				$("#Prefer-contents").html();
 				$("#Prefer-container").show();
-				$("#Prefer").fadeIn();
+				$("#Prefer").slideDown();
 				
 				content += '<h3 class="text-uppercase text-muted ls-1 mb-1">' + "선호하는 화장실" + "</h3>";
 				for(var i = 0; i < 3; i++) {
@@ -1377,7 +1375,7 @@ function reviewRefresh(lng, lat){
 				$("#Prefer-contents").html(content);
 			}else {
 			alert("로그인 후 사용가능 한 기능입니다 로그인 후 사용해주세요");
-				location.href = "/member/login";
+				location.href = "../member/login";
 			}
 		},
 		error : function(e) {
