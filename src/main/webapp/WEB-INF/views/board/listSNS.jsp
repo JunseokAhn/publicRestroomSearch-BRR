@@ -1289,7 +1289,7 @@ $.ajax
 		<nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
 			<div class="container-fluid">
 				<!-- Brand -->
-				<a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="<c:url value="/review/reviewMain"/>">Reviews</a>
+				<a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="<c:url value="/sns/listSNS"/>">SNS</a>
 				<!-- Form -->
 				<form id="normal-search" class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto" action="<c:url value="/review/reviewMain"/>" method="get">
 					<div class="form-group mb-0">
