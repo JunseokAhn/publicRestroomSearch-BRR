@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>화장실이 급할땐? - 부르르</title>
 <script src="../resources/js/jquery-3.4.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 <!-- Favicon -->
 <link href="<c:url value="/resources/assets/img/brand/favicon.png"/>" rel="icon" type="image/png">
 <!-- Fonts -->
@@ -300,7 +301,7 @@ function updateSnsReply() {
 	console.log(snsBoardnum);
 	console.log(snsReplynum);
 	console.log(comments);
-
+	var temp_info;
 	var str1 = '';
 		str1 += '<input class="form-control form-control-sm" type="text" id="replyUpd" value="'+ comments +'">';
 		str1 += '<input type="button" id="confirmUpd" class="btn btn-secondary btn-sm" value="수정 확인">';
@@ -410,18 +411,27 @@ var diaryPictureArray = [ "../resources/img/normal.png",
     "../resources/img/normal.png", "../resources/img/dangerous.png",
     "../resources/img/sobad.png", "../resources/img/normal.png" ];
 
-var diaryGraphInfoArray = [ new diaryGraphInfo(3, 1, 2, 3),
-    new diaryGraphInfo(5, 1, 3, 2), new diaryGraphInfo(4, 2, 2, 2),
+var diaryGraphInfoArray = [ 
+	new diaryGraphInfo(3, 1, 2, 3),
+    new diaryGraphInfo(5, 1, 3, 2),
+    new diaryGraphInfo(4, 2, 2, 2),
     new diaryGraphInfo(4, 1.5, 0.5, 3),
+    
+    new diaryGraphInfo(0, 5, 5, 2 ),
+    new diaryGraphInfo(2, 1, 1, 4),
+    new diaryGraphInfo(3, 2, 2, 2),
+    new diaryGraphInfo(2, 2, 3, 3),
 
-    new diaryGraphInfo(0, 5, 5, 2), new diaryGraphInfo(2, 1, 1, 4),
-    new diaryGraphInfo(3, 2, 2, 2), new diaryGraphInfo(2, 2, 3, 3),
+    new diaryGraphInfo(3, 0.9, 2, 3),            
+    new diaryGraphInfo(3, 1.9, 2, 2),
+    new diaryGraphInfo(3, 1, 1, 2),
+    new diaryGraphInfo(0.9, 1, 2, 3),
 
-    new diaryGraphInfo(3, 1, 2, 3), new diaryGraphInfo(3, 2, 2, 2),
-    new diaryGraphInfo(3, 1, 1, 2), new diaryGraphInfo(1, 1, 2, 3),
-
-    new diaryGraphInfo(2, 4, 4, 3), new diaryGraphInfo(4, 1, 2, 2),
-    new diaryGraphInfo(5, 0.5, 0.5, 1), new diaryGraphInfo(1, 1, 2, 3) ];
+    new diaryGraphInfo(2, 4, 4, 3),
+    new diaryGraphInfo(4, 1, 2, 2),
+    new diaryGraphInfo(5, 0.5, 0.5, 1),
+    new diaryGraphInfo(1, 1, 2, 3)        
+];
 
 var diaryresult = "";
 var result_show_flag = true;
@@ -639,7 +649,9 @@ function resize (obj) {
 	obj.style.height = ( 12 + obj.scrollHeight ) + "px";
 }
 
-var temp_info;
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart;
+
 //type1의 진단결과
 function clickFunc()
 {
@@ -767,8 +779,8 @@ function clickFunc()
 	     if(result_show_flag)
 		{
 			console.log("계속 돈다");
-	    	 var ctx = document.getElementById('myChart').getContext('2d');
-				var myChart = new Chart(ctx, {
+	    	 
+				myChart = new Chart(ctx, {
 				    type: 'line',
 				    data: {
 				        labels: ['스트레스', '수분', '영양소'],
@@ -1060,13 +1072,9 @@ $.ajax
 		</form>
 	</div>
 
-
-
-
-
-	<div id="diary-container" style="display: none;"></div>
-
-	<div id="diary" class="col-xl-4" style="display: none;">
+	<!-- 다이어리 -->
+	<div id="diary-container" style="display:none;"></div>	
+	<div id="diary" class="col-xl-4" style="display:none;">
 		<form action="">
 			<div class="card shadow">
 				<div class="card-header bg-transparent">
@@ -1074,44 +1082,54 @@ $.ajax
 						<div class="col">
 							<h2 class="mb-0" style="display: inline-block">Health Test</h2>
 
-
 							<input id="x-button" name="feed-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#diary").hide(), $("#diary-container").fadeOut()'> <input id="register" hidden="hidden" name="save-data" class="btn btn-sm btn-primary" type="button" value="Save Data" onclick="SaveTest()"> <br>
 							<h4 id="health-ment" class="mb-0" style="display: inline-block">STEP1.대변의 모양을 선택해주세요</h4>
 
 						</div>
 					</div>
 					<div class="card-body2">
-						<!-- 결과 그래프 출력 -->
-						<canvas id="myChart" hidden="hidden" width="5" height="2"></canvas>
-						<table id="result_table" hidden="hidden">
-							<tr>
-								<td><img id="result_picture" src="" style="width: 50%" /></td>
-								<td>
-									<p id="result_description"></p>
-								</td>
-							</tr>
-						</table>
-
-						<table id="hopital_table" hidden="hidden">
-
-						</table>
-
-						<!-- 테스트 목록 출력 -->
-						<table id="health_test_table">
-							<tr>
-								<td style="width: 230px; height: 150px;"><img id="type1" class="hvr-grow-shadow" name="1" src="../resources/img/type1_1.png" style="width: 90%;" /></td>
-								<td style="width: 230px; height: 150px;"><img id="type2" class="hvr-grow-shadow" name="2" src="../resources/img/type2_1.png" style="width: 90%;" /></td>
-							</tr>
-							<tr>
-								<td style="width: 230px; height: 150px;"><img id="type3" class="hvr-grow-shadow" name="3" src="../resources/img/type3_1.png" style="width: 90%" /></td>
-								<td style="width: 230px; height: 150px;"><img id="type4" class="hvr-grow-shadow" name="4" src="../resources/img/type4_1.png" style="width: 90%" /></td>
-							</tr>
-						</table>
+					<!-- 결과 그래프 출력  width="382" height="152"-->
+					<canvas id="myChart" hidden="hidden"></canvas>					
+					<table id="result_table"  hidden="hidden">
+						<tr>							
+							<td>
+								<img id="result_picture" src=""  style="width:50%" />
+							</td>
+							<td>
+								<p id="result_description"></p> 
+							</td>
+						</tr>
+					</table>
+					
+					<table id="hopital_table"  class="table align-items-center table-flush"  hidden="hidden">
+														
+					</table>
+					
+					<!-- 테스트 목록 출력 -->
+					<table id="health_test_table">
+						<tr>
+							<td style="width:230px;height:150px;"> 
+								<img id="type1" class="hvr-grow-shadow"  name="1" src="../resources/img/type1_1.png" style="width:90%;"  />
+							</td>
+							<td style="width:230px;height:150px;">
+								<img id="type2" class="hvr-grow-shadow" name="2" src="../resources/img/type2_1.png" style="width:90%; " />
+							</td>
+						</tr>
+						<tr>
+							<td style="width:230px;height:150px;">
+								<img id="type3" class="hvr-grow-shadow" name="3" src="../resources/img/type3_1.png" style="width:90%"/>
+							</td>
+							<td style="width:230px;height:150px;">
+								<img id="type4" class="hvr-grow-shadow" name="4" src="../resources/img/type4_1.png" style="width:90%" />
+							</td>
+						</tr>
+					</table>
 					</div>
 				</div>
 			</div>
 		</form>
 	</div>
+	<!-- 다이어리 끝 -->
 
 	<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
 		<div class="container-fluid">
