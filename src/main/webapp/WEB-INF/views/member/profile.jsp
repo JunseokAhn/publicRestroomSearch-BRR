@@ -821,9 +821,69 @@ function GoNextYear()
 	Init((today_info.search_year+1),(today_info.search_month-1));	
 }
 
+//선호 화장실 출력
+//선호하는 화장실
+function Prefer() 
+{
+	var id = $("#sessionId").val();
+	$.ajax({
+	url : "<c:url value='/dayaver/recent'/>",
+	type : "GET" ,
+	data : {
+			id : id
+	},
+	success : function(list) {
+		console.log(list);
+		if(id != null && id != "") {
+			var content = "<table>";
+			$("#Prefer-contents").val("");
+			$("input[name='Prefer-x-button']").html();
+			$("#Prefer-contents").html();
+			$("#Prefer-container").show();
+			$("#Prefer").slideDown();
+				
+			content += '<h3 class="text-uppercase text-muted ls-1 mb-1">' + "선호하는 화장실" + "</h3>";
+			for(var i = 0; i < 3; i++) {
+				content += '<tr>';
+				content +='<th scope="col" style="text-align:left; font-size:16px;">';
+				content += (i+1) + " ." ;
+				content += list.list2[i].toiletNm + "<br>";
+				content += list.list3[i]  + "번 이용 했습니다." + "<br>" + "<hr>";
+				content += '</th>';
+				content += "</tr>";
+			}
+				
+			content += "</table>";
+			console.log(content);
+			
+			$("#Prefer-contents").html(content);
+		}
+		else if(list.list2.length == 0 && id != null && id != "")
+		{
+			alert("저장된 데이터가 없습니다. 한 번 이상 길찾기를 해주세요.");
+			return false;
+		}
+		else
+		{
+			alert("로그인 후 사용가능 한 기능입니다 로그인 후 사용해주세요");
+			location.href = "../member/login";
+		}
+	},
+	error : function(e) {
+		alert(JSON.stringify(e));
+	}
+	});
+}
+
 	$(
 			function()
 			{
+				 window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = []; 
+				window.myWidgetParam.push({id: 18,cityid: '1835848',appid: 'c08b376c4c1ca3b5e593c4991d91eb3c',
+				units: 'metric',containerid: 'openweathermap-widget-18',  });  
+				(function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";
+					script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
+						var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();
 				// type모양별 체크시 각 함수를 다르게 지정해서 건강진단을 함    
 		    	$("#type1").on
 		    	(
@@ -1132,45 +1192,64 @@ function GoNextYear()
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<!-- Brand -->
-			<a class="navbar-brand pt-0" href="<c:url value="/maps/mapsMain"/>"> <img src="<c:url value="/resources/img/Logo.png"/>" class="navbar-brand-img" alt="...">
+			<a class="navbar-brand pt-0 pb-0" href="<c:url value="/maps/mapsMain"/>">
+				<img src="<c:url value="/resources/img/Logo.png"/>" class="navbar-brand-img" alt="...">
 			</a>
+
 			<!-- User -->
 			<ul class="nav align-items-center d-md-none">
-				<li class="nav-item dropdown"><a class="nav-link nav-link-icon" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="ni ni-bell-55"></i>
-				</a>
+				<li class="nav-item dropdown"><a class="nav-link nav-link-icon" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="ni ni-bell-55"></i>
+					</a>
 					<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right" aria-labelledby="navbar-default_dropdown_1">
-						<a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a>
+						<a class="dropdown-item" href="#">Action</a>
+						<a class="dropdown-item" href="#">Another action</a>
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="#">Something else here</a>
 					</div></li>
 				<li class="nav-item dropdown"><a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						<div class="media align-items-center">
-							<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-1-800x800.jpg"/>">
+							<span class="avatar avatar-sm rounded-circle"> 
+							<c:if test="${sessionScope.sessionId != null}">
+								<img alt="Image placeholder" src="${sessionScope.Profile}">
+							</c:if>
+							<c:if test="${sessionScope.sessionId == null}">
+								<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>">
+							</c:if>
 							</span>
 						</div>
-				</a>
+					</a>
 					<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
 						<div class=" dropdown-header noti-title">
 							<h6 class="text-overflow m-0">Welcome!</h6>
 						</div>
-						<a href="<c:url value="/profile"/>" class="dropdown-item"> <i class="ni ni-single-02"></i> <span>My profile</span>
-						</a> 
-						<a href="<c:url value="/board/listSNS"/>" class="dropdown-item"> <i class="ni ni-settings-gear-65"></i> <span>SNS</span></a>
-<%-- 						</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-calendar-grid-58"></i> <span>Activity</span> --%>
-<%-- 						</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-support-16"></i> <span>Support</span> --%>
-<!-- 						</a> -->
+						<a href="<c:url value="/examples/profile"/>" class="dropdown-item">
+							<i class="ni ni-single-02"></i> <span>My profile</span>
+						</a>
+						<a href="<c:url value="/examples/profile"/>" class="dropdown-item">
+							<i class="ni ni-settings-gear-65"></i> <span>Settings</span>
+						</a>
+						<a href="<c:url value="/examples/profile"/>" class="dropdown-item">
+							<i class="ni ni-calendar-grid-58"></i> <span>Activity</span>
+						</a>
+						<a href="<c:url value="/examples/profile"/>" class="dropdown-item">
+							<i class="ni ni-support-16"></i> <span>Support</span>
+						</a>
 						<div class="dropdown-divider"></div>
-						<a href="/member/logout" class="dropdown-item"> <i class="ni ni-user-run"></i> <span>Logout</span>
+						<a href="#!" class="dropdown-item">
+							<i class="ni ni-user-run"></i> <span>Logout</span>
 						</a>
 					</div></li>
 			</ul>
+
 			<!-- Collapse -->
 			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
 				<!-- Collapse header -->
 				<div class="navbar-collapse-header d-md-none">
 					<div class="row">
 						<div class="col-6 collapse-brand">
-							<a href="<c:url value="/examples/index"/>"> <img src="<c:url value="/resources/assets/img/brand/blue.png"/>">
+							<a href="<c:url value="/maps/mapsMain"/>">
+								<img src="<c:url value="/resources/img/Logo.png"/>">
 							</a>
 						</div>
 						<div class="col-6 collapse-close">
@@ -1181,62 +1260,65 @@ function GoNextYear()
 					</div>
 				</div>
 				<!-- Form -->
-				<form class="mt-4 mb-3 d-md-none">
+				<form id="responsive-search" class="mt-4 mb-3 d-md-none" action="<c:url value="/review/reviewMain"/>" method="get">
 					<div class="input-group input-group-rounded input-group-merge">
-						<input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Search" aria-label="Search">
+						<input type="search" class="form-control form-control-rounded form-control-prepended" name="toiletNm" placeholder="Search Review" aria-label="Search">
 						<div class="input-group-prepend">
-							<div class="input-group-text">
+							<div class="input-group-text" onclick="document.forms['responsive-search'].submit();">
 								<span class="fa fa-search"></span>
 							</div>
 						</div>
 					</div>
 				</form>
+				
 				<!-- Navigation -->
 				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link  active " href="<c:url value="/maps/mapsMain"/>"> <i class="ni ni-pin-3 text-orange"></i> Maps
-					</a></li>
-					<li class="nav-item"><a class="nav-link " href="<c:url value="/board/listSNS"/>"> <i class="ni ni-tv-2 text-primary"></i> SNS
-					</a></li>
+					<li class="nav-item"><a class="nav-link  active " href="<c:url value="/maps/mapsMain"/>">
+							<i class="ni ni-pin-3 text-orange"></i> Maps
+						</a></li>
+					<li class="nav-item"><a class="nav-link " href="<c:url value="/sns/listSNS"/>">
+							<i class="ni ni-tv-2 text-primary"></i> SNS
+						</a></li>
+
 					<%-- <li class="nav-item  active "><a class="nav-link " href="<c:url value="/examples/index"/>">
 							<i class="ni ni-tv-2 text-primary"></i> Dashboard
-						</a></li> //nav-item  active는 무조건 검정색으로 표시됩니다. --%>
-<%-- 					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/icons"/>"> <i class="ni ni-planet text-blue"></i> Icons --%>
-<!-- 					</a></li> -->
+						</a></li> //nav-item  active는 무조건 검정색으로 표시됩니다. 
+					
+							ni ni-chat-round
 
-					
-					
-					<li class="nav-item">
-						<a class="nav-link " href="javascript:DiaryShow();"><i class="ni ni-bullet-list-67 text-red"></i> 
-							Diary
-						</a>
-					</li>
-					
+					 --%>
+					<li class="nav-item"><a class="nav-link" href="<c:url value="/review/reviewMain"/>">
+							<i class="ni ni-chat-round"></i> Reviews
+						</a></li>
+
+					<!-- 건강 테스트 -->
+					<li class="nav-item"><a class="nav-link " href="javascript:DiaryShow();">
+							<i class="ni ni-bullet-list-67 text-red"></i> Diary
+						</a></li>
+
+
+					<!-- 로그인 영역 -->
+
 					<c:if test="${sessionScope.sessionId == null }">
-						<li class="nav-item"><a class="nav-link" href="<c:url value="/member/login"/>"> <i class="ni ni-key-25 text-info"></i> Login
-						</a></li>
-<%-- 						<li class="nav-item"><a class="nav-link" href="<c:url value="/examples/register"/>"> <i class="ni ni-circle-08 text-pink"></i> Sign up --%>
-<!-- 						</a></li> -->
+						<li class="nav-item"><a class="nav-link" href="<c:url value="/member/login"/>">
+								<i class="ni ni-key-25 text-info"></i> Login
+							</a></li>
+						<li class="nav-item"><a class="nav-link " href="<c:url value="/member/profile"/>">
+								<i class="ni ni-single-02 text-gray-dark"></i> User profile
+							</a></li>
 					</c:if>
+
 					<c:if test="${sessionScope.sessionId != null }">
-<%-- 						<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/profile"/>"> <i class="ni ni-single-02 text-yellow"></i> User profile --%>
-<!-- 						</a></li> -->
-						<li class="nav-item"><a class="nav-link" href="<c:url value="logout"/>"> <i class="ni ni-key-25 text-info"></i> Logout
-						</a></li>
-						<!-- 네이버 로그인 시 -->
-						<c:if test="${sessionScope.sessionNaver != null}">
-					<li class="nav-item">
-					<a class="nav-link " href="<c:url value="./deleteNaver"/>"> 
-					<i class="ni ni-single-02 text-gray-dark""></i> 회원탈퇴
-					</a></li>
-					</c:if>
-					<!-- 구글 로그인 시 -->
-					<c:if test="${sessionScope.sessionNaver == null}">
-					<li class="nav-item"><a class="nav-link " href="<c:url value="./deleteGoogle"/>"> <i class="ni ni-bullet-list-67 text-red"></i> 회원탈퇴
-					</a></li>
-						</c:if>
+						<li class="nav-item"><a class="nav-link " href="<c:url value="/member/profile"/>">
+								<i class="ni ni-single-02 text-gray-dark"></i> User profile
+							</a></li>
+						<li class="nav-item"><a class="nav-link" href="<c:url value="/member/logout"/>">
+								<i class="ni ni-key-25 text-info"></i> Logout
+							</a></li>
 					</c:if>
 				</ul>
-				<!-- Divider -->
+<!-- 				
+						<!-- Divider -->
 						<hr class="my-3">
 						<!-- Heading -->
 						<h6 class="navbar-heading text-muted">NEED LOGIN</h6>
@@ -1254,16 +1336,10 @@ function GoNextYear()
 						</a></li>
 
 					<li class="nav-item"><br> <br>
-						<div id="openweathermap-widget-18"></div> <script>
-							/* window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = []; 
-							window.myWidgetParam.push({id: 18,cityid: '1835848',appid: 'c08b376c4c1ca3b5e593c4991d91eb3c',
-							units: 'metric',containerid: 'openweathermap-widget-18',  });  
-							(function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";
-							script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
-							var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })(); */
-						</script></li>
+						<div id="openweathermap-widget-18"></div> 
+					</li>
+
 				</ul>
-				
 				<ul class="navbar-nav">
 					<li class="nav-item active active-pro"><a class="nav-link" href="<c:url value="/maps/mapsMain2"/>">
 							<i class="ni ni-bus-front-12"></i> Google Maps (Beta)
@@ -1272,20 +1348,21 @@ function GoNextYear()
 			</div>
 		</div>
 	</nav>
+	<!-- 네비게이션[E] -->
 	<div class="main-content">
 		<!-- Navbar -->
 		<nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
 			<div class="container-fluid">
 				<!-- Brand -->
-				<a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="<c:url value="/examples/index"/>">User Profile</a>
+				<a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="<c:url value="/maps/mapsMain"/>">Maps</a>
 				<!-- Form -->
-				<form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+				<form id="normal-search" class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto" action="<c:url value="/review/reviewMain"/>" method="get">
 					<div class="form-group mb-0">
 						<div class="input-group input-group-alternative">
 							<div class="input-group-prepend">
-								<span class="input-group-text"><i class="fas fa-search"></i></span>
+								<span class="input-group-text pointer" onclick="document.forms['normal-search'].submit();""><i class="fas fa-search"></i></span>
 							</div>
-							<input class="form-control" placeholder="Search" type="text">
+							<input class="form-control" placeholder="Search Review" name="toiletNm" type="text">
 						</div>
 					</div>
 				</form>
@@ -1293,31 +1370,63 @@ function GoNextYear()
 				<ul class="navbar-nav align-items-center d-none d-md-flex">
 					<li class="nav-item dropdown"><a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<div class="media align-items-center">
-								<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="${sessionScope.Profile}"/>">
-								</span>
-								<div class="media-body ml-2 d-none d-lg-block">
-									<span class="mb-0 text-sm  font-weight-bold">${sessionScope.sessionNickname}</span>
-								</div>
+								<!-- 회원 네비게이터 영역 -->
+								<c:if test="${sessionScope.sessionId == null}">
+									<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>">
+									</span>
+									<div class="media-body ml-2 d-none d-lg-block">
+										<span class="mb-0 text-sm  font-weight-bold">로그인을 해 주세요.</span>
+									</div>
+								</c:if>
+
+								<c:if test="${sessionScope.sessionId != null}">
+
+									<c:if test="${sessionScope.sessionNaver != null}">
+										<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="${sessionScope.Profile}"/>">
+										</span>
+										<div class="media-body ml-2 d-none d-lg-block">
+											<span class="mb-0 text-sm  font-weight-bold">${sessionScope.sessionNickname}</span>
+										</div>
+									</c:if>
+
+									<c:if test="${sessionScope.sessionNaver == null}">
+										<span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="<c:url value="${sessionScope.Profile}"/>">
+										</span>
+										<div class="media-body ml-2 d-none d-lg-block">
+											<span class="mb-0 text-sm  font-weight-bold">${sessionScope.sessionNickname}</span>
+										</div>
+									</c:if>
+
+								</c:if>
 							</div>
-					</a>
+						</a>
 						<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
 							<div class=" dropdown-header noti-title">
 								<h6 class="text-overflow m-0">Welcome!</h6>
 							</div>
-<%-- 							<a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-single-02"></i> <span>My profile</span> --%>
-<%-- 							</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-settings-gear-65"></i> <span>Settings</span> --%>
-<%-- 							</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-calendar-grid-58"></i> <span>Activity</span> --%>
-<%-- 							</a> <a href="<c:url value="/examples/profile"/>" class="dropdown-item"> <i class="ni ni-support-16"></i> <span>Support</span> --%>
-<!-- 							</a> -->
-							<div class="dropdown-divider"></div>
-							<a href="../member/logout" class="dropdown-item"> <i class="ni ni-user-run"></i> <span>Logout</span>
-							
-							</a>
+
+							<c:if test="${sessionScope.sessionId == null}">
+								<div class="dropdown-divider"></div>
+								<a href="<c:url value="/member/login"/>" class="dropdown-item">
+									<i class="ni ni-user-run"></i> <span>Login</span>
+								</a>
+							</c:if>
+
+							<c:if test="${sessionScope.sessionId != null}">
+								<a href="<c:url value="/member/profile"/>" class="dropdown-item">
+									<i class="ni ni-single-02"></i> <span>My profile</span>
+								</a>
+								<div class="dropdown-divider"></div>
+								<a href="<c:url value="/member/logout"/>" class="dropdown-item">
+									<i class="ni ni-user-run"></i> <span>Logout</span>
+								</a>
+							</c:if>
 						</div></li>
 				</ul>
 			</div>
 		</nav>
-		<!-- End Navbar -->
+	<!-- 네비끝 -->
+	
 		<!-- Header -->
 		<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url(<c:url value="${sessionScope.Profile}"/>); background-size: cover; background-position: center top;">
 			<!-- Mask -->
@@ -1426,10 +1535,7 @@ function GoNextYear()
 
 
 
-<!-- 달력 여기까지 -->
-			
-			
-			
+<!-- 달력 여기까지 -->			
 			<!-- Footer -->
 			<footer class="footer">
 				<div class="row align-items-center justify-content-xl-between">
