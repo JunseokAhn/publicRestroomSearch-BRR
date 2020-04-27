@@ -42,7 +42,6 @@ var test_result_index=0;
 
 var user_id;
 
-
 //대변 체크 결과
  var temp_info;
 var diaryGraphInfo = 
@@ -125,6 +124,43 @@ var diaryDescriptionArray=
 "<p>설사와 혈변은 염증성 질환일 수 도 있습니다.<br>가까운 병원에 빠르게 진찰을 받아보세요.</p>",
 "<p>수분이나 당분,지방을 지나치게 많이 먹어 장이 자극받은 상태입니다.<br>휴식이 필요해요.</p>"
 ];
+
+var pos = 
+    function(lat, lng)
+    {
+    	this.lat = lat;
+    	this.lng = lng;    	
+    	return this;
+    };
+    
+var lat;
+var lng;
+var now_pos;
+function FindMyPos()
+{
+    // HTML5의 geolocation으로 사용할 수 있는지 확인합니다      
+    if(navigator.geolocation)
+    {       
+    	navigator.geolocation.getCurrentPosition
+    	(
+    	    function (position) 
+    	    {
+    			lat = position.coords.latitude;
+    			lng = position.coords.longitude;
+    			now_pos=new pos(lat.toFixed(6),lng.toFixed(6));
+
+    			console.log(now_pos.lat);
+    			console.log(now_pos.lng);
+    	    }
+    	)
+    	
+    }
+    else
+    {
+    	 console.log("불가능");
+    }
+}
+
 
 function clickFunc()
 {
@@ -390,6 +426,7 @@ function InsertResult()
 					else if(flag=="warning")
 					{
 						alert("데이터를 저장했지만 건강이 위험한 상태입니다.\n 반경 1km 병원의 위치를 알려드리겠습니다.");
+						FindMyPos();
 						ShowHospitalList();												
 					}
 					else if(flag=="success")
@@ -415,15 +452,15 @@ function InsertResult()
 }
 
 function ShowHospitalList()
-{
+{	
 	$.ajax
 	(
 		{
 			url:"<c:url value="/toilet/receive_near_hospital"/>",
 			type:"post",				
 			data:{
-				lat : pos.lat.toFixed(6),
-    			lng : pos.lng.toFixed(6)
+				lat : now_pos.lat,
+    			lng : now_pos.lng
     		},
 			success:
 				function(list)
@@ -923,8 +960,8 @@ function Prefer()
 
 	$(
 			function()
-			{
-				 window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = []; 
+			{				
+				window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = []; 
 				window.myWidgetParam.push({id: 18,cityid: '1835848',appid: 'c08b376c4c1ca3b5e593c4991d91eb3c',
 				units: 'metric',containerid: 'openweathermap-widget-18',  });  
 				(function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";
