@@ -124,7 +124,7 @@ function BackHome(){
 			<div class="row justify-content-center">
 				<div class="col-lg-5 col-md-7">
 					<div class="card bg-secondary shadow border-0">
-						<div class="card-header bg-transparent pb-5">
+						<div class="card-header bg-transparent pb-4">
 							<div class="text-muted text-center mt-2 mb-3">
 								<h3>로그인을 선택 해 주세요.</h3>
 							</div>
@@ -141,9 +141,9 @@ function BackHome(){
 								</table>
 							</div>
 						</div>
-						<div class="card-body px-lg-5 py-lg-5">
-							<div class="text-center text-muted mb-4">
-							<img width="40%" height="20%" src="<c:url value="/resources/img/Logo.png"/>" />
+						<div class="card-body px-lg-4 py-lg-4">
+							<div class="text-center text-muted mb-3">
+							<img width="35%" height="20%" src="<c:url value="/resources/img/Logo.png"/>" />
 <!-- 								<small>이 부근에 로고를 넣으시면 됩니다.</small> -->
 									
 							</div>
