@@ -126,6 +126,23 @@ var diaryDescriptionArray=
 "<p>수분이나 당분,지방을 지나치게 많이 먹어 장이 자극받은 상태입니다.<br>휴식이 필요해요.</p>"
 ];
 
+var lat;
+var lng;
+
+function FindMyPos()
+{
+	if(navigator.geolocation)
+	{
+        navigator.geolocation.getCurrentPosition
+        (
+                function (position) 
+                {
+           			lat = position.coords.latitude;
+           			lng = position.coords.longitude;
+           		}
+        );
+}
+
 function clickFunc()
 {
 	diaryresult += $(this).attr("id");		
