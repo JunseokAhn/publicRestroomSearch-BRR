@@ -584,6 +584,7 @@ function reviewRefresh(lng, lat){
     function reviewCheck(){
         //청결도, 별점입력했는지
         var toiletNm = document.getElementById("toiletNm").value
+        var toiletType = document.getElementById("toiletType").value
         var lng = document.getElementById("lng").value
         var lat = document.getElementById("lat").value
         var sessionId = document.getElementById("sessionId").value
@@ -636,14 +637,73 @@ function reviewRefresh(lng, lat){
         	},
         	type : "post",
         	success: function(e){
-        		reviewRefresh(lng, lat);
+        	    $.ajax({
+                    url: "<c:url value='/review/reviewAver'/>",
+                    data:{
+                        lat: lat, 
+                        lng: lng
+                    },
+                    type:"post",
+                    success: function(e){
+                         $.ajax({
+							url : "<c:url value='/dayaver/average'/>",
+							type : "POST",
+							data : {
+								lng : lng, 
+								lat : lat
+							},
+							success : function (res) {
+								var changeRate = res.differ;
+								var averageRate = res.average;
+								changeDiv1(e.starAver, e.cleanAver, e.starDiffer, e.cleanDiffer, toiletNm, toiletType, lat, lng, changeRate, averageRate);
+								reviewRefresh(lng, lat);
+							},
+							error : function (e) {
+								console.log(JSON.stringify(e));
+							}
+						}); 
+                    },
+                    error: function(e){
+                        console.log(e);
+                    }
+                });
+        		
         		$("#review").hide();
         		$("#review-container").fadeOut();  
         		$("#review-area").val("");
         		hover();
         	},
         	error: function(e){
-        		reviewRefresh(lng, lat);
+        	    $.ajax({
+                    url: "<c:url value='/review/reviewAver'/>",
+                    data:{
+                        lat: lat, 
+                        lng: lng
+                    },
+                    type:"post",
+                    success: function(e){
+                         $.ajax({
+							url : "<c:url value='/dayaver/average'/>",
+							type : "POST",
+							data : {
+								lng : lng, 
+								lat : lat
+							},
+							success : function (res) {
+								var changeRate = res.differ;
+								var averageRate = res.average;
+								changeDiv1(e.starAver, e.cleanAver, e.starDiffer, e.cleanDiffer, toiletNm, toiletType, lat, lng, changeRate, averageRate);
+								reviewRefresh(lng, lat);
+							},
+							error : function (e) {
+								console.log(JSON.stringify(e));
+							}
+						}); 
+                    },
+                    error: function(e){
+                        console.log(e);
+                    }
+                });
         		$("#review").hide();
         		$("#review-container").fadeOut();  
         		$("#review-area").val("");
@@ -808,11 +868,11 @@ function reviewRefresh(lng, lat){
         <%-- <%=(String) session.getAttribute("sessionId")%>
         ; --%>
         //리뷰쓰기
-        content2 += "<input class='replyButton3 ml-1 pointer' type='button' value='리뷰 쓰기' onclick='reviewWrite(" + "\"" + title + "\"," + "\"" + id + "\"," + "\"" + lng + "\"," + "\"" + lat + "\")'>";
+        content2 += "<input class='replyButton3 ml-1 pointer' type='button' value='리뷰 쓰기' onclick='reviewWrite(" + "\"" + title + "\"," + "\"" + id + "\"," + "\"" + lng + "\"," + "\"" + lat + "\"," + "\"" + toiletType + "\")'>";
         content2 += "</p>";
 
         div1.innerHTML = content2;
-        reviewRefresh(lng, lat);
+       
         
        
     }
@@ -909,6 +969,7 @@ function reviewRefresh(lng, lat){
 											var changeRate = res.differ;
 											var averageRate = res.average;
 											changeDiv1(e.starAver, e.cleanAver, e.starDiffer, e.cleanDiffer, title, toiletType, target._lat, target._lng, changeRate, averageRate);
+											reviewRefresh(target._lng, target._lat);
 										},
 										error : function (e) {
 											console.log(JSON.stringify(e));
@@ -927,10 +988,11 @@ function reviewRefresh(lng, lat){
         
     }//setPositions[E]
     
-    function reviewWrite (title, id, lng, lat) {
+    function reviewWrite (title, id, lng, lat, toiletType) {
     	document.getElementById("review-toilet").innerHTML=title;
     	$("#review-area").val("");
     	$("#toiletNm").val(title);
+    	$("#toiletType").val(toiletType);
     	$("#lng").val(lng);
     	$("#lat").val(lat);
     	$("#review-container").fadeIn();
@@ -1063,6 +1125,7 @@ function reviewRefresh(lng, lat){
 						var changeRate = res.differ;
 						var averageRate = res.average;
 						changeDiv1(e.starAver, e.cleanAver, e.starDiffer, e.cleanDiffer, title, toiletType, toiletVO.lat, toiletVO.lng, changeRate, averageRate);
+						reviewRefresh(toiletVO.lng, toiletVO.lat);
 					},
 					error : function (e) {
 						console.log(JSON.stringify(e));
@@ -1142,7 +1205,36 @@ function reviewRefresh(lng, lat){
     	console.log("endY" + endY);
     	console.log("title" + title);
     	<%-- <%=(String) session.getAttribute("sessionId")%> --%>
-    	;    	
+    	;
+    	$.ajax({
+            url: "<c:url value='/review/reviewAver'/>",
+            data:{
+                lat: endY, 
+                lng: endX
+            },
+            type:"post",
+            success: function(e){
+                 $.ajax({
+					url : "<c:url value='/dayaver/average'/>",
+					type : "POST",
+					data : {
+						lng : endX, 
+						lat : endY
+					},
+					success : function (res) {
+						var changeRate = res.differ;
+						var averageRate = res.average;
+						changeDiv1(e.starAver, e.cleanAver, e.starDiffer, e.cleanDiffer, title, toiletType, endY, endX, changeRate, averageRate);
+					},
+					error : function (e) {
+						console.log(JSON.stringify(e));
+					}
+				}); 
+            },
+            error: function(e){
+                console.log(e);
+            }
+        });
         //DB에 정보저장, title값 필요
         if(id != null){
         	$.ajax({
@@ -1755,7 +1847,7 @@ function InsertResult()
 	<input type="hidden" id="Profile" name="profile_image" value="${sessionScope.Profile}">
 	<input type="hidden" id="sessionNickname" name="nickname" value="${sessionScope.sessionNickname}">
 	<input type="hidden" id="sessionId" name="sessionId" value="${sessionScope.sessionId}">
-	
+
 	<div id="review-container"></div>
 	<div id="review" class="col-xl-4">
 		<div class="card shadow">
@@ -1763,7 +1855,7 @@ function InsertResult()
 				<div class="row align-items-center">
 					<div class="col">
 						<h2 id="review-toilet" class="mb-0" style="display: inline-block"></h2>
-						<input type="hidden" id="toiletNm"> <input id="x-button" class="btn btn-sm btn-primary" type="button" value="X" onclick='$("#review").hide(), $("#review-container").fadeOut()'> <input id="register" class="btn btn-sm btn-primary" type="button" value="Register" onclick='reviewCheck()'>
+						<input type="hidden" id="toiletNm"> <input type="hidden" id="toiletType"> <input id="x-button" class="btn btn-sm btn-primary" type="button" value="X" onclick='$("#review").hide(), $("#review-container").fadeOut()'> <input id="register" class="btn btn-sm btn-primary" type="button" value="Register" onclick='reviewCheck()'>
 						<h6 id="review-ment" class="text-uppercase text-muted ls-1 mb-1">당신의 리뷰가 다른 사람들에게 도움이 될 거에요!</h6>
 					</div>
 				</div>
@@ -1772,7 +1864,7 @@ function InsertResult()
 				<div class="col-xl-12 col-lg-6">
 					<div class="card card-stats mb-4 mb-xl-0">
 						<textarea class="card-body4 replyButton2" id="review-area" name="review" onkeydown="resize(this)" onkeyup="resize(this)" style="resize: none;"></textarea>
-						<div class="row" >
+						<div class="row">
 							<div class="col mt-2">
 								<span class="h2 font-weight mb-0">별점<img id="star1" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star2" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star3" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star4" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="star5" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>">
 								</span> <span id="clean-margin" class="h2 font-weight mb-0">청결도<img id="clean1" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean2" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean3" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean4" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"><img id="clean5" class="stars ml-1" src="<c:url value="/resources/img/starOff.png"/>"></span>
@@ -1809,31 +1901,30 @@ function InsertResult()
 			</div>
 		</form>
 	</div>
-	
+
 	<!-- 최근 이용 화장실 nav-->
-	<div id="Recent-container" style="display:none;"></div>
-	<div id="Recent" class="col-xl-4" style="display:none;">
+	<div id="Recent-container" style="display: none;"></div>
+	<div id="Recent" class="col-xl-4" style="display: none;">
 		<form action="">
 			<div class="card shadow">
 				<div class="card-header bg-transparent">
 					<div class="row align-items-center">
 						<div class="col">
 							<h2 class="mb-0" style="display: inline-block">Recent toliet</h2>
-							<input id="x-button" name="Recent-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#Recent").hide(), $("#Recent-container").fadeOut()'> 
+							<input id="x-button" name="Recent-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#Recent").hide(), $("#Recent-container").fadeOut()'>
 							<h6 id="Recent-ment" class="text-uppercase text-muted ls-1 mb-1">최근 이용 화장실 목록 입니다.</h6>
 						</div>
 					</div>
 				</div>
 				<div class="card-body2">
 					<div class="col-xl-12 col-lg-6">
-						<div class="card card-stats mb-4 mb-xl-0" id="Recent-contents">
-						</div>
+						<div class="card card-stats mb-4 mb-xl-0" id="Recent-contents"></div>
 					</div>
 				</div>
 			</div>
 		</form>
 	</div>
-	
+
 	<!-- 선호 화장실 nav-->
 	<div id="Prefer-container"></div>
 	<div id="Prefer" class="col-xl-4">
@@ -1843,28 +1934,27 @@ function InsertResult()
 					<div class="row align-items-center">
 						<div class="col">
 							<h2 class="mb-0" style="display: inline-block">Preferred toliet</h2>
-							<input id="x-button" name="Recent-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#Prefer").hide(), $("#Prefer-container").fadeOut()'> 
+							<input id="x-button" name="Recent-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#Prefer").hide(), $("#Prefer-container").fadeOut()'>
 							<h6 id="Prefer-ment" class="text-uppercase text-muted ls-1 mb-1">가장 많이 이용 한 화장실 목록 입니다.</h6>
 						</div>
 					</div>
 				</div>
 				<div class="card-body2">
 					<div class="col-xl-12 col-lg-6">
-						<div class="card card-stats mb-4 mb-xl-0" id="Prefer-contents">
-						</div>
+						<div class="card card-stats mb-4 mb-xl-0" id="Prefer-contents"></div>
 					</div>
 				</div>
 			</div>
 		</form>
 	</div>
-	
-	
-	
 
 
-	<div id="diary-container" style="display:none;"></div>
-	
-	<div id="diary" class="col-xl-4" style="display:none;">
+
+
+
+	<div id="diary-container" style="display: none;"></div>
+
+	<div id="diary" class="col-xl-4" style="display: none;">
 		<form action="">
 			<div class="card shadow">
 				<div class="card-header bg-transparent">
@@ -1878,48 +1968,38 @@ function InsertResult()
 						</div>
 					</div>
 					<div class="card-body2">
-					<!-- 결과 그래프 출력 -->
-					<canvas id="myChart" hidden="hidden" width="5" height="2"></canvas>					
-					<table id="result_table"  hidden="hidden">
-						<tr>							
-							<td>
-								<img id="result_picture" src=""  style="width:50%" />
-							</td>
-							<td>
-								<p id="result_description"></p> 
-							</td>
-						</tr>
-					</table>
-					
-					<table id="hopital_table"  class="table align-items-center table-flush"  hidden="hidden">
-														
-					</table>
-					
-					<!-- 테스트 목록 출력 -->
-					<table id="health_test_table">
-						<tr>
-							<td style="width:230px;height:150px;"> 
-								<img id="type1" class="hvr-grow-shadow"  name="1" src="../resources/img/type1_1.png" style="width:90%;"  />
-							</td>
-							<td style="width:230px;height:150px;">
-								<img id="type2" class="hvr-grow-shadow" name="2" src="../resources/img/type2_1.png" style="width:90%; " />
-							</td>
-						</tr>
-						<tr>
-							<td style="width:230px;height:150px;">
-								<img id="type3" class="hvr-grow-shadow" name="3" src="../resources/img/type3_1.png" style="width:90%"/>
-							</td>
-							<td style="width:230px;height:150px;">
-								<img id="type4" class="hvr-grow-shadow" name="4" src="../resources/img/type4_1.png" style="width:90%" />
-							</td>
-						</tr>
-					</table>
+						<!-- 결과 그래프 출력 -->
+						<canvas id="myChart" hidden="hidden" width="5" height="2"></canvas>
+						<table id="result_table" hidden="hidden">
+							<tr>
+								<td><img id="result_picture" src="" style="width: 50%" /></td>
+								<td>
+									<p id="result_description"></p>
+								</td>
+							</tr>
+						</table>
+
+						<table id="hopital_table" class="table align-items-center table-flush" hidden="hidden">
+
+						</table>
+
+						<!-- 테스트 목록 출력 -->
+						<table id="health_test_table">
+							<tr>
+								<td style="width: 230px; height: 150px;"><img id="type1" class="hvr-grow-shadow" name="1" src="../resources/img/type1_1.png" style="width: 90%;" /></td>
+								<td style="width: 230px; height: 150px;"><img id="type2" class="hvr-grow-shadow" name="2" src="../resources/img/type2_1.png" style="width: 90%;" /></td>
+							</tr>
+							<tr>
+								<td style="width: 230px; height: 150px;"><img id="type3" class="hvr-grow-shadow" name="3" src="../resources/img/type3_1.png" style="width: 90%" /></td>
+								<td style="width: 230px; height: 150px;"><img id="type4" class="hvr-grow-shadow" name="4" src="../resources/img/type4_1.png" style="width: 90%" /></td>
+							</tr>
+						</table>
 					</div>
 				</div>
 			</div>
 		</form>
 	</div>
-	
+
 	<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
 		<div class="container-fluid">
 			<!-- Toggler -->
@@ -1944,13 +2024,11 @@ function InsertResult()
 					</div></li>
 				<li class="nav-item dropdown"><a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						<div class="media align-items-center">
-							<span class="avatar avatar-sm rounded-circle"> 
-							<c:if test="${sessionScope.sessionId != null}">
-								<img alt="Image placeholder" src="${sessionScope.Profile}">
-							</c:if>
-							<c:if test="${sessionScope.sessionId == null}">
-								<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>">
-							</c:if>
+							<span class="avatar avatar-sm rounded-circle"> <c:if test="${sessionScope.sessionId != null}">
+									<img alt="Image placeholder" src="${sessionScope.Profile}">
+								</c:if> <c:if test="${sessionScope.sessionId == null}">
+									<img alt="Image placeholder" src="<c:url value="/resources/assets/img/theme/team-4-800x800.jpg"/>">
+								</c:if>
 							</span>
 						</div>
 					</a>
@@ -2005,7 +2083,7 @@ function InsertResult()
 						</div>
 					</div>
 				</form>
-				
+
 				<!-- Navigation -->
 				<ul class="navbar-nav">
 					<li class="nav-item"><a class="nav-link  active " href="<c:url value="/maps/mapsMain"/>">
@@ -2052,27 +2130,26 @@ function InsertResult()
 							</a></li>
 					</c:if>
 				</ul>
-<!-- 				
+				<!-- 				
 						<!-- Divider -->
-						<hr class="my-3">
-						<!-- Heading -->
-						<h6 class="navbar-heading text-muted">NEED LOGIN</h6>
-						<!-- Navigation -->
-						<ul class="navbar-nav mb-md-3">
-							<li class="nav-item"><a class="nav-link" href="javascript:Recent();">
-								<i class="ni ni-watch-time text-indigo"></i> <span>Recent toilet</span>
-							</a></li>
-							<li class="nav-item"><a class="nav-link" href="javascript:Prefer();">
-								<i class="ni ni-favourite-28 text-pink"></i> <span>Preferred toilet</span>
-							</a></li>
+				<hr class="my-3">
+				<!-- Heading -->
+				<h6 class="navbar-heading text-muted">NEED LOGIN</h6>
+				<!-- Navigation -->
+				<ul class="navbar-nav mb-md-3">
+					<li class="nav-item"><a class="nav-link" href="javascript:Recent();">
+							<i class="ni ni-watch-time text-indigo"></i> <span>Recent toilet</span>
+						</a></li>
+					<li class="nav-item"><a class="nav-link" href="javascript:Prefer();">
+							<i class="ni ni-favourite-28 text-pink"></i> <span>Preferred toilet</span>
+						</a></li>
 
 					<li class="nav-item"><a class="nav-link" href="javascript:FeedbackShow();">
 							<i class="ni ni-send text-blue"></i> <span>Send Feedback</span>
 						</a></li>
 
 					<li class="nav-item"><br> <br>
-						<div id="openweathermap-widget-18"></div>
-					</li>
+						<div id="openweathermap-widget-18"></div></li>
 
 				</ul>
 				<ul class="navbar-nav">
@@ -2264,7 +2341,7 @@ function InsertResult()
 										</div>
 									</div>
 								</div>
-							</div>							
+							</div>
 						</div>
 					</div>
 				</div>
