@@ -1546,7 +1546,6 @@ function reviewRefresh(lng, lat){
 					        }]
 					    },
 					    options: {
-						    
 					    	 legend:
 						    {
 					    		 showLines: false,
@@ -1663,10 +1662,19 @@ function ShowHospitalList()
 					$("input[name='save-data']").attr("hidden","hidden");	
 					var contents = "";
 					var list_temp = list;
+
+					if(list_temp.length==0)
+					{
+						contents+='<tr>';
+						contents+='<th scope="col" style="text-align: left; font-size:14px;">근처에 병원이 존재하지 않습니다.</th>';
+						contents+='</tr>';	
+						return;
+					}
+					
 					
 					for(var i =0;i<5;i++)
 					{
-						contents+='<tr">';
+						contents+='<tr>';
 						contents+='<th scope="col" style="text-align: left; font-size:14px;">'+(i+1) +'. 병원 이름 : ' + list_temp[i].dutyName + ' 전화번호 : ' + list_temp[i].dutyTel1+'<br>';
 						contents+='평일 개시시간 : '+ list_temp[i].dutyTimeS + ' 평일 종료시간 : ' + list_temp[i].dutyTimeC +'<br>';
 						contents+= '주소: '+ list_temp[i].dutyAddr;
@@ -1737,9 +1745,11 @@ function InsertResult()
 </script>
 </head>
 <body class="" onload="initTmap()">
+
 	<input type="hidden" id="Profile" name="profile_image" value="${sessionScope.Profile}">
 	<input type="hidden" id="sessionNickname" name="nickname" value="${sessionScope.sessionNickname}">
 	<input type="hidden" id="sessionId" name="sessionId" value="${sessionScope.sessionId}">
+	
 	<div id="review-container"></div>
 	<div id="review" class="col-xl-4">
 		<div class="card shadow">
