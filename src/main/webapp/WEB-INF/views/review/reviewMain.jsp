@@ -76,556 +76,486 @@
         "<p>설사와 혈변은 염증성 질환일 수 도 있습니다.<br>가까운 병원에 빠르게 진찰을 받아보세요.</p>",
         "<p>수분이나 당분,지방을 지나치게 많이 먹어 장이 자극받은 상태입니다.<br>휴식이 필요해요.</p>" ];
     $(function () {
-    	// type모양별 체크시 각 함수를 다르게 지정해서 건강진단을 함    
-    	$("#type1").on
-    	(
-    		"click",
-    		clickFunc
-    		);	
-    	$("#type2").on
-    	(
-    		"click",
-    		clickFunc
-    		);	
-    	$("#type3").on
-    	(
-    		"click",
-    		clickFunc
-    		);	
-    	$("#type4").on
-    	(
-    		"click",
-    		clickFunc
-    		);
+        setTimeout(function () {
+            window.myWidgetParam
+                    ? window.myWidgetParam : window.myWidgetParam = [ ];
+            window.myWidgetParam.push({
+                id : 18,
+                cityid : '1835848',
+                appid : 'c08b376c4c1ca3b5e593c4991d91eb3c',
+                units : 'metric',
+                containerid : 'openweathermap-widget-18',
+            });
+            ( function () {
+                var script = document.createElement('script');
+                script.async = true;
+                script.charset = "utf-8";
+                script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(script, s);
+            } )();
+        }, 1000)
+
+        // type모양별 체크시 각 함수를 다르게 지정해서 건강진단을 함    
+        $("#type1").on("click", clickFunc);
+        $("#type2").on("click", clickFunc);
+        $("#type3").on("click", clickFunc);
+        $("#type4").on("click", clickFunc);
     })
-    	  function FeedbackShow()
-    {
-    	$.ajax
-    	(
-    	{
-    		url:"<c:url value="/checkAvailSend"/>",
-    		type:"get",				
-    		dataType:"text",
-    		success:
-    		function(flag)
-    		{
-    			if(flag=="success")
-    			{
-    				$("#feedback-contents").val("");
-    				$("input[name='feed-x-button']").removeAttr("disabled","disabled");
-    				$("input[name='feedback-send']").removeAttr("disabled","disabled");
-    				$("#feedback-contents").removeAttr("disabled","disabled");
-    				$("#feedback-container").show();
-    				$("#feedback").fadeIn();
-    			}
-    			else if(flag=="error")
-    			{
-    				alert("로그인을 해야 사용할 수 있는 기능입니다.\n로그인 페이지로 이동합니다.");
-    				location.href="<c:url value='/member/login'/>";
-    			}						
-    		}
-    		,
-    		error:
-    		function(e)
-    		{
-    			alert(Json.Stringify(e));
-    		}
-    	}
-    	);	    	
+    function FeedbackShow () {
+        $.ajax({
+            url : "<c:url value="/checkAvailSend"/>",
+            type : "get",
+            dataType : "text",
+            success : function (flag) {
+                if(flag == "success"){
+                    $("#feedback-contents").val("");
+                    $("input[name='feed-x-button']")
+                            .removeAttr("disabled", "disabled");
+                    $("input[name='feedback-send']")
+                            .removeAttr("disabled", "disabled");
+                    $("#feedback-contents").removeAttr("disabled", "disabled");
+                    $("#feedback-container").show();
+                    $("#feedback").fadeIn();
+                }
+                else if(flag == "error"){
+                    alert("로그인을 해야 사용할 수 있는 기능입니다.\n로그인 페이지로 이동합니다.");
+                    location.href = "<c:url value='/member/login'/>";
+                }
+            },
+            error : function (e) {
+                alert(Json.Stringify(e));
+            }
+        });
     }
 
-    function SendFeedback()
-    {
-    	var contents = $("#feedback-contents").val();
-    	
-    	if(contents.length==0||contents.length<=10)
-    	{
-    		alert("내용을 충분히 입력해주세요(최소 10자 이상)");
-    		return;
-    	}
-
-    	$("input[name='feed-x-button']").attr("disabled","disabled");
-    	$("input[name='feedback-send']").attr("disabled","disabled");
-    	$("#feedback-contents").attr("disabled","disabled");
-
-    	$.ajax
-    	(
-    	{
-    		url:"<c:url value="/sendFeedBack"/>",
-    		type:"post",
-    		data:{contentFromUser:contents},		
-    		dataType:"text",
-    		success:
-    		function(flag)
-    		{
-    			if(flag=="success")
-    			{
-    				alert("피드백을 보내주셔서 감사합니다.\n더 나은 서비스를 제공하기 위해서 더욱 힘쓰겠습니다.");
-    				$("#feedback").hide();
-    				$("#feedback-container").fadeOut();
-    				return;
-    			}										
-    		}
-    		,
-    		error:
-    		function(e)
-    		{
-    			alert(Json.Stringify(e));
-    			return;
-    		}
-    	}
-    	);     	
+    function SendFeedback () {
+        var contents = $("#feedback-contents").val();
+        
+        if(contents.length == 0 || contents.length <= 10){
+            alert("내용을 충분히 입력해주세요(최소 10자 이상)");
+            return;
+        }
+        
+        $("input[name='feed-x-button']").attr("disabled", "disabled");
+        $("input[name='feedback-send']").attr("disabled", "disabled");
+        $("#feedback-contents").attr("disabled", "disabled");
+        
+        $.ajax({
+            url : "<c:url value="/sendFeedBack"/>",
+            type : "post",
+            data : {
+                contentFromUser : contents
+            },
+            dataType : "text",
+            success : function (flag) {
+                if(flag == "success"){
+                    alert("피드백을 보내주셔서 감사합니다.\n더 나은 서비스를 제공하기 위해서 더욱 힘쓰겠습니다.");
+                    $("#feedback").hide();
+                    $("#feedback-container").fadeOut();
+                    return;
+                }
+            },
+            error : function (e) {
+                alert(Json.Stringify(e));
+                return;
+            }
+        });
     }
-	
-	// 최근 이용했던 화장실
-	function Recent() {
-		var id = $("#sessionId").val();
-		$.ajax({
-		url : "<c:url value='/dayaver/recent'/>",
-		type : "GET" ,
-		data : {
-				id : id
-			},
-		success : function(list) {
-			var id = $("#sessionId").val();
-			console.log(list);
-			if(id != null && id != "") {
-				var content = "<table>";
-				$("#Recent-contents").val("");
-				$("input[name='Recent-x-button']").html();
-				$("#Recent-contents").html();
-				$("#Recent-container").show();
-				$("#Recent").slideDown();
-				content += '<h3 class="text-uppercase text-muted ls-1 mb-1">' + "최근이용 화장실" + "</h3>";
-				for(var i = 0; i < 3; i++) {
-				content += '<tr>';
-				content +='<th scope="col" style="text-align:left; font-size:16px;">';
-				content += (i+1) + " ." ;
-				content += list.list1[i].toiletNm + "<br>";
-				content += list.list1[i].inputdate + "<br>" + "<hr>";
-				content += '</th>';
-				content += "</tr>";
-				}
-				content += "</table>";
-				console.log(content);
-				$("#Recent-contents").html(content);
-			} else {
-				alert("로그인이 필요한 서비스 입니다. 로그인을 해 주세요.");
-				location.href = "../member/login";
-			}
-		},
-		error : function(e) {
-			alert(JSON.stringify(e));
-		}
-	});
-}
-	//선호하는 화장실
-	function Prefer() {
-		var id = $("#sessionId").val();
-		$.ajax({
-		url : "<c:url value='/dayaver/recent'/>",
-		type : "GET" ,
-		data : {
-				id : id
-			},
-		success : function(list) {
-			console.log(list);
-			if(id != null && id != "") {
-				var content = "<table>";
-				$("#Prefer-contents").val("");
-				$("input[name='Prefer-x-button']").html();
-				$("#Prefer-contents").html();
-				$("#Prefer-container").show();
-				$("#Prefer").slideDown();
-				
-				content += '<h3 class="text-uppercase text-muted ls-1 mb-1">' + "선호하는 화장실" + "</h3>";
-				for(var i = 0; i < 3; i++) {
-					content += '<tr>';
-					content +='<th scope="col" style="text-align:left; font-size:16px;">';
-					content += (i+1) + " ." ;
-					content += list.list2[i].toiletNm + "<br>";
-					content += list.list3[i]  + "번 이용 했습니다." + "<br>" + "<hr>";
-					content += '</th>';
-					content += "</tr>";
-					}
-				
-				content += "</table>";
-				console.log(content);
-				
-				$("#Prefer-contents").html(content);
-			}else {
-			alert("로그인 후 사용가능 한 기능입니다 로그인 후 사용해주세요");
-				location.href = "../member/login";
-			}
-		},
-		error : function(e) {
-			alert(JSON.stringify(e));
-		}
-	});
-}
-	
+
+    // 최근 이용했던 화장실
+    function Recent () {
+        var id = $("#sessionId").val();
+        $
+                .ajax({
+                    url : "<c:url value='/dayaver/recent'/>",
+                    type : "GET",
+                    data : {
+                        id : id
+                    },
+                    success : function (list) {
+                        var id = $("#sessionId").val();
+                        console.log(list);
+                        if(id != null && id != ""){
+                            var content = "<table>";
+                            $("#Recent-contents").val("");
+                            $("input[name='Recent-x-button']").html();
+                            $("#Recent-contents").html();
+                            $("#Recent-container").show();
+                            $("#Recent").slideDown();
+                            content += '<h3 class="text-uppercase text-muted ls-1 mb-1">' + "최근이용 화장실" + "</h3>";
+                            for(var i = 0; i < 3; i++){
+                                content += '<tr>';
+                                content += '<th scope="col" style="text-align:left; font-size:16px;">';
+                                content += ( i + 1 ) + " .";
+                                content += list.list1[i].toiletNm + "<br>";
+                                content += list.list1[i].inputdate + "<br>" + "<hr>";
+                                content += '</th>';
+                                content += "</tr>";
+                            }
+                            content += "</table>";
+                            console.log(content);
+                            $("#Recent-contents").html(content);
+                        }
+                        else{
+                            alert("로그인이 필요한 서비스 입니다. 로그인을 해 주세요.");
+                            location.href = "../member/login";
+                        }
+                    },
+                    error : function (e) {
+                        alert(JSON.stringify(e));
+                    }
+                });
+    }
+    //선호하는 화장실
+    function Prefer () {
+        var id = $("#sessionId").val();
+        $
+                .ajax({
+                    url : "<c:url value='/dayaver/recent'/>",
+                    type : "GET",
+                    data : {
+                        id : id
+                    },
+                    success : function (list) {
+                        console.log(list);
+                        if(id != null && id != ""){
+                            var content = "<table>";
+                            $("#Prefer-contents").val("");
+                            $("input[name='Prefer-x-button']").html();
+                            $("#Prefer-contents").html();
+                            $("#Prefer-container").show();
+                            $("#Prefer").slideDown();
+                            
+                            content += '<h3 class="text-uppercase text-muted ls-1 mb-1">' + "선호하는 화장실" + "</h3>";
+                            for(var i = 0; i < 3; i++){
+                                content += '<tr>';
+                                content += '<th scope="col" style="text-align:left; font-size:16px;">';
+                                content += ( i + 1 ) + " .";
+                                content += list.list2[i].toiletNm + "<br>";
+                                content += list.list3[i] + "번 이용 했습니다." + "<br>" + "<hr>";
+                                content += '</th>';
+                                content += "</tr>";
+                            }
+                            
+                            content += "</table>";
+                            console.log(content);
+                            
+                            $("#Prefer-contents").html(content);
+                        }
+                        else{
+                            alert("로그인 후 사용가능 한 기능입니다 로그인 후 사용해주세요");
+                            location.href = "../member/login";
+                        }
+                    },
+                    error : function (e) {
+                        alert(JSON.stringify(e));
+                    }
+                });
+    }
+
     function resize (obj) {
-    	obj.style.height = "1px";
-    	obj.style.height = ( 12 + obj.scrollHeight ) + "px";
+        obj.style.height = "1px";
+        obj.style.height = ( 12 + obj.scrollHeight ) + "px";
     }
-    
+
     var temp_info;
-	//type1의 진단결과
-	function clickFunc()
-	{
-		diaryresult += $(this).attr("id");		
-		console.log(diaryresult);
-		
-		if($(this).attr("id")=="type1"||$(this).attr("id")=="type2"||$(this).attr("id")=="type3"||$(this).attr("id")=="type4")
-		{
-			$('#health-ment').text('STEP2.대변의 색깔을 선택해주세요');
-			$('#type1').attr('src','../resources/img/brown.png');
-			$('#type2').attr('src','../resources/img/gray.png');
-			$('#type3').attr('src','../resources/img/red.png');
-			$('#type4').attr('src','../resources/img/yellow.png');
-			$("#type1").attr('id','brown'); 
-			$("#type2").attr('id','gray'); 
-			$("#type3").attr('id','red'); 
-			$("#type4").attr('id','yellow'); 
-		}
-		else
-		{			
-			var temp_str;
-			var temp_src;
-			
-			$("#health_test_table").attr("hidden","hidden");
-			$("#health-ment").attr("hidden","hidden");
-			
-			if(diaryresult=="type1brown")
-			{
-				temp_info=diaryGraphInfoArray[0];
-				temp_str=diaryDescriptionArray[0];
-				temp_src=diaryPictureArray[0];								
-		     }
+    //type1의 진단결과
+    function clickFunc () {
+        diaryresult += $(this).attr("id");
+        console.log(diaryresult);
+        
+        if($(this).attr("id") == "type1" || $(this).attr("id") == "type2" || $(this)
+                .attr("id") == "type3" || $(this).attr("id") == "type4"){
+            $('#health-ment').text('STEP2.대변의 색깔을 선택해주세요');
+            $('#type1').attr('src', '../resources/img/brown.png');
+            $('#type2').attr('src', '../resources/img/gray.png');
+            $('#type3').attr('src', '../resources/img/red.png');
+            $('#type4').attr('src', '../resources/img/yellow.png');
+            $("#type1").attr('id', 'brown');
+            $("#type2").attr('id', 'gray');
+            $("#type3").attr('id', 'red');
+            $("#type4").attr('id', 'yellow');
+        }
+        else{
+            var temp_str;
+            var temp_src;
+            
+            $("#health_test_table").attr("hidden", "hidden");
+            $("#health-ment").attr("hidden", "hidden");
+            
+            if(diaryresult == "type1brown"){
+                temp_info = diaryGraphInfoArray[0];
+                temp_str = diaryDescriptionArray[0];
+                temp_src = diaryPictureArray[0];
+            }
+            
+            else if(diaryresult == "type1gray"){
+                temp_info = diaryGraphInfoArray[1];
+                temp_str = diaryDescriptionArray[1];
+                temp_src = diaryPictureArray[1];
+            }
+            else if(diaryresult == "type1red"){
+                temp_info = diaryGraphInfoArray[2];
+                temp_str = diaryDescriptionArray[2];
+                temp_src = diaryPictureArray[2];
+            }
+            else if(diaryresult == "type1yellow"){
+                temp_info = diaryGraphInfoArray[3];
+                temp_str = diaryDescriptionArray[3];
+                temp_src = diaryPictureArray[3];
+            }
+            else if(diaryresult == "type2brown"){
+                temp_info = diaryGraphInfoArray[4];
+                temp_str = diaryDescriptionArray[4];
+                temp_src = diaryPictureArray[4];
+            }
+            else if(diaryresult == "type2gray"){
+                temp_info = diaryGraphInfoArray[5];
+                temp_str = diaryDescriptionArray[5];
+                temp_src = diaryPictureArray[5];
+            }
+            else if(diaryresult == "type2red"){
+                temp_info = diaryGraphInfoArray[6];
+                temp_str = diaryDescriptionArray[6];
+                temp_src = diaryPictureArray[6];
+            }
+            else if(diaryresult == "type2yellow"){
+                temp_info = diaryGraphInfoArray[7];
+                temp_str = diaryDescriptionArray[7];
+                temp_src = diaryPictureArray[7];
+            }
+            else if(diaryresult == "type3brown"){
+                temp_info = diaryGraphInfoArray[8];
+                temp_str = diaryDescriptionArray[8];
+                temp_src = diaryPictureArray[8];
+            }
+            else if(diaryresult == "type3gray"){
+                temp_info = diaryGraphInfoArray[9];
+                temp_str = diaryDescriptionArray[9];
+                temp_src = diaryPictureArray[9];
+            }
+            else if(diaryresult == "type3red"){
+                temp_info = diaryGraphInfoArray[10];
+                temp_str = diaryDescriptionArray[10];
+                temp_src = diaryPictureArray[10];
+            }
+            else if(diaryresult == "type3yellow"){
+                temp_info = diaryGraphInfoArray[11];
+                temp_str = diaryDescriptionArray[11];
+                temp_src = diaryPictureArray[11];
+            }
+            else if(diaryresult == "type4brown"){
+                temp_info = diaryGraphInfoArray[12];
+                temp_str = diaryDescriptionArray[12];
+                temp_src = diaryPictureArray[12];
+            }
+            else if(diaryresult == "type4gray"){
+                temp_info = diaryGraphInfoArray[13];
+                temp_str = diaryDescriptionArray[13];
+                temp_src = diaryPictureArray[13];
+            }
+            else if(diaryresult == "type4red"){
+                temp_info = diaryGraphInfoArray[14];
+                temp_str = diaryDescriptionArray[14];
+                temp_src = diaryPictureArray[14];
+            }
+            else if(diaryresult == "type4yellow"){
+                temp_info = diaryGraphInfoArray[15];
+                temp_str = diaryDescriptionArray[15];
+                temp_src = diaryPictureArray[15];
+            }
+            
+            if(result_show_flag){
+                console.log("계속 돈다");
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type : 'line',
+                    data : {
+                        labels : [ '스트레스', '수분', '영양소' ],
+                        datasets : [ {
+                            label : '',
+                            data : [ temp_info.stress, temp_info.moisture,
+                                temp_info.ingredient ],
+                            backgroundColor : [ 'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(0, 255, 0, 0.2)' ],
+                            borderColor : [ 'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)', 'rgba(0, 255, 0, 1)' ],
+                            borderWidth : 1
+                        } ]
+                    },
+                    options : {
+                        
+                        legend : {
+                            showLines : false,
+                            display : false
+                        },
+                        scales : {
+                            yAxes : [ {
+                                ticks : {
+                                    beginAtZero : true,
+                                    display : false
+                                
+                                },
+                                gridLines : {
+                                    lineWidth : 0
+                                
+                                }
+                            } ]
+                        }
+                    }
+                });
+                result_show_flag = false;
+            }
+            
+            $("#result_picture").attr("src", temp_src);
+            $("#result_description").html(temp_str);
+            $("input[name='save-data']").removeAttr("hidden", "hidden");
+            $("#result_table").removeAttr("hidden", "hidden");
+            $("#myChart").removeAttr("hidden", "hidden");
+        }
+    } //요기가 함수 끝
+    
+    function DiaryShow () {
+        console.log("눌렀다");
+        diaryresult = "";
+        result_show_flag = true;
+        $("#hopital_table").attr("hidden", "hidden");
+        $("input[name='save-data']").attr("hidden", "hidden");
+        $("#myChart").attr("hidden", "hidden");
+        $("#result_table").attr("hidden", "hidden");
+        
+        $("#health_test_table").removeAttr("hidden", "hidden");
+        $("#health-ment").html("STEP1.대변의 모양을 선택해주세요");
+        
+        $("#health-ment").removeAttr("hidden", "hidden");
+        
+        $("#health-ment").removeAttr("hidden", "hidden");
+        $('#brown').attr('src', '../resources/img/type1_1.png');
+        $('#gray').attr('src', '../resources/img/type2_1.png');
+        $('#red').attr('src', '../resources/img/type3_1.png');
+        $('#yellow').attr('src', '../resources/img/type4_1.png');
+        
+        $('#brown').attr('id', 'type1');
+        $('#gray').attr('id', 'type2');
+        $('#red').attr('id', 'type3');
+        $('#yellow').attr('id', 'type4');
+        
+        $("#diary-container").show();
+        $("#diary").fadeIn();
+    }
 
-			else if(diaryresult=="type1gray")
-			{
-				temp_info=diaryGraphInfoArray[1];
-				temp_str=diaryDescriptionArray[1];
-				temp_src=diaryPictureArray[1];				
-			}
-			else if(diaryresult=="type1red")
-			{
-				temp_info=diaryGraphInfoArray[2];
-				temp_str=diaryDescriptionArray[2];
-				temp_src=diaryPictureArray[2];				
-			}	    	    
-			else if(diaryresult=="type1yellow")
-			{
-				temp_info=diaryGraphInfoArray[3];
-				temp_str=diaryDescriptionArray[3];
-				temp_src=diaryPictureArray[3];				
-			}	    	    
-			else if(diaryresult=="type2brown")
-			{
-				temp_info=diaryGraphInfoArray[4];
-				temp_str=diaryDescriptionArray[4];
-				temp_src=diaryPictureArray[4];				
-			}
-			else if(diaryresult=="type2gray")
-			{
-				temp_info=diaryGraphInfoArray[5];
-				temp_str=diaryDescriptionArray[5];
-				temp_src=diaryPictureArray[5];				
-			}
-			else if(diaryresult=="type2red")
-			{
-				temp_info=diaryGraphInfoArray[6];
-				temp_str=diaryDescriptionArray[6];
-				temp_src=diaryPictureArray[6];				
-			}	    	    
-			else if(diaryresult=="type2yellow")
-			{
-				temp_info=diaryGraphInfoArray[7];
-				temp_str=diaryDescriptionArray[7];
-				temp_src=diaryPictureArray[7];				
-			}	    	    
-			else if(diaryresult=="type3brown")
-			{
-				temp_info=diaryGraphInfoArray[8];
-				temp_str=diaryDescriptionArray[8];
-				temp_src=diaryPictureArray[8];				
-			}
-			else if(diaryresult=="type3gray")
-			{
-				temp_info=diaryGraphInfoArray[9];
-				temp_str=diaryDescriptionArray[9];
-				temp_src=diaryPictureArray[9];				
-			}
-			else if(diaryresult=="type3red")
-			{
-				temp_info=diaryGraphInfoArray[10];
-				temp_str=diaryDescriptionArray[10];
-				temp_src=diaryPictureArray[10];				
-			}	    	    
-			else if(diaryresult=="type3yellow")
-			{
-				temp_info=diaryGraphInfoArray[11];
-				temp_str=diaryDescriptionArray[11];
-				temp_src=diaryPictureArray[11];				
-			}	    	    
-			else if(diaryresult=="type4brown")
-			{
-				temp_info=diaryGraphInfoArray[12];
-				temp_str=diaryDescriptionArray[12];
-				temp_src=diaryPictureArray[12];				
-			}
-			else if(diaryresult=="type4gray")
-			{
-				temp_info=diaryGraphInfoArray[13];
-				temp_str=diaryDescriptionArray[13];
-				temp_src=diaryPictureArray[13];				
-			}
-			else if(diaryresult=="type4red")
-			{
-				temp_info=diaryGraphInfoArray[14];
-				temp_str=diaryDescriptionArray[14];
-				temp_src=diaryPictureArray[14];				
-			}	    	    
-			else if(diaryresult=="type4yellow")
-			{
-				temp_info=diaryGraphInfoArray[15];
-				temp_str=diaryDescriptionArray[15];
-				temp_src=diaryPictureArray[15];
-			}	    	    
-		     	    	    
-		     if(result_show_flag)
-			{
-				console.log("계속 돈다");
-		    	 var ctx = document.getElementById('myChart').getContext('2d');
-					var myChart = new Chart(ctx, {
-					    type: 'line',
-					    data: {
-					        labels: ['스트레스', '수분', '영양소'],
-					        datasets: [{
-					            label: '',
-					            data: [temp_info.stress,temp_info.moisture ,temp_info.ingredient],
-					            backgroundColor: [
-					                'rgba(255, 99, 132, 0.2)',
-					                'rgba(54, 162, 235, 0.2)',
-					                'rgba(0, 255, 0, 0.2)'			                
-					            ],
-					            borderColor: [
-					                'rgba(255, 99, 132, 1)',
-					                'rgba(54, 162, 235, 1)',
-					                'rgba(0, 255, 0, 1)'			               
-					            ],
-					            borderWidth: 1		           
-					        }]
-					    },
-					    options: {
-						    
-					    	 legend:
-						    {
-					    		 showLines: false,
-					             display:false
-					      	},  
-					        scales: 
-						    { 
-					            yAxes: [{
-					                ticks: {
-					                    beginAtZero: true,
-					                    display : false
-					                    
-					                },
-					                gridLines:
-						            {
-					                     lineWidth:0
-					                     
-					                 }
-					            }]
-					        }
-					    }
-					}); 
-					result_show_flag=false;
-			}
-			
-			$("#result_picture").attr("src",temp_src);
-			$("#result_description").html(temp_str);			
-			$("input[name='save-data']").removeAttr("hidden","hidden");
-			$("#result_table").removeAttr("hidden","hidden");
-			$("#myChart").removeAttr("hidden","hidden");
-		}		
-	} //요기가 함수 끝
+    function SaveTest () {
+        $.ajax({
+            url : "<c:url value="/checkAvailSend"/>",
+            type : "get",
+            dataType : "text",
+            success : function (flag) {
+                if(flag == "success"){
+                    InsertResult();
+                }
+                else if(flag == "error"){
+                    alert("로그인을 해야 사용할 수 있는 기능입니다.\n로그인 페이지로 이동합니다.");
+                    location.href = "<c:url value='/member/login'/>";
+                }
+            },
+            error : function (e) {
+                alert(Json.Stringify(e));
+            }
+        });
+    }
 
-	
-    function DiaryShow()
-    { 
-        console.log("눌렀다");        
- 	  	diaryresult="";
-		result_show_flag=true;
-		$("#hopital_table").attr("hidden","hidden");
-    	$("input[name='save-data']").attr("hidden","hidden");
-    	$("#myChart").attr("hidden","hidden");
-    	$("#result_table").attr("hidden","hidden");
-    	
-    	$("#health_test_table").removeAttr("hidden","hidden");
-    	$("#health-ment").html("STEP1.대변의 모양을 선택해주세요");
+    function ShowHospitalList () {
+        $
+                .ajax({
+                    url : "<c:url value="/toilet/receive_near_hospital"/>",
+                    type : "post",
+                    data : {
+                        lat : pos.lat.toFixed(6),
+                        lng : pos.lng.toFixed(6)
+                    },
+                    success : function (list) {
+                        $("#result_table").attr("hidden", "hidden");
+                        $("#myChart").attr("hidden", "hidden");
+                        $("input[name='save-data']").attr("hidden", "hidden");
+                        var contents = "";
+                        var list_temp = list;
+                        for(var i = 0; i < 5; i++){
+                            console.log(list_temp[i].dutyName);
+                            
+                            for(var i = 0; i < 5; i++){
+                                contents += '<tr>';
+                                contents += '<td style="float:left">' + ( i + 1 ) + '</td>';
+                                contents += '</tr>';
+                                
+                                contents += '<tr style="float: left;">';
+                                contents += '<td>병원 이름 : ' + list_temp[i].dutyName + ' 전화번호 : ' + list_temp[i].dutyTel1 + '</td>';
+                                contents += '</tr>';
+                                
+                                contents += '<tr style="float: left;">';
+                                contents += '<td style="width:100%">평일 개시시간 : ' + list_temp[i].dutyTimeS + ' 평일 종료시간 : ' + list_temp[i].dutyTimeC + '</td>';
+                                contents += '</tr>';
+                                
+                                contents += '<tr style="float:left;">';
+                                contents += '<td style="font-size:15px;">' + list_temp[i].dutyAddr + '</td>';
+                                contents += '</tr>';
+                            }
+                            
+                            $("#hopital_table").html(contents);
+                            $("#hopital_table").removeAttr("hidden", "hidden");
+                            
+                            /* 						<tr style="float: left;">
+                             <td>병원 이름 : 최평락한의원  전화번호 : 02-501-1488</td>															
+                             </tr>
+                             <tr style="float: left;">							
+                             <td>평일 개시시간 : 0930,  평일 종료시간 : 1830</td>														
+                             </tr>	
+                             <tr style="float: left;border-bottom: 1px solid;">													
+                             <td>서울특별시 강남구 영동대로 309, 2층 (대치동, 준오빌딩 2층)</td>		
+                             <td><br></td>													
+                             </tr>								 */
 
-		$("#health-ment").removeAttr("hidden","hidden");
-		
-		$("#health-ment").removeAttr("hidden","hidden");
-		$('#brown').attr('src','../resources/img/type1_1.png');
-		$('#gray').attr('src','../resources/img/type2_1.png');
-		$('#red').attr('src','../resources/img/type3_1.png');
-		$('#yellow').attr('src','../resources/img/type4_1.png');
+                        }
+                    },
+                    error : function (e) {
+                        
+                    }
+                });
+    }
 
-		$('#brown').attr('id','type1');
-		$('#gray').attr('id','type2');
-		$('#red').attr('id','type3');
-		$('#yellow').attr('id','type4');		
-		
-		$("#diary-container").show();
-		$("#diary").fadeIn(); 
-	}
-
-
-	function SaveTest()
-	{
-    	$.ajax
-		(
-			{
-				url:"<c:url value="/checkAvailSend"/>",
-				type:"get",				
-				dataType:"text",
-				success:
-					function(flag)
-					{
-						if(flag=="success")
-						{
-							InsertResult();
-						}
-						else if(flag=="error")
-						{
-							alert("로그인을 해야 사용할 수 있는 기능입니다.\n로그인 페이지로 이동합니다.");
-							location.href="<c:url value='/member/login'/>";
-						}						
-					}
-				,
-				error:
-					function(e)
-					{
-						alert(Json.Stringify(e));
-					}
-			}
-		);	    	
-	}
-
-
-function ShowHospitalList()
-{
-	$.ajax
-	(
-		{
-			url:"<c:url value="/toilet/receive_near_hospital"/>",
-			type:"post",				
-			data:{
-				lat : pos.lat.toFixed(6),
-    			lng : pos.lng.toFixed(6)
-    		},
-			success:
-				function(list)
-				{
-					$("#result_table").attr("hidden","hidden");
-					$("#myChart").attr("hidden","hidden");	
-					$("input[name='save-data']").attr("hidden","hidden");	
-					var contents = "";
-					var list_temp = list;
-					for(var i=0;i<5;i++)
-					{
-						console.log(list_temp[i].dutyName);
-						
-
-						for(var i =0;i<5;i++)
-						{						
-							contents+='<tr>';
-							contents+='<td style="float:left">' + (i+1) +'</td>';	
-							contents+='</tr>';
-							
-							contents+='<tr style="float: left;">';							
-							contents+='<td>병원 이름 : ' + list_temp[i].dutyName + ' 전화번호 : ' + list_temp[i].dutyTel1 + '</td>';							
-							contents+='</tr>';
-							
-
-							contents+='<tr style="float: left;">';
-							contents+='<td style="width:100%">평일 개시시간 : ' + list_temp[i].dutyTimeS + ' 평일 종료시간 : ' + list_temp[i].dutyTimeC + '</td>';
-							contents+='</tr>';
-
-							contents+='<tr style="float:left;">';
-							contents+='<td style="font-size:15px;">' + list_temp[i].dutyAddr + '</td>';
-							contents+='</tr>';													
-						}
-
-						$("#hopital_table").html(contents);
-						$("#hopital_table").removeAttr("hidden","hidden");
-						
-						
-/* 						<tr style="float: left;">
-							<td>병원 이름 : 최평락한의원  전화번호 : 02-501-1488</td>															
-						</tr>
-						<tr style="float: left;">							
-							<td>평일 개시시간 : 0930,  평일 종료시간 : 1830</td>														
-						</tr>	
-						<tr style="float: left;border-bottom: 1px solid;">													
-							<td>서울특별시 강남구 영동대로 309, 2층 (대치동, 준오빌딩 2층)</td>		
-							<td><br></td>													
-						</tr>								 */
-									
-					}
-				}
-			,
-			error:
-				function(e)
-				{				
-					
-				}
-		}
-	);	    	
-}
-	    
-function InsertResult()
-{
-	$.ajax
-	(
-		{
-			url:"<c:url value="/diary/insert"/>",
-			type:"post",				
-			dataType:"text",
-			data:{stress:temp_info.stress, moisture:temp_info.moisture, ingredient:temp_info.ingredient, status:temp_info.status},
-			success:
-				function(flag)
-				{
-					if(flag=="warning")
-					{
-						alert("데이터를 저장했지만 건강이 위험한 상태입니다.\n 반경 1km 병원의 위치를 알려드리겠습니다.");
-						ShowHospitalList();												
-					}
-					else if(flag=="success")
-					{
-						alert("저장에 성공했습니다. 프로필의 달력에서 기록을 확인 할 수 있습니다.");
-						$("#diary").hide();
-						$("#diary-container").fadeOut();
-						
-					}
-					else if(flag=="error")
-					{
-						alert("저장이 실패하였습니다. 다시 시도해주세요.");
-					}						
-				}
-			,
-			error:
-				function()
-				{
-					alert("에러");
-				}
-		}
-	);	    	
-}
+    function InsertResult () {
+        $
+                .ajax({
+                    url : "<c:url value="/diary/insert"/>",
+                    type : "post",
+                    dataType : "text",
+                    data : {
+                        stress : temp_info.stress,
+                        moisture : temp_info.moisture,
+                        ingredient : temp_info.ingredient,
+                        status : temp_info.status
+                    },
+                    success : function (flag) {
+                        if(flag == "warning"){
+                            alert("데이터를 저장했지만 건강이 위험한 상태입니다.\n 반경 1km 병원의 위치를 알려드리겠습니다.");
+                            ShowHospitalList();
+                        }
+                        else if(flag == "success"){
+                            alert("저장에 성공했습니다. 프로필의 달력에서 기록을 확인 할 수 있습니다.");
+                            $("#diary").hide();
+                            $("#diary-container").fadeOut();
+                            
+                        }
+                        else if(flag == "error"){
+                            alert("저장이 실패하였습니다. 다시 시도해주세요.");
+                        }
+                    },
+                    error : function () {
+                        alert("에러");
+                    }
+                });
+    }
 </script>
 
 </head>
@@ -657,7 +587,7 @@ function InsertResult()
 	</div>
 
 	<!-- 최근 이용 화장실 nav-->
-	<input type = "hidden" id ="sessionId" value = "${sessionScope.sessionId}">
+	<input type="hidden" id="sessionId" value="${sessionScope.sessionId}">
 	<div id="Recent-container"></div>
 	<div id="Recent" class="col-xl-4">
 		<form action="">
@@ -903,17 +833,11 @@ function InsertResult()
 							<i class="ni ni-send text-blue"></i> <span>Send Feedback</span>
 						</a></li>
 
-					<li class="nav-item"><br> <br>
-						<div id="openweathermap-widget-18"></div> <script>
-                            /* window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = []; 
-                            window.myWidgetParam.push({id: 18,cityid: '1835848',appid: 'c08b376c4c1ca3b5e593c4991d91eb3c',
-                            units: 'metric',containerid: 'openweathermap-widget-18',  });  
-                            (function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";
-                            script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
-                            var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })(); */
-                        </script></li>
-
+					<li class="nav-item mt-3">
+						<div id="openweathermap-widget-18"></div>
+					</li>
 				</ul>
+
 				<ul class="navbar-nav">
 					<li class="nav-item active active-pro"><a class="nav-link" href="<c:url value="/maps/mapsMain2"/>">
 							<i class="ni ni-bus-front-12"></i> Google Maps (Beta)
