@@ -1330,10 +1330,13 @@ function reviewRefresh(lng, lat){
 				content += "</table>";
 				console.log(content);
 				$("#Recent-contents").html(content);
-			} else {
+			} else if(list.list1.length == 0 && id != null && id != ""){
+				alert("저장된 데이터가 없습니다. 한 번 이상 길찾기를 해주세요.");
+				return false;
+			}else {
 				alert("로그인이 필요한 서비스 입니다. 로그인을 해 주세요.");
 				location.href = "../member/login";
-			}
+					}
 		},
 		error : function(e) {
 			alert(JSON.stringify(e));
@@ -1374,8 +1377,11 @@ function reviewRefresh(lng, lat){
 				console.log(content);
 				
 				$("#Prefer-contents").html(content);
+			}else if(list.list2.length == 0 && id != null && id != ""){
+				alert("저장된 데이터가 없습니다. 한 번 이상 길찾기를 해주세요.");
+				return false;
 			}else {
-			alert("로그인 후 사용가능 한 기능입니다 로그인 후 사용해주세요");
+				alert("로그인 후 사용가능 한 기능입니다 로그인 후 사용해주세요");
 				location.href = "../member/login";
 			}
 		},
