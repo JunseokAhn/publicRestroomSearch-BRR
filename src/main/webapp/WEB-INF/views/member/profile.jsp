@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
@@ -11,24 +10,25 @@
 <title>화장실이 급할땐? - 부르르</title>
 
 
-	
+
+
 <link href="<c:url value="/resources/assets/img/brand/favicon.png"/>" rel="icon" type="image/png">
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  	
+<!-- <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  	 -->
 <link rel="stylesheet" href="../resources/css/hover.css">	
-<link href="/resources/css/main.css" rel="stylesheet" type="text/css">
+<!-- <link href="/resources/css/main.css" rel="stylesheet" type="text/css"> -->
 <link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
 <link href="<c:url value="/resources/css/boardStyle.css"/>" rel="stylesheet" />
 <link href="<c:url value="/resources/assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css"/>" rel="stylesheet" />
-<link href="<c:url value="/resources/assets/js/plugins/nucleo/css/nucleo.css"/>" rel="stylesheet" />
+<link href="<c:url value="/resources/assets/js/plugins/nucleo/css/nucleo.css"/>" rel="stylesheet" /> 
 
 
 
 <!-- <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script> -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> -->
 <script src="<c:url value="/resources/js/jquery-3.4.1.js/"/>"></script>
-<script src="/resources/js/board.js" ></script>
+<!-- <script src="/resources/js/board.js" ></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 
 <!--달력 -->
@@ -41,6 +41,511 @@ var test_result_list;
 var test_result_index=0;
 
 var user_id;
+
+
+//대변 체크 결과
+ var temp_info;
+var diaryGraphInfo = 
+    function(stress, moisture, ingredient,status)
+    {
+    	this.stress = stress;
+    	this.moisture = moisture;
+    	this.ingredient = ingredient;
+    	this.status = status
+    	return this;
+    }
+
+var diaryPictureArray=
+[
+"../resources/img/normal.png",
+"../resources/img/dangerous.png",
+"../resources/img/dangerous.png",
+"../resources/img/normal.png",
+
+"../resources/img/good.png",
+"../resources/img/dangerous.png",
+"../resources/img/dangerous.png",
+"../resources/img/normal.png",
+
+"../resources/img/normal.png",
+"../resources/img/dangerous.png",
+"../resources/img/dangerous.png",
+"../resources/img/normal.png",
+
+"../resources/img/normal.png",
+"../resources/img/dangerous.png",
+"../resources/img/sobad.png",
+"../resources/img/normal.png"
+];
+
+var diaryGraphInfoArray=
+    [
+        new diaryGraphInfo(3, 1, 2, 3),
+        new diaryGraphInfo(5, 1, 3, 2),
+        new diaryGraphInfo(4, 2, 2, 2),
+        new diaryGraphInfo(4, 1.5, 0.5, 3),
+        
+        new diaryGraphInfo(0, 5, 5, 2 ),
+        new diaryGraphInfo(2, 1, 1, 4),
+        new diaryGraphInfo(3, 2, 2, 2),
+        new diaryGraphInfo(2, 2, 3, 3),
+
+        new diaryGraphInfo(3, 0.9, 2, 3),            
+        new diaryGraphInfo(3, 1.9, 2, 2),
+        new diaryGraphInfo(3, 1, 1, 2),
+        new diaryGraphInfo(0.9, 1, 2, 3),
+
+        new diaryGraphInfo(2, 4, 4, 3),
+        new diaryGraphInfo(4, 1, 2, 2),
+        new diaryGraphInfo(5, 0.5, 0.5, 1),
+        new diaryGraphInfo(1, 1, 2, 3)            
+    ];    			
+
+var diaryresult="";
+var result_show_flag=true;
+var diaryDescriptionArray=
+[
+"<p>영양소는 적당하지만,<Strong>변비</Strong> 증세가 있네요.<br>수분섭취와 스트레스를 줄여보세요.</p> ",
+"<p> 장건강의 이상으로 색깔이 변이될 수 있어요.<br><strong>악취</strong>가 나는 경우에는 진단을 받아 볼 필요가 있습니다.</p> ",
+"<p>치질처럼 항문 부근의<strong> 출혈</strong>이 있을수도 있습니다.<br>가까운 병원에서 진단을 받아보세요.</p> ",
+"<p><strong>영양부족</strong>으로 인한 색깔의 변이 혹은 변비의 전조증상입니다<br>충분한 영양과 수분을 섭취해주세요.</p> ",
+
+"<p> 색깔도 모양도 완벽해요.<br>당신의 대변 건강은 <strong>최고</strong>입니다.</p>",
+"<p>모양은 완벽!<strong>담즙</strong>의 흡수도에 따라 색이 흐려보일 수 있습니다.<br>색이 지속된다면 병원의 진찰을 받아보세요..</p>",
+"<p>모양은 완벽! 그러나 출혈 증상이 있습니다.<br><strong>항문</strong>질환을 의심해봐야 합니다.</p>",
+"<p>불규칙한 영양분의 흡수나, 먹은 음식에 따라 색깔이 노란빛을 띌 수 있습니다.</p>",
+
+"<p><strong>변비</strong> 증상이 있습니다.<br>채소나 과일의 섭취를 늘려주세요 !</p>",
+"<p>변비 증상과 장 속의 흡수문제는 <strong>큰 질환</strong>으로 이어질 수 있습니다.<br>가까운 병원에 진찰을 받아보세요.</p>",
+"<p>수분이 부족하여, 딱딱한 덩어리로 인한 <strong>출혈</strong> 등이 있을 수 있습니다<br>수시로 물과 섬유질을 섭취해 주세요</p>",
+"<p>규칙적인 영양분 섭취로 변비와 색을 개선해보세요.</p>",
+
+"<p>과식하셨나요? 휴식을 취하는 것이 필요해요.</p>",
+"<p>과한 알코올,지방 섭취의 원인일 수도 있습니다.<br>지속적인 증상이 나타난다면 병원에 진찰을 받아보세요.</p>",
+"<p>설사와 혈변은 염증성 질환일 수 도 있습니다.<br>가까운 병원에 빠르게 진찰을 받아보세요.</p>",
+"<p>수분이나 당분,지방을 지나치게 많이 먹어 장이 자극받은 상태입니다.<br>휴식이 필요해요.</p>"
+];
+
+function clickFunc()
+{
+	diaryresult += $(this).attr("id");		
+	console.log(diaryresult);
+	
+	if($(this).attr("id")=="type1"||$(this).attr("id")=="type2"||$(this).attr("id")=="type3"||$(this).attr("id")=="type4")
+	{
+		$('#health-ment').text('STEP2.대변의 색깔을 선택해주세요');
+		$('#type1').attr('src','../resources/img/brown.png');
+		$('#type2').attr('src','../resources/img/gray.png');
+		$('#type3').attr('src','../resources/img/red.png');
+		$('#type4').attr('src','../resources/img/yellow.png');
+		$("#type1").attr('id','brown'); 
+		$("#type2").attr('id','gray'); 
+		$("#type3").attr('id','red'); 
+		$("#type4").attr('id','yellow'); 
+	}
+	else
+	{			
+		var temp_str;
+		var temp_src;
+		
+		$("#health_test_table").attr("hidden","hidden");
+		$("#health-ment").attr("hidden","hidden");
+		
+		if(diaryresult=="type1brown")
+		{
+			temp_info=diaryGraphInfoArray[0];
+			temp_str=diaryDescriptionArray[0];
+			temp_src=diaryPictureArray[0];								
+	     }
+
+		else if(diaryresult=="type1gray")
+		{
+			temp_info=diaryGraphInfoArray[1];
+			temp_str=diaryDescriptionArray[1];
+			temp_src=diaryPictureArray[1];				
+		}
+		else if(diaryresult=="type1red")
+		{
+			temp_info=diaryGraphInfoArray[2];
+			temp_str=diaryDescriptionArray[2];
+			temp_src=diaryPictureArray[2];				
+		}	    	    
+		else if(diaryresult=="type1yellow")
+		{
+			temp_info=diaryGraphInfoArray[3];
+			temp_str=diaryDescriptionArray[3];
+			temp_src=diaryPictureArray[3];				
+		}	    	    
+		else if(diaryresult=="type2brown")
+		{
+			temp_info=diaryGraphInfoArray[4];
+			temp_str=diaryDescriptionArray[4];
+			temp_src=diaryPictureArray[4];				
+		}
+		else if(diaryresult=="type2gray")
+		{
+			temp_info=diaryGraphInfoArray[5];
+			temp_str=diaryDescriptionArray[5];
+			temp_src=diaryPictureArray[5];				
+		}
+		else if(diaryresult=="type2red")
+		{
+			temp_info=diaryGraphInfoArray[6];
+			temp_str=diaryDescriptionArray[6];
+			temp_src=diaryPictureArray[6];				
+		}	    	    
+		else if(diaryresult=="type2yellow")
+		{
+			temp_info=diaryGraphInfoArray[7];
+			temp_str=diaryDescriptionArray[7];
+			temp_src=diaryPictureArray[7];				
+		}	    	    
+		else if(diaryresult=="type3brown")
+		{
+			temp_info=diaryGraphInfoArray[8];
+			temp_str=diaryDescriptionArray[8];
+			temp_src=diaryPictureArray[8];				
+		}
+		else if(diaryresult=="type3gray")
+		{
+			temp_info=diaryGraphInfoArray[9];
+			temp_str=diaryDescriptionArray[9];
+			temp_src=diaryPictureArray[9];				
+		}
+		else if(diaryresult=="type3red")
+		{
+			temp_info=diaryGraphInfoArray[10];
+			temp_str=diaryDescriptionArray[10];
+			temp_src=diaryPictureArray[10];				
+		}	    	    
+		else if(diaryresult=="type3yellow")
+		{
+			temp_info=diaryGraphInfoArray[11];
+			temp_str=diaryDescriptionArray[11];
+			temp_src=diaryPictureArray[11];				
+		}	    	    
+		else if(diaryresult=="type4brown")
+		{
+			temp_info=diaryGraphInfoArray[12];
+			temp_str=diaryDescriptionArray[12];
+			temp_src=diaryPictureArray[12];				
+		}
+		else if(diaryresult=="type4gray")
+		{
+			temp_info=diaryGraphInfoArray[13];
+			temp_str=diaryDescriptionArray[13];
+			temp_src=diaryPictureArray[13];				
+		}
+		else if(diaryresult=="type4red")
+		{
+			temp_info=diaryGraphInfoArray[14];
+			temp_str=diaryDescriptionArray[14];
+			temp_src=diaryPictureArray[14];				
+		}	    	    
+		else if(diaryresult=="type4yellow")
+		{
+			temp_info=diaryGraphInfoArray[15];
+			temp_str=diaryDescriptionArray[15];
+			temp_src=diaryPictureArray[15];
+		}	    	    
+	     	    	    
+	     if(result_show_flag)
+		{
+			console.log("계속 돈다");
+			console.log(temp_info.stress,temp_info.moisture ,temp_info.ingredient)
+	    	 var ctx = document.getElementById('myChart').getContext('2d');
+				var myChart = new Chart(ctx, {
+				    type: 'line',
+				    data: {
+				        labels: ['스트레스', '수분', '영양소'],
+				        datasets: [{
+				            label: '',
+				            data: [temp_info.stress,temp_info.moisture ,temp_info.ingredient],
+				            backgroundColor: [
+				                'rgba(255, 99, 132, 0.2)',
+				                'rgba(54, 162, 235, 0.2)',
+				                'rgba(0, 255, 0, 0.2)'			                
+				            ],
+				            borderColor: [
+				                'rgba(255, 99, 132, 1)',
+				                'rgba(54, 162, 235, 1)',
+				                'rgba(0, 255, 0, 1)'			               
+				            ],
+				            borderWidth: 1		           
+				        }]
+				    },
+				    options: {
+				    	responsive: false,
+				    	 legend:
+					    {
+				    		 showLines: false,
+				             display:false
+				      	},  
+				        scales: 
+					    { 
+				            yAxes: [{
+				                ticks: {
+				                    beginAtZero: true,
+				                    display : false
+				                    
+				                },
+				                gridLines:
+					            {
+				                     lineWidth:0
+				                     
+				                 }
+				            }]
+				        }
+				    }
+				}); 
+				result_show_flag=false;
+		}
+		$("#result_picture").attr("src",temp_src);
+		$("#result_description").html(temp_str);			
+		$("input[name='save-data']").removeAttr("hidden","hidden");
+		$("#result_table").removeAttr("hidden","hidden");
+		$("#myChart").removeAttr("hidden","hidden");
+	}		
+} //요기가 함수 끝
+
+function DiaryShow()
+{ 
+    console.log("눌렀다");        
+	diaryresult="";
+	result_show_flag=true;
+	$("#hopital_table").attr("hidden","hidden");
+	$("input[name='save-data']").attr("hidden","hidden");
+	$("#myChart").attr("hidden","hidden");
+	$("#result_table").attr("hidden","hidden");
+	
+	$("#health_test_table").removeAttr("hidden","hidden");
+	$("#health-ment").html("STEP1.대변의 모양을 선택해주세요");
+
+	$("#health-ment").removeAttr("hidden","hidden");
+	
+	$("#health-ment").removeAttr("hidden","hidden");
+	$('#brown').attr('src','../resources/img/type1_1.png');
+	$('#gray').attr('src','../resources/img/type2_1.png');
+	$('#red').attr('src','../resources/img/type3_1.png');
+	$('#yellow').attr('src','../resources/img/type4_1.png');
+
+	$('#brown').attr('id','type1');
+	$('#gray').attr('id','type2');
+	$('#red').attr('id','type3');
+	$('#yellow').attr('id','type4');		
+	
+	$("#diary-container").show();
+	$("#diary").fadeIn(); 
+}
+
+function SaveTest()
+{
+	$.ajax
+	(
+		{
+			url:"<c:url value="/checkAvailSend"/>",
+			type:"get",				
+			dataType:"text",
+			success:
+				function(flag)
+				{
+					if(flag=="success")
+					{
+						InsertResult();
+					}
+					else if(flag=="error")
+					{
+						alert("로그인을 해야 사용할 수 있는 기능입니다.\n로그인 페이지로 이동합니다.");
+						location.href="<c:url value='/member/login'/>";
+					}						
+				}
+			,
+			error:
+				function(e)
+				{
+					alert(Json.Stringify(e));
+				}
+		}
+	);	    	
+}
+
+function InsertResult()
+{
+	$.ajax
+	(
+		{
+			url:"<c:url value="/diary/insert"/>",
+			type:"post",				
+			dataType:"text",
+			data:{stress:temp_info.stress, moisture:temp_info.moisture, ingredient:temp_info.ingredient, status:temp_info.status},
+			success:
+				function(flag)
+				{
+					if(flag=="ignore")
+					{
+						alert("하루 3번 초과의 테스트값을 저장 할 수는 없습니다. 진지하게 테스트에 임해주세요.");
+						$("#diary").hide();
+						$("#diary-container").fadeOut();
+					}					
+					else if(flag=="warning")
+					{
+						alert("데이터를 저장했지만 건강이 위험한 상태입니다.\n 반경 1km 병원의 위치를 알려드리겠습니다.");
+						ShowHospitalList();												
+					}
+					else if(flag=="success")
+					{
+						alert("저장에 성공했습니다. 프로필의 달력에서 기록을 확인 할 수 있습니다.");
+						$("#diary").hide();
+						$("#diary-container").fadeOut();
+						
+					}
+					else if(flag=="error")
+					{
+						alert("저장이 실패하였습니다. 다시 시도해주세요.");
+					}						
+				}
+			,
+			error:
+				function()
+				{
+					alert("에러");
+				}
+		}
+	);	    	
+}
+
+function ShowHospitalList()
+{
+	$.ajax
+	(
+		{
+			url:"<c:url value="/toilet/receive_near_hospital"/>",
+			type:"post",				
+			data:{
+				lat : pos.lat.toFixed(6),
+    			lng : pos.lng.toFixed(6)
+    		},
+			success:
+				function(list)
+				{
+					$("#result_table").attr("hidden","hidden");
+					$("#myChart").attr("hidden","hidden");	
+					$("input[name='save-data']").attr("hidden","hidden");	
+					var contents = "";
+					var list_temp = list;
+
+					if(list_temp.length==0)
+					{
+						contents+='<tr>';
+						contents+='<th scope="col" style="text-align: left; font-size:14px;">근처에 병원이 존재하지 않습니다.</th>';
+						contents+='</tr>';	
+						return;
+					}
+					
+					
+					for(var i =0;i<5;i++)
+					{
+						contents+='<tr>';
+						contents+='<th scope="col" style="text-align: left; font-size:14px;">'+(i+1) +'. 병원 이름 : ' + list_temp[i].dutyName + ' 전화번호 : ' + list_temp[i].dutyTel1+'<br>';
+						contents+='평일 개시시간 : '+ list_temp[i].dutyTimeS + ' 평일 종료시간 : ' + list_temp[i].dutyTimeC +'<br>';
+						contents+= '주소: '+ list_temp[i].dutyAddr;
+						contents+='</th>';							
+						contents+='</tr>';							
+					}
+					
+					$("#hopital_table").html(contents);
+					$("#hopital_table").removeAttr("hidden","hidden");			
+					
+				}
+			,
+			error:
+				function(e)
+				{				
+					
+				}
+		}
+	);	    	
+}
+
+
+function FeedbackShow()
+{
+	$.ajax
+	(
+	{
+		url:"<c:url value="/checkAvailSend"/>",
+		type:"get",				
+		dataType:"text",
+		success:
+		function(flag)
+		{
+			if(flag=="success")
+			{
+				$("#feedback-contents").val("");
+				$("input[name='feed-x-button']").removeAttr("disabled","disabled");
+				$("input[name='feedback-send']").removeAttr("disabled","disabled");
+				$("#feedback-contents").removeAttr("disabled","disabled");
+				$("#feedback-container").show();
+				$("#feedback").fadeIn();
+			}
+			else if(flag=="error")
+			{
+				alert("로그인을 해야 사용할 수 있는 기능입니다.\n로그인 페이지로 이동합니다.");
+				location.href="<c:url value='/member/login'/>";
+			}						
+		}
+		,
+		error:
+		function(e)
+		{
+			alert(Json.Stringify(e));
+		}
+	}
+	);	    	
+}
+
+function SendFeedback()
+{
+	var contents = $("#feedback-contents").val();
+	
+	if(contents.length==0||contents.length<=10)
+	{
+		alert("내용을 충분히 입력해주세요(최소 10자 이상)");
+		return;
+	}
+
+	$("input[name='feed-x-button']").attr("disabled","disabled");
+	$("input[name='feedback-send']").attr("disabled","disabled");
+	$("#feedback-contents").attr("disabled","disabled");
+
+	$.ajax
+	(
+	{
+		url:"<c:url value="/sendFeedBack"/>",
+		type:"post",
+		data:{contentFromUser:contents},		
+		dataType:"text",
+		success:
+		function(flag)
+		{
+			if(flag=="success")
+			{
+				alert("피드백을 보내주셔서 감사합니다.\n더 나은 서비스를 제공하기 위해서 더욱 힘쓰겠습니다.");
+				$("#feedback").hide();
+				$("#feedback-container").fadeOut();
+				return;
+			}										
+		}
+		,
+		error:
+		function(e)
+		{
+			alert(Json.Stringify(e));
+			return;
+		}
+	}
+	);     	
+}
 
 //그 달의 기록을 가져오는 함수
 function getData(input_year, input_month,input1,input2)
@@ -172,95 +677,16 @@ function Init(input1, input2)
 	    			console.log("년도랑 월 수 받아오기 실패");
 	    		}			
 		});		
-	}	
-	
+	}		
 }
-
-//대변 체크 결과
-var diaryGraphInfo = 
-    function(stress, moisture, ingredient,status)
-    {
-    	this.stress = stress;
-    	this.moisture = moisture;
-    	this.ingredient = ingredient;
-    	this.status = status
-    	return this;
-    }
-
-var diaryPictureArray=
-[
-"../resources/img/normal.png",
-"../resources/img/dangerous.png",
-"../resources/img/dangerous.png",
-"../resources/img/normal.png",
-
-"../resources/img/good.png",
-"../resources/img/dangerous.png",
-"../resources/img/dangerous.png",
-"../resources/img/normal.png",
-
-"../resources/img/normal.png",
-"../resources/img/dangerous.png",
-"../resources/img/dangerous.png",
-"../resources/img/normal.png",
-
-"../resources/img/normal.png",
-"../resources/img/dangerous.png",
-"../resources/img/sobad.png",
-"../resources/img/normal.png"
-];
-
-var diaryGraphInfoArray=
-    [
-        new diaryGraphInfo(3, 1, 2, 3),
-        new diaryGraphInfo(5, 1, 3, 2),
-        new diaryGraphInfo(4, 2, 2, 2),
-        new diaryGraphInfo(4, 1.5, 0.5, 3),
-        
-        new diaryGraphInfo(0, 5, 5, 2 ),
-        new diaryGraphInfo(2, 1, 1, 4),
-        new diaryGraphInfo(3, 2, 2, 2),
-        new diaryGraphInfo(2, 2, 3, 3),
-
-        new diaryGraphInfo(3, 0.9, 2, 3),            
-        new diaryGraphInfo(3, 1.9, 2, 2),
-        new diaryGraphInfo(3, 1, 1, 2),
-        new diaryGraphInfo(0.9, 1, 2, 3),
-
-        new diaryGraphInfo(2, 4, 4, 3),
-        new diaryGraphInfo(4, 1, 2, 2),
-        new diaryGraphInfo(5, 0.5, 0.5, 1),
-        new diaryGraphInfo(1, 1, 2, 3)            
-    ];    			
-
-var diaryresult="";
-var result_show_flag=true;
-var diaryDescriptionArray=
-[
-"<p>영양소는 적당하지만,<Strong>변비</Strong> 증세가 있네요.<br>수분섭취와 스트레스를 줄여보세요.</p> ",
-"<p> 장건강의 이상으로 색깔이 변이될 수 있어요.<br><strong>악취</strong>가 나는 경우에는 진단을 받아 볼 필요가 있습니다.</p> ",
-"<p>치질처럼 항문 부근의<strong> 출혈</strong>이 있을수도 있습니다.<br>가까운 병원에서 진단을 받아보세요.</p> ",
-"<p><strong>영양부족</strong>으로 인한 색깔의 변이 혹은 변비의 전조증상입니다<br>충분한 영양과 수분을 섭취해주세요.</p> ",
-
-"<p> 색깔도 모양도 완벽해요.<br>당신의 대변 건강은 <strong>최고</strong>입니다.</p>",
-"<p>모양은 완벽!<strong>담즙</strong>의 흡수도에 따라 색이 흐려보일 수 있습니다.<br>색이 지속된다면 병원의 진찰을 받아보세요..</p>",
-"<p>모양은 완벽! 그러나 출혈 증상이 있습니다.<br><strong>항문</strong>질환을 의심해봐야 합니다.</p>",
-"<p>불규칙한 영양분의 흡수나, 먹은 음식에 따라 색깔이 노란빛을 띌 수 있습니다.</p>",
-
-"<p><strong>변비</strong> 증상이 있습니다.<br>채소나 과일의 섭취를 늘려주세요 !</p>",
-"<p>변비 증상과 장 속의 흡수문제는 <strong>큰 질환</strong>으로 이어질 수 있습니다.<br>가까운 병원에 진찰을 받아보세요.</p>",
-"<p>수분이 부족하여, 딱딱한 덩어리로 인한 <strong>출혈</strong> 등이 있을 수 있습니다<br>수시로 물과 섬유질을 섭취해 주세요</p>",
-"<p>규칙적인 영양분 섭취로 변비와 색을 개선해보세요.</p>",
-
-"<p>과식하셨나요? 휴식을 취하는 것이 필요해요.</p>",
-"<p>과한 알코올,지방 섭취의 원인일 수도 있습니다.<br>지속적인 증상이 나타난다면 병원에 진찰을 받아보세요.</p>",
-"<p>설사와 혈변은 염증성 질환일 수 도 있습니다.<br>가까운 병원에 빠르게 진찰을 받아보세요.</p>",
-"<p>수분이나 당분,지방을 지나치게 많이 먹어 장이 자극받은 상태입니다.<br>휴식이 필요해요.</p>"
-];
-
 
 function ShowResult(stress,moisture,ingredient,status)
 {		
+	$("input[name='save-data']").attr("hidden","hidden");
+	$("#myChart").attr("hidden","hidden");
+	$("#health-ment").attr("hidden","hidden");
+	$("#health_test_table").attr("hidden","hidden");
+	
 	var temp_str;
 	var temp_pic;
 	
@@ -276,6 +702,7 @@ function ShowResult(stress,moisture,ingredient,status)
 	
 	$("#result_picture").attr("src",temp_pic);
 	$("#result_description").html(temp_str);
+	
 
 	$("#result_table").removeAttr("hidden","hidden");				
 	
@@ -397,6 +824,28 @@ function GoNextYear()
 	$(
 			function()
 			{
+				// type모양별 체크시 각 함수를 다르게 지정해서 건강진단을 함    
+		    	$("#type1").on
+		    	(
+		    		"click",
+		    		clickFunc
+		    		);	
+		    	$("#type2").on
+		    	(
+		    		"click",
+		    		clickFunc
+		    		);	
+		    	$("#type3").on
+		    	(
+		    		"click",
+		    		clickFunc
+		    		);	
+		    	$("#type4").on
+		    	(
+		    		"click",
+		    		clickFunc
+		    	);
+		    		
 				user_id =$("#UseForCalenderById").val();
 				Init(-9999,-9999);
 			}
@@ -589,7 +1038,33 @@ function GoNextYear()
 
 <body class="">
 
-	<!-- 차트 폼 -->
+	<!-- 이메일 피드백 -->
+	<div id="feedback-container"></div>
+	<div id="feedback" class="col-xl-4">
+		<form action="">
+			<div class="card shadow">
+				<div class="card-header bg-transparent">
+					<div class="row align-items-center">
+						<div class="col">
+							<h2 class="mb-0" style="display: inline-block">Feedback Send</h2>
+							<input id="x-button" name="feed-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#feedback").hide(), $("#feedback-container").fadeOut()'> <input id="register" name="feedback-send" class="btn btn-sm btn-primary" type="button" value="Send Feedback" onclick="SendFeedback()">
+							<h6 id="review-ment" class="text-uppercase text-muted ls-1 mb-1">사용자님의 의견을 적어주세요! 적극 반영하겠습니다.</h6>
+						</div>
+					</div>
+				</div>
+				<div class="card-body2">
+					<div class="col-xl-12 col-lg-6">
+						<div class="card card-stats mb-4 mb-xl-0">
+							<textarea class="card-body4 replyButton2" id="feedback-contents" onkeydown="resize(this)" onkeyup="resize(this)" style="resize: none;"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<!-- 이메일 피드백 끝 -->
+	
+	<!-- 다이어리 -->
 	<div id="diary-container" style="display:none;"></div>	
 	<div id="diary" class="col-xl-4" style="display:none;">
 		<form action="">
@@ -597,29 +1072,58 @@ function GoNextYear()
 				<div class="card-header bg-transparent">
 					<div class="row align-items-center">
 						<div class="col">
-							<h2 class="mb-0" style="display: inline-block">Health Test Result</h2>
+							<h2 class="mb-0" style="display: inline-block">Health Test</h2>
+
 							<input id="x-button" name="feed-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#diary").hide(), $("#diary-container").fadeOut()'> <input id="register" hidden="hidden" name="save-data" class="btn btn-sm btn-primary" type="button" value="Save Data" onclick="SaveTest()"> <br>
+							<h4 id="health-ment" class="mb-0" style="display: inline-block">STEP1.대변의 모양을 선택해주세요</h4>
+
 						</div>
 					</div>
 					<div class="card-body2">
-						<!-- 결과 그래프 출력 -->
-						<canvas id="myChart" hidden="hidden" width="10" height="10"></canvas>					
-						<table id="result_table"  hidden="hidden">
-							<tr>							
-								<td>									
-									<img id="result_picture" src=""  style="width:100%" />
-								</td>
-								<td style=" text-align: left;">
-									<p id="result_description"></p> 
-								</td>
-							</tr>
-						</table>	
+					<!-- 결과 그래프 출력  width="382" height="152"-->
+					<canvas id="myChart" hidden="hidden" draggable="false" style=" width:100%; height:100%;"></canvas>					
+					<table id="result_table"  hidden="hidden">
+						<tr>							
+							<td>
+								<img id="result_picture" src=""  style="width:50%" />
+							</td>
+							<td>
+								<p id="result_description"></p> 
+							</td>
+						</tr>
+					</table>
+					
+					<table id="hopital_table"  class="table align-items-center table-flush"  hidden="hidden">
+														
+					</table>
+					
+					<!-- 테스트 목록 출력 -->
+					<table id="health_test_table">
+						<tr>
+							<td style="width:230px;height:150px;"> 
+								<img id="type1" class="hvr-grow-shadow"  name="1" src="../resources/img/type1_1.png" style="width:90%;"  />
+							</td>
+							<td style="width:230px;height:150px;">
+								<img id="type2" class="hvr-grow-shadow" name="2" src="../resources/img/type2_1.png" style="width:90%; " />
+							</td>
+						</tr>
+						<tr>
+							<td style="width:230px;height:150px;">
+								<img id="type3" class="hvr-grow-shadow" name="3" src="../resources/img/type3_1.png" style="width:90%"/>
+							</td>
+							<td style="width:230px;height:150px;">
+								<img id="type4" class="hvr-grow-shadow" name="4" src="../resources/img/type4_1.png" style="width:90%" />
+							</td>
+						</tr>
+					</table>
 					</div>
 				</div>
 			</div>
 		</form>
 	</div>
-	<!-- 차트 폼 끝 -->
+	<!-- 다이어리 끝 -->
+	
+
 	
 	<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
 		<div class="container-fluid">
@@ -699,8 +1203,14 @@ function GoNextYear()
 <%-- 					<li class="nav-item"><a class="nav-link " href="<c:url value="/examples/icons"/>"> <i class="ni ni-planet text-blue"></i> Icons --%>
 <!-- 					</a></li> -->
 
-					<li class="nav-item"><a class="nav-link " href="<c:url value="/diary/diaryMain"/>"> <i class="ni ni-bullet-list-67 text-red"></i> diary
-					</a></li>
+					
+					
+					<li class="nav-item">
+						<a class="nav-link " href="javascript:DiaryShow();"><i class="ni ni-bullet-list-67 text-red"></i> 
+							Diary
+						</a>
+					</li>
+					
 					<c:if test="${sessionScope.sessionId == null }">
 						<li class="nav-item"><a class="nav-link" href="<c:url value="/member/login"/>"> <i class="ni ni-key-25 text-info"></i> Login
 						</a></li>
@@ -727,21 +1237,37 @@ function GoNextYear()
 					</c:if>
 				</ul>
 				<!-- Divider -->
-				<hr class="my-3">
-				<!-- Heading -->
-				<h6 class="navbar-heading text-muted">Documentation</h6>
-				<!-- Navigation -->
-				<ul class="navbar-nav mb-md-3">
-					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html"> <i class="ni ni-spaceship"></i> Getting started
-					</a></li>
-					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/foundation/colors.html"> <i class="ni ni-palette"></i> Foundation
-					</a></li>
-					<li class="nav-item"><a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/components/alerts.html"> <i class="ni ni-ui-04"></i> Components
-					</a></li>
+						<hr class="my-3">
+						<!-- Heading -->
+						<h6 class="navbar-heading text-muted">NEED LOGIN</h6>
+						<!-- Navigation -->
+						<ul class="navbar-nav mb-md-3">
+							<li class="nav-item"><a class="nav-link" href="javascript:Recent();">
+								<i class="ni ni-watch-time text-indigo"></i> <span>Recent toilet</span>
+							</a></li>
+							<li class="nav-item"><a class="nav-link" href="javascript:Prefer();">
+								<i class="ni ni-favourite-28 text-pink"></i> <span>Preferred toilet</span>
+							</a></li>
+
+					<li class="nav-item"><a class="nav-link" href="javascript:FeedbackShow();">
+							<i class="ni ni-send text-blue"></i> <span>Send Feedback</span>
+						</a></li>
+
+					<li class="nav-item"><br> <br>
+						<div id="openweathermap-widget-18"></div> <script>
+							/* window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = []; 
+							window.myWidgetParam.push({id: 18,cityid: '1835848',appid: 'c08b376c4c1ca3b5e593c4991d91eb3c',
+							units: 'metric',containerid: 'openweathermap-widget-18',  });  
+							(function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";
+							script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
+							var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })(); */
+						</script></li>
 				</ul>
+				
 				<ul class="navbar-nav">
-					<li class="nav-item active active-pro"><a class="nav-link" href="<c:url value="/examples/upgrade"/>"> <i class="ni ni-send text-dark"></i> Upgrade to PRO
-					</a></li>
+					<li class="nav-item active active-pro"><a class="nav-link" href="<c:url value="/maps/mapsMain2"/>">
+							<i class="ni ni-bus-front-12"></i> Google Maps (Beta)
+						</a></li>
 				</ul>
 			</div>
 		</div>
