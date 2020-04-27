@@ -103,6 +103,25 @@
         "<p>설사와 혈변은 염증성 질환일 수 도 있습니다.<br>가까운 병원에 빠르게 진찰을 받아보세요.</p>",
         "<p>수분이나 당분,지방을 지나치게 많이 먹어 장이 자극받은 상태입니다.<br>휴식이 필요해요.</p>" ];
     $(function () {
+        setTimeout(function () {
+            window.myWidgetParam
+                    ? window.myWidgetParam : window.myWidgetParam = [ ];
+            window.myWidgetParam.push({
+                id : 18,
+                cityid : '1835848',
+                appid : 'c08b376c4c1ca3b5e593c4991d91eb3c',
+                units : 'metric',
+                containerid : 'openweathermap-widget-18',
+            });
+            ( function () {
+                var script = document.createElement('script');
+                script.async = true;
+                script.charset = "utf-8";
+                script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(script, s);
+            } )();
+        }, 1000)
         // type모양별 체크시 각 함수를 다르게 지정해서 건강진단을 함    
         $("#type1").on("click", clickFunc);
         $("#type2").on("click", clickFunc);
@@ -593,7 +612,7 @@
 	</div>
 
 	<!-- 최근 이용 화장실 nav-->
-	<input type = "hidden" id ="sessionId" value = "${sessionScope.sessionId}">
+	<input type="hidden" id="sessionId" value="${sessionScope.sessionId}">
 	<div id="Recent-container" style="display: none;"></div>
 	<div id="Recent" class="col-xl-4" style="display: none;">
 		<form action="">
@@ -838,16 +857,9 @@
 							<i class="ni ni-send text-blue"></i> <span>Send Feedback</span>
 						</a></li>
 
-					<li class="nav-item"><br> <br>
-						<div id="openweathermap-widget-18"></div> <script>
-                            /* window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = []; 
-                            window.myWidgetParam.push({id: 18,cityid: '1835848',appid: 'c08b376c4c1ca3b5e593c4991d91eb3c',
-                            units: 'metric',containerid: 'openweathermap-widget-18',  });  
-                            (function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";
-                            script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
-                            var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })(); */
-                        </script></li>
-
+					<li class="nav-item mt-3">
+						<div id="openweathermap-widget-18"></div>
+					</li>
 				</ul>
 				<ul class="navbar-nav">
 					<li class="nav-item active active-pro"><a class="nav-link" href="<c:url value="/maps/mapsMain2"/>">
