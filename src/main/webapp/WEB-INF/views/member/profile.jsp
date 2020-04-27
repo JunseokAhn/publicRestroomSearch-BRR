@@ -821,6 +821,52 @@ function GoNextYear()
 	Init((today_info.search_year+1),(today_info.search_month-1));	
 }
 
+//최근 이용했던 화장실
+function Recent() {
+	var id = $("#sessionId").val();
+	$.ajax({
+	url : "<c:url value='/dayaver/recent'/>",
+	type : "GET" ,
+	data : {
+			id : id
+		},
+	success : function(list) {
+		var id = $("#sessionId").val();
+		console.log(list);
+		if(id != null && id != "") {
+			var content = "<table>";
+			$("#Recent-contents").val("");
+			$("input[name='Recent-x-button']").html();
+			$("#Recent-contents").html();
+			$("#Recent-container").show();
+			$("#Recent").slideDown();
+			content += '<h3 class="text-uppercase text-muted ls-1 mb-1">' + "최근이용 화장실" + "</h3>";
+			for(var i = 0; i < 3; i++) {
+			content += '<tr>';
+			content +='<th scope="col" style="text-align:left; font-size:16px;">';
+			content += (i+1) + " ." ;
+			content += list.list1[i].toiletNm + "<br>";
+			content += list.list1[i].inputdate + "<br>" + "<hr>";
+			content += '</th>';
+			content += "</tr>";
+			}
+			content += "</table>";
+			console.log(content);
+			$("#Recent-contents").html(content);
+		} else if(list.list1.length == 0 && id != null && id != ""){
+			alert("저장된 데이터가 없습니다. 한 번 이상 길찾기를 해주세요.");
+			return false;
+		}else {
+			alert("로그인이 필요한 서비스 입니다. 로그인을 해 주세요.");
+			location.href = "../member/login";
+				}
+	},
+	error : function(e) {
+		alert(JSON.stringify(e));
+	}
+});
+}
+
 //선호 화장실 출력
 //선호하는 화장실
 function Prefer() 
@@ -1097,7 +1143,59 @@ function Prefer()
 </head>
 
 <body class="">
-
+	<input type="hidden" id="Profile" name="profile_image" value="${sessionScope.Profile}">
+	<input type="hidden" id="sessionNickname" name="nickname" value="${sessionScope.sessionNickname}">
+	<input type="hidden" id="sessionId" name="sessionId" value="${sessionScope.sessionId}">
+	
+	<!-- 최근 이용 화장실 nav-->
+	<div id="Recent-container" style="display:none;"></div>
+	<div id="Recent" class="col-xl-4" style="display:none;">
+		<form action="">
+			<div class="card shadow">
+				<div class="card-header bg-transparent">
+					<div class="row align-items-center">
+						<div class="col">
+							<h2 class="mb-0" style="display: inline-block">Recent toliet</h2>
+							<input id="x-button" name="Recent-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#Recent").hide(), $("#Recent-container").fadeOut()'> 
+							<h6 id="Recent-ment" class="text-uppercase text-muted ls-1 mb-1">최근 이용 화장실 목록 입니다.</h6>
+						</div>
+					</div>
+				</div>
+				<div class="card-body2">
+					<div class="col-xl-12 col-lg-6">
+						<div class="card card-stats mb-4 mb-xl-0" id="Recent-contents">
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	
+	
+	<!-- 선호 화장실 nav-->
+	<div id="Prefer-container"></div>
+	<div id="Prefer" class="col-xl-4">
+		<form action="">
+			<div class="card shadow">
+				<div class="card-header bg-transparent">
+					<div class="row align-items-center">
+						<div class="col">
+							<h2 class="mb-0" style="display: inline-block">Preferred toliet</h2>
+							<input id="x-button" name="Recent-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#Prefer").hide(), $("#Prefer-container").fadeOut()'> 
+							<h6 id="Prefer-ment" class="text-uppercase text-muted ls-1 mb-1">가장 많이 이용 한 화장실 목록 입니다.</h6>
+						</div>
+					</div>
+				</div>
+				<div class="card-body2">
+					<div class="col-xl-12 col-lg-6">
+						<div class="card card-stats mb-4 mb-xl-0" id="Prefer-contents">
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	
 	<!-- 이메일 피드백 -->
 	<div id="feedback-container"></div>
 	<div id="feedback" class="col-xl-4">
@@ -1447,10 +1545,52 @@ function Prefer()
 					</div>
 				</div>
 			</div>
+			
+			<div class="col-xl-8 order-xl-1" >
+					<div class="card bg-secondary shadow" style="width: 70%; position: relative; left: 300px;">
+						<div class="card-header bg-white border-0">
+							<div class="row align-items-center">
+								<div class="col-8">
+									<h3 class="mb-0">My account</h3>
+								</div>
+								<div class="col-4 text-right">
+<!-- 									<a href="#!" class="btn btn-sm btn-primary">Settings</a> -->
+								</div>
+							</div>
+						</div>
+						<div class="card-body" >
+							<form>
+								<h6 class="heading-small text-muted mb-4">User information</h6>
+								<div class="pl-lg-4">
+									<div class="row">
+										<div class="col-lg-6">
+											<div class="form-group">
+												<c:if test="${sessionScope.sessionNaver != null}">
+												<label class="form-control-label" for="input-username">Username</label> <input type="text" id="input-username" class="form-control form-control-alternative" style="color:black;"  value="${sessionScope.sessionNickname}">
+												</c:if>
+												<c:if test="${sessionScope.sessionGooglename != null}">
+												<label class="form-control-label" for="input-username">Username</label> <input type="text" id="input-username" class="form-control form-control-alternative" style="color:black;"  value="${sessionScope.sessionGooglename}">
+												</c:if>
+											</div>
+										</div>
+										<div class="col-lg-6">
+											<div class="form-group">
+												<label class="form-control-label" for="input-email">Email address</label> <input type="email" id="input-email" class="form-control form-control-alternative" style="color:black;" value="${sessionScope.sessionEmail}">
+											</div>
+										</div>
+									</div>									
+								</div>
+								<hr class="my-4" />																			
+							</form>
+						</div>
+					</div>
+				</div>
+			
+			
 		</div>
 		<!-- Page content -->
 		
-		<!-- 여기서부터 신경 써야한다.  -->
+		<%-- <!-- 여기서부터 신경 써야한다.  -->
 		<div class="container-fluid mt--7" style="width:1600px;margin: 0 auto;">
 			<div class="row">				
 				<div class="col-xl-8 order-xl-1">
@@ -1493,7 +1633,7 @@ function Prefer()
 					</div>
 				</div>
 			</div>
-			<!-- 여기까지  -->
+			<!-- 여기까지  --> --%>
 			
 <!-- 달력 -->
 	<input type="hidden" id="UseForCalenderById" value="${sessionScope.sessionId}">
