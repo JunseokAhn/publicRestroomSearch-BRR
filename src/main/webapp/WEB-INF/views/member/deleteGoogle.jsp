@@ -19,20 +19,39 @@
 <!-- CSS Files -->
 <link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
 <script>
-function onLoad() { 
-	gapi.load('auth2', function() { 
-		gapi.auth2.init(); 
-	});
+// function onLoad() { 
+// 	gapi.load('auth2', function() { 
+// 		gapi.auth2.init(); 
+// 	});
+// }
+
+// function signOut() {
+// 	var auth2 = gapi.auth2.getAuthInstance();
+//     auth2.signOut().then(function () {
+//     console.log('회원 탈퇴 완료');
+//     });
+//     	auth2.disconnect();
+// }
+
+var url = "https://accounts.google.com/logout";
+
+function logout()
+{
+    var url3 = window.open(url,"popup","width = 200, height = 200");
+    alert("회원탈퇴가 정상적으로 이루어졌습니다.");
+     url3.open();
+     setTimeout(function(){
+         url3.close();
+//          lo();
+         },300)
 }
 
-function signOut() {
-	var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-    console.log('회원 탈퇴 완료');
-    });
-    	auth2.disconnect();
-    	
-}
+// function lo()
+// {
+// var url2 = "http://localhost:8888/brr/maps/mapsMain";
+// location.replace(url2);
+// }
+
 
 </script>
 </head>
@@ -108,8 +127,8 @@ function signOut() {
 										<td><h1>${sessionScope.sessionEmail}</h1></td>
 									</tr>
 									<tr>
-										<td><form action="delGoogle" method = "post" onsubmit="signOut()">
-										<input type = "submit" value="탈퇴" class="btn btn-primary">
+										<td><form action="delGoogle" method = "post" onsubmit="logout()">
+										<input type = "submit" value="회원탈퇴" class="btn btn-primary">
 										</form></td>
 									</tr>
 									</table>
