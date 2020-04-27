@@ -1205,7 +1205,36 @@ function reviewRefresh(lng, lat){
     	console.log("endY" + endY);
     	console.log("title" + title);
     	<%-- <%=(String) session.getAttribute("sessionId")%> --%>
-    	;    	
+    	;
+    	$.ajax({
+            url: "<c:url value='/review/reviewAver'/>",
+            data:{
+                lat: endY, 
+                lng: endX
+            },
+            type:"post",
+            success: function(e){
+                 $.ajax({
+					url : "<c:url value='/dayaver/average'/>",
+					type : "POST",
+					data : {
+						lng : endX, 
+						lat : endY
+					},
+					success : function (res) {
+						var changeRate = res.differ;
+						var averageRate = res.average;
+						changeDiv1(e.starAver, e.cleanAver, e.starDiffer, e.cleanDiffer, title, toiletType, endY, endX, changeRate, averageRate);
+					},
+					error : function (e) {
+						console.log(JSON.stringify(e));
+					}
+				}); 
+            },
+            error: function(e){
+                console.log(e);
+            }
+        });
         //DB에 정보저장, title값 필요
         if(id != null){
         	$.ajax({
