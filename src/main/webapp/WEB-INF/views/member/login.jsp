@@ -186,24 +186,26 @@ function BackHome(){
 			</div>
 		</div>
 		<!-- Footer -->
-         <footer class="footer">
-            <div class="row align-items-center justify-content-xl-between">
-               <div class="col-xl-6">
-                  <div class="copyright text-center text-xl-left text-muted">
-                     &copy; 2020
+         <footer class="py-5">
+	<div class="container">
+		<div class="row align-items-center justify-content-xl-between">
+			<div class="col-xl-6">
+				<div class="copyright text-center text-xl-left text-muted">
+					&copy; 2020
                      <a href="" class="font-weight-bold ml-1" target="_blank">Crispy Donut</a>
-                  </div>
-               </div>
-               <div class="col-xl-6">
-                  <ul class="nav nav-footer justify-content-center justify-content-xl-end">
+				</div>
+			</div>
+			<div class="col-xl-6">
+				<ul class="nav nav-footer justify-content-center justify-content-xl-end">
                      <li class="nav-item"><a href="" class="nav-link" target="_blank">About Us</a></li>
                      <li class="nav-item"><a href="https://github.com/JunseokAhn/brr" class="nav-link" target="_blank">Git hub</a></li>
                      <li class="nav-item"><a href="http://tempcat.coo.kr" class="nav-link" target="_blank">Blog</a></li>
                      <li class="nav-item"><a href="http://tradecampus.com/" class="nav-link" target="_blank">SCIT MASTER</a></li>
                   </ul>
-               </div>
-            </div>
-         </footer>
+			</div>
+		</div>
+	</div>
+</footer>
 	</div>
 	<!--   Core   -->
 	<script src="<c:url value="/resources/assets/js/plugins/jquery/dist/jquery.min.js"/>"></script>
