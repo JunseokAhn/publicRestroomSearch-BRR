@@ -567,6 +567,7 @@
 	</div>
 
 	<!-- 최근 이용 화장실 nav-->
+	<input type = "hidden" id = "sessionId" value = "${sessionScope.sessionId}">
 	<div id="Recent-container"></div>
 	<div id="Recent" class="col-xl-4">
 		<form action="">

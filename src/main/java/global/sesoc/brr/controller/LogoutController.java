@@ -36,10 +36,21 @@ private static final Logger logger = LoggerFactory.getLogger(LogoutController.cl
 		String result = restTemplate.getForObject(apiURL, String.class);
 		System.out.println(result);
 		
-		httpsession.invalidate();
-		
 		return "member/logoutForm";
 	}
 	
+	@GetMapping("logout2")
+	public String logout2 (HttpSession httpsession) {
+		logger.info("네이버 세션 만료");
+		httpsession.invalidate();
+		return "redirect:/";
+	}
+	
+	@GetMapping("logout3")
+	public String logout3 (HttpSession httpsession) {
+		logger.info("구글 세션 만료");
+		httpsession.invalidate();
+		return "redirect:/";
+	}
 	
 }

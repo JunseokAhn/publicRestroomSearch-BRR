@@ -35,7 +35,7 @@
 			<mapping path="/sns/readSNS"/>
 			<mapping path="/sns/updateSNS"/>
 			<mapping path="/member/profile"/>
-			<mapping path="/member/logout"/>
+<!-- 			<mapping path="/member/logout"/> -->
 			<mapping path="/member/deleteGoogle"/>
 			<mapping path="/member/deleteNaver"/>
 			

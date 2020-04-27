@@ -41,27 +41,24 @@
 	
 // 	location.href = "/brr/maps/mapsMain";
 // }
-// setTimeout(function()
-// {   
-//    logout();
-// },1000);
+
 
 
 var url = "https://accounts.google.com/logout";
-
+var mapsMain = "http://localhost:8888/brr/maps/mapsMain";
 function logout()
 {
     var url3 = window.open(url,"popup","width = 200, height = 200");
-    alert("홈으로 돌아갑니다.");
+//     mapsMain.focus();
+		alert("홈으로 이동합니다.");
      url3.open();
-     setTimeout(function(){
+     setTimeout(function()
+    	 {
          url3.close();
          lo();
          },300)
-         
-    
-    
 }
+
 
 function lo()
 {
@@ -139,9 +136,17 @@ location.replace(url2);
 								<h3>이용해주셔서 감사합니다!</h3>
 							</div>
 								<div align="center">
-									<form action="/brr/maps/mapsMain" method = "GET" onsubmit="logout()">
+									<c:if test="${sessionScope.sessionNaver != null}">
+									<form action="logout2" method = "GET" >
 									<input type="submit" value="홈으로 돌아가기" class="btn btn-primary">
 									</form>
+									</c:if>
+									
+									<c:if test="${sessionScope.sessionNaver == null}">
+									<form action="logout3" method = "GET" onsubmit="logout()">
+									<input type="submit" value="홈으로 돌아가기" class="btn btn-primary">
+									</form>
+									</c:if>
 								</div>
 						</div>
 						<div class="card-body px-lg-5 py-lg-5">
@@ -158,24 +163,26 @@ location.replace(url2);
 			</div>
 		</div>
 		<!-- Footer -->
-         <footer class="footer">
-            <div class="row align-items-center justify-content-xl-between">
-               <div class="col-xl-6">
-                  <div class="copyright text-center text-xl-left text-muted">
-                     &copy; 2020
+         <footer class="py-5">
+	<div class="container">
+		<div class="row align-items-center justify-content-xl-between">
+			<div class="col-xl-6">
+				<div class="copyright text-center text-xl-left text-muted">
+					&copy; 2020
                      <a href="" class="font-weight-bold ml-1" target="_blank">Crispy Donut</a>
-                  </div>
-               </div>
-               <div class="col-xl-6">
-                  <ul class="nav nav-footer justify-content-center justify-content-xl-end">
+				</div>
+			</div>
+			<div class="col-xl-6">
+				<ul class="nav nav-footer justify-content-center justify-content-xl-end">
                      <li class="nav-item"><a href="" class="nav-link" target="_blank">About Us</a></li>
                      <li class="nav-item"><a href="https://github.com/JunseokAhn/brr" class="nav-link" target="_blank">Git hub</a></li>
                      <li class="nav-item"><a href="http://tempcat.coo.kr" class="nav-link" target="_blank">Blog</a></li>
                      <li class="nav-item"><a href="http://tradecampus.com/" class="nav-link" target="_blank">SCIT MASTER</a></li>
                   </ul>
-               </div>
-            </div>
-         </footer>
+			</div>
+		</div>
+	</div>
+</footer>
 	</div>
 	<!--   Core   -->
 	<script src="<c:url value="/resources/assets/js/plugins/jquery/dist/jquery.min.js"/>"></script>
