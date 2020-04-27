@@ -961,12 +961,14 @@ function Prefer()
 	$(
 			function()
 			{				
-				window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = []; 
-				window.myWidgetParam.push({id: 18,cityid: '1835848',appid: 'c08b376c4c1ca3b5e593c4991d91eb3c',
-				units: 'metric',containerid: 'openweathermap-widget-18',  });  
-				(function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";
-					script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
-						var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();
+			    setTimeout(function(){
+		            window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = []; 
+		    		window.myWidgetParam.push({id: 18,cityid: '1835848',appid: 'c08b376c4c1ca3b5e593c4991d91eb3c',
+		    		units: 'metric',containerid: 'openweathermap-widget-18',  });  
+		    		(function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";
+		    			script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
+		    				var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();
+		        },1000)
 				// type모양별 체크시 각 함수를 다르게 지정해서 건강진단을 함    
 		    	$("#type1").on
 		    	(
