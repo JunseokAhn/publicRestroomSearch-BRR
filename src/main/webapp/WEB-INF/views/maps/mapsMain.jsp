@@ -253,6 +253,12 @@
     }
     
     $(function () {
+    	window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = []; 
+		window.myWidgetParam.push({id: 18,cityid: '1835848',appid: 'c08b376c4c1ca3b5e593c4991d91eb3c',
+		units: 'metric',containerid: 'openweathermap-widget-18',  });  
+		(function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";
+			script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
+				var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();
     	// type모양별 체크시 각 함수를 다르게 지정해서 건강진단을 함    
     	$("#type1").on
     	(
@@ -1999,6 +2005,7 @@ function InsertResult()
 						</div>
 					</div>
 				</form>
+				
 				<!-- Navigation -->
 				<ul class="navbar-nav">
 					<li class="nav-item"><a class="nav-link  active " href="<c:url value="/maps/mapsMain"/>">
@@ -2064,14 +2071,8 @@ function InsertResult()
 						</a></li>
 
 					<li class="nav-item"><br> <br>
-						<div id="openweathermap-widget-18"></div> <script>
-							/* window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = []; 
-							window.myWidgetParam.push({id: 18,cityid: '1835848',appid: 'c08b376c4c1ca3b5e593c4991d91eb3c',
-							units: 'metric',containerid: 'openweathermap-widget-18',  });  
-							(function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";
-							script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
-							var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })(); */
-						</script></li>
+						<div id="openweathermap-widget-18"></div>
+					</li>
 
 				</ul>
 				<ul class="navbar-nav">
@@ -2263,48 +2264,7 @@ function InsertResult()
 										</div>
 									</div>
 								</div>
-							</div>
-
-							<!-- <div class="col-xl-3 col-lg-6">
-								<div class="card card-stats mb-4 mb-xl-0">
-									<div class="card-body replyButton2">
-										<div class="row">
-											<div class="col">
-												<h5 class="card-title text-uppercase text-muted mb-0">Title</h5>
-												<span class="h2 font-weight-bold mb-0">Contents</span>
-											</div>
-											<div class="col-auto">
-												<div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
-													<i class="fas fa-users"></i>
-												</div>
-											</div>
-										</div>
-										<p class="mt-3 mb-0 text-muted text-sm">
-											<span class="text-warning mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span> <span class="text-nowrap">Since yesterday</span>
-										</p>
-									</div>
-								</div>
-							</div>
-							<div class="col-xl-3 col-lg-6">
-								<div class="card card-stats mb-4 mb-xl-0">
-									<div class="card-body replyButton2">
-										<div class="row">
-											<div class="col">
-												<h5 class="card-title text-uppercase text-muted mb-0">Title</h5>
-												<span class="h2 font-weight-bold mb-0">Contents</span>
-											</div>
-											<div class="col-auto">
-												<div class="icon icon-shape bg-info text-white rounded-circle shadow">
-													<i class="fas fa-percent"></i>
-												</div>
-											</div>
-										</div>
-										<p class="mt-3 mb-0 text-muted text-sm">
-											<span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span> <span class="text-nowrap">Since last month</span>
-										</p>
-									</div>
-								</div>
-							</div> -->
+							</div>							
 						</div>
 					</div>
 				</div>
