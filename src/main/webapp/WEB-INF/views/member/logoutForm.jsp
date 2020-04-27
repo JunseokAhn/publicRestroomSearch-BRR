@@ -22,29 +22,53 @@
 <link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
 <script>
 
-
-
-function onLoad() {
-	gapi.load('auth2', function() { 
-		gapi.auth2.init();
+// function onLoad() {
+// 	gapi.load('auth2', function() { 
+// 		gapi.auth2.init();
 		
-	});
-}
-function signOut() {
-	var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-    console.log('로그아웃 완료');
-    });
-	auth2.disconnect();
-	goHome();
-}
+// 	});
+// }
+// function signOut() {
+// 	var auth2 = gapi.auth2.getAuthInstance();
+//     auth2.signOut().then(function () {
+//     console.log('로그아웃 완료');
+//     });
+// 	auth2.disconnect();
+// 	goHome();
+// }
 
-
-
-function goHome() {
+// function goHome() {
 	
-	location.href = "/brr/maps/mapsMain";
+// 	location.href = "/brr/maps/mapsMain";
+// }
+// setTimeout(function()
+// {   
+//    logout();
+// },1000);
+
+
+var url = "https://accounts.google.com/logout";
+
+function logout()
+{
+    var url3 = window.open(url,"popup","width = 200, height = 200");
+    alert("홈으로 돌아갑니다.");
+     url3.open();
+     setTimeout(function(){
+         url3.close();
+         lo();
+         },300)
+         
+    
+    
 }
+
+function lo()
+{
+var url2 = "http://localhost:8888/brr/maps/mapsMain";
+location.replace(url2);
+}
+
 
 </script>
 </head>
@@ -115,7 +139,7 @@ function goHome() {
 								<small>이용해주셔서 감사합니다!</small>
 							</div>
 								<div align="center">
-									<form action="/brr/maps/mapsMain" method = "GET" onsubmit="signOut()">
+									<form action="/brr/maps/mapsMain" method = "GET" onsubmit="logout()">
 									<input type="submit" value="홈으로 돌아가기" class="btn btn-primary">
 									</form>
 								</div>
