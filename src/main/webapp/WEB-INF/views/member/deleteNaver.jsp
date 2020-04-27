@@ -111,7 +111,7 @@ function init() {
 					<div class="card bg-secondary shadow border-0">
 						<div class="card-header bg-transparent pb-5">
 							<div class="text-muted text-center mt-2 mb-3">
-								<small>이용해주셔서 감사합니다!</small>
+								<h3>이용해주셔서 감사합니다!</h3>
 							</div>
 								<div align="center">
 									<table>
@@ -128,7 +128,8 @@ function init() {
 						</div>
 						<div class="card-body px-lg-5 py-lg-5">
 							<div class="text-center text-muted mb-4">
-								<small>이 부근에 로고를 넣으시면 됩니다.</small>
+<!-- 								<small>이 부근에 로고를 넣으시면 됩니다.</small> -->
+								<img width="40%" height="20%" src="<c:url value="/resources/img/Logo.png"/>" />
 							</div>
 							<form role="form">
 
@@ -138,25 +139,25 @@ function init() {
 				</div>
 			</div>
 		</div>
-		<footer class="py-5">
-			<div class="container">
-				<div class="row align-items-center justify-content-xl-between">
-					<div class="col-xl-6">
-						<div class="copyright text-center text-xl-left text-muted">
-							© 2020 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
-						</div>
-					</div>
-					<div class="col-xl-6">
-						<ul class="nav nav-footer justify-content-center justify-content-xl-end">
-							<li class="nav-item"><a href="https://www.creative-tim.com" class="nav-link" target="_blank">Creative Tim</a></li>
-							<li class="nav-item"><a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">About Us</a></li>
-							<li class="nav-item"><a href="http://blog.creative-tim.com" class="nav-link" target="_blank">Blog</a></li>
-							<li class="nav-item"><a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" class="nav-link" target="_blank">MIT License</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</footer>
+		<!-- Footer -->
+         <footer class="footer">
+            <div class="row align-items-center justify-content-xl-between">
+               <div class="col-xl-6">
+                  <div class="copyright text-center text-xl-left text-muted">
+                     &copy; 2020
+                     <a href="" class="font-weight-bold ml-1" target="_blank">Crispy Donut</a>
+                  </div>
+               </div>
+               <div class="col-xl-6">
+                  <ul class="nav nav-footer justify-content-center justify-content-xl-end">
+                     <li class="nav-item"><a href="" class="nav-link" target="_blank">About Us</a></li>
+                     <li class="nav-item"><a href="https://github.com/JunseokAhn/brr" class="nav-link" target="_blank">Git hub</a></li>
+                     <li class="nav-item"><a href="http://tempcat.coo.kr" class="nav-link" target="_blank">Blog</a></li>
+                     <li class="nav-item"><a href="http://tradecampus.com/" class="nav-link" target="_blank">SCIT MASTER</a></li>
+                  </ul>
+               </div>
+            </div>
+         </footer>
 	</div>
 	<!--   Core   -->
 	<script src="<c:url value="/resources/assets/js/plugins/jquery/dist/jquery.min.js"/>"></script>

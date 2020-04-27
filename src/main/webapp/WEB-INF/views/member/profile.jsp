@@ -1574,7 +1574,7 @@ function Prefer()
 						<h1 class="display-2 text-white">${sessionScope.sessionNickname}</h1>
 						<p class="text-white mt-0 mb-5">${sessionScope.sessionNickname}님 brr를 이용해 주셔서 감사합니다.</p>
 						</c:if>
-						<c:if test="${sessionScope.sessionGooglename != null}">
+						<c:if test="${sessionScope.sessionNaver == null}">
 						<h1 class="display-2 text-white">${sessionScope.sessionNickname}</h1>
 						<p class="text-white mt-0 mb-5">${sessionScope.sessionNickname}님 brr를 이용해 주셔서 감사합니다.</p>
 						</c:if>
@@ -1652,8 +1652,8 @@ function Prefer()
 												<c:if test="${sessionScope.sessionNaver != null}">
 												<label class="form-control-label" for="input-username">Username</label> <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username" value="${sessionScope.sessionNickname}">
 												</c:if>
-												<c:if test="${sessionScope.sessionGooglename != null}">
-												<label class="form-control-label" for="input-username">Username</label> <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username" value="${sessionScope.sessionGooglename}">
+												<c:if test="${sessionScope.sessionNaver != null}">
+												<label class="form-control-label" for="input-username">Username</label> <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username" value="${sessionScope.sessionNickname}">
 												</c:if>
 											</div>
 										</div>
