@@ -30,7 +30,7 @@ public class GoogleMapsDAO {
 		ToiletVO VO = mapper.searchRating(lo);
 		return VO;
 	}
-	
+
 	public ToiletVO searchClean(LocationVO lo) {
 		// TODO Auto-generated method stub
 		GoogleMapsMapper mapper = session.getMapper(GoogleMapsMapper.class);
@@ -42,8 +42,11 @@ public class GoogleMapsDAO {
 		// TODO Auto-generated method stub
 		GoogleMapsMapper mapper = session.getMapper(GoogleMapsMapper.class);
 		ToiletVO VO = mapper.searchSmooth(lo);
-		if(VO==null)
+
+		if (VO == null) {
+			System.out.println("원활도길찾기 : 주변에 사용자 0명인 화장실 없음.");
 			VO = mapper.searchSmooth2(lo);
+		}
 		return VO;
 	}
 }
