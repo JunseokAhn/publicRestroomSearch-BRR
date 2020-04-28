@@ -43,14 +43,14 @@ private static final Logger logger = LoggerFactory.getLogger(LogoutController.cl
 	public String logout2 (HttpSession httpsession) {
 		logger.info("네이버 세션 만료");
 		httpsession.invalidate();
-		return "redirect:/";
+		return "redirect:/maps/mapsMain";
 	}
 	
 	@GetMapping("logout3")
 	public String logout3 (HttpSession httpsession) {
 		logger.info("구글 세션 만료");
 		httpsession.invalidate();
-		return "redirect:/";
+		return "redirect:/maps/mapsMain";
 	}
 	
 }

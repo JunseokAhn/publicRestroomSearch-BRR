@@ -1411,15 +1411,23 @@ function reviewRefresh(lng, lat){
 		success : function(list) {
 			var id = $("#sessionId").val();
 			console.log(list);
-			if(id != null && id != "") {
+			console.log(id);
+			console.log(list.list1.length);
+			if(id != null && id != "" && list.list1.length == 0) {
+				alert("저장된 데이터가 없습니다. 한 번 이상 길찾기를 해주세요.");
+				return false;
+				
+			} else if(id != null && id != ""){
 				var content = "<table>";
 				$("#Recent-contents").val("");
 				$("input[name='Recent-x-button']").html();
 				$("#Recent-contents").html();
 				$("#Recent-container").show();
 				$("#Recent").slideDown();
+				
 				content += '<h3 class="text-uppercase text-muted ls-1 mb-1">' + "최근이용 화장실" + "</h3>";
-				for(var i = 0; i < 3; i++) {
+
+				for(var i = 0; i < list.list1.length; i++) {
 				content += '<tr>';
 				content +='<th scope="col" style="text-align:left; font-size:16px;">';
 				content += (i+1) + " ." ;
@@ -1428,16 +1436,15 @@ function reviewRefresh(lng, lat){
 				content += '</th>';
 				content += "</tr>";
 				}
+				
 				content += "</table>";
 				console.log(content);
 				$("#Recent-contents").html(content);
-			} else if(list.list1.length == 0 && id != null && id != ""){
-				alert("저장된 데이터가 없습니다. 한 번 이상 길찾기를 해주세요.");
-				return false;
 			}else {
 				alert("로그인이 필요한 서비스 입니다. 로그인을 해 주세요.");
 				location.href = "../member/login";
 					}
+			
 		},
 		error : function(e) {
 			alert(JSON.stringify(e));
@@ -1455,7 +1462,12 @@ function reviewRefresh(lng, lat){
 			},
 		success : function(list) {
 			console.log(list);
-			if(id != null && id != "") {
+			if(list.list2.length == 0 && id != null && id != "" ) 
+			{
+				alert("저장된 데이터가 없습니다. 한 번 이상 길찾기를 해주세요.");
+				return false;
+				
+			}else if(id != null && id != ""){
 				var content = "<table>";
 				$("#Prefer-contents").val("");
 				$("input[name='Prefer-x-button']").html();
@@ -1464,7 +1476,7 @@ function reviewRefresh(lng, lat){
 				$("#Prefer").slideDown();
 				
 				content += '<h3 class="text-uppercase text-muted ls-1 mb-1">' + "선호하는 화장실" + "</h3>";
-				for(var i = 0; i < 3; i++) {
+				for(var i = 0; i < list.list2.length; i++) {
 					content += '<tr>';
 					content +='<th scope="col" style="text-align:left; font-size:16px;">';
 					content += (i+1) + " ." ;
@@ -1478,9 +1490,6 @@ function reviewRefresh(lng, lat){
 				console.log(content);
 				
 				$("#Prefer-contents").html(content);
-			}else if(list.list2.length == 0 && id != null && id != ""){
-				alert("저장된 데이터가 없습니다. 한 번 이상 길찾기를 해주세요.");
-				return false;
 			}else {
 				alert("로그인 후 사용가능 한 기능입니다 로그인 후 사용해주세요");
 				location.href = "../member/login";
