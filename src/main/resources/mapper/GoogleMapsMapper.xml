@@ -79,7 +79,6 @@
                          select trunc(DISTANCE_WGS84(#{lat},#{lng}, lat, lng),3)*1000 as DISTANCE, lat, lng
 						 from brr_toilet
 						 where (lat between #{lat}-0.021 and #{lat}+0.021) and (lng between #{lng}-0.0246 and #{lng}+0.0246)
-						 order by DISTANCE
 						 )a 
                     where a.lat not in 
                         ( 
@@ -93,7 +92,7 @@
                                    (
                                      select * 
                                      from dayaver
-                                      where inputdate between sysdate-1 and sysdate
+                                     where inputdate between sysdate-1 and sysdate
                                    ) d 
                                 using(lat, lng) 
                                 group by lat, lng) 
@@ -113,8 +112,9 @@
                                  group by lat, lng)
                  )
               where rownum=1
+              order by DISTANCE  
              )
-         using(lat, lng)
+         using(lat, lng) where rownum=1
 	</select>
 	
 	
