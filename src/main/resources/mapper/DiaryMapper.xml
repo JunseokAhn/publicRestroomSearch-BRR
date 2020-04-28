@@ -5,8 +5,8 @@
 
 <select id="countTest" resultType="int">
 	select count(*)
-	from diary_result
-	group by inputdate
+	from diary_result	
+	group by inputdate	
 	having inputdate = to_date(to_char(sysdate,'yyyy/mm/dd'))
 </select>
 
