@@ -1395,7 +1395,7 @@
 								</ul>  --%>
 								<ul class="pagination justify-content-end mb-0">
 									<c:if test="${pn.currentGroup!=0}">
-										<li class="page-item"><a class="page-link" href="<c:url value="/review/reviewMain?currentPage=${pn.startPageGroup-1}"/>">
+										<li class="page-item"><a class="page-link" href="<c:url value="/review/reviewMain?currentPage=${pn.startPageGroup-1}&toiletNm=${search}"/>">
 												<i class="fas fa-angle-left"></i>
 											</a></li>
 									</c:if>
@@ -1406,14 +1406,14 @@
 									</c:if> --%>
 									<c:forEach var="i" begin="${pn.startPageGroup}" end="${pn.endPageGroup}">
 										<c:if test="${pn.currentPage==i}">
-											<li class="page-item active"><a class="page-link" href="<c:url value="/review/reviewMain?currentPage=${i}"/>">${i}</a></li>
+											<li class="page-item active"><a class="page-link" href="<c:url value="/review/reviewMain?currentPage=${i}&toiletNm=${search}"/>">${i}</a></li>
 										</c:if>
 										<c:if test="${pn.currentPage!=i}">
-											<li class="page-item"><a class="page-link" href="<c:url value="/review/reviewMain?currentPage=${i}"/>">${i}</a></li>
+											<li class="page-item"><a class="page-link" href="<c:url value="/review/reviewMain?currentPage=${i}&toiletNm=${search}"/>">${i}</a></li>
 										</c:if>
 									</c:forEach>
 									<c:if test="${pn.endPageGroup!=pn.totalPageCount}">
-										<li class="page-item"><a class="page-link" href="<c:url value="/review/reviewMain?currentPage=${pn.startPageGroup+5}"/>">
+										<li class="page-item"><a class="page-link" href="<c:url value="/review/reviewMain?currentPage=${pn.startPageGroup+5}&toiletNm=${search}"/>">
 												<i class="fas fa-angle-right"></i>
 											</a></li>
 									</c:if>
