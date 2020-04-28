@@ -1682,8 +1682,7 @@ function reviewRefresh(lng, lat){
 
 	
     function DiaryShow()
-    { 
-        console.log("눌렀다");        
+    {     	      
  	  	diaryresult="";
 		result_show_flag=true;
 		$("#hopital_table").attr("hidden","hidden");
@@ -1763,7 +1762,7 @@ function ShowHospitalList()
 					$("input[name='save-data']").attr("hidden","hidden");	
 					var contents = "";
 					var list_temp = list;
-
+					
 					if(list_temp.length==0)
 					{
 						contents+='<tr>';
@@ -1772,16 +1771,30 @@ function ShowHospitalList()
 						return;
 					}
 					
-					
-					for(var i =0;i<5;i++)
+					if(list_temp.length>5)
 					{
-						contents+='<tr>';
-						contents+='<th scope="col" style="text-align: left; font-size:14px;">'+(i+1) +'. 병원 이름 : ' + list_temp[i].dutyName + ' 전화번호 : ' + list_temp[i].dutyTel1+'<br>';
-						contents+='평일 개시시간 : '+ list_temp[i].dutyTimeS + ' 평일 종료시간 : ' + list_temp[i].dutyTimeC +'<br>';
-						contents+= '주소: '+ list_temp[i].dutyAddr;
-						contents+='</th>';							
-						contents+='</tr>';							
+						for(var i =0;i<5;i++)
+						{
+							contents+='<tr>';
+							contents+='<th scope="col" style="text-align: left; font-size:14px;">'+(i+1) +'. 병원 이름 : ' + list_temp[i].dutyName + ' 전화번호 : ' + list_temp[i].dutyTel1+'<br>';
+							contents+='평일 개시시간 : '+ list_temp[i].dutyTimeS + ' 평일 종료시간 : ' + list_temp[i].dutyTimeC +'<br>';
+							contents+= '주소: '+ list_temp[i].dutyAddr;
+							contents+='</th>';							
+							contents+='</tr>';							
+						}
 					}
+					else
+					{
+						for(var i =0;i<list_temp.length;i++)
+						{
+							contents+='<tr>';
+							contents+='<th scope="col" style="text-align: left; font-size:14px;">'+(i+1) +'. 병원 이름 : ' + list_temp[i].dutyName + ' 전화번호 : ' + list_temp[i].dutyTel1+'<br>';
+							contents+='평일 개시시간 : '+ list_temp[i].dutyTimeS + ' 평일 종료시간 : ' + list_temp[i].dutyTimeC +'<br>';
+							contents+= '주소: '+ list_temp[i].dutyAddr;
+							contents+='</th>';							
+							contents+='</tr>';							
+						}
+					}					
 					
 					$("#hopital_table").html(contents);
 					$("#hopital_table").removeAttr("hidden","hidden");			
@@ -1956,7 +1969,6 @@ function InsertResult()
 
 
 	<div id="diary-container" style="display: none;"></div>
-
 	<div id="diary" class="col-xl-4" style="display: none;">
 		<form action="">
 			<div class="card shadow">
@@ -1964,10 +1976,9 @@ function InsertResult()
 					<div class="row align-items-center">
 						<div class="col">
 							<h2 class="mb-0" style="display: inline-block">Health Test</h2>
-
-							<input id="x-button" name="feed-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#diary").hide(), $("#diary-container").fadeOut()'> <input id="register" hidden="hidden" name="save-data" class="btn btn-sm btn-primary" type="button" value="Save Data" onclick="SaveTest()"> <br>
+							<input id="x-button" name="feed-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#diary").hide(), $("#diary-container").fadeOut()'> 
+							<input id="register" hidden="hidden" name="save-data" class="btn btn-sm btn-primary" type="button" value="Save Data" onclick="SaveTest()"> <br>
 							<h4 id="health-ment" class="mb-0" style="display: inline-block">STEP1.대변의 모양을 선택해주세요</h4>
-
 						</div>
 					</div>
 					<div class="card-body2">
@@ -1982,8 +1993,7 @@ function InsertResult()
 							</tr>
 						</table>
 
-						<table id="hopital_table" class="table align-items-center table-flush" hidden="hidden">
-
+						<table id="hopital_table" class="table align-items-center table-flush" hidden="hidden" >
 						</table>
 
 						<!-- 테스트 목록 출력 -->
