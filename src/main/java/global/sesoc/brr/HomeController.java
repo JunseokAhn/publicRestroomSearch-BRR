@@ -37,27 +37,33 @@ public class HomeController
 	private HospitalDAO hospitalDAO;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home() {
-		logger.info("메인 화면으로 이동");
+	public String home(HttpSession session) 
+	{
+		if(session.getAttribute("DownFlag")==null)
+		{
+			session.setAttribute("DownFlag", true);
+			System.out.println("내용 : "+session.getAttribute("DownFlag") );
+		}
+		logger.info("메인 화면으로 이동");		
 		return "/maps/mapsMain";
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/checkRecv", method = RequestMethod.GET)
-	public String CheckRecv() 
+	public String CheckRecv(HttpSession session) 
 	{
+		session.setAttribute("DownFlag", false);
 		logger.debug("이동하였다.");
 		if(download_flag)
 		{
 			if(toiletDAO.countToiletInfo()>32000&&hospitalDAO.countHospitalInfo()>18600)
 			{
-				logger.debug("필요하지 않다.");
-				download_flag = false;
+				logger.debug("필요하지 않다.");				
 				return "do_not_need";
 			}
 			else
 			{
-				logger.debug("필요하다.");
+				logger.debug("필요하다.");				
 				return "need";
 			}		
 		}
