@@ -45,13 +45,13 @@
 <!--달력 -->
 <script type="text/javaScript">
 
-var today_info;
-var date_list;
+var today_info;//날짜 기준
+var date_list;//일수 리스트
 
-var test_result_list;
-var test_result_index=0;
+var test_result_list;//테스트 결과 리스트
+var test_result_index=0;//날짜랑 같이 출력 할 때 테스트 결과 리스트 인덱스
 
-var user_id;
+var user_id;//유저 아이디
 
 //대변 체크 결과
  var temp_info;
