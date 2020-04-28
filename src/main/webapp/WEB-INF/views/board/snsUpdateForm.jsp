@@ -25,6 +25,125 @@
 <link rel="stylesheet" type="text/css" href="../resources/css/boardStyle.css">
 
 <script>
+
+//대변 체크 결과
+var diaryGraphInfo = 
+    function(stress, moisture, ingredient,status)	
+    {
+    	this.stress = stress;
+    	this.moisture = moisture;
+    	this.ingredient = ingredient;
+    	this.status = status
+    	return this;
+    }
+
+var diaryPictureArray=
+[
+"../resources/img/normal.png",
+"../resources/img/dangerous.png",
+"../resources/img/dangerous.png",
+"../resources/img/normal.png",
+
+"../resources/img/good.png",
+"../resources/img/dangerous.png",
+"../resources/img/dangerous.png",
+"../resources/img/normal.png",
+
+"../resources/img/normal.png",
+"../resources/img/dangerous.png",
+"../resources/img/dangerous.png",
+"../resources/img/normal.png",
+
+"../resources/img/normal.png",
+"../resources/img/dangerous.png",
+"../resources/img/sobad.png",
+"../resources/img/normal.png"
+];
+
+var diaryGraphInfoArray=
+    [
+        new diaryGraphInfo(3, 1, 2, 3),
+        new diaryGraphInfo(5, 1, 3, 2),
+        new diaryGraphInfo(4, 2, 2, 2),
+        new diaryGraphInfo(4, 1.5, 0.5, 3),
+        
+        new diaryGraphInfo(0, 5, 5, 2 ),
+        new diaryGraphInfo(2, 1, 1, 4),
+        new diaryGraphInfo(3, 2, 2, 2),
+        new diaryGraphInfo(2, 2, 3, 3),
+
+        new diaryGraphInfo(3, 0.9, 2, 3),            
+        new diaryGraphInfo(3, 1.9, 2, 2),
+        new diaryGraphInfo(3, 1, 1, 2),
+        new diaryGraphInfo(0.9, 1, 2, 3),
+
+        new diaryGraphInfo(2, 4, 4, 3),
+        new diaryGraphInfo(4, 1, 2, 2),
+        new diaryGraphInfo(5, 0.5, 0.5, 1),
+        new diaryGraphInfo(1, 1, 2, 3)            
+    ];    			
+
+var diaryresult="";
+var result_show_flag=true;
+var diaryDescriptionArray=
+[
+"<p>영양소는 적당하지만,<Strong>변비</Strong> 증세가 있네요.<br>수분섭취와 스트레스를 줄여보세요.</p> ",
+"<p> 장건강의 이상으로 색깔이 변이될 수 있어요.<br><strong>악취</strong>가 나는 경우에는 진단을 받아 볼 필요가 있습니다.</p> ",
+"<p>치질처럼 항문 부근의<strong> 출혈</strong>이 있을수도 있습니다.<br>가까운 병원에서 진단을 받아보세요.</p> ",
+"<p><strong>영양부족</strong>으로 인한 색깔의 변이 혹은 변비의 전조증상입니다<br>충분한 영양과 수분을 섭취해주세요.</p> ",
+
+"<p> 색깔도 모양도 완벽해요.<br>당신의 대변 건강은 <strong>최고</strong>입니다.</p>",
+"<p>모양은 완벽!<strong>담즙</strong>의 흡수도에 따라 색이 흐려보일 수 있습니다.<br>색이 지속된다면 병원의 진찰을 받아보세요..</p>",
+"<p>모양은 완벽! 그러나 출혈 증상이 있습니다.<br><strong>항문</strong>질환을 의심해봐야 합니다.</p>",
+"<p>불규칙한 영양분의 흡수나, 먹은 음식에 따라 색깔이 노란빛을 띌 수 있습니다.</p>",
+
+"<p><strong>변비</strong> 증상이 있습니다.<br>채소나 과일의 섭취를 늘려주세요 !</p>",
+"<p>변비 증상과 장 속의 흡수문제는 <strong>큰 질환</strong>으로 이어질 수 있습니다.<br>가까운 병원에 진찰을 받아보세요.</p>",
+"<p>수분이 부족하여, 딱딱한 덩어리로 인한 <strong>출혈</strong> 등이 있을 수 있습니다<br>수시로 물과 섬유질을 섭취해 주세요</p>",
+"<p>규칙적인 영양분 섭취로 변비와 색을 개선해보세요.</p>",
+
+"<p>과식하셨나요? 휴식을 취하는 것이 필요해요.</p>",
+"<p>과한 알코올,지방 섭취의 원인일 수도 있습니다.<br>지속적인 증상이 나타난다면 병원에 진찰을 받아보세요.</p>",
+"<p>설사와 혈변은 염증성 질환일 수 도 있습니다.<br>가까운 병원에 빠르게 진찰을 받아보세요.</p>",
+"<p>수분이나 당분,지방을 지나치게 많이 먹어 장이 자극받은 상태입니다.<br>휴식이 필요해요.</p>"
+];
+
+var pos = 
+    function(lat, lng)
+    {
+    	this.lat = lat;
+    	this.lng = lng;    	
+    	return this;
+    };
+    
+var lat;
+var lng;
+var now_pos;
+function FindMyPos()
+{
+    // HTML5의 geolocation으로 사용할 수 있는지 확인합니다      
+    if(navigator.geolocation)
+    {       
+    	navigator.geolocation.getCurrentPosition
+    	(
+    	    function (position) 
+    	    {
+    			lat = position.coords.latitude;
+    			lng = position.coords.longitude;
+    			now_pos=new pos(lat.toFixed(6),lng.toFixed(6));
+
+    			console.log(now_pos.lat);
+    			console.log(now_pos.lng);
+    	    }
+    	)
+    	
+    }
+    else
+    {
+    	 console.log("불가능");
+    }
+}
+
     //글쓰기폼 확인
     function formCheck () {
         var title = document.getElementsByName('title');
@@ -45,63 +164,7 @@
         }
         return true;
     }
-    //대변 체크 결과
-    var diaryGraphInfo = function (stress, moisture, ingredient, status) {
-        this.stress = stress;
-        this.moisture = moisture;
-        this.ingredient = ingredient;
-        this.status = status
-        return this;
-    }
-
-    var diaryPictureArray = [ "../resources/img/normal.png",
-        "../resources/img/dangerous.png", "../resources/img/dangerous.png",
-        "../resources/img/normal.png",
-
-        "../resources/img/good.png", "../resources/img/dangerous.png",
-        "../resources/img/dangerous.png", "../resources/img/normal.png",
-
-        "../resources/img/normal.png", "../resources/img/dangerous.png",
-        "../resources/img/dangerous.png", "../resources/img/normal.png",
-
-        "../resources/img/normal.png", "../resources/img/dangerous.png",
-        "../resources/img/sobad.png", "../resources/img/normal.png" ];
-    
-    var diaryGraphInfoArray = [ new diaryGraphInfo(3, 1, 2, 3),
-        new diaryGraphInfo(5, 1, 3, 2), new diaryGraphInfo(4, 2, 2, 2),
-        new diaryGraphInfo(4, 1.5, 0.5, 3),
-
-        new diaryGraphInfo(0, 5, 5, 2), new diaryGraphInfo(2, 1, 1, 4),
-        new diaryGraphInfo(3, 2, 2, 2), new diaryGraphInfo(2, 2, 3, 3),
-
-        new diaryGraphInfo(3, 1, 2, 3), new diaryGraphInfo(3, 2, 2, 2),
-        new diaryGraphInfo(3, 1, 1, 2), new diaryGraphInfo(1, 1, 2, 3),
-
-        new diaryGraphInfo(2, 4, 4, 3), new diaryGraphInfo(4, 1, 2, 2),
-        new diaryGraphInfo(5, 0.5, 0.5, 1), new diaryGraphInfo(1, 1, 2, 3) ];
-    
-    var diaryresult = "";
-    var result_show_flag = true;
-    var diaryDescriptionArray = [
-        "<p>영양소는 적당하지만,<Strong>변비</Strong> 증세가 있네요.<br>수분섭취와 스트레스를 줄여보세요.</p> ",
-        "<p> 장건강의 이상으로 색깔이 변이될 수 있어요.<br><strong>악취</strong>가 나는 경우에는 진단을 받아 볼 필요가 있습니다.</p> ",
-        "<p>치질처럼 항문 부근의<strong> 출혈</strong>이 있을수도 있습니다.<br>가까운 병원에서 진단을 받아보세요.</p> ",
-        "<p><strong>영양부족</strong>으로 인한 색깔의 변이 혹은 변비의 전조증상입니다<br>충분한 영양과 수분을 섭취해주세요.</p> ",
-        
-        "<p> 색깔도 모양도 완벽해요.<br>당신의 대변 건강은 <strong>최고</strong>입니다.</p>",
-        "<p>모양은 완벽!<strong>담즙</strong>의 흡수도에 따라 색이 흐려보일 수 있습니다.<br>색이 지속된다면 병원의 진찰을 받아보세요..</p>",
-        "<p>모양은 완벽! 그러나 출혈 증상이 있습니다.<br><strong>항문</strong>질환을 의심해봐야 합니다.</p>",
-        "<p>불규칙한 영양분의 흡수나, 먹은 음식에 따라 색깔이 노란빛을 띌 수 있습니다.</p>",
-        
-        "<p><strong>변비</strong> 증상이 있습니다.<br>채소나 과일의 섭취를 늘려주세요 !</p>",
-        "<p>변비 증상과 장 속의 흡수문제는 <strong>큰 질환</strong>으로 이어질 수 있습니다.<br>가까운 병원에 진찰을 받아보세요.</p>",
-        "<p>수분이 부족하여, 딱딱한 덩어리로 인한 <strong>출혈</strong> 등이 있을 수 있습니다<br>수시로 물과 섬유질을 섭취해 주세요</p>",
-        "<p>규칙적인 영양분 섭취로 변비와 색을 개선해보세요.</p>",
-
-        "<p>과식하셨나요? 휴식을 취하는 것이 필요해요.</p>",
-        "<p>과한 알코올,지방 섭취의 원인일 수도 있습니다.<br>지속적인 증상이 나타난다면 병원에 진찰을 받아보세요.</p>",
-        "<p>설사와 혈변은 염증성 질환일 수 도 있습니다.<br>가까운 병원에 빠르게 진찰을 받아보세요.</p>",
-        "<p>수분이나 당분,지방을 지나치게 많이 먹어 장이 자극받은 상태입니다.<br>휴식이 필요해요.</p>" ];
+   
     $(function () {
         setTimeout(function () {
             window.myWidgetParam
@@ -297,269 +360,267 @@
     }
 
     var temp_info;
-    //type1의 진단결과
-    function clickFunc () {
-        diaryresult += $(this).attr("id");
-        console.log(diaryresult);
-        
-        if($(this).attr("id") == "type1" || $(this).attr("id") == "type2" || $(this)
-                .attr("id") == "type3" || $(this).attr("id") == "type4"){
-            $('#health-ment').text('STEP2.대변의 색깔을 선택해주세요');
-            $('#type1').attr('src', '../resources/img/brown.png');
-            $('#type2').attr('src', '../resources/img/gray.png');
-            $('#type3').attr('src', '../resources/img/red.png');
-            $('#type4').attr('src', '../resources/img/yellow.png');
-            $("#type1").attr('id', 'brown');
-            $("#type2").attr('id', 'gray');
-            $("#type3").attr('id', 'red');
-            $("#type4").attr('id', 'yellow');
-        }
-        else{
-            var temp_str;
-            var temp_src;
-            
-            $("#health_test_table").attr("hidden", "hidden");
-            $("#health-ment").attr("hidden", "hidden");
-            
-            if(diaryresult == "type1brown"){
-                temp_info = diaryGraphInfoArray[0];
-                temp_str = diaryDescriptionArray[0];
-                temp_src = diaryPictureArray[0];
-            }
-            
-            else if(diaryresult == "type1gray"){
-                temp_info = diaryGraphInfoArray[1];
-                temp_str = diaryDescriptionArray[1];
-                temp_src = diaryPictureArray[1];
-            }
-            else if(diaryresult == "type1red"){
-                temp_info = diaryGraphInfoArray[2];
-                temp_str = diaryDescriptionArray[2];
-                temp_src = diaryPictureArray[2];
-            }
-            else if(diaryresult == "type1yellow"){
-                temp_info = diaryGraphInfoArray[3];
-                temp_str = diaryDescriptionArray[3];
-                temp_src = diaryPictureArray[3];
-            }
-            else if(diaryresult == "type2brown"){
-                temp_info = diaryGraphInfoArray[4];
-                temp_str = diaryDescriptionArray[4];
-                temp_src = diaryPictureArray[4];
-            }
-            else if(diaryresult == "type2gray"){
-                temp_info = diaryGraphInfoArray[5];
-                temp_str = diaryDescriptionArray[5];
-                temp_src = diaryPictureArray[5];
-            }
-            else if(diaryresult == "type2red"){
-                temp_info = diaryGraphInfoArray[6];
-                temp_str = diaryDescriptionArray[6];
-                temp_src = diaryPictureArray[6];
-            }
-            else if(diaryresult == "type2yellow"){
-                temp_info = diaryGraphInfoArray[7];
-                temp_str = diaryDescriptionArray[7];
-                temp_src = diaryPictureArray[7];
-            }
-            else if(diaryresult == "type3brown"){
-                temp_info = diaryGraphInfoArray[8];
-                temp_str = diaryDescriptionArray[8];
-                temp_src = diaryPictureArray[8];
-            }
-            else if(diaryresult == "type3gray"){
-                temp_info = diaryGraphInfoArray[9];
-                temp_str = diaryDescriptionArray[9];
-                temp_src = diaryPictureArray[9];
-            }
-            else if(diaryresult == "type3red"){
-                temp_info = diaryGraphInfoArray[10];
-                temp_str = diaryDescriptionArray[10];
-                temp_src = diaryPictureArray[10];
-            }
-            else if(diaryresult == "type3yellow"){
-                temp_info = diaryGraphInfoArray[11];
-                temp_str = diaryDescriptionArray[11];
-                temp_src = diaryPictureArray[11];
-            }
-            else if(diaryresult == "type4brown"){
-                temp_info = diaryGraphInfoArray[12];
-                temp_str = diaryDescriptionArray[12];
-                temp_src = diaryPictureArray[12];
-            }
-            else if(diaryresult == "type4gray"){
-                temp_info = diaryGraphInfoArray[13];
-                temp_str = diaryDescriptionArray[13];
-                temp_src = diaryPictureArray[13];
-            }
-            else if(diaryresult == "type4red"){
-                temp_info = diaryGraphInfoArray[14];
-                temp_str = diaryDescriptionArray[14];
-                temp_src = diaryPictureArray[14];
-            }
-            else if(diaryresult == "type4yellow"){
-                temp_info = diaryGraphInfoArray[15];
-                temp_str = diaryDescriptionArray[15];
-                temp_src = diaryPictureArray[15];
-            }
-            
-            if(result_show_flag){
-                console.log("계속 돈다");
-                var ctx = document.getElementById('myChart').getContext('2d');
-                var myChart = new Chart(ctx, {
-                    type : 'line',
-                    data : {
-                        labels : [ '스트레스', '수분', '영양소' ],
-                        datasets : [ {
-                            label : '',
-                            data : [ temp_info.stress, temp_info.moisture,
-                                temp_info.ingredient ],
-                            backgroundColor : [ 'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(0, 255, 0, 0.2)' ],
-                            borderColor : [ 'rgba(255, 99, 132, 1)',
-                                'rgba(54, 162, 235, 1)', 'rgba(0, 255, 0, 1)' ],
-                            borderWidth : 1
-                        } ]
-                    },
-                    options : {
-                        
-                        legend : {
-                            showLines : false,
-                            display : false
-                        },
-                        scales : {
-                            yAxes : [ {
-                                ticks : {
-                                    beginAtZero : true,
-                                    display : false
-                                
-                                },
-                                gridLines : {
-                                    lineWidth : 0
-                                
-                                }
-                            } ]
-                        }
-                    }
-                });
-                result_show_flag = false;
-            }
-            
-            $("#result_picture").attr("src", temp_src);
-            $("#result_description").html(temp_str);
-            $("input[name='save-data']").removeAttr("hidden", "hidden");
-            $("#result_table").removeAttr("hidden", "hidden");
-            $("#myChart").removeAttr("hidden", "hidden");
-        }
-    } //요기가 함수 끝
+  //type1의 진단결과
+  function clickFunc()
+  {
+  	diaryresult += $(this).attr("id");		
+  	console.log(diaryresult);
+  	
+  	if($(this).attr("id")=="type1"||$(this).attr("id")=="type2"||$(this).attr("id")=="type3"||$(this).attr("id")=="type4")
+  	{
+  		$('#health-ment').text('STEP2.대변의 색깔을 선택해주세요');
+  		$('#type1').attr('src','../resources/img/brown.png');
+  		$('#type2').attr('src','../resources/img/gray.png');
+  		$('#type3').attr('src','../resources/img/red.png');
+  		$('#type4').attr('src','../resources/img/yellow.png');
+  		$("#type1").attr('id','brown'); 
+  		$("#type2").attr('id','gray'); 
+  		$("#type3").attr('id','red'); 
+  		$("#type4").attr('id','yellow'); 
+  	}
+  	else
+  	{			
+  		var temp_str;
+  		var temp_src;
+  		
+  		$("#health_test_table").attr("hidden","hidden");
+  		$("#health-ment").attr("hidden","hidden");
+  		
+  		if(diaryresult=="type1brown")
+  		{
+  			temp_info=diaryGraphInfoArray[0];
+  			temp_str=diaryDescriptionArray[0];
+  			temp_src=diaryPictureArray[0];								
+  	     }
+
+  		else if(diaryresult=="type1gray")
+  		{
+  			temp_info=diaryGraphInfoArray[1];
+  			temp_str=diaryDescriptionArray[1];
+  			temp_src=diaryPictureArray[1];				
+  		}
+  		else if(diaryresult=="type1red")
+  		{
+  			temp_info=diaryGraphInfoArray[2];
+  			temp_str=diaryDescriptionArray[2];
+  			temp_src=diaryPictureArray[2];				
+  		}	    	    
+  		else if(diaryresult=="type1yellow")
+  		{
+  			temp_info=diaryGraphInfoArray[3];
+  			temp_str=diaryDescriptionArray[3];
+  			temp_src=diaryPictureArray[3];				
+  		}	    	    
+  		else if(diaryresult=="type2brown")
+  		{
+  			temp_info=diaryGraphInfoArray[4];
+  			temp_str=diaryDescriptionArray[4];
+  			temp_src=diaryPictureArray[4];				
+  		}
+  		else if(diaryresult=="type2gray")
+  		{
+  			temp_info=diaryGraphInfoArray[5];
+  			temp_str=diaryDescriptionArray[5];
+  			temp_src=diaryPictureArray[5];				
+  		}
+  		else if(diaryresult=="type2red")
+  		{
+  			temp_info=diaryGraphInfoArray[6];
+  			temp_str=diaryDescriptionArray[6];
+  			temp_src=diaryPictureArray[6];				
+  		}	    	    
+  		else if(diaryresult=="type2yellow")
+  		{
+  			temp_info=diaryGraphInfoArray[7];
+  			temp_str=diaryDescriptionArray[7];
+  			temp_src=diaryPictureArray[7];				
+  		}	    	    
+  		else if(diaryresult=="type3brown")
+  		{
+  			temp_info=diaryGraphInfoArray[8];
+  			temp_str=diaryDescriptionArray[8];
+  			temp_src=diaryPictureArray[8];				
+  		}
+  		else if(diaryresult=="type3gray")
+  		{
+  			temp_info=diaryGraphInfoArray[9];
+  			temp_str=diaryDescriptionArray[9];
+  			temp_src=diaryPictureArray[9];				
+  		}
+  		else if(diaryresult=="type3red")
+  		{
+  			temp_info=diaryGraphInfoArray[10];
+  			temp_str=diaryDescriptionArray[10];
+  			temp_src=diaryPictureArray[10];				
+  		}	    	    
+  		else if(diaryresult=="type3yellow")
+  		{
+  			temp_info=diaryGraphInfoArray[11];
+  			temp_str=diaryDescriptionArray[11];
+  			temp_src=diaryPictureArray[11];				
+  		}	    	    
+  		else if(diaryresult=="type4brown")
+  		{
+  			temp_info=diaryGraphInfoArray[12];
+  			temp_str=diaryDescriptionArray[12];
+  			temp_src=diaryPictureArray[12];				
+  		}
+  		else if(diaryresult=="type4gray")
+  		{
+  			temp_info=diaryGraphInfoArray[13];
+  			temp_str=diaryDescriptionArray[13];
+  			temp_src=diaryPictureArray[13];				
+  		}
+  		else if(diaryresult=="type4red")
+  		{
+  			temp_info=diaryGraphInfoArray[14];
+  			temp_str=diaryDescriptionArray[14];
+  			temp_src=diaryPictureArray[14];				
+  		}	    	    
+  		else if(diaryresult=="type4yellow")
+  		{
+  			temp_info=diaryGraphInfoArray[15];
+  			temp_str=diaryDescriptionArray[15];
+  			temp_src=diaryPictureArray[15];
+  		}	 	    
+  		
+  		$("#result_picture").attr("src",temp_src);
+  		$("#result_description").html(temp_str);			
+  		$("input[name='save-data']").removeAttr("hidden","hidden");
+  		$("#result_table").removeAttr("hidden","hidden");
+  		$("#myChart").removeAttr("hidden","hidden");
+  	}		
+  } //요기가 함수 끝
     
-    function DiaryShow () {
-        console.log("눌렀다");
-        diaryresult = "";
-        result_show_flag = true;
-        $("#hopital_table").attr("hidden", "hidden");
-        $("input[name='save-data']").attr("hidden", "hidden");
-        $("#myChart").attr("hidden", "hidden");
-        $("#result_table").attr("hidden", "hidden");
-        
-        $("#health_test_table").removeAttr("hidden", "hidden");
-        $("#health-ment").html("STEP1.대변의 모양을 선택해주세요");
-        
-        $("#health-ment").removeAttr("hidden", "hidden");
-        
-        $("#health-ment").removeAttr("hidden", "hidden");
-        $('#brown').attr('src', '../resources/img/type1_1.png');
-        $('#gray').attr('src', '../resources/img/type2_1.png');
-        $('#red').attr('src', '../resources/img/type3_1.png');
-        $('#yellow').attr('src', '../resources/img/type4_1.png');
-        
-        $('#brown').attr('id', 'type1');
-        $('#gray').attr('id', 'type2');
-        $('#red').attr('id', 'type3');
-        $('#yellow').attr('id', 'type4');
-        
-        $("#diary-container").show();
-        $("#diary").fadeIn();
-    }
+  function DiaryShow()
+  { 	
+      console.log("눌렀다");    
+      FindMyPos();
+  	 diaryresult="";
+  	 result_show_flag=true;
+  	 $("#hopital_table").attr("hidden","hidden");
+  	 $("input[name='save-data']").attr("hidden","hidden");
+  	 $("#myChart").attr("hidden","hidden");
+  	 $("#result_table").attr("hidden","hidden");
+  	
+  	 $("#health_test_table").removeAttr("hidden","hidden");
+  	 $("#health-ment").html("STEP1.대변의 모양을 선택해주세요");
 
-    function SaveTest () {
-        $.ajax({
-            url : "<c:url value="/checkAvailSend"/>",
-            type : "get",
-            dataType : "text",
-            success : function (flag) {
-                if(flag == "success"){
-                    InsertResult();
-                }
-                else if(flag == "error"){
-                    alert("로그인을 해야 사용할 수 있는 기능입니다.\n로그인 페이지로 이동합니다.");
-                    location.href = "<c:url value='/member/login'/>";
-                }
-            },
-            error : function (e) {
-                alert(Json.Stringify(e));
-            }
-        });
-    }
+  	 $("#health-ment").removeAttr("hidden","hidden");
+  	
+  	 $("#health-ment").removeAttr("hidden","hidden");
+  	 $('#brown').attr('src','../resources/img/type1_1.png');
+  	 $('#gray').attr('src','../resources/img/type2_1.png');
+  	 $('#red').attr('src','../resources/img/type3_1.png');
+  	 $('#yellow').attr('src','../resources/img/type4_1.png');
 
-    function ShowHospitalList () {
-        $
-                .ajax({
-                    url : "<c:url value="/toilet/receive_near_hospital"/>",
-                    type : "post",
-                    data : {
-                        lat : pos.lat.toFixed(6),
-                        lng : pos.lng.toFixed(6)
-                    },
-                    success : function (list) {
-                        $("#result_table").attr("hidden", "hidden");
-                        $("#myChart").attr("hidden", "hidden");
-                        $("input[name='save-data']").attr("hidden", "hidden");
-                        var contents = "";
-                        var list_temp = list;
-                        for(var i = 0; i < 5; i++){
-                            console.log(list_temp[i].dutyName);
-                            
-                            for(var i = 0; i < 5; i++){
-                                contents += '<tr>';
-                                contents += '<td style="float:left">' + ( i + 1 ) + '</td>';
-                                contents += '</tr>';
-                                
-                                contents += '<tr style="float: left;">';
-                                contents += '<td>병원 이름 : ' + list_temp[i].dutyName + ' 전화번호 : ' + list_temp[i].dutyTel1 + '</td>';
-                                contents += '</tr>';
-                                
-                                contents += '<tr style="float: left;">';
-                                contents += '<td style="width:100%">평일 개시시간 : ' + list_temp[i].dutyTimeS + ' 평일 종료시간 : ' + list_temp[i].dutyTimeC + '</td>';
-                                contents += '</tr>';
-                                
-                                contents += '<tr style="float:left;">';
-                                contents += '<td style="font-size:15px;">' + list_temp[i].dutyAddr + '</td>';
-                                contents += '</tr>';
-                            }
-                            
-                            $("#hopital_table").html(contents);
-                            $("#hopital_table").removeAttr("hidden", "hidden");
-                            
-                            /* 						<tr style="float: left;">
-                             <td>병원 이름 : 최평락한의원  전화번호 : 02-501-1488</td>															
-                             </tr>
-                             <tr style="float: left;">							
-                             <td>평일 개시시간 : 0930,  평일 종료시간 : 1830</td>														
-                             </tr>	
-                             <tr style="float: left;border-bottom: 1px solid;">													
-                             <td>서울특별시 강남구 영동대로 309, 2층 (대치동, 준오빌딩 2층)</td>		
-                             <td><br></td>													
-                             </tr>								 */
+  	 $('#brown').attr('id','type1');
+  	 $('#gray').attr('id','type2');
+  	 $('#red').attr('id','type3');
+  	 $('#yellow').attr('id','type4');		
+  	 
+  	 $("#diary-container").show();
+  	 $("#diary").fadeIn(); 
+  }
 
-                        }
-                    },
-                    error : function (e) {
-                        
-                    }
-                });
-    }
+  function SaveTest()
+  {
+  	$.ajax
+  	(
+  		{
+  			url:"<c:url value="/checkAvailSend"/>",
+  			type:"get",				
+  			dataType:"text",
+  			success:
+  				function(flag)
+  				{
+  					if(flag=="success")
+  					{
+  						InsertResult();
+  					}
+  					else if(flag=="error")
+  					{
+  						alert("로그인을 해야 사용할 수 있는 기능입니다.\n로그인 페이지로 이동합니다.");
+  						location.href="<c:url value='/member/login'/>";
+  					}						
+  				}
+  			,
+  			error:
+  				function(e)
+  				{
+  					alert(Json.Stringify(e));
+  				}
+  		}
+  	);	    	
+  }
+
+  function ShowHospitalList()
+  {	
+  	$.ajax
+  	(
+  		{
+  			url:"<c:url value="/toilet/receive_near_hospital"/>",
+  			type:"post",				
+  			data:{
+  				lat : now_pos.lat,
+      			lng : now_pos.lng
+      		},
+  			success:
+  				function(list)
+  				{
+  					$("#result_table").attr("hidden","hidden");
+  					$("#myChart").attr("hidden","hidden");	
+  					$("input[name='save-data']").attr("hidden","hidden");	
+  					var contents = "";
+  					var list_temp = list;
+
+  					if(list_temp.length==0)
+  					{
+  						contents+='<tr>';
+  						contents+='<th scope="col" style="text-align: left; font-size:14px;">근처에 병원이 존재하지 않습니다.</th>';
+  						contents+='</tr>';	
+  						return;
+  					}
+  					
+  					
+  					if(list_temp.length>5)
+  					{
+  						for(var i =0;i<5;i++)
+  						{
+  							contents+='<tr>';
+  							contents+='<th scope="col" style="text-align: left; font-size:14px;">'+(i+1) +'. 병원 이름 : ' + list_temp[i].dutyName + ' 전화번호 : ' + list_temp[i].dutyTel1+'<br>';
+  							contents+='평일 개시시간 : '+ list_temp[i].dutyTimeS + ' 평일 종료시간 : ' + list_temp[i].dutyTimeC +'<br>';
+  							contents+= '주소: '+ list_temp[i].dutyAddr;
+  							contents+='</th>';							
+  							contents+='</tr>';							
+  						}
+  					}
+  					else
+  					{
+  						for(var i =0;i<list_temp.length;i++)
+  						{
+  							contents+='<tr>';
+  							contents+='<th scope="col" style="text-align: left; font-size:14px;">'+(i+1) +'. 병원 이름 : ' + list_temp[i].dutyName + ' 전화번호 : ' + list_temp[i].dutyTel1+'<br>';
+  							contents+='평일 개시시간 : '+ list_temp[i].dutyTimeS + ' 평일 종료시간 : ' + list_temp[i].dutyTimeC +'<br>';
+  							contents+= '주소: '+ list_temp[i].dutyAddr;
+  							contents+='</th>';							
+  							contents+='</tr>';							
+  						}
+  					}
+  					
+  					$("#hopital_table").html(contents);
+  					$("#hopital_table").removeAttr("hidden","hidden");			
+  					
+  				}
+  			,
+  			error:
+  				function(e)
+  				{				
+  					
+  				}
+  		}
+  	);	    	
+  }
 
     function InsertResult () {
         $

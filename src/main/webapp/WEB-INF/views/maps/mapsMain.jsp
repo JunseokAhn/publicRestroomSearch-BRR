@@ -25,6 +25,8 @@
 <link rel="stylesheet" href="../resources/css/hover.css">
 
 <script type="text/javascript">
+	
+
 		var map, pos, marker, toiletMarker, marker_s, marker_e, marker_p1, marker_p2, title, id, label, endX, endY, polyline_, myWindow, targetWindow, destinyWindow, realTime;
 		var tDistance, tTime;
 		var shortestDistance, highestRating, highestClean, highestSmooth;
@@ -100,27 +102,57 @@
     var diaryresult="";
     var result_show_flag=true;
     var diaryDescriptionArray=
-    [
-    "<p>영양소는 적당하지만,<Strong>변비</Strong> 증세가 있네요.<br>수분섭취와 스트레스를 줄여보세요.</p> ",
-    "<p> 장건강의 이상으로 색깔이 변이될 수 있어요.<br><strong>악취</strong>가 나는 경우에는 진단을 받아 볼 필요가 있습니다.</p> ",
-    "<p>치질처럼 항문 부근의<strong> 출혈</strong>이 있을수도 있습니다.<br>가까운 병원에서 진단을 받아보세요.</p> ",
-    "<p><strong>영양부족</strong>으로 인한 색깔의 변이 혹은 변비의 전조증상입니다<br>충분한 영양과 수분을 섭취해주세요.</p> ",
+    	[
+    	"<p>영양소는 적당하지만,<Strong>변비</Strong> 증세가 있네요.<br>수분섭취와 스트레스를 줄여보세요.</p> ",
+    	"<p> 장건강의 이상으로 색깔이 변이될 수 있어요.<br><strong>악취</strong>가 나는 경우에는 진단을 받아 볼 필요가 있습니다.</p> ",
+    	"<p>치질처럼 항문 부근의<strong> 출혈</strong>이 있을수도 있습니다.<br>가까운 병원에서 진단을 받아보세요.</p> ",
+    	"<p><strong>영양부족</strong>으로 인한 색깔의 변이 혹은 변비의 전조증상입니다<br>충분한 영양과 수분을 섭취해주세요.</p> ",
+
+    	"<p> 색깔도 모양도 완벽해요.<br>당신의 대변 건강은 <strong>최고</strong>입니다.</p>",
+    	"<p>모양은 완벽!<strong>담즙</strong>의 흡수도에 따라 색이 흐려보일 수 있습니다.<br>색이 지속된다면 병원의 진찰을 받아보세요..</p>",
+    	"<p>모양은 완벽! 그러나 출혈 증상이 있습니다.<br><strong>항문</strong>질환을 의심해봐야 합니다.</p>",
+    	"<p>불규칙한 영양분의 흡수나, 먹은 음식에 따라 색깔이 노란빛을 띌 수 있습니다.</p>",
+
+    	"<p><strong>변비</strong> 증상이 있습니다.<br>채소나 과일의 섭취를 늘려주세요 !</p>",
+    	"<p>변비 증상과 장 속의 흡수문제는 <strong>큰 질환</strong>으로 이어질 수 있습니다.<br>가까운 병원에 진찰을 받아보세요.</p>",
+    	"<p>수분이 부족하여, 딱딱한 덩어리로 인한 <strong>출혈</strong> 등이 있을 수 있습니다<br>수시로 물과 섬유질을 섭취해 주세요</p>",
+    	"<p>규칙적인 영양분 섭취로 변비와 색을 개선해보세요.</p>",
+
+    	"<p>과식하셨나요? 휴식을 취하는 것이 필요해요.</p>",
+    	"<p>과한 알코올,지방 섭취의 원인일 수도 있습니다.<br>지속적인 증상이 나타난다면 병원에 진찰을 받아보세요.</p>",
+    	"<p>설사와 혈변은 염증성 질환일 수 도 있습니다.<br>가까운 병원에 빠르게 진찰을 받아보세요.</p>",
+    	"<p>수분이나 당분,지방을 지나치게 많이 먹어 장이 자극받은 상태입니다.<br>휴식이 필요해요.</p>"
+    	];
+
+    function download()
+    {
+       $.ajax
+        ({
+            url:"<c:url value="/checkRecv"/>",
+            dataType:"text",
+            success:
+                function(flag)
+                {
+                	if(flag=="do_not_need")
+                    {
+                        alert("최신 데이터 입니다. 다운로드가 필요없습니다.");
+                    }
+                	else if(flag=="need")
+                    {
+                		alert("데이터가 부족합니다, 다운로드가 필요합니다.");
+                		location.href="<c:url value='/toilet/toiletRecv'/>";
+                    }
+                	else return;
+                }
+            ,
+       		error:
+           		function()
+           		{
+           			console.log("다운로드 함수 실행 실패");
+           		}
+        });
+    }
     
-    "<p> 색깔도 모양도 완벽해요.<br>당신의 대변 건강은 <strong>최고</strong>입니다.</p>",
-    "<p>모양은 완벽!<strong>담즙</strong>의 흡수도에 따라 색이 흐려보일 수 있습니다.<br>색이 지속된다면 병원의 진찰을 받아보세요..</p>",
-    "<p>모양은 완벽! 그러나 출혈 증상이 있습니다.<br><strong>항문</strong>질환을 의심해봐야 합니다.</p>",
-    "<p>불규칙한 영양분의 흡수나, 먹은 음식에 따라 색깔이 노란빛을 띌 수 있습니다.</p>",
-    
-    "<p><strong>변비</strong> 증상이 있습니다.<br>채소나 과일의 섭취를 늘려주세요 !</p>",
-    "<p>변비 증상과 장 속의 흡수문제는 <strong>큰 질환</strong>으로 이어질 수 있습니다.<br>가까운 병원에 진찰을 받아보세요.</p>",
-    "<p>수분이 부족하여, 딱딱한 덩어리로 인한 <strong>출혈</strong> 등이 있을 수 있습니다<br>수시로 물과 섬유질을 섭취해 주세요</p>",
-    "<p>규칙적인 영양분 섭취로 변비와 색을 개선해보세요.</p>",
-    
-    "<p>과식하셨나요? 휴식을 취하는 것이 필요해요.</p>",
-    "<p>과한 알코올,지방 섭취의 원인일 수도 있습니다.<br>지속적인 증상이 나타난다면 병원에 진찰을 받아보세요.</p>",
-    "<p>설사와 혈변은 염증성 질환일 수 도 있습니다.<br>가까운 병원에 빠르게 진찰을 받아보세요.</p>",
-    "<p>수분이나 당분,지방을 지나치게 많이 먹어 장이 자극받은 상태입니다.<br>휴식이 필요해요.</p>"
-    ];
     function hover(){
         //별 초기화
         $("#star5").attr("src", "<c:url value='/resources/img/starOff.png'/>");
@@ -253,6 +285,7 @@
     }
     
     $(function () {
+        
         setTimeout(function(){
             window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = []; 
     		window.myWidgetParam.push({id: 18,cityid: '1835848',appid: 'c08b376c4c1ca3b5e593c4991d91eb3c',
@@ -261,6 +294,14 @@
     			script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
     				var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();
         },1000)
+    	
+    	console.log("여기 안에서는? : "+ ${sessionScope.DownFlag});
+    	if(${sessionScope.DownFlag})
+        {
+    		download();   		
+        }
+    	
+    	
     	
     	// type모양별 체크시 각 함수를 다르게 지정해서 건강진단을 함    
     	$("#type1").on
@@ -1691,8 +1732,7 @@ function reviewRefresh(lng, lat){
 
 	
     function DiaryShow()
-    { 
-        console.log("눌렀다");        
+    {     	      
  	  	diaryresult="";
 		result_show_flag=true;
 		$("#hopital_table").attr("hidden","hidden");
@@ -1772,7 +1812,7 @@ function ShowHospitalList()
 					$("input[name='save-data']").attr("hidden","hidden");	
 					var contents = "";
 					var list_temp = list;
-
+					
 					if(list_temp.length==0)
 					{
 						contents+='<tr>';
@@ -1781,16 +1821,30 @@ function ShowHospitalList()
 						return;
 					}
 					
-					
-					for(var i =0;i<5;i++)
+					if(list_temp.length>5)
 					{
-						contents+='<tr>';
-						contents+='<th scope="col" style="text-align: left; font-size:14px;">'+(i+1) +'. 병원 이름 : ' + list_temp[i].dutyName + ' 전화번호 : ' + list_temp[i].dutyTel1+'<br>';
-						contents+='평일 개시시간 : '+ list_temp[i].dutyTimeS + ' 평일 종료시간 : ' + list_temp[i].dutyTimeC +'<br>';
-						contents+= '주소: '+ list_temp[i].dutyAddr;
-						contents+='</th>';							
-						contents+='</tr>';							
+						for(var i =0;i<5;i++)
+						{
+							contents+='<tr>';
+							contents+='<th scope="col" style="text-align: left; font-size:14px;">'+(i+1) +'. 병원 이름 : ' + list_temp[i].dutyName + ' 전화번호 : ' + list_temp[i].dutyTel1+'<br>';
+							contents+='평일 개시시간 : '+ list_temp[i].dutyTimeS + ' 평일 종료시간 : ' + list_temp[i].dutyTimeC +'<br>';
+							contents+= '주소: '+ list_temp[i].dutyAddr;
+							contents+='</th>';							
+							contents+='</tr>';							
+						}
 					}
+					else
+					{
+						for(var i =0;i<list_temp.length;i++)
+						{
+							contents+='<tr>';
+							contents+='<th scope="col" style="text-align: left; font-size:14px;">'+(i+1) +'. 병원 이름 : ' + list_temp[i].dutyName + ' 전화번호 : ' + list_temp[i].dutyTel1+'<br>';
+							contents+='평일 개시시간 : '+ list_temp[i].dutyTimeS + ' 평일 종료시간 : ' + list_temp[i].dutyTimeC +'<br>';
+							contents+= '주소: '+ list_temp[i].dutyAddr;
+							contents+='</th>';							
+							contents+='</tr>';							
+						}
+					}					
 					
 					$("#hopital_table").html(contents);
 					$("#hopital_table").removeAttr("hidden","hidden");			
@@ -1965,7 +2019,6 @@ function InsertResult()
 
 
 	<div id="diary-container" style="display: none;"></div>
-
 	<div id="diary" class="col-xl-4" style="display: none;">
 		<form action="">
 			<div class="card shadow">
@@ -1973,10 +2026,9 @@ function InsertResult()
 					<div class="row align-items-center">
 						<div class="col">
 							<h2 class="mb-0" style="display: inline-block">Health Test</h2>
-
-							<input id="x-button" name="feed-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#diary").hide(), $("#diary-container").fadeOut()'> <input id="register" hidden="hidden" name="save-data" class="btn btn-sm btn-primary" type="button" value="Save Data" onclick="SaveTest()"> <br>
+							<input id="x-button" name="feed-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#diary").hide(), $("#diary-container").fadeOut()'> 
+							<input id="register" hidden="hidden" name="save-data" class="btn btn-sm btn-primary" type="button" value="Save Data" onclick="SaveTest()"> <br>
 							<h4 id="health-ment" class="mb-0" style="display: inline-block">STEP1.대변의 모양을 선택해주세요</h4>
-
 						</div>
 					</div>
 					<div class="card-body2">
@@ -1991,8 +2043,7 @@ function InsertResult()
 							</tr>
 						</table>
 
-						<table id="hopital_table" class="table align-items-center table-flush" hidden="hidden">
-
+						<table id="hopital_table" class="table align-items-center table-flush" hidden="hidden" >
 						</table>
 
 						<!-- 테스트 목록 출력 -->

@@ -10,37 +10,48 @@
 <title>화장실이 급할땐? - 부르르</title>
 
 
-
-
+<script src="<c:url value="/resources/js/jquery-3.4.1.js/"/>"></script>
+<script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx4afb1a7c147445528d8e83f3f1d4fea0"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+<!-- Favicon -->
 <link href="<c:url value="/resources/assets/img/brand/favicon.png"/>" rel="icon" type="image/png">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+<!-- Icons -->
+<link href="<c:url value="/resources/assets/js/plugins/nucleo/css/nucleo.css"/>" rel="stylesheet" />
+<link href="<c:url value="/resources/assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css"/>" rel="stylesheet" />
+<!-- CSS Files -->
+<link href="<c:url value="/resources/css/boardStyle.css"/>" rel="stylesheet" />
+<link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
+
+<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../resources/css/hover.css" >
+
+<%-- <link href="<c:url value="/resources/assets/img/brand/favicon.png"/>" rel="icon" type="image/png">
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
-<!-- <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  	 -->
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" /> 
 <link rel="stylesheet" href="../resources/css/hover.css">	
-<!-- <link href="/resources/css/main.css" rel="stylesheet" type="text/css"> -->
 <link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
 <link href="<c:url value="/resources/css/boardStyle.css"/>" rel="stylesheet" />
 <link href="<c:url value="/resources/assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css"/>" rel="stylesheet" />
 <link href="<c:url value="/resources/assets/js/plugins/nucleo/css/nucleo.css"/>" rel="stylesheet" /> 
 
 
-
-<!-- <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script> -->
-<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> -->
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script src="<c:url value="/resources/js/jquery-3.4.1.js/"/>"></script>
-<!-- <script src="/resources/js/board.js" ></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script> --%>
 
 <!--달력 -->
 <script type="text/javaScript">
 
-var today_info;
-var date_list;
+var today_info;//날짜 기준
+var date_list;//일수 리스트
 
-var test_result_list;
-var test_result_index=0;
+var test_result_list;//테스트 결과 리스트
+var test_result_index=0;//날짜랑 같이 출력 할 때 테스트 결과 리스트 인덱스
 
-var user_id;
+var user_id;//유저 아이디
 
 //대변 체크 결과
  var temp_info;
@@ -165,7 +176,7 @@ function FindMyPos()
 function clickFunc()
 {
 	diaryresult += $(this).attr("id");		
-	console.log(diaryresult);
+	console.log(diaryresult);	
 	
 	if($(this).attr("id")=="type1"||$(this).attr("id")=="type2"||$(this).attr("id")=="type3"||$(this).attr("id")=="type4")
 	{
@@ -288,9 +299,11 @@ function clickFunc()
 	     if(result_show_flag)
 		{
 			console.log("계속 돈다");
-			console.log(temp_info.stress,temp_info.moisture ,temp_info.ingredient)
-	    	 var ctx = document.getElementById('myChart').getContext('2d');
-				var myChart = new Chart(ctx, {
+			console.log(temp_info.stress,temp_info.moisture ,temp_info.ingredient);	    	
+	    	
+    		var ctx = document.getElementById('myChart').getContext('2d');    				
+			   	
+			var myChart = new Chart(ctx, {
 				    type: 'line',
 				    data: {
 				        labels: ['스트레스', '수분', '영양소'],
@@ -334,6 +347,7 @@ function clickFunc()
 				        }
 				    }
 				}); 
+				
 				result_show_flag=false;
 		}
 		$("#result_picture").attr("src",temp_src);
@@ -344,8 +358,15 @@ function clickFunc()
 	}		
 } //요기가 함수 끝
 
+function DiaryClose()
+{	
+	$("#diary").hide();
+	$("#diary-container").fadeOut();
+}
+
 function DiaryShow()
-{ 
+{ 	
+	FindMyPos();
     console.log("눌렀다");        
 	diaryresult="";
 	result_show_flag=true;
@@ -425,8 +446,7 @@ function InsertResult()
 					}					
 					else if(flag=="warning")
 					{
-						alert("데이터를 저장했지만 건강이 위험한 상태입니다.\n 반경 1km 병원의 위치를 알려드리겠습니다.");
-						FindMyPos();
+						alert("데이터를 저장했지만 건강이 위험한 상태입니다.\n 반경 1km 병원의 위치를 알려드리겠습니다.");						
 						ShowHospitalList();												
 					}
 					else if(flag=="success")
@@ -480,14 +500,29 @@ function ShowHospitalList()
 					}
 					
 					
-					for(var i =0;i<5;i++)
+					if(list_temp.length>5)
 					{
-						contents+='<tr>';
-						contents+='<th scope="col" style="text-align: left; font-size:14px;">'+(i+1) +'. 병원 이름 : ' + list_temp[i].dutyName + ' 전화번호 : ' + list_temp[i].dutyTel1+'<br>';
-						contents+='평일 개시시간 : '+ list_temp[i].dutyTimeS + ' 평일 종료시간 : ' + list_temp[i].dutyTimeC +'<br>';
-						contents+= '주소: '+ list_temp[i].dutyAddr;
-						contents+='</th>';							
-						contents+='</tr>';							
+						for(var i =0;i<5;i++)
+						{
+							contents+='<tr>';
+							contents+='<th scope="col" style="text-align: left; font-size:14px;">'+(i+1) +'. 병원 이름 : ' + list_temp[i].dutyName + ' 전화번호 : ' + list_temp[i].dutyTel1+'<br>';
+							contents+='평일 개시시간 : '+ list_temp[i].dutyTimeS + ' 평일 종료시간 : ' + list_temp[i].dutyTimeC +'<br>';
+							contents+= '주소: '+ list_temp[i].dutyAddr;
+							contents+='</th>';							
+							contents+='</tr>';							
+						}
+					}
+					else
+					{
+						for(var i =0;i<list_temp.length;i++)
+						{
+							contents+='<tr>';
+							contents+='<th scope="col" style="text-align: left; font-size:14px;">'+(i+1) +'. 병원 이름 : ' + list_temp[i].dutyName + ' 전화번호 : ' + list_temp[i].dutyTel1+'<br>';
+							contents+='평일 개시시간 : '+ list_temp[i].dutyTimeS + ' 평일 종료시간 : ' + list_temp[i].dutyTimeC +'<br>';
+							contents+= '주소: '+ list_temp[i].dutyAddr;
+							contents+='</th>';							
+							contents+='</tr>';							
+						}
 					}
 					
 					$("#hopital_table").html(contents);
@@ -719,10 +754,12 @@ function Init(input1, input2)
 
 function ShowResult(stress,moisture,ingredient,status)
 {		
+	
 	$("input[name='save-data']").attr("hidden","hidden");
 	$("#myChart").attr("hidden","hidden");
 	$("#health-ment").attr("hidden","hidden");
 	$("#health_test_table").attr("hidden","hidden");
+	$("#hopital_table").attr("hidden","hidden");
 	
 	var temp_str;
 	var temp_pic;
@@ -1273,14 +1310,14 @@ function Prefer() {
 						<div class="col">
 							<h2 class="mb-0" style="display: inline-block">Health Test</h2>
 
-							<input id="x-button" name="feed-x-button" class="btn btn-sm btn-primary" value="X" onclick='$("#diary").hide(), $("#diary-container").fadeOut()'> <input id="register" hidden="hidden" name="save-data" class="btn btn-sm btn-primary" type="button" value="Save Data" onclick="SaveTest()"> <br>
+							<input id="x-button" name="feed-x-button" class="btn btn-sm btn-primary" value="X" onclick='javascript:DiaryClose()'> <input id="register" hidden="hidden" name="save-data" class="btn btn-sm btn-primary" type="button" value="Save Data" onclick="SaveTest()"> <br>
 							<h4 id="health-ment" class="mb-0" style="display: inline-block">STEP1.대변의 모양을 선택해주세요</h4>
 
 						</div>
 					</div>
-					<div class="card-body2">
-					<!-- 결과 그래프 출력  width="382" height="152"-->
-					<canvas id="myChart" hidden="hidden" draggable="false" style=" width:100%; height:100%;"></canvas>					
+					<div class="card-body2">					
+					<!-- draggable="false" style=" width:100%; height:100%;" -->
+					<canvas id="myChart" hidden="hidden" width="500" height="200"></canvas>					
 					<table id="result_table"  hidden="hidden">
 						<tr>							
 							<td>
