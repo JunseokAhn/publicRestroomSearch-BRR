@@ -21,50 +21,58 @@
 <!-- CSS Files -->
 <link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
 <script>
-
-// function onLoad() {
-// 	gapi.load('auth2', function() { 
-// 		gapi.auth2.init();
-		
-// 	});
-// }
-// function signOut() {
-// 	var auth2 = gapi.auth2.getAuthInstance();
-//     auth2.signOut().then(function () {
-//     console.log('로그아웃 완료');
-//     });
-// 	auth2.disconnect();
-// 	goHome();
-// }
-
-// function goHome() {
-	
-// 	location.href = "/brr/maps/mapsMain";
-// }
-
-
-
 var url = "https://accounts.google.com/logout";
 var mapsMain = "http://localhost:8888/brr/maps/mapsMain";
-function logout()
-{
-    var url3 = window.open(url,"popup","width = 200, height = 200");
-//     mapsMain.focus();
-		alert("홈으로 이동합니다.");
-     url3.open();
-     setTimeout(function()
-    	 {
-         url3.close();
-         lo();
-         },300)
+
+
+
+function onLoad() {
+	gapi.load('auth2', function() { 
+		gapi.auth2.init();
+		
+	});
+}
+function signOut() {
+
+	var auth2 = gapi.auth2.getAuthInstance();
+
+    auth2.signOut().then(function () {
+
+        console.log('로그아웃 완료');
+
+    });
+
+	auth2.disconnect();
+// 	goHome();
+}
+
+function goHome() {
+	
+	location.href = "/brr/maps/mapsMain";
 }
 
 
-function lo()
-{
-var url2 = "http://localhost:8888/brr/maps/mapsMain";
-location.replace(url2);
-}
+
+
+// function logout()
+// {
+//     var url3 = window.open(url,"popup","width = 200, height = 200");
+// //     mapsMain.focus();
+// 		alert("홈으로 이동합니다.");
+//      url3.open();
+//      setTimeout(function()
+//     	 {
+//          url3.close();
+//          lo();
+//          },300)
+// }
+
+
+// function lo()
+// {
+// var url2 = "http://localhost:8888/brr/maps/mapsMain";
+// location.replace(url2);
+// }
 
 
 </script>
@@ -143,7 +151,7 @@ location.replace(url2);
 									</c:if>
 									
 									<c:if test="${sessionScope.sessionNaver == null}">
-									<form action="logout3" method = "GET" onsubmit="logout()">
+									<form action="logout3" method = "GET" onsubmit="signOut()">
 									<input type="submit" value="홈으로 돌아가기" class="btn btn-primary">
 									</form>
 									</c:if>
