@@ -25,6 +25,8 @@
 <link rel="stylesheet" href="../resources/css/hover.css">
 
 <script type="text/javascript">
+	
+
 		var map, pos, marker, toiletMarker, marker_s, marker_e, marker_p1, marker_p2, title, id, label, endX, endY, polyline_, myWindow, targetWindow, destinyWindow, realTime;
 		var tDistance, tTime;
 		var shortestDistance, highestRating, highestClean, highestSmooth;
@@ -293,7 +295,13 @@
     				var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();
         },1000)
     	
-    	download();
+    	console.log("여기 안에서는? : "+ ${sessionScope.DownFlag});
+    	if(${sessionScope.DownFlag})
+        {
+    		download();   		
+        }
+    	
+    	
     	
     	// type모양별 체크시 각 함수를 다르게 지정해서 건강진단을 함    
     	$("#type1").on
