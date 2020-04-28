@@ -287,7 +287,8 @@ function snsReplySave(snsBoardnum, email) {
 	console.log(email);
 	console.log(comments);
 	
-	if(comments.length == 0) {
+	if(comments.length == 0) 
+	{
 		alert('댓글을 입력해 주세요.');
 		return;
 	}
@@ -323,9 +324,63 @@ function init(snsBoardnum) {
 		data: {
 			snsBoardnum: snsBoardnum
 		},
-		success: output
+		success: function(listSnsReply) {
+			//var snsBoardnum1 = '';
+			console.log(listSnsReply);
+			var str = '<div class="listTable mx-auto replyComments form-group" data-num="${sns.snsBoardnum}"><table class="table">';
+			//var str = '<table class="table">';
+
+			if(listSnsReply.length != 0) {
+				$.each(listSnsReply, function(index, snsReply) {
+					
+					str += '<thead>';
+					str += '	<tr>';
+					str += '		<th scope="col" class="id1" style="text-align: left;">' + snsReply.email + '</th>';
+					str += '		<th scope="col"></th>';
+						
+					str += '		<th scope="col" class="inpudate1">' + snsReply.inputdate + '</th>';
+					str += '	</tr>';
+					str += '</thead>';
+					//사용자정의속성
+					str += '<tbody>';
+					str += '	<tr>'
+					str += '		<td class="comments1" colspan="2" style="text-align: left;">' + snsReply.comments + '</td>';
+					str += '		<td class="reply'+snsReply.snsReplynum+'">';
+					str += '			<input type="button" data-no="'+snsReply.snsBoardnum+'" data-text="' +snsReply.comments+ '"data-num="' +snsReply.snsReplynum+ '" value="댓글수정" class="snsUpd btn btn-secondary btn-sm">';
+					str += '			<input type="button" data-no="'+snsReply.snsBoardnum+'" data-text="' +snsReply.comments+ '"data-num="' +snsReply.snsReplynum+ '" value="댓글삭제" class="snsDel btn btn-secondary btn-sm">';
+					str += '		</td>';
+//					str += '	<td class="del_length"><input type="button" value="댓글삭제" class="snsDel btn btn-secondary btn-sm" freenum="'+ snsReply.snsReplynum +'"></td>';
+					str += '	</tr>';
+					str += '</tbody>';
+					//게시판에 맞게 댓글 넣기!
+					snsBoardnum = snsReply.snsBoardnum;
+					
+				});
+				
+				str += '</table></div>';
+				//alert('snsBoardnum1는' + snsBoardnum1);
+				$('#replies[data-num="'+snsBoardnum+'"]').html(str);
+					
+				//str += '</table></div>';
+				//$('#replies[data-num="'+snsReply.snsBoardnum+'"]').html(str);
+
+				//sns댓글목록
+				//$('#snsListDiv').html(str);
+				//sns댓글수정
+				$('input:button.snsUpd').on('click', updateSnsReply);
+				//sns댓글삭제
+				$('input:button.snsDel').on('click', deleteSnsReply);
+					
+			}else {
+				str += '</table></div>';
+				//alert('snsBoardnum1는' + snsBoardnum1);
+				$('#replies[data-num="'+snsBoardnum+'"]').html("");
+			}
+
+		}
 	});
 }
+
 
 ////sns댓글목록
 //function output(listSnsReply) {
@@ -353,54 +408,49 @@ function init(snsBoardnum) {
 	
 //}
 
-function output(listSnsReply) {
-	var snsBoardnum1 = '';
-	console.log(snsBoardnum);
-	var str = '<div class="listTable mx-auto replyComments form-group" data-num="${sns.snsBoardnum}"><table class="table">';
-	//var str = '<table class="table">';
-
-	//$('#replies').html("");
-	$.each(listSnsReply, function(index, snsReply) {
-			
-		str += '<thead>';
-		str += '	<tr>';
-		str += '		<th scope="col" class="id1" style="text-align: left;">' + snsReply.email + '</th>';
-		str += '		<th scope="col"></th>';
-			
-		str += '		<th scope="col" class="inpudate1">' + snsReply.inputdate + '</th>';
-		str += '	</tr>';
-		str += '</thead>';
-		//사용자정의속성
-		str += '<tbody>';
-		str += '	<tr>'
-		str += '		<td class="comments1" colspan="2" style="text-align: left;">' + snsReply.comments + '</td>';
-		str += '		<td class="reply'+snsReply.snsReplynum+'">';
-		str += '			<input type="button" data-no="'+snsReply.snsBoardnum+'" data-text="' +snsReply.comments+ '"data-num="' +snsReply.snsReplynum+ '" value="댓글수정" class="snsUpd btn btn-secondary btn-sm">';
-		str += '			<input type="button" data-no="'+snsReply.snsBoardnum+'" data-text="' +snsReply.comments+ '"data-num="' +snsReply.snsReplynum+ '" value="댓글삭제" class="snsDel btn btn-secondary btn-sm">';
-		str += '		</td>';
-//		str += '	<td class="del_length"><input type="button" value="댓글삭제" class="snsDel btn btn-secondary btn-sm" freenum="'+ snsReply.snsReplynum +'"></td>';
-		str += '	</tr>';
-		str += '</tbody>';
-		//게시판에 맞게 댓글 넣기!
-		snsBoardnum1 = snsReply.snsBoardnum;
+// function output(listSnsReply,flag) 
+// {
+// 	var snsBoardnum1 = '';
 		
-	});
-	
-	str += '</table></div>';
-	//alert('snsBoardnum1는' + snsBoardnum1);
-	$('#replies[data-num="'+snsBoardnum1+'"]').html(str);
-		
-	//str += '</table></div>';
-	//$('#replies[data-num="'+snsReply.snsBoardnum+'"]').html(str);
 
-	//sns댓글목록
-	//$('#snsListDiv').html(str);
-	//sns댓글수정
-	$('input:button.snsUpd').on('click', updateSnsReply);
-	//sns댓글삭제
-	$('input:button.snsDel').on('click', deleteSnsReply);
+// 	if(flag&&listSnsReply.length==0)
+// 	{
+// 		$('#replies[data-num="'+snsBoardnum+'"]').html(str);	
+// 	}
+// 	else
+// 	{		
+// 		var str = '<div class="listTable mx-auto replyComments form-group" data-num="${sns.snsBoardnum}"><table class="table">';
+// 		$.each(listSnsReply, function(index, snsReply) {
+// 			snsBoardnum1 = snsReply.snsBoardnum;	
+// 			str += '<thead>';
+// 			str += '	<tr>';
+// 			str += '		<th scope="col" class="id1" style="text-align: left;">' + snsReply.email + '</th>';
+// 			str += '		<th scope="col"></th>';
+				
+// 			str += '		<th scope="col" class="inpudate1">' + snsReply.inputdate + '</th>';
+// 			str += '	</tr>';
+// 			str += '</thead>';
+// 			//사용자정의속성
+// 			str += '<tbody>';
+// 			str += '	<tr>'
+// 			str += '		<td class="comments1" colspan="2" style="text-align: left;">' + snsReply.comments + '</td>';
+// 			str += '		<td class="reply'+snsReply.snsReplynum+'">';
+// 			str += '			<input type="button" data-no="'+snsReply.snsBoardnum+'" data-text="' +snsReply.comments+ '"data-num="' +snsReply.snsReplynum+ '" value="댓글수정" class="snsUpd btn btn-secondary btn-sm">';
+// 			str += '			<input type="button" data-no="'+snsReply.snsBoardnum+'" data-text="' +snsReply.comments+ '"data-num="' +snsReply.snsReplynum+ '" value="댓글삭제" class="snsDel btn btn-secondary btn-sm">';
+// 			str += '		</td>';
 
-}
+// 			str += '	</tr>';
+// 			str += '</tbody>';
+// 			//게시판에 맞게 댓글 넣기!					
+// 		});
+// 		str += '</table></div>';
+// 		$('#replies[data-num="'+snsBoardnum1+'"]').html(str);		
+
+// 		$('input:button.snsUpd').on('click', updateSnsReply);
+// 		//sns댓글삭제
+// 		$('input:button.snsDel').on('click', deleteSnsReply);
+// 	}		
+// }
 
 //sns댓글수정
 function updateSnsReply() {
@@ -430,29 +480,7 @@ function updateSnsReply() {
 
 	//댓글수정 click시 버튼 숨기기
 	$('.snsUpd').hide();
-
-	//var str = '<div class="mx-auto replyComments form-group" style="text-align: left;"><table class="table">';
-		//var str = '<td>';
-		//str += '<thead>';
-		//str += '	<tr>';
-	//var	str = '<input class="form-control form-control-sm" type="text" id="replyUpd" value="'+ comments +'">';
-		//str += '	<td class="upd_length">';
-	//	str += '<input type="button" id="confirmUpd" class="btn btn-secondary btn-sm" value="수정 확인">';
-	//	str += '			<input type="button" id="cancelUpd" class="btn btn-secondary btn-sm" value="취소">';
-	//	str += '	</td>';	
-		//str += '	</tr>';
-		//str += '</thead>';	
-		//str += '</table></div>';
-
-// 	var str = '<div class="mx-auto replyComments form-group">';
-// 		str += '<p>';
-// 		str += '	<span class="review'+ snsReplynum +'"><input class="form-control form-control-sm" type="text" id="replyUpd"></span>';
-// 		str += '	<span style="float:left;"><input type="button" id="confirmUpd" class="btn btn-secondary btn-sm" value="수정 확인">';
-// 		str += '	<input type="button" id="cancelUpd" class="btn btn-secondary btn-sm" value="취소"></span>';
-// 		str += '</p>';
-// 		str += '</div>';
 	
-//	$(this).after(str);
 
 	$('#confirmUpd').on('click', function() {
 		var replyUpd = $(this).closest('td').find('#replyUpd').val();
@@ -481,17 +509,15 @@ function updateSnsReply() {
 			}
 		});		
 	});
-// 	//위의 코드가 실행된 이후에 이벤트를 걸어야 제대로 작동됨
-// 	$('#cancelUpd').on('click', function() {
-// 		//this(취소버튼)가까운 부모의 tr태그 즉 추가되었던 tr태그 remove(삭제)
-// 		$(this).closest('div').remove();
-// 	});
+
 }
 
 //sns댓글삭제
-function deleteSnsReply() {
+function deleteSnsReply() 
+{
 	var snsBoardnum = $(this).attr('data-no');
 	var snsReplynum = $(this).attr('data-num');
+	
 
 	$.ajax({
 		url: '../snsReply/deleteSnsReply',
@@ -499,9 +525,10 @@ function deleteSnsReply() {
 		data: {
 			snsReplynum: snsReplynum
 		},
-		success: function(cnt) {
+		success: function(cnt) 
+		{
 			alert(cnt);
-			init(snsBoardnum);
+			init(snsBoardnum,true);
 		}
 	});
 }
