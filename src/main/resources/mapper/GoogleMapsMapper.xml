@@ -93,6 +93,7 @@
                                    (
                                      select * 
                                      from dayaver
+                                      where inputdate between sysdate-1 and sysdate
                                    ) d 
                                 using(lat, lng) 
                                 group by lat, lng) 
@@ -107,6 +108,7 @@
                                (
                                 select * 
                                 from dayaver
+                                where inputdate between sysdate-1 and sysdate
                                ) d using(lat, lng) 
                                  group by lat, lng)
                  )
@@ -119,24 +121,24 @@
 	<select id="searchSmooth2" parameterType="location" resultType="toilet">
 		 select *
          from brr_toilet 
-         	  join 
+         join 
          	  ( select lat,lng 
         	    from
-        	    ( select LAT, LNG, DISTANCE, round((MENTOILETBOWLNUMBER+MENHANDICAPTOILETBOWLNUMBER+MENCHILDRENTOILETBOWLNUMBER+LADIESTOILETBOWLNUMBER+LADIESHANDICAPTOILETBOWLNUMBER+LADIESCHILDRENTOILETBOWLNUMBER) / USERCOUNT,1) SMOOTH 
+        	    ( select LAT, LNG, DISTANCE, (MENTOILETBOWLNUMBER+LADIESTOILETBOWLNUMBER) / USERCOUNT SMOOTH 
         	      from
         	      ( select lat, lng, distance, count(*) usercount 
         	        from
         	        ( select trunc(DISTANCE_WGS84(#{lat},#{lng}, lat, lng),3)*1000 as DISTANCE, lat, lng
          		      from brr_toilet
          		      where (lat between #{lat}-0.021 and #{lat}+0.021) and (lng between #{lng}-0.0246 and #{lng}+0.0246)
-        		    ) join dayaver using(lat, lng)
+        		    ) left join dayaver using(lat, lng)
                       where inputdate between sysdate-1 and sysdate
                       group by LAT, LNG, DISTANCE
                  ) 
                  join brr_toilet using(lat, lng)
-                 order by SMOOTH DESC, DISTANCE 
+                 order by SMOOTH DESC, DISTANCE
                )
-             where rownum=1
+             where rownum=1 
              ) 
              using(lat, lng)
 	</select>
