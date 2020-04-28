@@ -74,7 +74,7 @@ public class ReviewDAO {
 		map.put("lat", lat);
 		map.put("lng", lng);
 		ReviewAverVO VO = mapper.reviewAver(map);
-		System.out.println(VO);
+		
 		return VO;
 	}
 }

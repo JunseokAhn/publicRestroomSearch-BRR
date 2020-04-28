@@ -73,8 +73,6 @@ public class ReviewController {
 	@PostMapping(value = "reviewAver")
 	public ReviewAverVO reviewAver(Double lat, Double lng) {
 		ReviewAverVO VO = dao.reviewAver(lat, lng);
-		if(VO!=null)
-			System.out.println("reviewAver : "+VO.toString());
 		return VO;
 	}
 }
