@@ -100,7 +100,7 @@ public class NaverLoginController {
             logger.debug((String)httpsession.getAttribute("access_token"));
             
             httpsession.setAttribute("Profile", profile_image);
-        
+                        
         return "";
         
     }

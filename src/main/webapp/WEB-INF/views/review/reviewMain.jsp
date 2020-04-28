@@ -17,6 +17,7 @@
 <!-- CSS Files -->
 <link href="<c:url value="/resources/css/boardStyle.css"/>" rel="stylesheet" />
 <link href="<c:url value="/resources/assets/css/argon-dashboard.css?v=1.1.2"/>" rel="stylesheet" />
+<link rel="stylesheet" href="../resources/css/hover.css">
 <script type="text/javascript">
 //대변 체크 결과
 var diaryGraphInfo = 

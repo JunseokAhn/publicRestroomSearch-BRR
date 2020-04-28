@@ -3,6 +3,8 @@ package global.sesoc.brr.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +27,7 @@ public class TMapController {
 	LocationVO lo = new LocationVO();
 
 	@GetMapping(value = "mapsMain")
-	public String MapsMain(Model model) {
+	public String MapsMain(Model model,HttpSession session) {
 
 		/*
 		 * 데이터파싱연습 RestTemplate restTemplate = new RestTemplate(); URI uri =
@@ -39,6 +41,11 @@ public class TMapController {
 		 * System.out.println(responseEntity); model.addAttribute("directions",
 		 * responseEntity);
 		 */
+		if(session.getAttribute("DownFlag")==null)
+		{
+			session.setAttribute("DownFlag", true);
+			System.out.println("내용 : "+session.getAttribute("DownFlag") );
+		}
 		return "maps/mapsMain";
 	}
 
