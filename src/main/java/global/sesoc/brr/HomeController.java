@@ -21,7 +21,9 @@ import global.sesoc.brr.dao.ToiletDAO;
 
 
 @Controller
-public class HomeController {
+public class HomeController 
+{
+	public static boolean download_flag = true;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -42,18 +44,25 @@ public class HomeController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/checkRecv", method = RequestMethod.GET)
-	public String CheckRecv() {
+	public String CheckRecv() 
+	{
 		logger.debug("이동하였다.");
-		if(toiletDAO.countToiletInfo()>32000&&hospitalDAO.countHospitalInfo()>18600)
+		if(download_flag)
 		{
-			logger.debug("필요하지 않다.");
-			return "do_not_need";
+			if(toiletDAO.countToiletInfo()>32000&&hospitalDAO.countHospitalInfo()>18600)
+			{
+				logger.debug("필요하지 않다.");
+				download_flag = false;
+				return "do_not_need";
+			}
+			else
+			{
+				logger.debug("필요하다.");
+				return "need";
+			}		
 		}
-		else
-		{
-			logger.debug("필요하다.");
-			return "need";
-		}		
+		
+		return "checked";		
 	}
 	
 	

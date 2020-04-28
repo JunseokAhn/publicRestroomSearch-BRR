@@ -121,6 +121,36 @@
     "<p>설사와 혈변은 염증성 질환일 수 도 있습니다.<br>가까운 병원에 빠르게 진찰을 받아보세요.</p>",
     "<p>수분이나 당분,지방을 지나치게 많이 먹어 장이 자극받은 상태입니다.<br>휴식이 필요해요.</p>"
     ];
+
+    function download()
+    {
+        $.ajax
+        ({
+            url:"<c:url value='/checkRecv'/>",
+            dataType:"text",
+            success:
+                function(flag)
+                {
+                	if(flag=="do_not_need")
+                    {
+                        alert("최신 데이터 입니다. 다운로드가 필요없습니다.");
+                    }
+                	else if(flag=="need")
+                    {
+                		alert("데이터가 부족합니다, 다운로드가 필요합니다.");
+                		location.href="<c:url value=''/toilet/toiletRecv>";
+                    }
+                	else return;
+                }
+            ,
+       		error:
+           		function()
+           		{
+           			console.log("다운로드 함수 실행 실패");
+           		}
+        });
+    }
+    
     function hover(){
         //별 초기화
         $("#star5").attr("src", "<c:url value='/resources/img/starOff.png'/>");
@@ -253,6 +283,7 @@
     }
     
     $(function () {
+        
         setTimeout(function(){
             window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = []; 
     		window.myWidgetParam.push({id: 18,cityid: '1835848',appid: 'c08b376c4c1ca3b5e593c4991d91eb3c',
@@ -261,6 +292,8 @@
     			script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
     				var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();
         },1000)
+    	
+    	download();
     	
     	// type모양별 체크시 각 함수를 다르게 지정해서 건강진단을 함    
     	$("#type1").on
