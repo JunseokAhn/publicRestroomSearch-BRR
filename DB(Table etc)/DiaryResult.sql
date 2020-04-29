@@ -5,5 +5,5 @@ create table diary_result(
     stress number, -- 스트레스도
     moisture number, -- 수분
     ingredient number, -- 영양분
-    inputdate date default sysdate -- 날짜       
+    inputdate date default  to_date(to_char(sysdate,'yyyy/mm/dd')) -- 날짜       
 );
