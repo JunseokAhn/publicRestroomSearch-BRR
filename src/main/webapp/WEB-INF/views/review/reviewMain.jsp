@@ -60,8 +60,8 @@ var diaryGraphInfoArray=
         new diaryGraphInfo(4, 2, 2, 2),
         new diaryGraphInfo(4, 1.5, 0.5, 3),
         
-        new diaryGraphInfo(0, 5, 5, 2 ),
-        new diaryGraphInfo(2, 1, 1, 4),
+        new diaryGraphInfo(0, 5, 5, 4 ),
+        new diaryGraphInfo(2, 1, 1, 2),
         new diaryGraphInfo(3, 2, 2, 2),
         new diaryGraphInfo(2, 2, 3, 3),
 

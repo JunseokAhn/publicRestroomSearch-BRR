@@ -48,9 +48,7 @@ public class CalendarController
 		Map<String, Integer> today_info =  dateData.today_info(dateData);
 		List<DateData> dateList = new ArrayList<DateData>();			
 		
-		System.out.println("여기까지 왔다.");
 		
-		System.out.println("이건무너배열:"+dateData);		
 
 		//실질적인 달력 데이터 리스트에 데이터 삽입 시작.
 		//일단 시작 인덱스까지 아무것도 없는 데이터 삽입
