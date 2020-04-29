@@ -1295,7 +1295,7 @@ function reviewRefresh(lng, lat){
         		},
         		error : function (e) {
         			console.log("화장실검색정보 저장실패");
-        			alert(JSON.stringify(e));
+        			console.log(e)
         		}
         	});
         }
@@ -1391,7 +1391,7 @@ function reviewRefresh(lng, lat){
     		error:
     		function(e)
     		{
-    			alert(Json.Stringify(e));
+    			console.log(e);
     		}
     	}
     	);	    	
@@ -1433,7 +1433,7 @@ function reviewRefresh(lng, lat){
     		error:
     		function(e)
     		{
-    			alert(Json.Stringify(e));
+    		    console.log(e);
     			return;
     		}
     	}
@@ -1488,7 +1488,7 @@ function reviewRefresh(lng, lat){
 			
 		},
 		error : function(e) {
-			alert(JSON.stringify(e));
+		    console.log(e);
 		}
 	});
 }
@@ -1537,7 +1537,7 @@ function reviewRefresh(lng, lat){
 			}
 		},
 		error : function(e) {
-			alert(JSON.stringify(e));
+		    console.log(e);
 		}
 	});
 }
@@ -1786,7 +1786,7 @@ function reviewRefresh(lng, lat){
 				error:
 					function(e)
 					{
-						alert(Json.Stringify(e));
+				    console.log(e);
 					}
 			}
 		);	    	
@@ -1897,9 +1897,9 @@ function InsertResult()
 				}
 			,
 			error:
-				function()
+				function(e)
 				{
-					alert("에러");
+			    console.log(e);
 				}
 		}
 	);	    	
