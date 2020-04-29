@@ -140,7 +140,7 @@
                )
              where rownum=1 
              ) 
-             using(lat, lng)
+             using(lat, lng) where rownum=1
 	</select>
 	
 </mapper>
