@@ -54,26 +54,26 @@
         }
 
     var diaryPictureArray=
-    [
-    "../resources/img/normal.png",
-    "../resources/img/dangerous.png",
-    "../resources/img/dangerous.png",
-    "../resources/img/normal.png",
-    
-    "../resources/img/good.png",
-    "../resources/img/dangerous.png",
-    "../resources/img/dangerous.png",
-    "../resources/img/normal.png",
-    
-    "../resources/img/normal.png",
-    "../resources/img/dangerous.png",
-    "../resources/img/dangerous.png",
-    "../resources/img/normal.png",
-    
-    "../resources/img/normal.png",
-    "../resources/img/dangerous.png",
-    "../resources/img/sobad.png",
-    "../resources/img/normal.png"
+    [        
+    "<c:url value='/resources/img/normal.png'/>",
+    "<c:url value='/resources/img/dangerous.png'/>",
+    "<c:url value='/resources/img/dangerous.png'/>",   
+    "<c:url value='/resources/img/normal.png'/>", 
+
+    "<c:url value='/resources/img/good.png'/>",
+    "<c:url value='/resources/img/dangerous.png'/>",
+    "<c:url value='/resources/img/dangerous.png'/>",   
+    "<c:url value='/resources/img/normal.png'/>",   
+
+    "<c:url value='/resources/img/normal.png'/>",
+    "<c:url value='/resources/img/dangerous.png'/>",
+    "<c:url value='/resources/img/dangerous.png'/>",   
+    "<c:url value='/resources/img/normal.png'/>",   
+
+    "<c:url value='/resources/img/normal.png'/>",
+    "<c:url value='/resources/img/dangerous.png'/>",
+    "<c:url value='/resources/img/sobad.png'/>",   
+    "<c:url value='/resources/img/normal.png'/>"    
     ];
 
     var diaryGraphInfoArray=
@@ -1548,10 +1548,11 @@ function reviewRefresh(lng, lat){
 		if($(this).attr("id")=="type1"||$(this).attr("id")=="type2"||$(this).attr("id")=="type3"||$(this).attr("id")=="type4")
 		{
 			$('#health-ment').text('STEP2.대변의 색깔을 선택해주세요');
-			$('#type1').attr('src','../resources/img/brown.png');
-			$('#type2').attr('src','../resources/img/gray.png');
-			$('#type3').attr('src','../resources/img/red.png');
-			$('#type4').attr('src','../resources/img/yellow.png');
+			
+			$('#type1').attr('src','<c:url value="/resources/img/brown.png"/>');
+			$('#type2').attr('src','<c:url value="/resources/img/gray.png"/>');
+			$('#type3').attr('src','<c:url value="/resources/img/red.png"/>');
+			$('#type4').attr('src','<c:url value="/resources/img/yellow.png"/>');
 			$("#type1").attr('id','brown'); 
 			$("#type2").attr('id','gray'); 
 			$("#type3").attr('id','red'); 
@@ -1737,10 +1738,10 @@ function reviewRefresh(lng, lat){
 		$("#health-ment").removeAttr("hidden","hidden");
 		
 		$("#health-ment").removeAttr("hidden","hidden");
-		$('#brown').attr('src','../resources/img/type1_1.png');
-		$('#gray').attr('src','../resources/img/type2_1.png');
-		$('#red').attr('src','../resources/img/type3_1.png');
-		$('#yellow').attr('src','../resources/img/type4_1.png');
+		$('#brown').attr('src','<c:url value="/resources/img/type1_1.png"/>');
+		$('#gray').attr('src','<c:url value="/resources/img/type2_1.png"/>');
+		$('#red').attr('src','<c:url value="/resources/img/type3_1.png"/>');
+		$('#yellow').attr('src','<c:url value="/resources/img/type4_1.png"/>');
 
 		$('#brown').attr('id','type1');
 		$('#gray').attr('id','type2');
@@ -2035,17 +2036,17 @@ function InsertResult()
 						</table>
 
 						<table id="hopital_table" class="table align-items-center table-flush" hidden="hidden" >
-						</table>
+						</table>						
 
 						<!-- 테스트 목록 출력 -->
 						<table id="health_test_table">
 							<tr>
-								<td style="width: 230px; height: 150px;"><img id="type1" class="hvr-grow-shadow" name="1" src="../resources/img/type1_1.png" style="width: 90%;" /></td>
-								<td style="width: 230px; height: 150px;"><img id="type2" class="hvr-grow-shadow" name="2" src="../resources/img/type2_1.png" style="width: 90%;" /></td>
+								<td style="width: 230px; height: 150px;"><img id="type1" class="hvr-grow-shadow" name="1" src="<c:url value='/resources/img/type1_1.png'/>" style="width: 90%;" /></td>
+								<td style="width: 230px; height: 150px;"><img id="type2" class="hvr-grow-shadow" name="2" src="<c:url value='/resources/img/type2_1.png'/>" style="width: 90%;" /></td>
 							</tr>
-							<tr>
-								<td style="width: 230px; height: 150px;"><img id="type3" class="hvr-grow-shadow" name="3" src="../resources/img/type3_1.png" style="width: 90%" /></td>
-								<td style="width: 230px; height: 150px;"><img id="type4" class="hvr-grow-shadow" name="4" src="../resources/img/type4_1.png" style="width: 90%" /></td>
+							<tr>								
+								<td style="width: 230px; height: 150px;"><img id="type3" class="hvr-grow-shadow" name="3" src="<c:url value='/resources/img/type3_1.png'/>" style="width: 90%" /></td>
+								<td style="width: 230px; height: 150px;"><img id="type4" class="hvr-grow-shadow" name="4" src="<c:url value='/resources/img/type4_1.png'/>" style="width: 90%" /></td>
 							</tr>
 						</table>
 					</div>

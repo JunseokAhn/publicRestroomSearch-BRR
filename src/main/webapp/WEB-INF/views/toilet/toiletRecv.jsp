@@ -23,11 +23,17 @@
 							if(flag=="success")
 							{
 								alert("모든 데이터 업데이트가 완료되었습니다.\n 메인화면으로 이동합니다.");
-								location.href="<c:url value="/"/>"
+								location.href="<c:url value="/maps/mapsMain"/>";
 							}
-							else
+							else if(flag=="error")
 							{
-								alert("데이터를 받는 도중 이상이 생겼습니다. 다시 실행해주십시오.");
+								alert("데이터를 받는 도중 이상이 생겼습니다. 브라우저를 다시 실행해주세요.");
+								location.href="<c:url value="/maps/mapsMain"/>";
+							}
+							else if(flag=="problemofsever")
+							{
+								alert("공공포털api서버에 문제가 있어서 접속이 안 되고 있습니다.\n나중에 실행시켜 주십시오.\n이용에 불편을 드려 죄송합니다.");
+								location.href="<c:url value="/maps/mapsMain"/>";
 							}
 						}
 					,
@@ -35,6 +41,8 @@
 						function()
 						{
 							console.log("로직 에러!!");
+							alert("데이터를 받는 도중 이상이 생겼습니다. 브라우저를 다시 실행해주세요.");
+							location.href="<c:url value="/maps/mapsMain"/>"
 						}
 				});				 				
 			}

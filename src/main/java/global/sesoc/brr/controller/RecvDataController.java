@@ -143,6 +143,7 @@ public class RecvDataController {
 			catch(Exception e)
 			{
 				e.printStackTrace();
+				return "problemofsever";
 			}
 			
 			//화장실 데이터 받기
@@ -577,6 +578,7 @@ public class RecvDataController {
 			catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				return "error";
 			}				
 		}		
 		
