@@ -1062,10 +1062,10 @@ function reviewRefresh(lng, lat){
         			},
         			type : "post",
         			success : function (e) {
-        				if(locationFlag == 0){
-        					locationFlag = 1;
+        				//if(locationFlag == 0){
+        					//locationFlag = 1;
         					setPositions(e, marker);
-        				}
+        					//}
         			},
         			error : function (e) {
         				console.log(e)
