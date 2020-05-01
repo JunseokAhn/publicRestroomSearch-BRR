@@ -19,3 +19,23 @@ create table brr_toilet
     lat number, --x좌표(위도)
     lng number --y좌표(경도)   
 );
+
+create or replace FUNCTION RADIANS(nDegrees IN NUMBER) RETURN NUMBER DETERMINISTIC IS
+BEGIN  
+  RETURN nDegrees / 57.29577951308232087679815481410517033235;
+END RADIANS;
+/
+
+CREATE OR REPLACE FUNCTION DISTANCE_WGS84( H_LAT in number, H_LNG in number, T_LAT in number, T_LNG in number)
+RETURN NUMBER DETERMINISTIC
+IS
+BEGIN
+  RETURN ( 6371.0 * acos( 
+          cos( radians( H_LAT ) )*cos( radians( T_LAT /* 위도 */ ) )
+          *cos( radians( T_LNG /* 경도 */ )-radians( H_LNG ) )
+          +
+          sin( radians( H_LAT ) )*sin( radians( T_LAT /* 위도 */ ) )       
+         ));
+
+end DISTANCE_WGS84;
+/
