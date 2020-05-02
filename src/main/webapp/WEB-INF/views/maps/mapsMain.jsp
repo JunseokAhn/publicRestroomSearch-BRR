@@ -951,85 +951,79 @@ function reviewRefresh(lng, lat){
             	return function () {
             		index = i;
             		target = toiletMarker.getPosition();
-            		endX = target._lng;
-            		endY = target._lat;
             		
-                            //누르자마자 경로탐색 > 나중에 경로안내누르면 실시간안내되도록 바꾸기
-                            distime = directions(endX, endY);
-                            if(nearbyToilet[i].unisexToiletYn == "Y")
-                            	nearbyToilet[i].unisexToiletYn = "남녀공용 ";
-                            else
-                            	nearbyToilet[i].unisexToiletYn = "남녀별도 ";
+                    //누르자마자 경로탐색 > 나중에 경로안내누르면 실시간안내되도록 바꾸기
+                    distime = directions(target._lat, target._lng);
+                    if(nearbyToilet[i].unisexToiletYn == "Y")
+                      	nearbyToilet[i].unisexToiletYn = "남녀공용 ";
+                    else
+                      	nearbyToilet[i].unisexToiletYn = "남녀별도 ";
                             
-                            var toiletType = nearbyToilet[i].unisexToiletYn + nearbyToilet[i].toiletType;
-                            var toiletBowlNumber = nearbyToilet[i].menToiletBowlNumber + nearbyToilet[i].ladiesToiletBowlNumber;
-                            var handicap = nearbyToilet[i].menHandicapToiletBowlNumber + nearbyToilet[i].ladiesHandicapToiletBowlNumber;
-                            if(handicap > 0)
-                            	handicap = "Y";
-                            else
-                            	handicap = "N";
+                    var toiletType = nearbyToilet[i].unisexToiletYn + nearbyToilet[i].toiletType;
+                    var toiletBowlNumber = nearbyToilet[i].menToiletBowlNumber + nearbyToilet[i].ladiesToiletBowlNumber;
+                    var handicap = nearbyToilet[i].menHandicapToiletBowlNumber + nearbyToilet[i].ladiesHandicapToiletBowlNumber;
+                    if(handicap > 0)
+                     	handicap = "Y";
+                    else
+                    	handicap = "N";
                             
-                            console.log(marker)
-                            //여기까지 마커(내위치) 들어오는것 확인
-                            var content = "<div style='min-width:max-content;  z-index:999;'>"
-                            content += "<h5 class='card-title text-uppercase text-muted mb-0'>" + toiletType + "</h5>"
-                            content += "<br'><span class='card-title text-uppercase text-muted mb-0'>대변기 : " + toiletBowlNumber + "</span>"
-                            content += "<br><span class='card-title text-uppercase text-muted mb-0'>장애인 배려실 : " + handicap + "</span>"
+                    console.log(marker)
+                    var content = "<div style='min-width:max-content;  z-index:999;'>"
+                    content += "<h5 class='card-title text-uppercase text-muted mb-0'>" + toiletType + "</h5>"
+                    content += "<br'><span class='card-title text-uppercase text-muted mb-0'>대변기 : " + toiletBowlNumber + "</span>"
+                    content += "<br><span class='card-title text-uppercase text-muted mb-0'>장애인 배려실 : " + handicap + "</span>"
 
-                            content += "<br><input class='replyButton3 mt-1 pointer' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='navigators(" + endX + ',' + endY + ',' + '"' + title + '"' + ',' + '"' + toiletType + '"' + ',' + '"' + toiletBowlNumber + '"' + ',' + '"' + handicap + '"' + ")'>";
-                            content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";
-                            content += "</div>"
+                    content += "<br><input class='replyButton3 mt-1 pointer' type='button' id='direction[" + i + "]' value='실시간 길찾기' onclick='navigators(" + target._lat + ',' + target._lng + ',' + '"' + title + '"' + ',' + '"' + toiletType + '"' + ',' + '"' + toiletBowlNumber + '"' + ',' + '"' + handicap + '"' + ")'>";
+                    content += "<div style='display:inline-block; margin-left:5px; text-decoration: underline; '>" + distime + "</div>";
+                    content += "</div>"
 
-                            console.log("target : " + i)
-                            setTimeout(function () {
-                            	targetWindow.setMap(null)
-                            }, 0);
-                            setTimeout(function () {
-                            	targetWindow = new Tmapv2.InfoWindow({
-                            		position : new Tmapv2.LatLng(target._lat, target._lng),
-                            		content : content,
-                            		type : 1,
-                            		map : map
-                            	});
-                            }, 0);
+                    console.log("target : " + i)
+                    setTimeout(function () {
+                    	targetWindow.setMap(null)
+                    }, 0);
+                    setTimeout(function () {
+                    	targetWindow = new Tmapv2.InfoWindow({
+                    		position : new Tmapv2.LatLng(target._lat, target._lng),
+                    		content : content,
+                    		type : 1,
+                    		map : map
+                    	});
+                    }, 0);
                             
-                            //별점과 청결도의 평균, 최근2일변화량체크
-                             $.ajax({
-                                url: "<c:url value='/review/reviewAver'/>",
-                                data:{
-                                    lat: target._lat, 
-                                    lng: target._lng
-                                },
-                                type:"post",
-                                success: function(e){
-                                     $.ajax({
-        								url : "<c:url value='/dayaver/average'/>",
-        								type : "POST",
-        								data : {
-        									lng : target._lng, 
-        									lat : target._lat
-        								},
-        								success : function (res) {
-											var changeRate = res.differ;
-											var averageRate = res.average;
-											changeDiv1(e.starAver, e.cleanAver, e.starDiffer, e.cleanDiffer, title, toiletType, target._lat, target._lng, changeRate, averageRate);
-											reviewRefresh(target._lng, target._lat);
-										},
-										error : function (e) {
-											console.log(JSON.stringify(e));
-										}
-									}); 
-                                },
-                                error: function(e){
-                                    console.log(e);
-                                }
-                            });
-                            
-                            
+                    //별점과 청결도의 평균, 최근2일변화량체크
+                    $.ajax({
+                        url: "<c:url value='/review/reviewAver'/>",
+                        data:{
+                            lat: target._lat, 
+                            lng: target._lng
+                        },
+                        type:"post",
+                        success: function(e){
+                            $.ajax({
+        						url : "<c:url value='/dayaver/average'/>",
+        						type : "POST",
+        						data : {
+        							lng : target._lng, 
+        							lat : target._lat
+        						},
+        						success : function (res) {
+									var changeRate = res.differ;
+									var averageRate = res.average;
+									changeDiv1(e.starAver, e.cleanAver, e.starDiffer, e.cleanDiffer, title, toiletType, target._lat, target._lng, changeRate, averageRate);
+									reviewRefresh(target._lng, target._lat);
+								},
+								error : function (e) {
+									console.log(JSON.stringify(e));
+								}
+						    });   
+                        },
+                        error: function(e){
+                            console.log(e);
                         }
-                    }(toiletMarker, i, title));
-        }//마커생성 for[E]
-        
+                    });
+                }
+            }(toiletMarker, i, title));
+        }//마커생성 for[E]    
     }//setPositions[E]
     
     function reviewWrite (title, id, lng, lat, toiletType) {
