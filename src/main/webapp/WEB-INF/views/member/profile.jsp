@@ -996,7 +996,30 @@ function Prefer() {
 	}
 });
 }
-
+// 화장실 이용 기록 삭제
+function DeleteRe() {
+	var id = $('#sessionId').val();
+	$.ajax({
+	url : "../dayaver/deleteRecord",
+	type : "GET",
+	data : {
+		id : id
+	},
+	success : function(res) {
+		if(res){
+		alert("삭제에 성공하였습니다.");
+		} else {
+		alert("다시 시도 해 주세요.");
+		return false;
+		}
+	},
+	error : function(e) {
+		alert(JSON.stringify(e));
+	}
+});
+	
+}
+//네비게이터 끝
 	$(
 			function()
 			{				
@@ -1485,8 +1508,8 @@ function Prefer() {
 					</c:if>
 
 					<c:if test="${sessionScope.sessionId != null }">
-						<li class="nav-item"><a class="nav-link " href="<c:url value="/member/profile"/>">
-								<i class="ni ni-single-02 text-gray-dark"></i> User profile
+						<li class="nav-item"><a class="nav-link " href="<c:url value="javascript:DeleteRe()"/>">
+								<i class="ni ni-single-02 text-gray-dark"></i> Delete Record
 							</a></li>
 						<li class="nav-item"><a class="nav-link" href="<c:url value="/member/logout"/>">
 								<i class="ni ni-key-25 text-info"></i> Logout
